@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "Baixador de Reels do Instagram — Grátis, Rápido, Sem Marca D'água",
+    "description": "Cole o link de qualquer Reel do Instagram e baixe em HD, grátis, sem marca d'água, sem login e sem instalar aplicativos.",
+    "ogAlt": "Prévia da ferramenta de download de Reels do Instagram"
+  },
+  "hero": {
+    "badge": "100% Grátis · Sem Login",
+    "title": "Baixe Reels do Instagram em Segundos",
+    "subtitle": "Cole o link de um Reel abaixo para obter um vídeo em HD, sem marca d'água, pronto para salvar.",
+    "placeholder": "Cole aqui o link do Reel do Instagram…",
+    "pasteButton": "Colar",
+    "downloadCta": "Obter Vídeo",
+    "loading": "Buscando seu vídeo…",
+    "errorGeneric": "Não conseguimos obter esse Reel. Verifique o link e tente novamente.",
+    "errorInvalid": "Isso não parece ser um link válido de um Reel do Instagram."
+  },
+  "preview": {
+    "title": "Seu vídeo está pronto",
+    "author": "Por",
+    "duration": "Duração",
+    "downloadButton": "Baixar MP4",
+    "newSearch": "Baixar outro"
+  },
+  "seo": {
+    "heading": "A forma mais rápida de salvar Reels do Instagram",
+    "paragraphs": [
+      "O Instagram não oferece uma forma integrada de salvar o Reel de outra pessoa na sua galeria. Nossa ferramenta resolve isso com um simples colar de link: buscamos o arquivo MP4 original direto dos servidores do Instagram para te dar uma cópia limpa, sem marca d'água, na mesma qualidade em que foi enviado.",
+      "Funciona totalmente no navegador — não há nada para instalar, nenhuma conta para criar e nenhum dado pessoal exigido. Apenas o link público do Reel que você quer. Isso torna seguro usar em qualquer dispositivo, seja no celular ou no computador.",
+      "Criadores usam para arquivar seu próprio conteúdo antes que ele saia dos feeds em alta, profissionais de marketing montam bancos de referências criativas, e usuários comuns guardam uma cópia de um Reel que um amigo enviou antes que seja apagado. Seja qual for o motivo, o fluxo é o mesmo: colar, pré-visualizar, baixar."
+    ]
+  },
+  "faq": {
+    "heading": "Perguntas frequentes",
+    "items": [
+      {
+        "q": "Esse baixador de Reels é realmente grátis?",
+        "a": "Sim. Não há assinatura, nenhuma marca d'água é adicionada e não há limite de conta, pois nenhuma conta é necessária."
+      },
+      {
+        "q": "Preciso fazer login na minha conta do Instagram?",
+        "a": "Não. Você só precisa do link público do Reel. Nunca pedimos seu usuário ou senha do Instagram."
+      },
+      {
+        "q": "Posso baixar Reels privados?",
+        "a": "Não. Esta ferramenta funciona apenas com Reels públicos, já que conteúdo privado é intencionalmente restrito pelo Instagram."
+      },
+      {
+        "q": "Qual qualidade de vídeo eu recebo?",
+        "a": "Você recebe a resolução original enviada pelo criador, geralmente HD, sem recompressão ou marcas adicionadas."
+      },
+      {
+        "q": "É legal baixar Reels?",
+        "a": "Baixar para uso pessoal geralmente é aceitável, mas reenviar o conteúdo de outra pessoa sem permissão pode violar direitos autorais e os termos do Instagram. Sempre credite o criador original."
+      },
+      {
+        "q": "Funciona em iPhone e Android?",
+        "a": "Sim, funciona em qualquer navegador moderno de celular ou computador, sem precisar instalar um app."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "Esta ferramenta não é afiliada, endossada ou patrocinada pelo Instagram ou Meta. Use apenas para baixar conteúdo que você tem o direito de salvar."
+  }
+}
