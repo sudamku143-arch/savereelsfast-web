@@ -4,17 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 
 export type ReelFormat = {
-  label: string; // e.g. "720p"
+  quality: string; // e.g. "720p"
   url: string;
-  width: number | null;
-  height: number | null;
-  sizeBytes: number | null;
+  width?: number | null;
+  height?: number | null;
 };
 
 export type ReelResult = {
+  id: string;
   videoUrl: string;
   thumbnailUrl: string;
-  caption: string | null;
+  title: string | null;
   author: string | null;
   durationSeconds: number | null;
   formats?: ReelFormat[];
@@ -38,13 +38,6 @@ function formatDuration(totalSeconds: number): string {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-function formatSize(bytes: number): string {
-  const mb = bytes / (1024 * 1024);
-  return mb >= 1
-    ? `${mb.toFixed(1)} MB`
-    : `${Math.max(1, Math.round(bytes / 1024))} KB`;
-}
-
 export default function PreviewCard({
   result,
   dict,
@@ -58,22 +51,16 @@ export default function PreviewCard({
     result.formats && result.formats.length > 0
       ? result.formats
       : [
-          {
-            label: dict.original,
-            url: result.videoUrl,
-            width: null,
-            height: null,
-            sizeBytes: null,
-          },
+          { quality: dict.original, url: result.videoUrl },
         ];
 
   const [selected, setSelected] = useState(0);
   const current = options[Math.min(selected, options.length - 1)];
-  const filename = `savereelsfast-${result.author ?? "reel"}.mp4`;
+  const filename = `savereelsfast-${result.id}.mp4`;
   // Same-origin proxy: cross-origin CDN links ignore the `download` attribute.
   const downloadHref = `/api/download?url=${encodeURIComponent(
     current.url
-  )}&filename=${encodeURIComponent(filename)}`;
+  )}&id=${encodeURIComponent(result.id)}`;
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
 
@@ -86,7 +73,7 @@ export default function PreviewCard({
           {result.thumbnailUrl && (
             <Image
               src={result.thumbnailUrl}
-              alt={result.caption ?? dict.thumbnailAlt}
+              alt={result.title ?? dict.thumbnailAlt}
               fill
               sizes="112px"
               className="object-cover"
@@ -110,8 +97,8 @@ export default function PreviewCard({
               <span className="font-medium">@{result.author}</span>
             </p>
           )}
-          {result.caption && (
-            <p className="line-clamp-3 text-zinc-400">{result.caption}</p>
+          {result.title && (
+            <p className="line-clamp-3 text-zinc-400">{result.title}</p>
           )}
         </div>
       </div>
@@ -125,15 +112,9 @@ export default function PreviewCard({
             const active = i === selected;
             const resolution =
               opt.width && opt.height ? `${opt.width}×${opt.height}` : null;
-            const meta = [
-              resolution,
-              opt.sizeBytes != null ? formatSize(opt.sizeBytes) : null,
-            ]
-              .filter(Boolean)
-              .join(" · ");
             return (
               <label
-                key={`${opt.label}-${i}`}
+                key={`${opt.quality}-${i}`}
                 className={`cursor-pointer rounded-lg border px-3 py-2 text-left text-xs transition focus-within:ring-2 focus-within:ring-brand-500 ${
                   active
                     ? "border-brand-500 bg-brand-500/15 text-zinc-50"
@@ -147,8 +128,10 @@ export default function PreviewCard({
                   onChange={() => setSelected(i)}
                   className="sr-only"
                 />
-                <span className="block text-sm font-semibold">{opt.label}</span>
-                {meta && <span className="block text-zinc-500">{meta}</span>}
+                <span className="block text-sm font-semibold">{opt.quality}</span>
+                {resolution && (
+                  <span className="block text-zinc-500">{resolution}</span>
+                )}
               </label>
             );
           })}

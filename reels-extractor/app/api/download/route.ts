@@ -8,13 +8,9 @@ export const runtime = "edge";
 const HEADER_TIMEOUT_MS = 10000;
 const MAX_BYTES = 200 * 1024 * 1024;
 
-function safeFilename(raw: string | null): string {
-  const base = (raw ?? "")
-    .replace(/\.mp4$/i, "")
-    .replace(/[^A-Za-z0-9._-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
-  return `${base || "reel"}.mp4`;
+function safeFilename(rawId: string | null): string {
+  const id = (rawId ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+  return `savereelsfast-${id || "reel"}.mp4`;
 }
 
 function fail(message: string, status: number) {
@@ -22,7 +18,7 @@ function fail(message: string, status: number) {
 }
 
 /**
- * GET /api/download?url=<Instagram CDN video URL>&filename=<name>
+ * GET /api/download?url=<Instagram CDN video URL>&id=<reel shortcode>
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -37,7 +33,7 @@ export async function GET(request: NextRequest) {
     return fail("Invalid or unsupported video URL.", 400);
   }
 
-  const filename = safeFilename(searchParams.get("filename"));
+  const filename = safeFilename(searchParams.get("id"));
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), HEADER_TIMEOUT_MS);

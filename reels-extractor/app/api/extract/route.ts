@@ -14,27 +14,23 @@ export const maxDuration = 20;
 /**
  * Request contract:
  *   POST /api/extract
- *   body: { url: string }
+ *   body: { url: string }   // /reel/, /reels/, /p/ or /tv/ link
  *
  * Success response (200):
  *   {
  *     success: true,
- *     data: {
- *       videoUrl: string,        // direct MP4 URL (Instagram CDN)
- *       thumbnailUrl: string,    // "" when none could be found
- *       caption: string | null,
- *       author: string | null,   // Instagram handle without "@"
- *       durationSeconds: number | null,
- *       formats?: { label, url, width, height, sizeBytes }[]  // best first
- *     }
+ *     id: string,                 // shortcode, used for the download filename
+ *     videoUrl: string,           // highest-resolution MP4 on the Instagram CDN
+ *     thumbnailUrl: string,       // "" when none could be found
+ *     title: string | null,       // caption
+ *     author: string | null,      // handle without "@"
+ *     durationSeconds: number | null,
+ *     formats?: { quality, url, width, height }[]   // best first
  *   }
  *
- * Error response (4xx/5xx):
- *   { success: false, error: string }
- *
- * Status codes: 400 bad body, 422 not a Reel URL, 404 nothing extractable
- * (private/deleted/removed), 429/503 Instagram is throttling us, 502 upstream
- * failure or unexpected error.
+ * Error response: { success: false, error: string }
+ *   400 missing/invalid link, 404 private/deleted/unavailable,
+ *   429 Instagram is rate-limiting us, 500 upstream or unexpected failure.
  */
 
 type ExtractRequestBody = {
@@ -42,20 +38,20 @@ type ExtractRequestBody = {
 };
 
 export type ReelFormat = {
-  label: string; // e.g. "720p"
+  quality: string; // e.g. "720p"
   url: string;
   width: number | null;
   height: number | null;
-  sizeBytes: number | null;
 };
 
 export type ReelData = {
+  id: string;
   videoUrl: string;
   thumbnailUrl: string;
-  caption: string | null;
+  title: string | null;
   author: string | null;
   durationSeconds: number | null;
-  formats?: ReelFormat[]; // optional; UI falls back to videoUrl when absent
+  formats?: ReelFormat[]; // best first; UI falls back to videoUrl when absent
 };
 
 const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
@@ -88,7 +84,7 @@ export async function POST(request: NextRequest) {
 
   if (!url) {
     return NextResponse.json(
-      { success: false, error: "Missing required field: url." },
+      { success: false, error: "Please provide an Instagram Reel link." },
       { status: 400 }
     );
   }
@@ -96,7 +92,7 @@ export async function POST(request: NextRequest) {
   if (url.length > 300 || !REEL_URL_REGEX.test(url)) {
     return NextResponse.json(
       { success: false, error: "That doesn't look like a valid Instagram Reel URL." },
-      { status: 422 }
+      { status: 400 }
     );
   }
 
@@ -114,7 +110,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, ...data });
   } catch (err) {
     if (err instanceof ExtractionError) {
       return NextResponse.json(
@@ -125,7 +121,7 @@ export async function POST(request: NextRequest) {
     console.error("[/api/extract] unexpected failure:", err);
     return NextResponse.json(
       { success: false, error: "Something went wrong while fetching this Reel." },
-      { status: 502 }
+      { status: 500 }
     );
   }
 }
@@ -146,6 +142,7 @@ async function extractReelData(reelUrl: string): Promise<ReelData | null> {
 
   const strategies: [string, Strategy][] = [
     ["embed", extractFromEmbed],
+    ["graphql", extractFromGraphql],
     ["page-meta", extractFromPageMeta],
   ];
 
@@ -157,7 +154,7 @@ async function extractReelData(reelUrl: string): Promise<ReelData | null> {
       const data = await strategy(shortcode);
       if (data) return data;
     } catch (err) {
-      if (err instanceof HttpStatusError && [401, 403, 429].includes(err.status)) {
+      if (err instanceof HttpStatusError && [403, 429].includes(err.status)) {
         throttled = true;
       } else if (!(err instanceof HttpStatusError)) {
         networkFailures += 1;
@@ -175,7 +172,7 @@ async function extractReelData(reelUrl: string): Promise<ReelData | null> {
   if (networkFailures === strategies.length) {
     throw new ExtractionError(
       "Couldn't reach Instagram right now. Please try again shortly.",
-      502
+      500
     );
   }
   return null;
@@ -188,7 +185,10 @@ class HttpStatusError extends Error {
   }
 }
 
-async function fetchText(url: string): Promise<string> {
+async function fetchText(
+  url: string,
+  extraHeaders: Record<string, string> = {}
+): Promise<string> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
@@ -197,6 +197,7 @@ async function fetchText(url: string): Promise<string> {
         "User-Agent": BROWSER_UA,
         Accept: "text/html,application/xhtml+xml",
         "Accept-Language": "en-US,en;q=0.9",
+        ...extraHeaders,
       },
       redirect: "follow",
       cache: "no-store",
@@ -215,6 +216,64 @@ function toSafeMediaUrl(value: unknown): string | null {
   return isAllowedMediaUrl(cleaned) ? cleaned : null;
 }
 
+/** Builds a best-first list of MP4 formats from Instagram's `video_versions` array. */
+function buildFormats(versions: unknown): ReelFormat[] {
+  if (!Array.isArray(versions)) return [];
+  const byQuality = new Map<string, ReelFormat>();
+
+  for (const item of versions) {
+    if (!item || typeof item !== "object") continue;
+    const { url, width, height } = item as Record<string, unknown>;
+    const safeUrl = toSafeMediaUrl(url);
+    if (!safeUrl) continue;
+    const w = typeof width === "number" ? width : null;
+    const h = typeof height === "number" ? height : null;
+    const short = w && h ? Math.min(w, h) : null;
+    const quality = short ? `${short}p` : "HD";
+    const existing = byQuality.get(quality);
+    if (
+      !existing ||
+      (w ?? 0) * (h ?? 0) > (existing.width ?? 0) * (existing.height ?? 0)
+    ) {
+      byQuality.set(quality, { quality, url: safeUrl, width: w, height: h });
+    }
+  }
+
+  return [...byQuality.values()].sort(
+    (a, b) => (b.width ?? 0) * (b.height ?? 0) - (a.width ?? 0) * (a.height ?? 0)
+  );
+}
+
+/** Pulls video, poster, caption, author and duration out of an Instagram media JSON tree. */
+function parseMediaJson(tree: unknown, shortcode: string): ReelData | null {
+  const formats = buildFormats(findFirst(tree, "video_versions"));
+  const videoUrl =
+    formats[0]?.url ?? toSafeMediaUrl(findFirst(tree, "video_url"));
+  if (!videoUrl) return null;
+
+  const thumbnail =
+    toSafeMediaUrl(findFirst(tree, "display_url")) ??
+    toSafeMediaUrl(findFirst(tree, "thumbnail_src")) ??
+    toSafeMediaUrl(findFirst(findFirst(tree, "image_versions2"), "url"));
+
+  const captionNode = findFirst(tree, "edge_media_to_caption");
+  const captionText =
+    findFirst(captionNode, "text") ??
+    findFirst(findFirst(tree, "caption"), "text");
+  const username = findFirst(findFirst(tree, "owner"), "username");
+  const seconds = findFirst(tree, "video_duration");
+
+  return {
+    id: shortcode,
+    videoUrl,
+    thumbnailUrl: thumbnail ?? "",
+    title: truncate(typeof captionText === "string" ? captionText : null),
+    author: typeof username === "string" ? username : null,
+    durationSeconds: typeof seconds === "number" ? seconds : null,
+    ...(formats.length > 0 ? { formats } : {}),
+  };
+}
+
 function truncate(text: string | null, max = 300): string | null {
   if (!text) return null;
   const trimmed = text.trim();
@@ -231,60 +290,58 @@ async function extractFromEmbed(shortcode: string): Promise<ReelData | null> {
     `https://www.instagram.com/p/${shortcode}/embed/captioned/`
   );
 
-  let videoUrl: string | null = null;
-  let thumbnailUrl: string | null = null;
-  let caption: string | null = null;
-  let author: string | null = null;
-  let duration: number | null = null;
-
   // Preferred path: parse the embedded JSON document.
   const contextMatch = /"contextJSON"\s*:\s*("(?:[^"\\]|\\.)*")/.exec(html);
   if (contextMatch) {
     try {
       const inner = JSON.parse(JSON.parse(contextMatch[1]) as string);
-      videoUrl = toSafeMediaUrl(findFirst(inner, "video_url"));
-      thumbnailUrl =
-        toSafeMediaUrl(findFirst(inner, "display_url")) ??
-        toSafeMediaUrl(findFirst(inner, "thumbnail_src"));
-      const captionNode = findFirst(inner, "edge_media_to_caption");
-      const text = findFirst(captionNode, "text");
-      caption = typeof text === "string" ? text : null;
-      const username = findFirst(findFirst(inner, "owner"), "username");
-      author = typeof username === "string" ? username : null;
-      const seconds = findFirst(inner, "video_duration");
-      duration = typeof seconds === "number" ? seconds : null;
+      const parsed = parseMediaJson(inner, shortcode);
+      if (parsed) return parsed;
     } catch {
       // Fall through to the regex path below.
     }
   }
 
   // Fallback path: scrape the raw markup for the same keys.
-  if (!videoUrl) {
-    const raw = /video_url\\*"\s*:\s*\\*"(https?:[^"]+?)\\*"/.exec(html)?.[1];
-    videoUrl = toSafeMediaUrl(raw);
-  }
+  const rawVideo = /video_url\\*"\s*:\s*\\*"(https?:[^"]+?)\\*"/.exec(html)?.[1];
+  const videoUrl = toSafeMediaUrl(rawVideo);
   if (!videoUrl) return null;
 
-  if (!thumbnailUrl) {
-    const raw = /display_url\\*"\s*:\s*\\*"(https?:[^"]+?)\\*"/.exec(html)?.[1];
-    thumbnailUrl = toSafeMediaUrl(raw);
-  }
-  if (!caption) {
-    const raw = /class="Caption"[^>]*>[\s\S]*?<div class="CaptionContent"[^>]*>([\s\S]*?)<\/div>/.exec(
-      html
-    )?.[1];
-    if (raw) {
-      caption = decodeHtmlEntities(raw.replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
-    }
-  }
+  const rawThumb = /display_url\\*"\s*:\s*\\*"(https?:[^"]+?)\\*"/.exec(html)?.[1];
+  const rawCaption = /class="CaptionContent"[^>]*>([\s\S]*?)<\/div>/.exec(html)?.[1];
+  const caption = rawCaption
+    ? decodeHtmlEntities(rawCaption.replace(/<[^>]+>/g, " ").replace(/\s+/g, " "))
+    : null;
 
   return {
+    id: shortcode,
     videoUrl,
-    thumbnailUrl: thumbnailUrl ?? "",
-    caption: truncate(caption),
-    author,
-    durationSeconds: duration,
+    thumbnailUrl: toSafeMediaUrl(rawThumb) ?? "",
+    title: truncate(caption),
+    author: null,
+    durationSeconds: null,
   };
+}
+
+/**
+ * Strategy 2 (best effort): Instagram's public web GraphQL query. The
+ * `doc_id` is a persisted-query hash that Instagram rotates, so this is
+ * expected to fail occasionally; the other strategies cover for it.
+ */
+const GRAPHQL_DOC_ID = "8845758582119845";
+
+async function extractFromGraphql(shortcode: string): Promise<ReelData | null> {
+  const variables = encodeURIComponent(JSON.stringify({ shortcode }));
+  const body = await fetchText(
+    `https://www.instagram.com/graphql/query/?doc_id=${GRAPHQL_DOC_ID}&variables=${variables}`,
+    {
+      Accept: "application/json",
+      "X-IG-App-ID": "936619743392459",
+      "X-Requested-With": "XMLHttpRequest",
+    }
+  );
+  const json: unknown = JSON.parse(body);
+  return parseMediaJson(findFirst(json, "xdt_shortcode_media") ?? json, shortcode);
 }
 
 function readMeta(html: string, property: string): string | null {
@@ -298,7 +355,7 @@ function readMeta(html: string, property: string): string | null {
   return value ? decodeHtmlEntities(value) : null;
 }
 
-/** Strategy 2: Open Graph tags on the public Reel page (og:video / og:image). */
+/** Strategy 3: Open Graph tags on the public Reel page (og:video / og:image). */
 async function extractFromPageMeta(shortcode: string): Promise<ReelData | null> {
   const html = await fetchText(`https://www.instagram.com/reel/${shortcode}/`);
 
@@ -315,9 +372,10 @@ async function extractFromPageMeta(shortcode: string): Promise<ReelData | null> 
   const captionMatch = title ? /on Instagram:\s*["“]([\s\S]*?)["”]?$/i.exec(title) : null;
 
   return {
+    id: shortcode,
     videoUrl,
     thumbnailUrl: toSafeMediaUrl(readMeta(html, "og:image")) ?? "",
-    caption: truncate(captionMatch?.[1] ?? description),
+    title: truncate(captionMatch?.[1] ?? description),
     author: handleMatch?.[1] ?? authorMatch?.[1]?.trim() ?? null,
     durationSeconds: null,
   };

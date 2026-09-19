@@ -58,7 +58,7 @@ export default function ExtractorClient({
         return;
       }
 
-      setResult(data.data as ReelResult);
+      setResult(data as ReelResult);
       setStatus("done");
     } catch {
       setError(heroDict.errorGeneric);
