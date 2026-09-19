@@ -66,6 +66,256 @@
       "placeholder": "Paste Snapchat Spotlight link here…"
     }
   },
+  "landing": {
+    "common": {
+      "breadcrumbHome": "Home",
+      "downloaders": "Downloaders",
+      "howToHeading": "How to download {noun}",
+      "steps": [
+        "Copy the link. {copyHint}",
+        "Paste it in the box above. The {platform} tab is selected automatically and the download starts as soon as you paste.",
+        "Tap “Download Video” to save the MP4 to your device."
+      ],
+      "featuresHeading": "Why use SaveReelsFast for {platform}",
+      "features": [
+        {
+          "title": "Free, no account",
+          "text": "No signup, no login and nothing to install. It runs in your browser."
+        },
+        {
+          "title": "Works on any device",
+          "text": "iPhone, Android, Windows, Mac or Linux: if you have a browser, you're set."
+        },
+        {
+          "title": "Quality kept as-is",
+          "text": "You get the file exactly as {platform} serves it, with no re-compression and no extra branding added by us."
+        },
+        {
+          "title": "Nine platforms in one place",
+          "text": "The same tool handles Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit and Snapchat."
+        }
+      ],
+      "faqHeading": "{platform} downloader FAQ",
+      "sharedFaq": [
+        {
+          "q": "Is this {platform} downloader free?",
+          "a": "Yes. SaveReelsFast is free to use, with no subscription, no account and no limit tied to a login."
+        },
+        {
+          "q": "Do I need to log in to {platform}?",
+          "a": "No. You only need the link to a public video. We never ask for your {platform} username or password."
+        },
+        {
+          "q": "Is it legal to download {platform} videos?",
+          "a": "Saving a video for personal, offline viewing is generally fine, but re-uploading someone else's content without permission can break copyright law and {platform}'s terms. Only download content you have the right to save, and credit the creator."
+        }
+      ],
+      "otherHeading": "Downloaders for every platform",
+      "otherLead": "Pick your platform for a tailored guide.",
+      "here": "You are here",
+      "structuredDescription": "Free online downloader for {noun}. Paste a link and save the video as an MP4, with no login or app required."
+    },
+    "platforms": {
+      "instagram": {
+        "noun": "Instagram Reels and videos",
+        "metaTitle": "Instagram Reels Downloader — Save Reels & Videos Free",
+        "metaDescription": "Free Instagram Reels downloader. Paste a Reel, video or post link and save it as an MP4 to your phone or computer. No login, no app, no signup.",
+        "h1": "Free Instagram Reels Downloader",
+        "lead": "Paste the link of any public Instagram Reel, video post or IGTV video and save it as an MP4 in seconds. It works on iPhone, Android and desktop, with no login and nothing to install.",
+        "copyHint": "In the Instagram app, open the Reel, tap Share, then Copy link.",
+        "faq": [
+          {
+            "q": "Can I download Instagram Reels from a private account?",
+            "a": "No. Only public posts can be downloaded. Private accounts restrict their content to approved followers, and this tool never asks for your Instagram login."
+          },
+          {
+            "q": "Which Instagram links work?",
+            "a": "Reel links (instagram.com/reel/…), video posts (/p/…), IGTV (/tv/…) and Instagram share links. Posts that only contain photos have no video to save."
+          },
+          {
+            "q": "Why is my downloaded Instagram video silent?",
+            "a": "Some clips are posted without sound, and Instagram sometimes delivers video and audio as separate files. When only a video-only file is available we tell you, and if a separate audio track is offered you can save it with the audio button."
+          }
+        ]
+      },
+      "youtube": {
+        "noun": "YouTube Shorts and videos",
+        "metaTitle": "YouTube Shorts & Video Downloader — Free MP4 Download",
+        "metaDescription": "Download YouTube Shorts and videos as MP4 for free. Paste a youtube.com or youtu.be link and save it with sound. No login, no software.",
+        "h1": "Download YouTube Shorts in Seconds",
+        "lead": "Paste a YouTube Shorts or video link (youtube.com or youtu.be) and save it as an MP4 with sound. It's free, needs no account and works in any browser.",
+        "copyHint": "In the YouTube app, tap Share, then Copy link. On a computer, copy the address from your browser.",
+        "faq": [
+          {
+            "q": "What quality do I get when downloading from YouTube?",
+            "a": "You get a single MP4 file with sound. YouTube normally offers those ready-made files at up to 360p; higher resolutions are delivered as separate video and audio streams that can't be combined here, so 360p is the practical ceiling for now."
+          },
+          {
+            "q": "Can I download YouTube Shorts?",
+            "a": "Yes. Paste the Shorts link (youtube.com/shorts/…) or the share link and it downloads like any other video."
+          },
+          {
+            "q": "Can I download age-restricted or private YouTube videos?",
+            "a": "No. Those need a signed-in YouTube account, which this tool never uses. Public videos work; private, members-only and age-restricted ones don't."
+          }
+        ]
+      },
+      "facebook": {
+        "noun": "Facebook videos and Reels",
+        "metaTitle": "Facebook Video Downloader — Save Videos & Reels Free",
+        "metaDescription": "Free Facebook video downloader. Paste a Facebook video, Reel or fb.watch link and save it as an MP4. No login, no app to install.",
+        "h1": "Free Facebook Video Downloader",
+        "lead": "Paste a public Facebook video, Reel or fb.watch link and save it as an MP4. It works on phones and computers, and you don't need to sign in to anything.",
+        "copyHint": "Tap Share under the video, then Copy link.",
+        "faq": [
+          {
+            "q": "Which Facebook links are supported?",
+            "a": "Video links (facebook.com/watch and /videos/), Reels (/reel/), Facebook share links and fb.watch short links. Photos and text posts have no video to download."
+          },
+          {
+            "q": "Can I download videos from private groups or friends-only posts?",
+            "a": "No. Only public videos can be fetched. Content limited to friends or group members requires a Facebook login, which this tool doesn't use."
+          },
+          {
+            "q": "Why did my Facebook link fail?",
+            "a": "The video is probably not public, has been deleted, or is restricted in some regions. Check that it opens in a private browser window without logging in; if it does, try again in a minute."
+          }
+        ]
+      },
+      "threads": {
+        "noun": "Threads videos",
+        "metaTitle": "Threads Video Downloader — Save Threads Videos (MP4)",
+        "metaDescription": "Download videos from Threads posts as MP4 for free. Paste a threads.net or threads.com link. No login, no app needed.",
+        "h1": "Download Threads Videos in Seconds",
+        "lead": "Paste the link of a public Threads post with a video and save it as an MP4. Both threads.net and threads.com links work, and there's nothing to install.",
+        "copyHint": "Tap the Share icon on the post, then Copy link.",
+        "faq": [
+          {
+            "q": "Do threads.com and threads.net links both work?",
+            "a": "Yes. Threads uses both domains, and links from either one are accepted, including the share links the app creates."
+          },
+          {
+            "q": "Can I download photos from Threads?",
+            "a": "This tool saves videos. A post that only contains photos or text has no video, so there is nothing to download."
+          },
+          {
+            "q": "Why doesn't my Threads link work?",
+            "a": "Threads support is newer and depends on what Threads publicly shows for a post. Posts from private profiles, or without a video, can't be downloaded; if a public video fails, try again later."
+          }
+        ]
+      },
+      "x": {
+        "noun": "Twitter (X) videos",
+        "metaTitle": "Twitter (X) Video Downloader — Save Tweet Videos as MP4",
+        "metaDescription": "Download Twitter and X videos as MP4 for free. Paste a post link from x.com or twitter.com. No login, no app.",
+        "h1": "Download Twitter (X) Videos in Seconds",
+        "lead": "Paste the link of a public post on X (formerly Twitter) and save its video as an MP4. Both x.com and twitter.com links work, and no login is needed.",
+        "copyHint": "Tap the Share icon under the post, then Copy link.",
+        "faq": [
+          {
+            "q": "Do x.com and twitter.com links both work?",
+            "a": "Yes. Twitter is now X, and the old twitter.com links still point to the same posts, so both are accepted."
+          },
+          {
+            "q": "Can I download GIFs from Twitter?",
+            "a": "Twitter stores GIFs as short MP4 videos, so GIF posts normally download as an MP4 file."
+          },
+          {
+            "q": "What if a post has several videos?",
+            "a": "Each video is listed separately with its own Download button, and there's a Download all option."
+          }
+        ]
+      },
+      "pinterest": {
+        "noun": "Pinterest videos",
+        "metaTitle": "Pinterest Video Downloader — Save Pins as MP4 Free",
+        "metaDescription": "Free Pinterest video downloader. Paste a pin or pin.it link and save the video as an MP4. No login, no app.",
+        "h1": "Download Pinterest Videos in Seconds",
+        "lead": "Paste the link of a Pinterest video pin and save it as an MP4 in seconds. Short pin.it links work too, and you never need to sign in.",
+        "copyHint": "Open the pin, tap Share, then Copy link.",
+        "faq": [
+          {
+            "q": "Does it work with pin.it short links?",
+            "a": "Yes. We follow the short link to the real pin automatically, so you can paste whatever the app gives you."
+          },
+          {
+            "q": "Can I download image pins?",
+            "a": "No. This tool is for video pins. Image pins contain no video."
+          },
+          {
+            "q": "Do country versions of Pinterest work?",
+            "a": "Yes. Links from pinterest.com and regional sites such as pinterest.co.uk or pinterest.fr are accepted."
+          }
+        ]
+      },
+      "tiktok": {
+        "noun": "TikTok videos",
+        "metaTitle": "TikTok Video Downloader — Save TikTok Videos as MP4",
+        "metaDescription": "Free TikTok video downloader. Paste a TikTok or vm.tiktok.com link and save the video as an MP4. No login, no app.",
+        "h1": "Free TikTok Video Downloader",
+        "lead": "Paste a public TikTok link and save the video as an MP4 in seconds. Short links from the TikTok app work too, and you don't need an account.",
+        "copyHint": "In TikTok, tap Share, then Copy link.",
+        "faq": [
+          {
+            "q": "Which TikTok links work?",
+            "a": "Full links (tiktok.com/@user/video/…) and the short links the app creates (vm.tiktok.com and vt.tiktok.com), which we follow automatically."
+          },
+          {
+            "q": "Can I download private or friends-only TikToks?",
+            "a": "No. Only public videos can be saved. Private videos require a TikTok login that this tool never asks for."
+          },
+          {
+            "q": "Why does a TikTok link sometimes fail?",
+            "a": "TikTok limits automated requests, so a link can occasionally fail even though the video is public. Wait a minute and paste it again."
+          }
+        ]
+      },
+      "reddit": {
+        "noun": "Reddit videos",
+        "metaTitle": "Reddit Video Downloader — Save v.redd.it Videos (MP4 + Audio)",
+        "metaDescription": "Download Reddit videos for free. Paste a Reddit post or v.redd.it link and save the MP4 and, when available, the audio track separately.",
+        "h1": "Free Reddit Video Downloader",
+        "lead": "Paste a link to a Reddit video post or a v.redd.it link and save the video as an MP4. No account or app is needed, and if Reddit provides a separate audio track you can save that too.",
+        "copyHint": "Tap Share on the post, then Copy link.",
+        "faq": [
+          {
+            "q": "Why does my Reddit video have no sound?",
+            "a": "Reddit stores a video and its audio as two separate files, and this tool can't merge them. The MP4 you download is video-only; when Reddit offers the audio track you'll see a separate Download Audio button so you can save it too."
+          },
+          {
+            "q": "Do v.redd.it and share links work?",
+            "a": "Yes. Post links (reddit.com/r/…/comments/…), share links (…/s/…) and v.redd.it links are all accepted."
+          },
+          {
+            "q": "Can I download NSFW or private-subreddit videos?",
+            "a": "No. Those require a logged-in Reddit account, which this tool doesn't use. Public posts work."
+          }
+        ]
+      },
+      "snapchat": {
+        "noun": "Snapchat Spotlight videos",
+        "metaTitle": "Snapchat Spotlight Downloader — Save Spotlight Videos",
+        "metaDescription": "Free Snapchat Spotlight downloader. Paste a public Spotlight link and save the video as an MP4. No login, no app.",
+        "h1": "Download Snapchat Spotlight Videos",
+        "lead": "Paste the link of a public Snapchat Spotlight video and save it as an MP4. Short links from the Snapchat app work too, and you don't need an account.",
+        "copyHint": "Open the Spotlight video, tap Share, then Copy link.",
+        "faq": [
+          {
+            "q": "Which Snapchat links are supported?",
+            "a": "Public Spotlight links (snapchat.com/spotlight/…) and the short links the app creates (t.snapchat.com). Stories and private snaps are not supported."
+          },
+          {
+            "q": "Can I download someone's Snapchat Story?",
+            "a": "No. Stories aren't public Spotlight videos, and they're restricted to the people they're shared with. This tool works only with public Spotlight posts."
+          },
+          {
+            "q": "Can I download private snaps?",
+            "a": "No. Private snaps are only visible to their recipients and can't be reached through a public link."
+          }
+        ]
+      }
+    }
+  },
   "preview": {
     "title": "Your video is ready",
     "author": "By",
@@ -209,14 +459,14 @@
         {
           "heading": "Information we process",
           "body": [
-            "Links you submit: when you paste a video link, it is sent to our server, and to a backend service that runs on our behalf, so we can look up the public video. We do not keep the link or the video once the request is finished.",
+            "Links you submit: when you paste a video link, it is sent to our server, and to a backend service that runs on our behalf, so we can look up the public video. To make repeat requests fast, the result of that lookup (the link, the title and temporary download addresses) is kept in memory for up to 90 minutes and then discarded. We never store the videos themselves.",
             "Technical data: like most websites, our hosting provider may automatically record your IP address, browser type, and the time of each request for security and reliability purposes."
           ]
         },
         {
           "heading": "Cookies and local storage",
           "body": [
-            "We use one functional cookie, NEXT_LOCALE, to remember the language you choose. It contains no personal information.",
+            "We use one functional cookie, NEXT_LOCALE, to remember the language you choose. It contains no personal information. Your browser's local and session storage also holds a few convenience settings (your recent results and whether you dismissed the install banner); that data stays on your device.",
             "If we display advertising in the future, our advertising partners may set their own cookies. Where the law requires it, we will ask for your consent before non-essential cookies are used."
           ]
         },

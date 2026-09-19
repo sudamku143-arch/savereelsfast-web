@@ -1,0 +1,179 @@
+#!/usr/bin/env node
+/**
+ * Fetches every landing page from a RUNNING server and checks what a crawler would see:
+ * status, <title>, description, canonical, hreflang, Open Graph image, a single <h1>,
+ * structured data, internal links, plus sitemap.xml and robots.txt.
+ *
+ *   npm run build && npm start &        # in one terminal
+ *   BASE_URL=http://127.0.0.1:3000 npm run verify:seo
+ *
+ * Exits non-zero if anything is wrong.
+ */
+import { readFileSync } from "node:fs";
+
+const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
+const SITE = "https://savereelsfast.com"; // canonical URLs always point at production
+const LOCALES = ["en", "es", "pt"];
+const SLUGS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
+
+const messages = Object.fromEntries(
+  LOCALES.map((l) => [l, JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"))])
+);
+
+const path = (locale, p) => (locale === "en" ? p : `/${locale}${p}`);
+const home = (locale) => (locale === "en" ? "/" : `/${locale}`);
+const decode = (s) =>
+  s.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+let checks = 0;
+const failures = [];
+function check(ok, label) {
+  checks += 1;
+  if (!ok) failures.push(label);
+}
+
+async function get(url, init) {
+  return fetch(`${BASE}${url}`, { redirect: "manual", ...init });
+}
+
+function meta(html, attr, name) {
+  const re = new RegExp(`<meta[^>]+${attr}="${name}"[^>]*content="([^"]*)"`, "i");
+  const alt = new RegExp(`<meta[^>]+content="([^"]*)"[^>]*${attr}="${name}"`, "i");
+  const m = html.match(re) ?? html.match(alt);
+  return m ? decode(m[1]) : null;
+}
+
+function jsonLd(html) {
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  return blocks.map((b) => JSON.parse(b));
+}
+
+async function verifyLanding(locale, id, slug) {
+  const url = path(locale, `/downloader/${slug}`);
+  const tag = `[${locale}/${id}]`;
+  const res = await get(url);
+  check(res.status === 200, `${tag} ${url} returned ${res.status}`);
+  if (res.status !== 200) return;
+  const html = await res.text();
+  const content = messages[locale].landing.platforms[id];
+
+  const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
+  check(title && decode(title) === content.metaTitle, `${tag} <title> is "${title}"`);
+  check(meta(html, "name", "description") === content.metaDescription, `${tag} meta description differs`);
+  check(new RegExp(`<html[^>]+lang="${locale}"`).test(html), `${tag} <html lang> is not ${locale}`);
+
+  const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
+  check(canonical === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} canonical is ${canonical}`);
+  for (const l of LOCALES) {
+    const expected = `${SITE}${path(l, `/downloader/${slug}`)}`;
+    check(html.includes(`hrefLang="${l}" href="${expected}"`) || html.includes(`hreflang="${l}" href="${expected}"`), `${tag} missing hreflang ${l}`);
+  }
+  check(meta(html, "property", "og:title") === content.metaTitle, `${tag} og:title differs`);
+  check(meta(html, "property", "og:image") === `${SITE}/api/og`, `${tag} og:image missing`);
+  check(meta(html, "name", "twitter:card") === "summary_large_image", `${tag} twitter:card missing`);
+
+  const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)].map((m) => decode(m[1].replace(/<[^>]+>/g, "")));
+  check(h1s.length === 1 && h1s[0] === content.h1, `${tag} h1s: ${JSON.stringify(h1s)}`);
+
+  let data = [];
+  try {
+    data = jsonLd(html);
+  } catch (e) {
+    check(false, `${tag} JSON-LD does not parse: ${e.message}`);
+  }
+  const graph = data.flatMap((d) => d["@graph"] ?? [d]);
+  const type = (t) => graph.find((n) => n["@type"] === t);
+  const app = type("SoftwareApplication");
+  const faq = type("FAQPage");
+  const crumbs = type("BreadcrumbList");
+  check(!!app && app.applicationCategory === "MultimediaApplication" && app.offers?.price === "0", `${tag} SoftwareApplication missing/invalid`);
+  check(!app || !("aggregateRating" in app), `${tag} must not invent an aggregateRating`);
+  check(faq?.mainEntity?.length === 6, `${tag} FAQPage has ${faq?.mainEntity?.length} questions (expected 6)`);
+  check(crumbs?.itemListElement?.length === 2, `${tag} BreadcrumbList incomplete`);
+  check(app?.url === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} schema url mismatch`);
+  // Every FAQ in the markup must also be visible on the page (Google requires it).
+  const visible = decode(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
+  check((faq?.mainEntity ?? []).every((q) => visible.includes(q.name)), `${tag} an FAQ question is in the schema but not on the page`);
+
+  for (const other of Object.values(SLUGS)) {
+    if (other === slug) continue;
+    check(html.includes(`href="${path(locale, `/downloader/${other}`)}"`), `${tag} no internal link to ${other}`);
+  }
+}
+
+async function main() {
+  console.log(`Verifying ${BASE}\n`);
+
+  for (const locale of LOCALES) {
+    for (const [id, slug] of Object.entries(SLUGS)) await verifyLanding(locale, id, slug);
+  }
+
+  // Home pages link to every landing page.
+  for (const locale of LOCALES) {
+    const html = await (await get(home(locale))).text();
+    for (const slug of Object.values(SLUGS)) {
+      check(html.includes(`href="${path(locale, `/downloader/${slug}`)}"`), `[${locale}] home page has no link to ${slug}`);
+    }
+  }
+
+  // Routing edge cases.
+  const legacy = await get("/downloader/x");
+  check([301, 308].includes(legacy.status) && legacy.headers.get("location")?.endsWith("/downloader/twitter"), `/downloader/x should redirect to /twitter (got ${legacy.status} ${legacy.headers.get("location")})`);
+  const legacyEs = await get("/es/downloader/x");
+  check([301, 308].includes(legacyEs.status) && legacyEs.headers.get("location")?.endsWith("/es/downloader/twitter"), `/es/downloader/x redirect (got ${legacyEs.status} ${legacyEs.headers.get("location")})`);
+  for (const bad of ["/downloader/vimeo", "/es/downloader/xyz", "/downloader"]) {
+    const res = await get(bad);
+    check(res.status === 404, `${bad} should be 404 (got ${res.status})`);
+  }
+  const explicitEn = await get("/en/downloader/youtube");
+  check(explicitEn.status === 308 && explicitEn.headers.get("location")?.endsWith("/downloader/youtube"), `/en/... should redirect to the unprefixed URL (got ${explicitEn.status})`);
+
+  // sitemap.xml
+  const sitemapRes = await get("/sitemap.xml");
+  check(sitemapRes.status === 200 && /xml/.test(sitemapRes.headers.get("content-type") ?? ""), "sitemap.xml not served as XML");
+  const xml = await sitemapRes.text();
+  const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
+  const locs = entries.map((e) => e.match(/<loc>([^<]*)<\/loc>/)?.[1]);
+  check(entries.length === 13 * LOCALES.length, `sitemap has ${entries.length} URLs (expected ${13 * LOCALES.length})`);
+  check(new Set(locs).size === locs.length, "sitemap has duplicate URLs");
+  for (const locale of LOCALES) {
+    for (const slug of Object.values(SLUGS)) {
+      const loc = `${SITE}${path(locale, `/downloader/${slug}`)}`;
+      const entry = entries.find((e) => e.includes(`<loc>${loc}</loc>`));
+      check(!!entry, `sitemap is missing ${loc}`);
+      if (entry) {
+        check(/<changefreq>daily<\/changefreq>/.test(entry), `${loc} changefreq is not daily`);
+        check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(entry), `${loc} lastmod missing`);
+        check(/hreflang="es"/.test(entry) && /hreflang="pt"/.test(entry) && /hreflang="en"/.test(entry), `${loc} lacks hreflang alternates`);
+      }
+    }
+    check(locs.includes(`${SITE}${home(locale)}`), `sitemap is missing the ${locale} home page`);
+  }
+  check(locs.every((l) => l?.startsWith(SITE)), "sitemap contains non-production URLs");
+
+  // Every sitemap URL must actually exist on this server.
+  for (const loc of locs) {
+    const res = await get(loc.replace(SITE, ""));
+    check(res.status === 200, `sitemap URL ${loc} returned ${res.status}`);
+  }
+
+  // robots.txt
+  const robots = await (await get("/robots.txt")).text();
+  check(/Sitemap: https:\/\/savereelsfast\.com\/sitemap\.xml/.test(robots), "robots.txt does not point at the sitemap");
+  check(/Disallow: \/api\//.test(robots), "robots.txt should block /api/");
+  check(/Allow: \/api\/og/.test(robots), "robots.txt should allow the share image /api/og");
+  check(!/Disallow: \/\s*$/m.test(robots), "robots.txt must not block the whole site");
+
+  console.log(`${checks - failures.length}/${checks} checks passed`);
+  if (failures.length) {
+    console.log(`\n${failures.length} problem(s):`);
+    for (const f of failures) console.log(`  ✗ ${f}`);
+    process.exit(1);
+  }
+  console.log("All SEO checks passed.");
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

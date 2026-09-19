@@ -7,6 +7,13 @@ const nextConfig = {
       { protocol: "https", hostname: "**.fbcdn.net" },
     ],
   },
+  async redirects() {
+    // "twitter" is the slug people search for; keep the old id-based URL working.
+    return [
+      { source: "/downloader/x", destination: "/downloader/twitter", permanent: true },
+      { source: "/:locale(es|pt)/downloader/x", destination: "/:locale/downloader/twitter", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

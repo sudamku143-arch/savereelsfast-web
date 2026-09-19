@@ -1,10 +1,12 @@
 import { isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
+import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { getDictionary } from "@/lib/get-dictionary";
 import ExtractorClient from "./components/ExtractorClient";
 import SeoContent from "./components/SeoContent";
 import FaqAccordion from "./components/FaqAccordion";
 import AdSlot from "./components/AdSlot";
 import InstallBanner from "./components/InstallBanner";
+import PlatformLinks from "./components/PlatformLinks";
 
 export default async function LocalePage({
   params,
@@ -13,6 +15,10 @@ export default async function LocalePage({
 }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : defaultLocale;
   const dict = await getDictionary(locale);
+
+  const names = Object.fromEntries(
+    PLATFORM_IDS.map((id) => [id, dict.platforms[id].name])
+  ) as Record<PlatformId, string>;
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -43,6 +49,13 @@ export default async function LocalePage({
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
 
       <AdSlot label={dict.ad.label} size="rectangle" />
+
+      <PlatformLinks
+        locale={locale}
+        names={names}
+        heading={dict.landing.common.otherHeading}
+        lead={dict.landing.common.otherLead}
+      />
 
       <FaqAccordion heading={dict.faq.heading} items={dict.faq.items} />
 

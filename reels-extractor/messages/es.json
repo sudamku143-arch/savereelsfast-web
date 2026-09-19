@@ -66,6 +66,256 @@
       "placeholder": "Pega aquí el enlace de Snapchat Spotlight…"
     }
   },
+  "landing": {
+    "common": {
+      "breadcrumbHome": "Inicio",
+      "downloaders": "Descargadores",
+      "howToHeading": "Cómo descargar {noun}",
+      "steps": [
+        "Copia el enlace. {copyHint}",
+        "Pégalo en el cuadro de arriba. La pestaña de {platform} se selecciona sola y la descarga empieza en cuanto pegas.",
+        "Toca «Descargar video» para guardar el MP4 en tu dispositivo."
+      ],
+      "featuresHeading": "Por qué usar SaveReelsFast para {platform}",
+      "features": [
+        {
+          "title": "Gratis y sin cuenta",
+          "text": "Sin registro, sin iniciar sesión y sin instalar nada. Funciona en tu navegador."
+        },
+        {
+          "title": "Funciona en cualquier dispositivo",
+          "text": "iPhone, Android, Windows, Mac o Linux: si tienes un navegador, ya puedes usarlo."
+        },
+        {
+          "title": "Calidad intacta",
+          "text": "Recibes el archivo tal como lo ofrece {platform}, sin recompresión y sin marcas añadidas por nosotros."
+        },
+        {
+          "title": "Nueve plataformas en un solo lugar",
+          "text": "La misma herramienta funciona con Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit y Snapchat."
+        }
+      ],
+      "faqHeading": "Preguntas frecuentes sobre el descargador de {platform}",
+      "sharedFaq": [
+        {
+          "q": "¿Es gratis este descargador de {platform}?",
+          "a": "Sí. SaveReelsFast es gratuito: sin suscripción, sin cuenta y sin límites ligados a un inicio de sesión."
+        },
+        {
+          "q": "¿Necesito iniciar sesión en {platform}?",
+          "a": "No. Solo necesitas el enlace de un video público. Nunca te pedimos tu usuario ni tu contraseña de {platform}."
+        },
+        {
+          "q": "¿Es legal descargar videos de {platform}?",
+          "a": "Guardar un video para verlo sin conexión de forma personal suele estar bien, pero volver a publicar contenido ajeno sin permiso puede infringir los derechos de autor y las condiciones de {platform}. Descarga solo lo que tengas derecho a guardar y menciona al creador."
+        }
+      ],
+      "otherHeading": "Descargadores para cada plataforma",
+      "otherLead": "Elige tu plataforma para ver una guía a medida.",
+      "here": "Estás aquí",
+      "structuredDescription": "Descargador online gratuito de {noun}. Pega un enlace y guarda el video como MP4, sin iniciar sesión ni instalar apps."
+    },
+    "platforms": {
+      "instagram": {
+        "noun": "Reels y videos de Instagram",
+        "metaTitle": "Descargar Reels de Instagram — Guarda Reels y Videos Gratis",
+        "metaDescription": "Descargador gratuito de Reels de Instagram. Pega el enlace de un Reel, video o publicación y guárdalo como MP4 en tu móvil o computadora. Sin iniciar sesión ni instalar apps.",
+        "h1": "Descargador de Reels de Instagram Gratis",
+        "lead": "Pega el enlace de cualquier Reel, video o IGTV público de Instagram y guárdalo como MP4 en segundos. Funciona en iPhone, Android y computadora, sin iniciar sesión y sin instalar nada.",
+        "copyHint": "En la app de Instagram, abre el Reel, toca Compartir y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Puedo descargar Reels de una cuenta privada de Instagram?",
+            "a": "No. Solo se pueden descargar publicaciones públicas. Las cuentas privadas limitan su contenido a seguidores aprobados, y esta herramienta nunca te pide tu inicio de sesión de Instagram."
+          },
+          {
+            "q": "¿Qué enlaces de Instagram funcionan?",
+            "a": "Enlaces de Reels (instagram.com/reel/…), publicaciones con video (/p/…), IGTV (/tv/…) y enlaces para compartir de Instagram. Las publicaciones que solo tienen fotos no tienen video que guardar."
+          },
+          {
+            "q": "¿Por qué el video de Instagram que descargué no tiene sonido?",
+            "a": "Algunos clips se publican sin sonido, y a veces Instagram entrega el video y el audio como archivos separados. Cuando solo hay un archivo de video sin audio te lo avisamos, y si se ofrece una pista de audio aparte puedes guardarla con el botón de audio."
+          }
+        ]
+      },
+      "youtube": {
+        "noun": "Shorts y videos de YouTube",
+        "metaTitle": "Descargar Shorts y Videos de YouTube — MP4 Gratis",
+        "metaDescription": "Descarga Shorts y videos de YouTube en MP4 gratis. Pega un enlace de youtube.com o youtu.be y guárdalo con sonido. Sin iniciar sesión ni programas.",
+        "h1": "Descarga Shorts de YouTube en Segundos",
+        "lead": "Pega el enlace de un Short o video de YouTube (youtube.com o youtu.be) y guárdalo como MP4 con sonido. Es gratis, no necesita cuenta y funciona en cualquier navegador.",
+        "copyHint": "En la app de YouTube, toca Compartir y luego Copiar enlace. En una computadora, copia la dirección del navegador.",
+        "faq": [
+          {
+            "q": "¿Qué calidad obtengo al descargar de YouTube?",
+            "a": "Obtienes un único archivo MP4 con sonido. YouTube ofrece esos archivos ya combinados normalmente hasta 360p; las resoluciones más altas se entregan como flujos de video y audio separados que aquí no se pueden unir, así que 360p es por ahora el máximo práctico."
+          },
+          {
+            "q": "¿Puedo descargar YouTube Shorts?",
+            "a": "Sí. Pega el enlace del Short (youtube.com/shorts/…) o el enlace para compartir y se descarga como cualquier otro video."
+          },
+          {
+            "q": "¿Puedo descargar videos de YouTube con restricción de edad o privados?",
+            "a": "No. Necesitan una cuenta de YouTube con sesión iniciada, que esta herramienta nunca usa. Los videos públicos funcionan; los privados, solo para miembros o con restricción de edad, no."
+          }
+        ]
+      },
+      "facebook": {
+        "noun": "videos y Reels de Facebook",
+        "metaTitle": "Descargar Videos de Facebook — Guarda Videos y Reels Gratis",
+        "metaDescription": "Descargador gratuito de videos de Facebook. Pega el enlace de un video, Reel o fb.watch y guárdalo como MP4. Sin iniciar sesión ni instalar apps.",
+        "h1": "Descargador de Videos de Facebook Gratis",
+        "lead": "Pega el enlace de un video, Reel o fb.watch público de Facebook y guárdalo como MP4. Funciona en móviles y computadoras, y no necesitas iniciar sesión en nada.",
+        "copyHint": "Toca Compartir debajo del video y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Qué enlaces de Facebook se admiten?",
+            "a": "Enlaces de video (facebook.com/watch y /videos/), Reels (/reel/), enlaces para compartir de Facebook y enlaces cortos fb.watch. Las fotos y publicaciones de texto no tienen video que descargar."
+          },
+          {
+            "q": "¿Puedo descargar videos de grupos privados o publicaciones solo para amigos?",
+            "a": "No. Solo se pueden obtener videos públicos. El contenido limitado a amigos o miembros de un grupo requiere iniciar sesión en Facebook, algo que esta herramienta no usa."
+          },
+          {
+            "q": "¿Por qué falló mi enlace de Facebook?",
+            "a": "Probablemente el video no es público, fue eliminado o tiene restricciones en algunas regiones. Comprueba que se abre en una ventana privada del navegador sin iniciar sesión; si es así, inténtalo de nuevo en un minuto."
+          }
+        ]
+      },
+      "threads": {
+        "noun": "videos de Threads",
+        "metaTitle": "Descargar Videos de Threads — Guarda Videos de Threads (MP4)",
+        "metaDescription": "Descarga videos de publicaciones de Threads en MP4 gratis. Pega un enlace de threads.net o threads.com. Sin iniciar sesión ni apps.",
+        "h1": "Descarga Videos de Threads en Segundos",
+        "lead": "Pega el enlace de una publicación pública de Threads con video y guárdalo como MP4. Funcionan tanto los enlaces de threads.net como los de threads.com, y no hay nada que instalar.",
+        "copyHint": "Toca el icono de Compartir en la publicación y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Funcionan los enlaces de threads.com y threads.net?",
+            "a": "Sí. Threads usa ambos dominios y se aceptan enlaces de cualquiera de los dos, incluidos los enlaces para compartir que crea la app."
+          },
+          {
+            "q": "¿Puedo descargar fotos de Threads?",
+            "a": "Esta herramienta guarda videos. Una publicación que solo contiene fotos o texto no tiene video, así que no hay nada que descargar."
+          },
+          {
+            "q": "¿Por qué no funciona mi enlace de Threads?",
+            "a": "La compatibilidad con Threads es más reciente y depende de lo que Threads muestre públicamente de cada publicación. Las publicaciones de perfiles privados o sin video no se pueden descargar; si falla un video público, inténtalo más tarde."
+          }
+        ]
+      },
+      "x": {
+        "noun": "videos de Twitter (X)",
+        "metaTitle": "Descargar Videos de Twitter (X) — Guarda Videos de Tuits en MP4",
+        "metaDescription": "Descarga videos de Twitter y X en MP4 gratis. Pega el enlace de una publicación de x.com o twitter.com. Sin iniciar sesión ni apps.",
+        "h1": "Descarga Videos de Twitter (X) en Segundos",
+        "lead": "Pega el enlace de una publicación pública de X (antes Twitter) y guarda su video como MP4. Funcionan los enlaces de x.com y de twitter.com, y no hace falta iniciar sesión.",
+        "copyHint": "Toca el icono de Compartir debajo de la publicación y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Funcionan los enlaces de x.com y twitter.com?",
+            "a": "Sí. Twitter ahora es X, y los enlaces antiguos de twitter.com siguen llevando a las mismas publicaciones, así que se aceptan ambos."
+          },
+          {
+            "q": "¿Puedo descargar GIF de Twitter?",
+            "a": "Twitter guarda los GIF como videos MP4 cortos, así que las publicaciones con GIF normalmente se descargan como un archivo MP4."
+          },
+          {
+            "q": "¿Y si una publicación tiene varios videos?",
+            "a": "Cada video aparece por separado con su propio botón de descarga, y hay una opción para descargar todos."
+          }
+        ]
+      },
+      "pinterest": {
+        "noun": "videos de Pinterest",
+        "metaTitle": "Descargar Videos de Pinterest — Guarda Pines en MP4 Gratis",
+        "metaDescription": "Descargador gratuito de videos de Pinterest. Pega el enlace de un pin o pin.it y guarda el video como MP4. Sin iniciar sesión ni apps.",
+        "h1": "Descarga Videos de Pinterest en Segundos",
+        "lead": "Pega el enlace de un pin de video de Pinterest y guárdalo como MP4 en segundos. También funcionan los enlaces cortos pin.it, y nunca necesitas iniciar sesión.",
+        "copyHint": "Abre el pin, toca Compartir y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Funciona con los enlaces cortos pin.it?",
+            "a": "Sí. Seguimos el enlace corto hasta el pin real de forma automática, así que puedes pegar lo que te dé la app."
+          },
+          {
+            "q": "¿Puedo descargar pines de imagen?",
+            "a": "No. Esta herramienta es para pines de video. Los pines de imagen no contienen video."
+          },
+          {
+            "q": "¿Funcionan las versiones de Pinterest de cada país?",
+            "a": "Sí. Se aceptan enlaces de pinterest.com y de sitios regionales como pinterest.es o pinterest.fr."
+          }
+        ]
+      },
+      "tiktok": {
+        "noun": "videos de TikTok",
+        "metaTitle": "Descargar Videos de TikTok — Guarda Videos de TikTok en MP4",
+        "metaDescription": "Descargador gratuito de videos de TikTok. Pega un enlace de TikTok o vm.tiktok.com y guarda el video como MP4. Sin iniciar sesión ni apps.",
+        "h1": "Descargador de Videos de TikTok Gratis",
+        "lead": "Pega un enlace público de TikTok y guarda el video como MP4 en segundos. También funcionan los enlaces cortos de la app de TikTok, y no necesitas una cuenta.",
+        "copyHint": "En TikTok, toca Compartir y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Qué enlaces de TikTok funcionan?",
+            "a": "Los enlaces completos (tiktok.com/@usuario/video/…) y los enlaces cortos que crea la app (vm.tiktok.com y vt.tiktok.com), que seguimos automáticamente."
+          },
+          {
+            "q": "¿Puedo descargar TikToks privados o solo para amigos?",
+            "a": "No. Solo se pueden guardar videos públicos. Los videos privados requieren iniciar sesión en TikTok, algo que esta herramienta nunca te pide."
+          },
+          {
+            "q": "¿Por qué a veces falla un enlace de TikTok?",
+            "a": "TikTok limita las solicitudes automáticas, así que un enlace puede fallar de vez en cuando aunque el video sea público. Espera un minuto y vuelve a pegarlo."
+          }
+        ]
+      },
+      "reddit": {
+        "noun": "videos de Reddit",
+        "metaTitle": "Descargar Videos de Reddit — Guarda Videos de v.redd.it (MP4 + Audio)",
+        "metaDescription": "Descarga videos de Reddit gratis. Pega el enlace de una publicación de Reddit o de v.redd.it y guarda el MP4 y, si existe, la pista de audio por separado.",
+        "h1": "Descargador de Videos de Reddit Gratis",
+        "lead": "Pega el enlace de una publicación de video de Reddit o de v.redd.it y guarda el video como MP4. No hace falta cuenta ni app, y si Reddit ofrece una pista de audio aparte también puedes guardarla.",
+        "copyHint": "Toca Compartir en la publicación y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Por qué mi video de Reddit no tiene sonido?",
+            "a": "Reddit guarda el video y su audio como dos archivos separados, y esta herramienta no puede unirlos. El MP4 que descargas es solo video; cuando Reddit ofrece la pista de audio verás un botón aparte de descargar audio para guardarla también."
+          },
+          {
+            "q": "¿Funcionan los enlaces de v.redd.it y los de compartir?",
+            "a": "Sí. Se aceptan enlaces de publicaciones (reddit.com/r/…/comments/…), enlaces para compartir (…/s/…) y enlaces de v.redd.it."
+          },
+          {
+            "q": "¿Puedo descargar videos NSFW o de subreddits privados?",
+            "a": "No. Requieren una cuenta de Reddit con sesión iniciada, algo que esta herramienta no usa. Las publicaciones públicas funcionan."
+          }
+        ]
+      },
+      "snapchat": {
+        "noun": "videos de Snapchat Spotlight",
+        "metaTitle": "Descargar Snapchat Spotlight — Guarda Videos de Spotlight",
+        "metaDescription": "Descargador gratuito de Snapchat Spotlight. Pega un enlace público de Spotlight y guarda el video como MP4. Sin iniciar sesión ni apps.",
+        "h1": "Descarga Videos de Snapchat Spotlight",
+        "lead": "Pega el enlace de un video público de Snapchat Spotlight y guárdalo como MP4. También funcionan los enlaces cortos de la app de Snapchat, y no necesitas una cuenta.",
+        "copyHint": "Abre el video de Spotlight, toca Compartir y luego Copiar enlace.",
+        "faq": [
+          {
+            "q": "¿Qué enlaces de Snapchat se admiten?",
+            "a": "Enlaces públicos de Spotlight (snapchat.com/spotlight/…) y los enlaces cortos que crea la app (t.snapchat.com). Las historias y los snaps privados no se admiten."
+          },
+          {
+            "q": "¿Puedo descargar la historia de Snapchat de otra persona?",
+            "a": "No. Las historias no son videos públicos de Spotlight y están limitadas a las personas con las que se comparten. Esta herramienta solo funciona con publicaciones públicas de Spotlight."
+          },
+          {
+            "q": "¿Puedo descargar snaps privados?",
+            "a": "No. Los snaps privados solo los ven sus destinatarios y no se puede acceder a ellos con un enlace público."
+          }
+        ]
+      }
+    }
+  },
   "preview": {
     "title": "Tu video está listo",
     "author": "Por",
@@ -209,14 +459,14 @@
         {
           "heading": "Información que procesamos",
           "body": [
-            "Enlaces que envías: al pegar el enlace de un video, se envía a nuestro servidor y a un servicio de backend que funciona en nuestro nombre, para poder localizar el video público. No conservamos el enlace ni el video una vez terminada la solicitud.",
+            "Enlaces que envías: al pegar el enlace de un video, se envía a nuestro servidor y a un servicio de backend que funciona en nuestro nombre, para poder localizar el video público. Para acelerar las solicitudes repetidas, el resultado de esa búsqueda (el enlace, el título y las direcciones de descarga temporales) se conserva en memoria hasta 90 minutos y después se descarta. Nunca almacenamos los videos en sí.",
             "Datos técnicos: como la mayoría de los sitios web, nuestro proveedor de alojamiento puede registrar automáticamente tu dirección IP, el tipo de navegador y la hora de cada solicitud por motivos de seguridad y fiabilidad."
           ]
         },
         {
           "heading": "Cookies y almacenamiento local",
           "body": [
-            "Usamos una cookie funcional, NEXT_LOCALE, para recordar el idioma que eliges. No contiene información personal.",
+            "Usamos una cookie funcional, NEXT_LOCALE, para recordar el idioma que eliges. No contiene información personal. El almacenamiento local y de sesión de tu navegador también guarda algunos ajustes de comodidad (tus resultados recientes y si cerraste el aviso de instalación); esos datos permanecen en tu dispositivo.",
             "Si en el futuro mostramos publicidad, nuestros socios publicitarios podrían instalar sus propias cookies. Cuando la ley lo exija, pediremos tu consentimiento antes de usar cookies no esenciales."
           ]
         },

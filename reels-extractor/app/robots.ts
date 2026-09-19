@@ -3,7 +3,8 @@ import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/"] }],
+    // /api/ is off limits to crawlers except the share image that link previews fetch.
+    rules: [{ userAgent: "*", allow: ["/", "/api/og"], disallow: ["/api/"] }],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
   };

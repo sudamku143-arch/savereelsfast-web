@@ -37,14 +37,23 @@ export default function ExtractorClient({
   previewDict,
   errorsDict,
   downloadDict,
+  initialPlatform = "instagram",
+  fixedHeading,
 }: {
   heroDict: HeroDict;
   platformsDict: PlatformsDict;
   previewDict: PreviewDict;
   errorsDict: ErrorsDict;
   downloadDict: DownloadDict;
+  /** Platform tab selected on first render (platform landing pages preselect theirs). */
+  initialPlatform?: PlatformId;
+  /**
+   * Landing pages keep one fixed h1 and intro, whichever tab is active, because the
+   * heading is what the page is meant to rank for. The home page changes it per tab.
+   */
+  fixedHeading?: { title: string; subtitle: string };
 }) {
-  const [platform, setPlatform] = useState<PlatformId>("instagram");
+  const [platform, setPlatform] = useState<PlatformId>(initialPlatform);
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
     "idle"
   );
@@ -142,10 +151,10 @@ export default function ExtractorClient({
         {heroDict.badge}
       </span>
       <h1 className="max-w-2xl text-center text-3xl font-extrabold tracking-tight text-zinc-50 sm:text-5xl">
-        {active.title}
+        {fixedHeading?.title ?? active.title}
       </h1>
       <p className="mt-4 max-w-xl text-center text-sm text-zinc-400 sm:text-base">
-        {heroDict.subtitle}
+        {fixedHeading?.subtitle ?? heroDict.subtitle}
       </p>
 
       <div className="mt-8 w-full max-w-xl space-y-3">
