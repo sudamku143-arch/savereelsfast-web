@@ -14,9 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Prefer a single progressive MP4 (video + audio); fall back to the best stream.
+# Prefer a single progressive MP4 that carries BOTH video and audio. Instagram
+# also serves video-only DASH streams, which play silently, so they come last.
 YDL_OPTS = {
-    "format": "best[ext=mp4]/best",
+    "format": "best[ext=mp4][vcodec!=none][acodec!=none]/best[ext=mp4]/best",
     "quiet": True,
     "no_warnings": True,
     "noplaylist": True,
@@ -33,6 +34,28 @@ def _validate_url(url: str) -> None:
         raise HTTPException(
             status_code=400, detail="Please provide a valid Instagram Reel URL."
         )
+
+
+def _audio_state(fmt: dict) -> str:
+    """'yes' / 'no' / 'unknown' - yt-dlp reports acodec="none" for video-only streams."""
+    acodec = fmt.get("acodec")
+    if acodec is None:
+        return "unknown"
+    return "no" if acodec == "none" else "yes"
+
+
+def _has_video(fmt: dict) -> bool:
+    return bool(fmt.get("url")) and fmt.get("vcodec") != "none"
+
+
+def _to_option(fmt: dict) -> dict:
+    height = fmt.get("height")
+    return {
+        "quality": f"{height}p" if height else fmt.get("format_id", "mp4"),
+        "url": fmt["url"],
+        "width": fmt.get("width"),
+        "height": height,
+    }
 
 
 @app.get("/")
@@ -64,21 +87,28 @@ def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> d
     if not info:
         raise HTTPException(status_code=400, detail="No data returned for this URL.")
 
-    video_url = info.get("url")
+    # Only offer progressive MP4s that contain audio. Formats whose audio is
+    # merely unreported are used only if nothing is confirmed to have sound.
+    candidates = [
+        f for f in (info.get("formats") or []) if _has_video(f) and f.get("ext") == "mp4"
+    ]
+    with_audio = [f for f in candidates if _audio_state(f) == "yes"]
+    unknown_audio = [f for f in candidates if _audio_state(f) == "unknown"]
+    usable = with_audio or unknown_audio
+
+    formats = [_to_option(f) for f in usable]
+    formats.sort(key=lambda f: f["height"] or 0, reverse=True)
+
+    # Primary URL: best confirmed-audio format, else the format yt-dlp selected.
+    if formats:
+        video_url = formats[0]["url"]
+        has_audio = bool(with_audio)
+    else:
+        video_url = info.get("url")
+        has_audio = _audio_state(info) != "no"
+
     if not video_url:
         raise HTTPException(status_code=400, detail="No downloadable video found.")
-
-    formats = [
-        {
-            "quality": f"{f['height']}p" if f.get("height") else f.get("format_id", "mp4"),
-            "url": f["url"],
-            "width": f.get("width"),
-            "height": f.get("height"),
-        }
-        for f in (info.get("formats") or [])
-        if f.get("url") and f.get("ext") == "mp4" and f.get("vcodec") not in (None, "none")
-    ]
-    formats.sort(key=lambda f: f["height"] or 0, reverse=True)
 
     return {
         "success": True,
@@ -88,5 +118,6 @@ def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> d
         "thumbnail": info.get("thumbnail"),
         "duration": info.get("duration"),
         "videoUrl": video_url,
+        "hasAudio": has_audio,
         "formats": formats,
     }
