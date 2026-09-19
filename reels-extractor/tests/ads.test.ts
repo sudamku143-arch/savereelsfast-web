@@ -6,7 +6,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { readFileSync } from "node:fs";
-import { planAd, resolveAdConfig } from "../lib/ads.ts";
+import { aadsSnippet, planAd, resolveAdConfig } from "../lib/ads.ts";
 
 const CLIENT = "ca-pub-1234567890123456";
 
@@ -143,3 +143,27 @@ describe("where the slots live", () => {
   });
 });
 
+describe("A-ADS embed code", () => {
+  // Exactly what A-ADS issued for unit 2455819 (its verification bot looks for this text).
+  const issued = `<!-- BEGIN AADS AD UNIT 2455819 -->
+<div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+  <iframe data-aa='2455819' src='//acceptable.a-ads.com/2455819/?size=Adaptive' style='border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;'></iframe>
+</div>
+<!-- END AADS AD UNIT 2455819 -->`;
+
+  it("reproduces the issued snippet character for character", () => {
+    assert.equal(aadsSnippet("2455819"), issued);
+  });
+
+  it("drops only the id on later copies, so ids stay unique", () => {
+    assert.equal(aadsSnippet("2455819", false), issued.replace(' id="frame"', ""));
+  });
+
+  it("is rendered into the server HTML, never behind a client-side check", () => {
+    const banner = readFileSync(new URL("../app/[locale]/components/AdBanner.tsx", import.meta.url), "utf8");
+    const single = banner.slice(banner.indexOf("if (mobileUnit === null)"), banner.indexOf("if (desktop === null)")); // the branch ends where the device-dependent path begins
+    assert.ok(single.includes("dangerouslySetInnerHTML"), "the single-unit path must emit raw HTML");
+    assert.ok(!single.includes("useIsDesktop") && !single.includes("desktop === null"), "and must not wait for the browser");
+    assert.ok(!single.includes('loading="lazy"'), "the snippet must not be lazy-loaded");
+  });
+});

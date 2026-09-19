@@ -85,3 +85,19 @@ export function planAd(config: AdConfig, variant: AdVariant): AdPlan {
   }
   return { kind: "placeholder" };
 }
+
+/**
+ * The A-ADS embed code, character for character as A-ADS issues it (comments, the
+ * #frame wrapper, single-quoted attributes). A-ADS's verification bot reads the raw
+ * server HTML looking for this exact text, so it must never be rebuilt from JSX:
+ * React drops HTML comments and would re-quote the attributes.
+ *
+ * `withId` is false for every copy after the first on a page, so `id="frame"` stays unique.
+ */
+export function aadsSnippet(unit: string, withId = true): string {
+  return `<!-- BEGIN AADS AD UNIT ${unit} -->
+<div${withId ? ' id="frame"' : ""} style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+  <iframe data-aa='${unit}' src='//acceptable.a-ads.com/${unit}/?size=Adaptive' style='border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;'></iframe>
+</div>
+<!-- END AADS AD UNIT ${unit} -->`;
+}

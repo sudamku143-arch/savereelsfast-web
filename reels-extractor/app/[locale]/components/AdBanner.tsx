@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  aadsSnippet,
   planAd,
   resolveAdConfig,
   type AdPlan,
@@ -88,12 +89,29 @@ function AAdsUnit({
   desktopUnit,
   mobileUnit,
   size,
+  primary,
 }: {
   desktopUnit: string;
   mobileUnit: string | null;
   size: "banner" | "native";
+  /** The first A-ADS copy on the page keeps id="frame"; later copies drop it. */
+  primary: boolean;
 }) {
   const desktop = useIsDesktop();
+
+  // One Adaptive unit needs no device check, so A-ADS's embed code goes into the server-rendered
+  // HTML as-is, with no client-side delay. That is what its verification bot looks for.
+  // `isolate` keeps the snippet's z-index: 99998 from climbing above our sticky header and dialogs;
+  // `[&>div]:h-full` makes its #frame wrapper fill the fixed-size ad box.
+  if (mobileUnit === null) {
+    return (
+      <div
+        className="isolate h-full w-full [&>div]:h-full"
+        dangerouslySetInnerHTML={{ __html: aadsSnippet(desktopUnit, primary) }}
+      />
+    );
+  }
+
   if (desktop === null) return null; // wait until we know which unit to load (never load both)
   const unit = desktop ? desktopUnit : (mobileUnit ?? desktopUnit);
   // "Adaptive" is what A-ADS's own embed code requests: the unit sizes itself to the space it gets
@@ -143,12 +161,29 @@ function Placeholder({ label }: { label: string }) {
   );
 }
 
-function Unit({ plan, size, label }: { plan: AdPlan; size: "banner" | "native"; label: string }) {
+function Unit({
+  plan,
+  size,
+  label,
+  primary = false,
+}: {
+  plan: AdPlan;
+  size: "banner" | "native";
+  label: string;
+  primary?: boolean;
+}) {
   switch (plan.kind) {
     case "adsense":
       return <AdSenseUnit clientId={plan.clientId} slot={plan.slot} />;
     case "aads":
-      return <AAdsUnit desktopUnit={plan.desktopUnit} mobileUnit={plan.mobileUnit} size={size} />;
+      return (
+        <AAdsUnit
+          desktopUnit={plan.desktopUnit}
+          mobileUnit={plan.mobileUnit}
+          size={size}
+          primary={primary}
+        />
+      );
     case "custom":
       return <CustomUnit html={plan.html} />;
     default:
@@ -284,7 +319,12 @@ export default function AdBanner({
         </span>
       )}
       <div className={box}>
-        <Unit plan={plan} size={variant === "native" ? "native" : "banner"} label={dict.label} />
+        <Unit
+          plan={plan}
+          size={variant === "native" ? "native" : "banner"}
+          label={dict.label}
+          primary={variant === "leaderboard"}
+        />
       </div>
     </aside>
   );

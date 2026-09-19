@@ -146,6 +146,23 @@ async function main() {
     }
   }
 
+  // A-ADS's verification bot reads the RAW server HTML for the exact embed code.
+  const unit = readFileSync(new URL("../.env.production", import.meta.url), "utf8").match(/^NEXT_PUBLIC_AD_SLOT_LEADERBOARD=(\d+)/m)?.[1];
+  if (unit) {
+    const snippet = `<!-- BEGIN AADS AD UNIT ${unit} -->
+<div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+  <iframe data-aa='${unit}' src='//acceptable.a-ads.com/${unit}/?size=Adaptive' style='border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;'></iframe>
+</div>
+<!-- END AADS AD UNIT ${unit} -->`;
+    for (const locale of LOCALES) {
+      for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/downloader/${slug}`))]) {
+        const html = await (await get(page)).text();
+        check(html.includes(snippet), `[${locale}] ${page}: raw HTML lacks the exact A-ADS snippet for unit ${unit}`);
+        check((html.match(/id="frame"/g) ?? []).length === 1, `[${locale}] ${page}: id="frame" must appear exactly once`);
+      }
+    }
+  }
+
   // Routing edge cases.
   const legacy = await get("/downloader/x");
   check([301, 308].includes(legacy.status) && legacy.headers.get("location")?.endsWith("/downloader/twitter"), `/downloader/x should redirect to /twitter (got ${legacy.status} ${legacy.headers.get("location")})`);
