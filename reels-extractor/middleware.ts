@@ -27,6 +27,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Canonical English lives at the unprefixed URL: /en -> /, /en/x -> /x
+  if (pathname === `/${defaultLocale}` || pathname.startsWith(`/${defaultLocale}/`)) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.slice(defaultLocale.length + 1) || "/";
+    return NextResponse.redirect(url, 308);
+  }
+
   const pathnameHasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
   );
