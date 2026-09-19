@@ -15,7 +15,7 @@ export const maxDuration = 40;
 /**
  * Request contract:
  *   POST /api/extract
- *   body: { url: string }   // Instagram, YouTube, Facebook, Threads, X, Pinterest or TikTok video link
+ *   body: { url: string }   // Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat video link
  *
  * Success response (200):
  *   {
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
       {
         success: false,
         error:
-          "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest or TikTok).",
+          "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat).",
       },
       { status: 400 }
     );
@@ -161,8 +161,9 @@ async function extractReelData(
 
   if (platform === "instagram") {
     fallbackId = parseShortcode(pageUrl);
-    if (!fallbackId) return null;
-    strategies.push(
+    // Share links (/share/reel/…) have no shortcode; only the scraper can resolve them.
+    if (!fallbackId && !scraperConfigured) return null;
+    if (fallbackId) strategies.push(
       ["embed", extractFromEmbed],
       ["graphql", extractFromGraphql],
       ["page-meta", extractFromPageMeta]

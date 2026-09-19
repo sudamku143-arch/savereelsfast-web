@@ -61,6 +61,23 @@ export default function PlatformIcon({
           <path d="M11 17.5 12.6 10M10.3 12.6c-.6-2.3 1-4 2.8-3.6 2.4.5 2.3 3.6.4 4.6-1.1.6-2.1.2-2.3-.6" />
         </svg>
       );
+    case "reddit":
+      return (
+        <svg {...common}>
+          <ellipse cx="12" cy="14" rx="8" ry="5.5" />
+          <circle cx="9" cy="13.5" r="0.9" fill="currentColor" />
+          <circle cx="15" cy="13.5" r="0.9" fill="currentColor" />
+          <path d="M9.5 16.5c1.4 1 3.6 1 5 0" />
+          <path d="M12 8.5 13.2 4l3.3.8" />
+          <circle cx="17.6" cy="4.9" r="1.1" />
+        </svg>
+      );
+    case "snapchat":
+      return (
+        <svg {...common}>
+          <path d="M12 3.5c-2.6 0-4.2 1.9-4.2 4.5v2.3c-.9.4-1.6.7-2.3.9.7.7 1.5 1 2.3 1.1-.4 1.1-1.1 2-2.2 2.6 1 .4 2 .6 2.9.7.3.8 1 1.2 1.9 1.2.6 0 1-.2 1.6-.2s1 .2 1.6.2c.9 0 1.6-.4 1.9-1.2.9-.1 1.9-.3 2.9-.7-1.1-.6-1.8-1.5-2.2-2.6.8-.1 1.6-.4 2.3-1.1-.7-.2-1.4-.5-2.3-.9V8c0-2.6-1.6-4.5-4.2-4.5Z" />
+        </svg>
+      );
     case "tiktok":
       return (
         <svg {...common}>

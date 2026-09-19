@@ -8,6 +8,8 @@ export const PLATFORM_IDS = [
   "x",
   "pinterest",
   "tiktok",
+  "reddit",
+  "snapchat",
 ] as const;
 
 export type PlatformId = (typeof PLATFORM_IDS)[number];
@@ -24,6 +26,8 @@ const HOSTS: Record<PlatformId, string[]> = {
   x: ["twitter.com", "x.com"],
   pinterest: ["pinterest.com", "pin.it"],
   tiktok: ["tiktok.com"],
+  reddit: ["reddit.com", "redd.it"],
+  snapchat: ["snapchat.com"],
 };
 
 // Pinterest also serves from country domains (pinterest.co.uk, pinterest.fr, …).
@@ -47,7 +51,10 @@ function looksLikeVideoLink(platform: PlatformId, url: URL): boolean {
 
   switch (platform) {
     case "instagram":
-      return /(?:^|\/)(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i.test(path);
+      return (
+        /(?:^|\/)(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i.test(path) ||
+        /^\/share\/[A-Za-z0-9_/-]+/i.test(path)
+      );
     case "youtube":
       if (hostMatches(host, "youtu.be")) return /^\/[A-Za-z0-9_-]{6,}/.test(path);
       return (
@@ -62,12 +69,19 @@ function looksLikeVideoLink(platform: PlatformId, url: URL): boolean {
         path.startsWith("/video.php")
       );
     case "threads":
-      return /\/(post|t)\/[A-Za-z0-9_-]+/.test(path);
+      // /share/… links are redirects that the scraper follows.
+      return /\/(post|t|share)\/[A-Za-z0-9_-]+/.test(path);
     case "x":
       return /\/status(es)?\/\d+/.test(path);
     case "pinterest":
       if (hostMatches(host, "pin.it")) return /^\/[A-Za-z0-9_-]+/.test(path);
       return /\/pin\/[A-Za-z0-9_-]+/.test(path);
+    case "reddit":
+      if (host === "v.redd.it" || host === "redd.it") return /^\/[A-Za-z0-9]+/.test(path);
+      return /\/comments\/[A-Za-z0-9]+/.test(path) || /\/s\/[A-Za-z0-9]+/.test(path);
+    case "snapchat":
+      if (host === "t.snapchat.com") return /^\/[A-Za-z0-9_-]+/.test(path);
+      return /^\/(spotlight|story|t)\/[A-Za-z0-9_-]+/.test(path);
     case "tiktok":
       return (
         /\/video\/\d+/.test(path) ||
@@ -95,6 +109,8 @@ const TRACKING_PARAMS = new Set([
   "sender_device",
   "_r",
   "_t",
+  "u_code",
+  "xmt",
 ]);
 
 function stripTracking(url: URL): URL {
@@ -139,7 +155,8 @@ export function parseSupportedUrl(raw: string): ParsedVideoUrl | null {
 
   if (platform === "instagram") {
     const canonical = normalizeInstagramUrl(parsed.toString());
-    return canonical ? { platform, url: canonical } : null;
+    // Share links (/share/reel/…) can't be canonicalised here; the scraper resolves them.
+    return { platform, url: canonical ?? stripTracking(parsed).toString() };
   }
   return { platform, url: stripTracking(parsed).toString() };
 }

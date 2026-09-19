@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Baixador de Vídeos de Redes Sociais — Instagram, YouTube, TikTok e mais",
-    "description": "Baixe vídeos do Instagram, YouTube, Facebook, Threads, X, Pinterest e TikTok de graça. Cole um link e salve um MP4, sem login e sem instalar apps.",
+    "description": "Baixe vídeos do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat de graça. Cole um link e salve um MP4, sem login e sem instalar apps.",
     "ogAlt": "Prévia da ferramenta de download de vídeos de redes sociais"
   },
   "nav": {
@@ -10,7 +10,7 @@
   },
   "hero": {
     "badge": "100% Grátis · Sem Login",
-    "subtitle": "Cole o link de um vídeo e salve um MP4 em HD no seu dispositivo. Funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest e TikTok.",
+    "subtitle": "Cole o link de um vídeo e salve um MP4 em HD no seu dispositivo. Funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat.",
     "pasteButton": "Colar",
     "downloadCta": "Obter Vídeo",
     "loading": "Buscando seu vídeo…",
@@ -53,6 +53,16 @@
       "name": "TikTok",
       "title": "Baixe vídeos do TikTok em segundos",
       "placeholder": "Cole aqui o link do vídeo do TikTok…"
+    },
+    "reddit": {
+      "name": "Reddit",
+      "title": "Baixe vídeos do Reddit em segundos",
+      "placeholder": "Cole aqui o link da publicação do Reddit ou v.redd.it…"
+    },
+    "snapchat": {
+      "name": "Snapchat",
+      "title": "Baixe vídeos do Snapchat Spotlight em segundos",
+      "placeholder": "Cole aqui o link do Snapchat Spotlight…"
     }
   },
   "preview": {
@@ -66,7 +76,7 @@
   "seo": {
     "heading": "A forma mais rápida de salvar vídeos de redes sociais",
     "paragraphs": [
-      "A maioria das redes sociais não oferece uma forma nativa de salvar no seu dispositivo o vídeo de outra pessoa. Nossa ferramenta resolve isso com uma colada: coloque o link do Instagram, YouTube, Facebook, Threads, X, Pinterest ou TikTok e buscamos o arquivo de vídeo para que você tenha um MP4 limpo para assistir offline.",
+      "A maioria das redes sociais não oferece uma forma nativa de salvar no seu dispositivo o vídeo de outra pessoa. Nossa ferramenta resolve isso com uma colada: coloque o link do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit ou Snapchat e buscamos o arquivo de vídeo para que você tenha um MP4 limpo para assistir offline.",
       "Funciona inteiramente no seu navegador: não há nada para instalar, nenhuma conta para criar e nenhum dado pessoal é necessário. Apenas o link público do vídeo que você quer. Por isso é seguro usar em qualquer dispositivo, seja no celular entre as aulas ou no computador editando uma compilação.",
       "Criadores usam para arquivar o próprio conteúdo antes que ele suma dos feeds, profissionais de marketing para montar arquivos de referência de anúncios, e usuários comuns para guardar uma cópia de um vídeo que um amigo enviou antes que seja apagado. Seja qual for o motivo, o fluxo é o mesmo: colar, visualizar, baixar."
     ]
@@ -101,7 +111,7 @@
     ]
   },
   "footer": {
-    "disclaimer": "Esta ferramenta não é afiliada, endossada nem patrocinada pelo Instagram, Meta, YouTube, Google, X, Pinterest, TikTok ou qualquer outra plataforma. Use-a apenas para baixar conteúdo que você tem o direito de salvar.",
+    "disclaimer": "Esta ferramenta não é afiliada, endossada nem patrocinada pelo Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap ou qualquer outra plataforma. Use-a apenas para baixar conteúdo que você tem o direito de salvar.",
     "rights": "Todos os direitos reservados.",
     "links": {
       "privacy": "Política de Privacidade",

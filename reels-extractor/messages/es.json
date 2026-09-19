@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Descargador de Videos de Redes Sociales — Instagram, YouTube, TikTok y más",
-    "description": "Descarga videos de Instagram, YouTube, Facebook, Threads, X, Pinterest y TikTok gratis. Pega un enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
+    "description": "Descarga videos de Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit y Snapchat gratis. Pega un enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
     "ogAlt": "Vista previa del descargador de videos de redes sociales"
   },
   "nav": {
@@ -10,7 +10,7 @@
   },
   "hero": {
     "badge": "100% Gratis · Sin Inicio de Sesión",
-    "subtitle": "Pega el enlace de un video y guarda un MP4 en HD en tu dispositivo. Funciona con Instagram, YouTube, Facebook, Threads, X, Pinterest y TikTok.",
+    "subtitle": "Pega el enlace de un video y guarda un MP4 en HD en tu dispositivo. Funciona con Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit y Snapchat.",
     "pasteButton": "Pegar",
     "downloadCta": "Obtener Video",
     "loading": "Buscando tu video…",
@@ -53,6 +53,16 @@
       "name": "TikTok",
       "title": "Descarga videos de TikTok en segundos",
       "placeholder": "Pega aquí el enlace del video de TikTok…"
+    },
+    "reddit": {
+      "name": "Reddit",
+      "title": "Descarga videos de Reddit en segundos",
+      "placeholder": "Pega aquí el enlace de la publicación de Reddit o v.redd.it…"
+    },
+    "snapchat": {
+      "name": "Snapchat",
+      "title": "Descarga videos de Snapchat Spotlight en segundos",
+      "placeholder": "Pega aquí el enlace de Snapchat Spotlight…"
     }
   },
   "preview": {
@@ -66,7 +76,7 @@
   "seo": {
     "heading": "La forma más rápida de guardar videos de redes sociales",
     "paragraphs": [
-      "La mayoría de las redes sociales no ofrecen una forma integrada de guardar en tu dispositivo el video de otra persona. Nuestra herramienta lo resuelve con un solo pegado: coloca el enlace de Instagram, YouTube, Facebook, Threads, X, Pinterest o TikTok y obtenemos el archivo de video para que tengas un MP4 limpio que puedes ver sin conexión.",
+      "La mayoría de las redes sociales no ofrecen una forma integrada de guardar en tu dispositivo el video de otra persona. Nuestra herramienta lo resuelve con un solo pegado: coloca el enlace de Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit o Snapchat y obtenemos el archivo de video para que tengas un MP4 limpio que puedes ver sin conexión.",
       "Funciona por completo en tu navegador: no hay nada que instalar, ninguna cuenta que crear y no se requieren datos personales. Solo el enlace público del video que quieres. Por eso es seguro usarlo en cualquier dispositivo, ya sea desde el móvil entre clases o desde un ordenador editando una recopilación.",
       "Los creadores lo usan para archivar su propio contenido antes de que desaparezca de los feeds, los profesionales del marketing para armar archivos de referencia de anuncios, y los usuarios comunes para conservar una copia de un clip que les envió un amigo antes de que lo borren. Sea cual sea el motivo, el proceso es el mismo: pegar, previsualizar, descargar."
     ]
@@ -101,7 +111,7 @@
     ]
   },
   "footer": {
-    "disclaimer": "Esta herramienta no está afiliada, respaldada ni patrocinada por Instagram, Meta, YouTube, Google, X, Pinterest, TikTok ni ninguna otra plataforma. Úsala solo para descargar contenido que tengas derecho a guardar.",
+    "disclaimer": "Esta herramienta no está afiliada, respaldada ni patrocinada por Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap ni ninguna otra plataforma. Úsala solo para descargar contenido que tengas derecho a guardar.",
     "rights": "Todos los derechos reservados.",
     "links": {
       "privacy": "Política de privacidad",

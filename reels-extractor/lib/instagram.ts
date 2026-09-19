@@ -11,6 +11,8 @@ const SHORTCODE_REGEX =
  * Returns null when the input is not an Instagram post link.
  */
 export function normalizeInstagramUrl(raw: string): string | null {
+  // /share/reel/CODE links carry a share code, not the post's shortcode.
+  if (/instagram\.com\/share\//i.test(raw)) return null;
   const match =
     /instagram\.com\/(?:[A-Za-z0-9._]+\/)?(reel|reels|p|tv)\/([A-Za-z0-9_-]+)/i.exec(
       raw
@@ -48,6 +50,11 @@ const MEDIA_HOST_SUFFIXES = [
   "byteoversea.com",
   "ibytedtos.com",
   "muscdn.com",
+  // Reddit (v.redd.it videos, preview.redd.it / external-preview thumbnails)
+  "redd.it",
+  "redditmedia.com",
+  // Snapchat
+  "sc-cdn.net",
 ];
 
 export function isAllowedMediaUrl(raw: string): boolean {
@@ -71,6 +78,8 @@ export function refererFor(mediaUrl: string): string {
     if (/tiktok|byteoversea|ibytedtos|muscdn/.test(host)) return "https://www.tiktok.com/";
     if (host.endsWith("googlevideo.com") || host.endsWith("ytimg.com")) return "https://www.youtube.com/";
     if (host.endsWith("twimg.com")) return "https://x.com/";
+    if (host.endsWith("redd.it") || host.endsWith("redditmedia.com")) return "https://www.reddit.com/";
+    if (host.endsWith("sc-cdn.net")) return "https://www.snapchat.com/";
     if (host.endsWith("pinimg.com")) return "https://www.pinterest.com/";
   } catch {
     // fall through
