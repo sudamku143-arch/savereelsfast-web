@@ -1,14 +1,4 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-
-export type ReelFormat = {
-  quality: string; // e.g. "720p"
-  url: string;
-  width?: number | null;
-  height?: number | null;
-};
 
 export type ReelResult = {
   id: string;
@@ -17,7 +7,6 @@ export type ReelResult = {
   title: string | null;
   author: string | null;
   durationSeconds: number | null;
-  formats?: ReelFormat[];
 };
 
 type Dict = {
@@ -26,8 +15,6 @@ type Dict = {
   duration: string;
   downloadButton: string;
   newSearch: string;
-  quality: string;
-  original: string;
   thumbnailAlt: string;
 };
 
@@ -47,19 +34,10 @@ export default function PreviewCard({
   dict: Dict;
   onReset: () => void;
 }) {
-  const options: ReelFormat[] =
-    result.formats && result.formats.length > 0
-      ? result.formats
-      : [
-          { quality: dict.original, url: result.videoUrl },
-        ];
-
-  const [selected, setSelected] = useState(0);
-  const current = options[Math.min(selected, options.length - 1)];
   const filename = `savereelsfast-${result.id}.mp4`;
   // Same-origin proxy: cross-origin CDN links ignore the `download` attribute.
   const downloadHref = `/api/download?url=${encodeURIComponent(
-    current.url
+    result.videoUrl
   )}&id=${encodeURIComponent(result.id)}`;
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
@@ -98,45 +76,10 @@ export default function PreviewCard({
             </p>
           )}
           {result.title && (
-            <p className="line-clamp-3 text-zinc-400">{result.title}</p>
+            <p className="line-clamp-4 text-zinc-400">{result.title}</p>
           )}
         </div>
       </div>
-
-      <fieldset className="mt-4">
-        <legend className="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">
-          {dict.quality}
-        </legend>
-        <div className="flex flex-wrap gap-2">
-          {options.map((opt, i) => {
-            const active = i === selected;
-            const resolution =
-              opt.width && opt.height ? `${opt.width}×${opt.height}` : null;
-            return (
-              <label
-                key={`${opt.quality}-${i}`}
-                className={`cursor-pointer rounded-lg border px-3 py-2 text-left text-xs transition focus-within:ring-2 focus-within:ring-brand-500 ${
-                  active
-                    ? "border-brand-500 bg-brand-500/15 text-zinc-50"
-                    : "border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="reel-format"
-                  checked={active}
-                  onChange={() => setSelected(i)}
-                  className="sr-only"
-                />
-                <span className="block text-sm font-semibold">{opt.quality}</span>
-                {resolution && (
-                  <span className="block text-zinc-500">{resolution}</span>
-                )}
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
 
       <div className="mt-4 flex gap-2">
         <a

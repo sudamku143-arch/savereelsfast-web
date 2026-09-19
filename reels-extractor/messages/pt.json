@@ -23,10 +23,8 @@
     "title": "Seu vídeo está pronto",
     "author": "Por",
     "duration": "Duração",
-    "downloadButton": "Baixar MP4",
+    "downloadButton": "Baixar MP4 (HD)",
     "newSearch": "Baixar outro",
-    "quality": "Qualidade",
-    "original": "Original",
     "thumbnailAlt": "Miniatura do Reel"
   },
   "seo": {

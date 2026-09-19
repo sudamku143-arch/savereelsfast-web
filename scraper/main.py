@@ -36,26 +36,28 @@ def _validate_url(url: str) -> None:
         )
 
 
-def _audio_state(fmt: dict) -> str:
-    """'yes' / 'no' / 'unknown' - yt-dlp reports acodec="none" for video-only streams."""
-    acodec = fmt.get("acodec")
-    if acodec is None:
-        return "unknown"
-    return "no" if acodec == "none" else "yes"
+def _is_playable(fmt: dict) -> bool:
+    """A downloadable MP4 with a video track (yt-dlp reports vcodec="none" for audio-only)."""
+    return bool(fmt.get("url")) and fmt.get("ext") == "mp4" and fmt.get("vcodec") != "none"
 
 
-def _has_video(fmt: dict) -> bool:
-    return bool(fmt.get("url")) and fmt.get("vcodec") != "none"
+def _best_progressive(info: dict) -> dict | None:
+    """
+    Pick the single best progressive MP4 (video + audio in one file).
 
+    Formats confirmed to carry audio (acodec present and not "none") win.
+    Formats whose acodec is merely unreported are only used when none is
+    confirmed. Video-only streams (acodec == "none") are never chosen.
+    Within a group, the tallest (then widest) format wins.
+    """
+    playable = [f for f in (info.get("formats") or []) if _is_playable(f)]
+    confirmed = [f for f in playable if f.get("acodec") not in (None, "none")]
+    unreported = [f for f in playable if f.get("acodec") is None]
 
-def _to_option(fmt: dict) -> dict:
-    height = fmt.get("height")
-    return {
-        "quality": f"{height}p" if height else fmt.get("format_id", "mp4"),
-        "url": fmt["url"],
-        "width": fmt.get("width"),
-        "height": height,
-    }
+    for group in (confirmed, unreported):
+        if group:
+            return max(group, key=lambda f: (f.get("height") or 0, f.get("width") or 0))
+    return None
 
 
 @app.get("/")
@@ -87,25 +89,14 @@ def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> d
     if not info:
         raise HTTPException(status_code=400, detail="No data returned for this URL.")
 
-    # Only offer progressive MP4s that contain audio. Formats whose audio is
-    # merely unreported are used only if nothing is confirmed to have sound.
-    candidates = [
-        f for f in (info.get("formats") or []) if _has_video(f) and f.get("ext") == "mp4"
-    ]
-    with_audio = [f for f in candidates if _audio_state(f) == "yes"]
-    unknown_audio = [f for f in candidates if _audio_state(f) == "unknown"]
-    usable = with_audio or unknown_audio
-
-    formats = [_to_option(f) for f in usable]
-    formats.sort(key=lambda f: f["height"] or 0, reverse=True)
-
-    # Primary URL: best confirmed-audio format, else the format yt-dlp selected.
-    if formats:
-        video_url = formats[0]["url"]
-        has_audio = bool(with_audio)
+    best = _best_progressive(info)
+    if best:
+        video_url = best["url"]
+        has_audio = best.get("acodec") is not None
     else:
+        # Nothing progressive found: use whatever yt-dlp selected, unless it is video-only.
         video_url = info.get("url")
-        has_audio = _audio_state(info) != "no"
+        has_audio = info.get("acodec") != "none"
 
     if not video_url:
         raise HTTPException(status_code=400, detail="No downloadable video found.")
@@ -119,5 +110,5 @@ def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> d
         "duration": info.get("duration"),
         "videoUrl": video_url,
         "hasAudio": has_audio,
-        "formats": formats,
+        "formats": [],  # a single best progressive stream is returned in videoUrl
     }

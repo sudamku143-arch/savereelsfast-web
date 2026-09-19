@@ -20,8 +20,6 @@ type PreviewDict = {
   duration: string;
   downloadButton: string;
   newSearch: string;
-  quality: string;
-  original: string;
   thumbnailAlt: string;
 };
 

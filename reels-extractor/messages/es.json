@@ -23,10 +23,8 @@
     "title": "Tu video está listo",
     "author": "Por",
     "duration": "Duración",
-    "downloadButton": "Descargar MP4",
+    "downloadButton": "Descargar MP4 (HD)",
     "newSearch": "Descargar otro",
-    "quality": "Calidad",
-    "original": "Original",
     "thumbnailAlt": "Miniatura del Reel"
   },
   "seo": {
