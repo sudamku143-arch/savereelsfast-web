@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd reels-extractor && npm run build",
-  "outputDirectory": "reels-extractor/.next",
-  "cleanUrls": true
-}
