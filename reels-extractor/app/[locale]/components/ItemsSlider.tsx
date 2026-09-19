@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { buildDownloadHref, downloadFilename } from "@/lib/download";
 import type { ReelItem } from "./PreviewCard";
+import DownloadButton, { type DownloadDict } from "./DownloadButton";
+import type { ErrorsDict } from "./ErrorCard";
 
 export type ItemsDict = {
   postItems: string;
@@ -34,9 +36,15 @@ function fill(text: string, values: Record<string, string | number>): string {
 export default function ItemsSlider({
   items,
   dict,
+  downloadDict,
+  errorsDict,
+  platformName,
 }: {
   items: ReelItem[];
   dict: ItemsDict;
+  downloadDict: DownloadDict;
+  errorsDict: ErrorsDict;
+  platformName: string;
 }) {
   const [busy, setBusy] = useState(false);
 
@@ -106,22 +114,25 @@ export default function ItemsSlider({
               </div>
 
               <div className="mt-2 flex flex-col gap-1.5">
-                <a
+                <DownloadButton
                   href={videoHref(item)}
-                  download={downloadFilename(item.id)}
-                  className="rounded-lg bg-brand-500 px-2 py-1.5 text-center text-xs font-semibold text-white outline-none transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-300"
-                >
-                  {dict.downloadItem}
-                  {item.quality ? ` · ${item.quality}` : ""}
-                </a>
+                  filename={downloadFilename(item.id)}
+                  label={`${dict.downloadItem}${item.quality ? ` · ${item.quality}` : ""}`}
+                  variant="compact"
+                  dict={downloadDict}
+                  errorsDict={errorsDict}
+                  platformName={platformName}
+                />
                 {audio && (
-                  <a
+                  <DownloadButton
                     href={audio}
-                    download={downloadFilename(item.id, "audio", item.audioExt)}
-                    className="rounded-lg border border-white/10 px-2 py-1 text-center text-[11px] font-medium text-zinc-300 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500"
-                  >
-                    {dict.downloadItemAudio}
-                  </a>
+                    filename={downloadFilename(item.id, "audio", item.audioExt)}
+                    label={dict.downloadItemAudio}
+                    variant="compact-secondary"
+                    dict={downloadDict}
+                    errorsDict={errorsDict}
+                    platformName={platformName}
+                  />
                 )}
               </div>
             </li>

@@ -38,4 +38,9 @@ body {
   .animate-fade-in-up {
     animation: none;
   }
+  /* No sliding motion: show the bar as a static, pulsing-free full-width fill instead. */
+  .animate-indeterminate {
+    animation: none;
+    width: 100%;
+  }
 }

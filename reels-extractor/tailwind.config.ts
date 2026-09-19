@@ -25,6 +25,10 @@ const config: Config = {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" },
         },
+        indeterminate: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(400%)" },
+        },
         "fade-in-up": {
           "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
@@ -33,6 +37,7 @@ const config: Config = {
       animation: {
         shimmer: "shimmer 2s infinite linear",
         "fade-in-up": "fade-in-up 0.3s ease-out both",
+        indeterminate: "indeterminate 1.3s ease-in-out infinite",
       },
     },
   },

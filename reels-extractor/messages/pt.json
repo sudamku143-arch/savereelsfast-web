@@ -82,6 +82,13 @@
     "downloadAllBusy": "Iniciando downloads…",
     "downloadAllHint": "Seu navegador pode pedir permissão para vários downloads."
   },
+  "download": {
+    "preparing": "Preparando o download…",
+    "downloading": "Baixando… {progress}",
+    "saving": "Salvando arquivo…",
+    "saved": "Salvo",
+    "cancel": "Cancelar"
+  },
   "errors": {
     "LOGIN_REQUIRED": {
       "title": "Privado ou exige login",
@@ -121,6 +128,10 @@
       "report": "Denunciar este link",
       "reportSubject": "Relato de problema com link",
       "reportBody": "Este link não funcionou no SaveReelsFast:"
+    },
+    "SERVER_BUSY": {
+      "title": "Estamos um pouco ocupados",
+      "message": "Muita gente está baixando agora. Tente novamente em alguns segundos."
     }
   },
   "pwa": {

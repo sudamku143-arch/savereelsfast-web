@@ -16,8 +16,9 @@ export const maxDuration = 40;
 
 /**
  * Request contract:
- *   POST /api/extract
- *   body: { url: string }   // Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat video link
+ *   GET  /api/extract?url=<link>   (CDN-cacheable: s-maxage=3600, stale-while-revalidate=86400)
+ *   POST /api/extract   body: { url: string }   (never cached)
+ *   link:   // Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat video link
  *
  * Success response (200):
  *   {
@@ -42,7 +43,7 @@ export const maxDuration = 40;
  * Error response: { success: false, error: string, code: ErrorCode }
  *   LOGIN_REQUIRED 403, UNSUPPORTED_POST 422, STREAM_EXPIRED_OR_BLOCKED 429/502,
  *   PLATFORM_TIMEOUT 504, EXTRACTION_FAILED 404, INVALID_URL 400,
- *   NOT_CONFIGURED 503, unexpected failures 500.
+ *   NOT_CONFIGURED 503, SERVER_BUSY 503 (with Retry-After), unexpected failures 500.
  */
 
 type ExtractRequestBody = {
@@ -102,37 +103,40 @@ class ExtractionError extends Error {
   }
 }
 
-export async function POST(request: NextRequest) {
-  let body: ExtractRequestBody;
+// Identical successful lookups are served from Vercel's edge cache for an hour (and may be
+// served stale for a day while a fresh copy is fetched). Errors are never cached.
+const CACHE_CONTROL_OK = "public, s-maxage=3600, stale-while-revalidate=86400";
 
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      { success: false, error: "Request body must be valid JSON." },
-      { status: 400 }
-    );
-  }
+function respond(
+  body: Record<string, unknown>,
+  status: number,
+  { cacheable = false, retryAfter }: { cacheable?: boolean; retryAfter?: number } = {}
+) {
+  const headers: Record<string, string> = {
+    "Cache-Control": cacheable && status === 200 ? CACHE_CONTROL_OK : "no-store",
+  };
+  if (retryAfter) headers["Retry-After"] = String(retryAfter);
+  return NextResponse.json(body, { status, headers });
+}
 
-  const url = typeof body?.url === "string" ? body.url.trim() : "";
-
-  if (!url) {
-    return NextResponse.json(
+async function handleExtract(rawUrl: string, cacheable: boolean) {
+  if (!rawUrl) {
+    return respond(
       { success: false, error: "Please provide a video link.", code: "INVALID_URL" },
-      { status: 400 }
+      400
     );
   }
 
-  const parsed = parseSupportedUrl(url);
+  const parsed = parseSupportedUrl(rawUrl);
   if (!parsed) {
-    return NextResponse.json(
+    return respond(
       {
         success: false,
         error:
           "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat).",
         code: "INVALID_URL",
       },
-      { status: 400 }
+      400
     );
   }
 
@@ -140,40 +144,62 @@ export async function POST(request: NextRequest) {
     const data = await extractReelData(parsed.url, parsed.platform);
 
     if (!data) {
-      return NextResponse.json(
+      return respond(
         {
           success: false,
           error:
             "Couldn't extract this video. It may be private, deleted, or region-restricted.",
           code: "EXTRACTION_FAILED",
         },
-        { status: 404 }
+        404
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      ...data,
-      platform: parsed.platform,
-      sourceUrl: parsed.url,
-    });
+    return respond(
+      { success: true, ...data, platform: parsed.platform, sourceUrl: parsed.url },
+      200,
+      { cacheable }
+    );
   } catch (err) {
     if (err instanceof ExtractionError) {
-      return NextResponse.json(
+      return respond(
         { success: false, error: err.message, code: err.code },
-        { status: err.status }
+        err.status,
+        { retryAfter: err.code === "SERVER_BUSY" ? 5 : undefined }
       );
     }
     console.error("[/api/extract] unexpected failure:", err);
-    return NextResponse.json(
+    return respond(
       {
         success: false,
         error: "Something went wrong while fetching this video.",
         code: "EXTRACTION_FAILED",
       },
-      { status: 500 }
+      500
     );
   }
+}
+
+/**
+ * GET /api/extract?url=<video link>
+ *
+ * The browser uses this form so that identical lookups are cacheable by the
+ * CDN: a viral link is extracted once per hour, not once per visitor.
+ */
+export async function GET(request: NextRequest) {
+  const url = request.nextUrl.searchParams.get("url")?.trim() ?? "";
+  return handleExtract(url, true);
+}
+
+/** POST { url } — same result as GET, never cached (kept for API clients). */
+export async function POST(request: NextRequest) {
+  let body: ExtractRequestBody;
+  try {
+    body = await request.json();
+  } catch {
+    return respond({ success: false, error: "Request body must be valid JSON." }, 400);
+  }
+  return handleExtract(typeof body?.url === "string" ? body.url.trim() : "", false);
 }
 
 type Strategy = (shortcode: string) => Promise<ReelData | null>;
@@ -246,6 +272,7 @@ async function extractReelData(
     "UNSUPPORTED_POST",
     "STREAM_EXPIRED_OR_BLOCKED",
     "PLATFORM_TIMEOUT",
+    "SERVER_BUSY",
   ];
   if (scraperFailure && specific.includes(scraperFailure.code)) {
     throw new ExtractionError(scraperFailure.message, scraperFailure.status, scraperFailure.code);

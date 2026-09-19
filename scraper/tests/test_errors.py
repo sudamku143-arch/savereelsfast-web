@@ -74,6 +74,14 @@ class EndpointBase(unittest.TestCase):
 
     URL = "https://www.youtube.com/watch?v=jNQXAC9IVRw"
 
+    def setUp(self):
+        self.reset_caches()
+
+    def reset_caches(self):
+        # Extraction results are cached per URL; tests mock a different answer for the same URL.
+        self.main.INFO_CACHE.clear()
+        self.main.NEGATIVE_CACHE.clear()
+
     def fmt(self, fid, height, acodec, ext="mp4"):
         return {"format_id": fid, "url": f"https://x.googlevideo.com/{fid}", "ext": ext, "height": height,
                 "width": height * 9 // 16, "vcodec": "avc1", "acodec": acodec, "protocol": "https"}
@@ -91,6 +99,7 @@ class EndpointTests(EndpointBase):
         ]
         for message, code, status in expectations:
             with self.subTest(code=code):
+                self.reset_caches()
                 with mock.patch.object(self.main, "_extract_info", side_effect=DownloadError(message)):
                     response = self.client.get("/extract", params={"url": self.URL})
                 self.assertEqual(response.status_code, status)
@@ -105,6 +114,7 @@ class EndpointTests(EndpointBase):
     def test_post_without_video_is_unsupported(self):
         for info in ({"id": "abc", "formats": []}, None):
             with self.subTest(info=info):
+                self.reset_caches()
                 with mock.patch.object(self.main, "_extract_info", return_value=info):
                     response = self.client.get("/extract", params={"url": self.URL})
                 self.assertEqual(response.status_code, 422)
@@ -118,6 +128,7 @@ class EndpointTests(EndpointBase):
         ]
         for message, status, code in cases:
             with self.subTest(code=code):
+                self.reset_caches()
                 # yt-dlp appends generic boilerplate lines after the real reason.
                 info = {"id": "abc", "formats": [], "_messages": [message, "No video formats found!", "Requested format is not available"]}
                 with mock.patch.object(self.main, "_extract_info", return_value=info):

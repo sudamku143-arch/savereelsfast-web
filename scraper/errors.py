@@ -8,6 +8,7 @@ STREAM_EXPIRED_OR_BLOCKED = "STREAM_EXPIRED_OR_BLOCKED"
 PLATFORM_TIMEOUT = "PLATFORM_TIMEOUT"
 EXTRACTION_FAILED = "EXTRACTION_FAILED"
 INVALID_URL = "INVALID_URL"
+SERVER_BUSY = "SERVER_BUSY"  # too many extractions/streams in flight; retry shortly
 
 # NO_AUDIO is not a failure: it is a warning attached to a successful result
 # when only a video-only stream could be offered.
@@ -20,6 +21,7 @@ STATUS = {
     PLATFORM_TIMEOUT: 504,
     EXTRACTION_FAILED: 404,
     INVALID_URL: 400,
+    SERVER_BUSY: 503,
 }
 
 MESSAGES = {
@@ -29,6 +31,7 @@ MESSAGES = {
     PLATFORM_TIMEOUT: "The platform didn't respond in time. Please try again shortly.",
     EXTRACTION_FAILED: "Couldn't extract this video. It may be private, deleted, or region-restricted.",
     INVALID_URL: "Please provide a supported video URL.",
+    SERVER_BUSY: "The service is busy right now. Please try again in a few seconds.",
 }
 
 # Order matters: the first matching group wins.

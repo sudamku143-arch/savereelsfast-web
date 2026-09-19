@@ -3,6 +3,8 @@ import type { PlatformId } from "@/lib/platforms";
 import { buildDownloadHref, downloadFilename } from "@/lib/download";
 import PlatformIcon from "./PlatformIcon";
 import ItemsSlider, { type ItemsDict } from "./ItemsSlider";
+import DownloadButton, { type DownloadDict } from "./DownloadButton";
+import type { ErrorsDict } from "./ErrorCard";
 
 export type ReelItem = {
   id: string;
@@ -61,12 +63,16 @@ export function snippet(text: string, max = 140): string {
 export default function PreviewCard({
   result,
   dict,
+  downloadDict,
+  errorsDict,
   platform,
   platformName,
   onReset,
 }: {
   result: ReelResult;
   dict: PreviewDict;
+  downloadDict: DownloadDict;
+  errorsDict: ErrorsDict;
   platform: PlatformId;
   platformName: string;
   onReset: () => void;
@@ -150,7 +156,13 @@ export default function PreviewCard({
       </div>
 
       {isCarousel ? (
-        <ItemsSlider items={items} dict={dict} />
+        <ItemsSlider
+          items={items}
+          dict={dict}
+          downloadDict={downloadDict}
+          errorsDict={errorsDict}
+          platformName={platformName}
+        />
       ) : (
         <>
           {result.warning === "NO_AUDIO" && (
@@ -176,21 +188,24 @@ export default function PreviewCard({
           )}
 
           <div className="mt-4 flex flex-col gap-2">
-            <a
+            <DownloadButton
               href={videoHref}
-              download={filename}
-              className="rounded-xl bg-brand-500 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300"
-            >
-              {dict.downloadButton}
-            </a>
+              filename={filename}
+              label={dict.downloadButton}
+              dict={downloadDict}
+              errorsDict={errorsDict}
+              platformName={platformName}
+            />
             {audioHref && (
-              <a
+              <DownloadButton
                 href={audioHref}
-                download={downloadFilename(result.id, "audio", result.audioExt)}
-                className="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-center text-sm font-semibold text-zinc-100 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500"
-              >
-                {dict.downloadAudio.replaceAll("{format}", audioFormat)}
-              </a>
+                filename={downloadFilename(result.id, "audio", result.audioExt)}
+                label={dict.downloadAudio.replaceAll("{format}", audioFormat)}
+                variant="secondary"
+                dict={downloadDict}
+                errorsDict={errorsDict}
+                platformName={platformName}
+              />
             )}
           </div>
         </>

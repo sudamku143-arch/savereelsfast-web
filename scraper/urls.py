@@ -142,6 +142,32 @@ def expand_redirects(
     return current
 
 
+def _strip_tracking(parsed) -> str:
+    query = [
+        (k, v)
+        for k, v in parse_qsl(parsed.query, keep_blank_values=True)
+        if not k.lower().startswith("utm_") and k.lower() not in TRACKING_PARAMS
+    ]
+    return urlunparse(parsed._replace(query=urlencode(query), fragment=""))
+
+
+def cache_key(url: str) -> str:
+    """
+    Stable cache key for a pasted link, computed WITHOUT any network call.
+
+    Full links use their normalized form, so tracking-parameter variants of the
+    same video share one entry. Short/share links are keyed by the link itself
+    (stripped of tracking), so repeat requests for a viral short link are hits
+    even though resolving it would need a redirect lookup.
+    """
+    parsed = urlparse(url.strip())
+    if parsed.scheme not in ("http", "https") or not host_allowed(parsed.hostname or ""):
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    if needs_expansion(url):
+        return _strip_tracking(parsed)
+    return normalize_url(url)
+
+
 def normalize_url(url: str) -> str:
     """Validate the host and strip tracking parameters / fragments from the link."""
     parsed = urlparse(url.strip())
@@ -160,12 +186,7 @@ def normalize_url(url: str) -> str:
         kind = "reel" if match.group(1).lower() == "reels" else match.group(1).lower()
         return f"https://www.instagram.com/{kind}/{match.group(2)}/"
 
-    query = [
-        (k, v)
-        for k, v in parse_qsl(parsed.query, keep_blank_values=True)
-        if not k.lower().startswith("utm_") and k.lower() not in TRACKING_PARAMS
-    ]
-    return urlunparse(parsed._replace(query=urlencode(query), fragment=""))
+    return _strip_tracking(parsed)
 
 
 def resolve_url(url: str, expand: Callable[[str], str] = expand_redirects) -> str:

@@ -48,6 +48,11 @@ function scraperBase(): string | null {
   return raw && /^https?:\/\//i.test(raw) ? raw : null;
 }
 
+/** Only a plain single range is forwarded upstream. */
+function validRange(value: string | null): string | null {
+  return value && /^bytes=\d*-\d*$/.test(value.trim()) ? value.trim() : null;
+}
+
 function attachmentHeaders(filename: string, length: number, contentType: string): Headers {
   const headers = new Headers({
     "Content-Type": contentType,
@@ -55,8 +60,30 @@ function attachmentHeaders(filename: string, length: number, contentType: string
     "Cache-Control": "private, no-store",
     "X-Content-Type-Options": "nosniff",
   });
-  if (length > 0) headers.set("Content-Length", String(length));
+  if (length > 0) {
+    headers.set("Content-Length", String(length));
+    // Streaming responses can lose Content-Length on the way to the browser (it falls back to
+    // chunked encoding), so the size is repeated in a header the download progress bar can rely on.
+    headers.set("X-File-Size", String(length));
+    headers.set("Access-Control-Expose-Headers", "X-File-Size");
+  }
   return headers;
+}
+
+/**
+ * Wrap an upstream video/audio response as our attachment response, keeping
+ * the byte-range headers so resumed downloads and seeking keep working.
+ */
+function respondWith(upstream: Response, filename: string, media: Media): Response {
+  const length = Number(upstream.headers.get("content-length") ?? 0);
+  const headers = attachmentHeaders(filename, length, media.contentType);
+  const partial = upstream.status === 206;
+  const contentRange = upstream.headers.get("content-range");
+  if (partial && contentRange) headers.set("Content-Range", contentRange);
+  if (partial || upstream.headers.get("accept-ranges")?.toLowerCase() === "bytes") {
+    headers.set("Accept-Ranges", "bytes");
+  }
+  return new Response(upstream.body, { status: partial ? 206 : 200, headers });
 }
 
 /** Fetch with a timeout that only covers waiting for the response headers. */
@@ -75,7 +102,12 @@ async function fetchWithHeaderTimeout(
 }
 
 /** Try the CDN URL directly. Returns a streaming response, or null when it can't be used. */
-async function tryDirect(target: string, filename: string, media: Media): Promise<Response | null> {
+async function tryDirect(
+  target: string,
+  filename: string,
+  media: Media,
+  range: string | null
+): Promise<Response | null> {
   let upstream: Response;
   try {
     upstream = await fetchWithHeaderTimeout(
@@ -87,6 +119,7 @@ async function tryDirect(target: string, filename: string, media: Media): Promis
           Accept:
             media.kind === "audio" ? "audio/*,*/*;q=0.5" : "video/mp4,video/*;q=0.9,*/*;q=0.5",
           "Accept-Language": "en-US,en;q=0.9",
+          ...(range ? { Range: range } : {}),
         },
         redirect: "manual", // never follow a redirect off the allow-list
       },
@@ -113,10 +146,7 @@ async function tryDirect(target: string, filename: string, media: Media): Promis
   const length = Number(upstream.headers.get("content-length") ?? 0);
   if (length > MAX_BYTES) return null;
 
-  return new Response(upstream.body, {
-    status: 200,
-    headers: attachmentHeaders(filename, length, media.contentType),
-  });
+  return respondWith(upstream, filename, media);
 }
 
 type ScraperFailure = { status: number; code: ErrorCode; message: string };
@@ -125,7 +155,8 @@ type ScraperFailure = { status: number; code: ErrorCode; message: string };
 async function fromScraper(
   path: string,
   filename: string,
-  media: Media
+  media: Media,
+  range: string | null = null
 ): Promise<Response | ScraperFailure> {
   const base = scraperBase();
   if (!base) {
@@ -141,7 +172,10 @@ async function fromScraper(
   try {
     res = await fetchWithHeaderTimeout(
       `${base}${path}`,
-      { headers: key ? { "X-Scraper-Key": key } : {}, cache: "no-store" },
+      {
+        headers: { ...(key ? { "X-Scraper-Key": key } : {}), ...(range ? { Range: range } : {}) },
+        cache: "no-store",
+      },
       FALLBACK_HEADER_TIMEOUT_MS
     );
   } catch {
@@ -163,18 +197,20 @@ async function fromScraper(
     };
   }
 
-  const length = Number(res.headers.get("content-length") ?? 0);
-  return new Response(res.body, {
-    status: 200,
-    headers: attachmentHeaders(filename, length, media.contentType),
-  });
+  return respondWith(res, filename, media);
 }
 
 /**
  * Stream the CDN URL through the scraper (`/stream`). The scraper fetches it
  * from its own IP, which is the one the link was issued to.
  */
-function viaScraperStream(target: string, id: string | null, filename: string, media: Media) {
+function viaScraperStream(
+  target: string,
+  id: string | null,
+  filename: string,
+  media: Media,
+  range: string | null
+) {
   const params = new URLSearchParams({
     url: target,
     referer: refererFor(target),
@@ -182,7 +218,7 @@ function viaScraperStream(target: string, id: string | null, filename: string, m
     kind: media.kind,
     ext: media.ext,
   });
-  return fromScraper(`/stream?${params.toString()}`, filename, media);
+  return fromScraper(`/stream?${params.toString()}`, filename, media, range);
 }
 
 /**
@@ -226,15 +262,16 @@ export async function GET(request: NextRequest) {
         }
       : { kind: "video", ext: "mp4", contentType: "video/mp4" };
   const filename = safeFilename(id, media);
+  const range = validRange(request.headers.get("range"));
 
   if (!isIpBound(target)) {
-    const direct = await tryDirect(target, filename, media);
+    const direct = await tryDirect(target, filename, media, range);
     if (direct) return direct;
   }
 
   let failure: ScraperFailure | null = null;
 
-  const streamed = await viaScraperStream(target, id, filename, media);
+  const streamed = await viaScraperStream(target, id, filename, media, range);
   if (streamed instanceof Response) return streamed;
   failure = streamed;
 

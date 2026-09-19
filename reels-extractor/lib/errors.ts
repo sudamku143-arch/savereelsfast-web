@@ -7,6 +7,7 @@ export const ERROR_CODES = [
   "EXTRACTION_FAILED", // generic: private, deleted, region-restricted, unknown
   "INVALID_URL", // not a supported video link
   "NOT_CONFIGURED", // scraper service needed for this platform isn't set up
+  "SERVER_BUSY", // the scraper is at capacity; retry in a few seconds
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

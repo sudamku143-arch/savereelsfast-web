@@ -16,20 +16,22 @@ const TYPING_DEBOUNCE_MS = 600;
 export default function InputBox({
   dict,
   placeholder,
+  defaultUrl = "",
   onSubmit,
   onDetectPlatform,
   disabled,
 }: {
   dict: Dict;
   placeholder: string;
+  defaultUrl?: string;
   onSubmit: (url: string) => void;
   onDetectPlatform: (platform: PlatformId) => void;
   disabled?: boolean;
 }) {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(defaultUrl);
   const [localError, setLocalError] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastSubmittedRef = useRef<string | null>(null);
+  const lastSubmittedRef = useRef<string | null>(defaultUrl || null);
 
   function clearTimer() {
     if (timerRef.current) {

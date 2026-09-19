@@ -1,13 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { isErrorCode } from "@/lib/errors";
+import {
+  getCachedResult,
+  getLastViewed,
+  putCachedResult,
+  setLastViewed,
+} from "@/lib/result-cache";
 import InputBox from "./InputBox";
 import PlatformTabs from "./PlatformTabs";
 import SkeletonLoader from "./SkeletonLoader";
 import PreviewCard, { type PreviewDict, type ReelResult } from "./PreviewCard";
 import ErrorCard, { type ErrorsDict, type UiErrorCode } from "./ErrorCard";
+import type { DownloadDict } from "./DownloadButton";
 
 type HeroDict = {
   badge: string;
@@ -29,11 +36,13 @@ export default function ExtractorClient({
   platformsDict,
   previewDict,
   errorsDict,
+  downloadDict,
 }: {
   heroDict: HeroDict;
   platformsDict: PlatformsDict;
   previewDict: PreviewDict;
   errorsDict: ErrorsDict;
+  downloadDict: DownloadDict;
 }) {
   const [platform, setPlatform] = useState<PlatformId>("instagram");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
@@ -43,25 +52,46 @@ export default function ExtractorClient({
   const [errorCode, setErrorCode] = useState<UiErrorCode | null>(null);
   // Remounting the input clears it; "Try again" reuses the last link.
   const [inputKey, setInputKey] = useState(0);
+  const [restoredUrl, setRestoredUrl] = useState("");
   const lastUrlRef = useRef<string | null>(null);
 
   const names = Object.fromEntries(
     PLATFORM_IDS.map((id) => [id, platformsDict[id].name])
   ) as Record<PlatformId, string>;
 
+  // Coming back to the page (browser back, reload) shows the last result again
+  // straight from sessionStorage: no spinner, no request.
+  useEffect(() => {
+    const last = getLastViewed<ReelResult>();
+    if (!last) return;
+    lastUrlRef.current = last.url;
+    setResult(last.result);
+    setStatus("done");
+    if (last.result.platform) setPlatform(last.result.platform);
+    setRestoredUrl(last.url);
+    setInputKey((k) => k + 1);
+  }, []);
+
   async function handleSubmit(url: string) {
     lastUrlRef.current = url;
-    setStatus("loading");
     setErrorCode(null);
+
+    // One of the last five successful lookups: render it instantly.
+    const cached = getCachedResult<ReelResult>(url);
+    if (cached) {
+      setResult(cached);
+      setStatus("done");
+      if (cached.platform) setPlatform(cached.platform);
+      setLastViewed(url);
+      return;
+    }
+
+    setStatus("loading");
     setResult(null);
 
     try {
-      const res = await fetch("/api/extract", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
-
+      // GET, so identical lookups can be cached by the CDN (see /api/extract).
+      const res = await fetch(`/api/extract?url=${encodeURIComponent(url)}`);
       const data = await res.json();
 
       if (!res.ok || !data.success) {
@@ -70,7 +100,10 @@ export default function ExtractorClient({
         return;
       }
 
-      setResult(data as ReelResult);
+      const fresh = data as ReelResult;
+      putCachedResult(url, fresh);
+      setLastViewed(url);
+      setResult(fresh);
       setStatus("done");
     } catch {
       setErrorCode("NETWORK");
@@ -84,6 +117,8 @@ export default function ExtractorClient({
     setResult(null);
     setErrorCode(null);
     lastUrlRef.current = null;
+    setLastViewed(null); // the cached results stay: pasting the same link again is still instant
+    setRestoredUrl("");
     setInputKey((k) => k + 1);
   }
 
@@ -124,6 +159,7 @@ export default function ExtractorClient({
           key={inputKey}
           dict={heroDict}
           placeholder={active.placeholder}
+          defaultUrl={restoredUrl}
           onSubmit={handleSubmit}
           onDetectPlatform={setPlatform}
           disabled={status === "loading"}
@@ -148,6 +184,8 @@ export default function ExtractorClient({
           <PreviewCard
             result={result}
             dict={previewDict}
+            downloadDict={downloadDict}
+            errorsDict={errorsDict}
             platform={result.platform ?? platform}
             platformName={platformsDict[result.platform ?? platform].name}
             onReset={handleReset}

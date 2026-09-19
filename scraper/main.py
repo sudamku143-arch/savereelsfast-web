@@ -1,6 +1,8 @@
+import asyncio
 import os
 import re
 import socket
+import weakref
 import urllib.error
 import urllib.request
 from typing import Iterator
@@ -11,14 +13,17 @@ import yt_dlp
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from starlette.background import BackgroundTask
 from yt_dlp.utils import DownloadError, ExtractorError
 
 import errors
+from cache import SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
 from urls import (
     BROWSER_UA,
     UnsupportedUrl,
+    cache_key,
     is_allowed_media_url,
     is_threads_host,
     resolve_url,
@@ -88,7 +93,38 @@ AUDIO_TYPES = {
 MAX_ITEMS = 20  # carousel posts are capped so one request can't fan out unbounded
 
 MAX_STREAM_BYTES = 200 * 1024 * 1024
-CHUNK_SIZE = 64 * 1024
+CHUNK_SIZE = 128 * 1024  # streamed in 128 KB pieces: low memory per download, smooth progress
+
+
+def _env_number(name: str, default: float) -> float:
+    try:
+        return float(os.environ.get(name, default))
+    except ValueError:
+        return float(default)
+
+
+# ---- performance / anti-crash tunables (override with environment variables) ----
+MAX_CONCURRENT_EXTRACTIONS = int(_env_number("MAX_CONCURRENT_EXTRACTIONS", 6))  # simultaneous yt-dlp runs
+MAX_QUEUED_EXTRACTIONS = int(_env_number("MAX_QUEUED_EXTRACTIONS", 30))  # requests allowed to wait for a slot
+QUEUE_WAIT_SECONDS = _env_number("QUEUE_WAIT_SECONDS", 20)  # longest a queued request waits
+MAX_CONCURRENT_STREAMS = int(_env_number("MAX_CONCURRENT_STREAMS", 12))  # simultaneous downloads
+CACHE_TTL_SECONDS = _env_number("CACHE_TTL_SECONDS", 5400)  # 1.5 h: CDN links stay valid for hours
+CACHE_MAX_ENTRIES = int(_env_number("CACHE_MAX_ENTRIES", 500))
+NEGATIVE_TTL_SECONDS = 60  # remember "private / no video" answers briefly so retries don't hammer the platform
+
+INFO_CACHE = TTLCache(max_entries=CACHE_MAX_ENTRIES, ttl=CACHE_TTL_SECONDS)
+NEGATIVE_CACHE = TTLCache(max_entries=200, ttl=NEGATIVE_TTL_SECONDS)
+# Failures worth remembering: they won't change in the next minute. Timeouts and
+# blocks are transient, so they are never cached.
+NEGATIVE_CACHEABLE = {errors.LOGIN_REQUIRED, errors.UNSUPPORTED_POST, errors.EXTRACTION_FAILED}
+
+STREAM_SLOTS = SlotPool(MAX_CONCURRENT_STREAMS, max_age=1800)
+
+# asyncio primitives belong to one event loop, so they are created per loop on first use.
+_extraction_slots_by_loop: "weakref.WeakKeyDictionary" = weakref.WeakKeyDictionary()
+_inflight: dict[str, "asyncio.Task"] = {}
+_waiting = 0  # requests currently queued for an extraction slot
+_active = 0  # extractions currently running
 
 
 def _check_key(key: str | None) -> None:
@@ -217,7 +253,12 @@ def _describe_items(info: dict) -> list[dict]:
 
 @app.get("/")
 def health() -> dict:
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "cache": INFO_CACHE.stats(),
+        "extractions": {"active": _active, "waiting": _waiting, "limit": MAX_CONCURRENT_EXTRACTIONS},
+        "streams": {"active": STREAM_SLOTS.active, "limit": STREAM_SLOTS.size},
+    }
 
 
 def _extract_info(url: str) -> dict | None:
@@ -279,12 +320,104 @@ def _resolve_and_extract(url: str) -> tuple[str, dict]:
 
 
 def _http_error(err: ScraperError) -> HTTPException:
-    return HTTPException(status_code=err.status, detail=err.detail())
+    headers = {"Retry-After": "5"} if err.code == errors.SERVER_BUSY else None
+    return HTTPException(status_code=err.status, detail=err.detail(), headers=headers)
 
 
-# Plain `def` so FastAPI runs the blocking network calls in its threadpool.
+def _extraction_slots() -> asyncio.Semaphore:
+    loop = asyncio.get_running_loop()
+    slots = _extraction_slots_by_loop.get(loop)
+    if slots is None:
+        slots = asyncio.Semaphore(MAX_CONCURRENT_EXTRACTIONS)
+        _extraction_slots_by_loop[loop] = slots
+    return slots
+
+
+def _swallow_result(task: "asyncio.Task") -> None:
+    """Mark a finished task's exception as retrieved so asyncio doesn't log it as unhandled."""
+    if not task.cancelled():
+        task.exception()
+
+
+async def _extract_guarded(url: str, key: str) -> tuple[str, dict]:
+    """
+    Run one extraction inside the concurrency limit.
+
+    At most MAX_CONCURRENT_EXTRACTIONS yt-dlp runs execute at once. Extra
+    requests queue (up to MAX_QUEUED_EXTRACTIONS, for at most QUEUE_WAIT_SECONDS)
+    and are then turned away with a 503 instead of piling up until the instance
+    runs out of memory.
+    """
+    global _waiting, _active
+    slots = _extraction_slots()
+
+    if slots.locked() and _waiting >= MAX_QUEUED_EXTRACTIONS:
+        raise ScraperError(errors.SERVER_BUSY)
+
+    _waiting += 1
+    try:
+        await asyncio.wait_for(slots.acquire(), timeout=QUEUE_WAIT_SECONDS)
+    except asyncio.TimeoutError:
+        raise ScraperError(errors.SERVER_BUSY)
+    finally:
+        _waiting -= 1
+
+    _active += 1
+    try:
+        resolved, info = await asyncio.to_thread(_resolve_and_extract, url)
+    except ScraperError as err:
+        if err.code in NEGATIVE_CACHEABLE:
+            NEGATIVE_CACHE.set(key, err)
+        raise
+    finally:
+        _active -= 1
+        slots.release()
+
+    entry = {"resolved": resolved, "info": slim_info(info)}
+    INFO_CACHE.set(key, entry)
+    try:  # a short link and the full link it points to share one entry
+        INFO_CACHE.set(cache_key(resolved), entry)
+    except UnsupportedUrl:
+        pass
+    return resolved, entry["info"]
+
+
+async def _acquire_info(url: str, fresh: bool = False) -> tuple[str, dict, bool]:
+    """
+    Post metadata for `url`: (resolved URL, info, served_from_cache).
+
+    Order: cache -> negative cache -> join an identical in-flight extraction
+    -> start a new one. A viral link requested by 100 people at once therefore
+    costs a single yt-dlp run, and everyone after it costs a dict lookup.
+    `fresh=True` skips the caches (used when a cached link turned out to be dead).
+    """
+    try:
+        key = cache_key(url)
+    except UnsupportedUrl as exc:
+        raise ScraperError(errors.INVALID_URL, str(exc))
+
+    if not fresh:
+        hit = INFO_CACHE.get(key)
+        if hit is not None:
+            return hit["resolved"], hit["info"], True
+        known_failure = NEGATIVE_CACHE.get(key)
+        if known_failure is not None:
+            raise known_failure
+
+    task = _inflight.get(key)
+    if task is None or fresh:
+        task = asyncio.ensure_future(_extract_guarded(url, key))
+        task.add_done_callback(_swallow_result)
+        _inflight[key] = task
+        task.add_done_callback(lambda done, k=key: _inflight.pop(k, None) if _inflight.get(k) is done else None)
+
+    # shield: if this client disconnects, other requests waiting on the same extraction keep going
+    resolved, info = await asyncio.shield(task)
+    return resolved, info, False
+
+
 @app.get("/extract")
-def extract(
+async def extract(
     url: str = Query(
         ...,
         description="Public video URL (Instagram, YouTube, Facebook, Threads, X, "
@@ -295,7 +428,7 @@ def extract(
     _check_key(x_scraper_key)
 
     try:
-        _resolved, info = _resolve_and_extract(url)
+        _resolved, info, cached = await _acquire_info(url)
     except ScraperError as err:
         raise _http_error(err)
 
@@ -314,17 +447,34 @@ def extract(
         "formats": [],  # a single best progressive stream is returned in videoUrl
         # Only present for posts with several videos (Instagram carousels, multi-video tweets).
         "items": items if len(items) > 1 else [],
+        "cached": cached,
     }
 
 
 class OpenStream:
-    """An opened upstream video response plus everything needed to close it."""
+    """An opened upstream response plus everything needed to close it."""
 
-    def __init__(self, response, length: int | None, closers: list, ext: str | None = None):
+    def __init__(
+        self,
+        response,
+        length: int | None,
+        closers: list,
+        ext: str | None = None,
+        status: int = 200,
+        content_range: str | None = None,
+        accept_ranges: bool = False,
+    ):
         self.response = response
         self.length = length
         self._closers = closers
+        self._closed = False
         self.ext = ext
+        self.status = status
+        self.content_range = content_range
+        self.accept_ranges = accept_ranges
+
+    def add_closer(self, closer) -> None:
+        self._closers.append(closer)
 
     def chunks(self) -> Iterator[bytes]:
         sent = 0
@@ -341,24 +491,21 @@ class OpenStream:
             self.close()
 
     def close(self) -> None:
+        if self._closed:
+            return
+        self._closed = True
         for closer in self._closers:
             try:
                 closer()
             except Exception:  # noqa: BLE001
                 pass
 
+    def __del__(self):  # a stream abandoned before it was iterated must still free its slot
+        self.close()
 
-def _open_stream(page_url: str, kind: str = "video", item: int = 0) -> OpenStream:
-    """
-    Re-resolve the post from THIS server's IP and open the best video (or
-    audio-only) stream. `item` selects a slide of a multi-video post.
 
-    Links resolved elsewhere (e.g. on Vercel) are often bound to the IP that
-    requested them (YouTube) or need the extractor's own headers/cookies
-    (TikTok, Facebook). Fetching here with yt-dlp's session avoids both.
-    Raises ScraperError.
-    """
-    resolved, info = _resolve_and_extract(page_url)
+def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> OpenStream:
+    """Open the best video (or audio-only) stream of an already-resolved post. Blocking."""
     entries = _entries(info)
     entry = entries[item] if 0 <= item < len(entries) else entries[0]
     if kind == "audio":
@@ -396,6 +543,30 @@ def _open_stream(page_url: str, kind: str = "video", item: int = 0) -> OpenStrea
         raise _failure_from_exception(exc)
 
 
+async def _open_stream(page_url: str, kind: str = "video", item: int = 0) -> OpenStream:
+    """
+    Re-resolve the post from THIS server's IP and open the best video (or
+    audio-only) stream. `item` selects a slide of a multi-video post.
+
+    Links resolved elsewhere (e.g. on Vercel) are often bound to the IP that
+    requested them (YouTube) or need the extractor's own headers/cookies
+    (TikTok, Facebook). Fetching here with yt-dlp's session avoids both.
+
+    Metadata comes from the cache when possible. If a cached link turns out
+    to be dead, it is refreshed once and the stream is opened again.
+    Raises ScraperError.
+    """
+    for attempt in (0, 1):
+        resolved, info, cached = await _acquire_info(page_url, fresh=attempt == 1)
+        try:
+            return await asyncio.to_thread(_open_stream_from_info, resolved, info, kind, item)
+        except ScraperError as err:
+            if attempt == 0 and cached and err.code in (errors.STREAM_EXPIRED_OR_BLOCKED, errors.PLATFORM_TIMEOUT):
+                continue
+            raise
+    raise ScraperError(errors.STREAM_EXPIRED_OR_BLOCKED)  # unreachable; keeps type checkers happy
+
+
 def _attachment_response(
     stream: OpenStream, video_id: str, kind: str = "video", ext: str | None = None
 ) -> StreamingResponse:
@@ -412,11 +583,21 @@ def _attachment_response(
     }
     if stream.length and stream.length <= MAX_STREAM_BYTES:
         headers["Content-Length"] = str(stream.length)
-    return StreamingResponse(stream.chunks(), media_type=media_type, headers=headers)
+    if stream.accept_ranges or stream.status == 206:
+        headers["Accept-Ranges"] = "bytes"
+    if stream.content_range:
+        headers["Content-Range"] = stream.content_range
+    return StreamingResponse(
+        stream.chunks(),
+        status_code=stream.status,
+        media_type=media_type,
+        headers=headers,
+        background=BackgroundTask(stream.close),  # frees the slot even if iteration never started
+    )
 
 
 @app.get("/download")
-def download(
+async def download(
     url: str = Query(..., description="The post URL (not a CDN URL); it is re-resolved here"),
     id: str = Query("video", max_length=60),
     kind: str = Query("video", pattern="^(video|audio)$"),
@@ -426,10 +607,18 @@ def download(
     """Re-resolve the post from this server's IP and stream the best video (or its audio-only track)."""
     _check_key(x_scraper_key)
 
+    lease = STREAM_SLOTS.acquire()
+    if lease is None:
+        raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        stream = _open_stream(url, kind, item)
+        stream = await _open_stream(url, kind, item)
     except ScraperError as err:
+        lease.release()
         raise _http_error(err)
+    except BaseException:
+        lease.release()
+        raise
+    stream.add_closer(lease.release)
 
     # Audio downloads are named after the container of the stream actually served.
     return _attachment_response(stream, id, kind, stream.ext)
@@ -445,7 +634,9 @@ class _HttpxReader:
         return next(self._chunks, b"")
 
 
-def _open_cdn_stream(media_url: str, referer: str | None, kind: str = "video") -> OpenStream:
+def _open_cdn_stream(
+    media_url: str, referer: str | None, kind: str = "video", range_header: str | None = None
+) -> OpenStream:
     """
     Open a CDN video URL from THIS server's IP.
 
@@ -463,6 +654,9 @@ def _open_cdn_stream(media_url: str, referer: str | None, kind: str = "video") -
         "Accept": "audio/*,*/*;q=0.5" if kind == "audio" else "video/mp4,video/*;q=0.9,*/*;q=0.5",
         "Accept-Language": "en-US,en;q=0.9",
     }
+    # Forward a single byte range so interrupted downloads can resume and players can seek.
+    if range_header and re.fullmatch(r"bytes=\d*-\d*", range_header.strip()):
+        headers["Range"] = range_header.strip()
     client = httpx.Client(timeout=httpx.Timeout(15.0, read=30.0), follow_redirects=False)
     try:
         current = media_url
@@ -503,7 +697,14 @@ def _open_cdn_stream(media_url: str, referer: str | None, kind: str = "video") -
             response.close()
             raise ScraperError(errors.EXTRACTION_FAILED, "This video is too large to download.")
 
-        return OpenStream(_HttpxReader(response), length, [response.close, client.close])
+        return OpenStream(
+            _HttpxReader(response),
+            length,
+            [response.close, client.close],
+            status=206 if response.status_code == 206 else 200,
+            content_range=response.headers.get("content-range") if response.status_code == 206 else None,
+            accept_ranges=response.headers.get("accept-ranges", "").lower() == "bytes",
+        )
     except ScraperError:
         client.close()
         raise
@@ -513,20 +714,29 @@ def _open_cdn_stream(media_url: str, referer: str | None, kind: str = "video") -
 
 
 @app.get("/stream")
-def stream(
+async def stream(
     url: str = Query(..., description="Video URL on a platform CDN, as returned by /extract"),
     referer: str | None = Query(None, description="Page the video came from (optional)"),
     id: str = Query("video", max_length=60),
     kind: str = Query("video", pattern="^(video|audio)$"),
     ext: str = Query("m4a", pattern="^[a-z0-9]{2,4}$"),
     x_scraper_key: str | None = Header(default=None),
+    range_header: str | None = Header(default=None, alias="range"),
 ) -> StreamingResponse:
     """Stream a CDN URL through this server so the CDN sees the scraper's IP."""
     _check_key(x_scraper_key)
 
+    lease = STREAM_SLOTS.acquire()
+    if lease is None:
+        raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        opened = _open_cdn_stream(url, referer, kind)
+        opened = await asyncio.to_thread(_open_cdn_stream, url, referer, kind, range_header)
     except ScraperError as err:
+        lease.release()
         raise _http_error(err)
+    except BaseException:
+        lease.release()
+        raise
+    opened.add_closer(lease.release)
 
     return _attachment_response(opened, id, kind, ext)
