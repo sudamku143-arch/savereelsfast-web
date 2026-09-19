@@ -4,8 +4,8 @@ import "../globals.css";
 import { locales, isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
 
-export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'es' }, { locale: 'pt' }];
+export async function generateStaticParams() {
+  return ['en', 'es', 'pt'].map((locale) => ({ locale }));
 }
 
 type Props = {
@@ -61,3 +61,4 @@ export default function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
+export const dynamicParams = true;
