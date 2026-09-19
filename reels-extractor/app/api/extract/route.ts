@@ -4,10 +4,10 @@ import {
   decodeHtmlEntities,
   findFirst,
   isAllowedMediaUrl,
-  normalizeInstagramUrl,
   parseShortcode,
   unescapeJsonFragment,
 } from "@/lib/instagram";
+import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 
 export const runtime = "nodejs";
 export const maxDuration = 40;
@@ -15,13 +15,13 @@ export const maxDuration = 40;
 /**
  * Request contract:
  *   POST /api/extract
- *   body: { url: string }   // /reel/, /reels/, /p/ or /tv/ link
+ *   body: { url: string }   // Instagram, YouTube, Facebook, Threads, X, Pinterest or TikTok video link
  *
  * Success response (200):
  *   {
  *     success: true,
- *     id: string,                 // shortcode, used for the download filename
- *     videoUrl: string,           // highest-resolution MP4 on the Instagram CDN
+ *     id: string,                 // post/video id, used for the download filename
+ *     videoUrl: string,           // direct MP4 URL on the platform's CDN
  *     thumbnailUrl: string,       // "" when none could be found
  *     title: string | null,       // caption
  *     author: string | null,      // handle without "@"
@@ -30,8 +30,9 @@ export const maxDuration = 40;
  *   }
  *
  * Error response: { success: false, error: string }
- *   400 missing/invalid link, 404 private/deleted/unavailable,
- *   429 Instagram is rate-limiting us, 500 upstream or unexpected failure.
+ *   400 missing/unsupported link, 404 private/deleted/unavailable,
+ *   429 the platform is rate-limiting us, 500 upstream or unexpected failure,
+ *   503 the scraper service needed for a non-Instagram platform isn't configured.
  */
 
 type ExtractRequestBody = {
@@ -55,7 +56,6 @@ export type ReelData = {
   formats?: ReelFormat[]; // best first; UI falls back to videoUrl when absent
 };
 
-const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
 const FETCH_TIMEOUT_MS = 8000;
 // Render's free tier can cold-start slowly; past this we fall back to the built-in extractor.
 const SCRAPER_TIMEOUT_MS = 10000;
@@ -87,27 +87,32 @@ export async function POST(request: NextRequest) {
 
   if (!url) {
     return NextResponse.json(
-      { success: false, error: "Please provide an Instagram Reel link." },
+      { success: false, error: "Please provide a video link." },
       { status: 400 }
     );
   }
 
-  if (url.length > 300 || !REEL_URL_REGEX.test(url)) {
+  const parsed = parseSupportedUrl(url);
+  if (!parsed) {
     return NextResponse.json(
-      { success: false, error: "That doesn't look like a valid Instagram Reel URL." },
+      {
+        success: false,
+        error:
+          "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest or TikTok).",
+      },
       { status: 400 }
     );
   }
 
   try {
-    const data = await extractReelData(normalizeInstagramUrl(url) ?? url);
+    const data = await extractReelData(parsed.url, parsed.platform);
 
     if (!data) {
       return NextResponse.json(
         {
           success: false,
           error:
-            "Couldn't extract this Reel. It may be private, deleted, or region-restricted.",
+            "Couldn't extract this video. It may be private, deleted, or region-restricted.",
         },
         { status: 404 }
       );
@@ -123,7 +128,7 @@ export async function POST(request: NextRequest) {
     }
     console.error("[/api/extract] unexpected failure:", err);
     return NextResponse.json(
-      { success: false, error: "Something went wrong while fetching this Reel." },
+      { success: false, error: "Something went wrong while fetching this video." },
       { status: 500 }
     );
   }
@@ -136,28 +141,45 @@ type Strategy = (shortcode: string) => Promise<ReelData | null>;
  * contains a playable, allow-listed video URL. A strategy that fails or
  * finds nothing never aborts the others.
  *
+ * Instagram has built-in fallbacks (embed / GraphQL / page meta). Every other
+ * platform relies on the yt-dlp scraper service alone.
+ *
  * Returns null when nothing could be extracted (private/deleted content).
  * Throws ExtractionError only when every failure looked like throttling.
  */
-async function extractReelData(reelUrl: string): Promise<ReelData | null> {
-  const shortcode = parseShortcode(reelUrl);
-  if (!shortcode) return null;
+async function extractReelData(
+  pageUrl: string,
+  platform: PlatformId
+): Promise<ReelData | null> {
+  const scraperConfigured = getScraperBaseUrl() !== null;
+  const strategies: [string, Strategy][] = [];
+  let fallbackId: string | null = null;
 
-  const strategies: [string, Strategy][] = [
-    ...(getScraperBaseUrl()
-      ? ([["scraper", (code) => extractFromScraper(code, reelUrl)]] as [string, Strategy][])
-      : []),
-    ["embed", extractFromEmbed],
-    ["graphql", extractFromGraphql],
-    ["page-meta", extractFromPageMeta],
-  ];
+  if (scraperConfigured) {
+    strategies.push(["scraper", (id) => extractFromScraper(id, pageUrl)]);
+  }
+
+  if (platform === "instagram") {
+    fallbackId = parseShortcode(pageUrl);
+    if (!fallbackId) return null;
+    strategies.push(
+      ["embed", extractFromEmbed],
+      ["graphql", extractFromGraphql],
+      ["page-meta", extractFromPageMeta]
+    );
+  } else if (!scraperConfigured) {
+    throw new ExtractionError(
+      "Downloads from this platform aren't available right now. Please try again later.",
+      503
+    );
+  }
 
   let throttled = false;
   let networkFailures = 0;
 
   for (const [name, strategy] of strategies) {
     try {
-      const data = await strategy(shortcode);
+      const data = await strategy(fallbackId ?? "");
       if (data) return data;
     } catch (err) {
       if (err instanceof HttpStatusError && [403, 429].includes(err.status)) {
@@ -171,13 +193,13 @@ async function extractReelData(reelUrl: string): Promise<ReelData | null> {
 
   if (throttled) {
     throw new ExtractionError(
-      "Instagram is temporarily limiting requests. Please try again in a minute.",
+      "The platform is temporarily limiting requests. Please try again in a minute.",
       429
     );
   }
   if (networkFailures === strategies.length) {
     throw new ExtractionError(
-      "Couldn't reach Instagram right now. Please try again shortly.",
+      "Couldn't reach the platform right now. Please try again shortly.",
       500
     );
   }
@@ -238,7 +260,7 @@ type ScraperResponse = {
  * below take over.
  */
 async function extractFromScraper(
-  shortcode: string,
+  knownId: string,
   reelUrl: string
 ): Promise<ReelData | null> {
   const base = getScraperBaseUrl();
@@ -286,8 +308,11 @@ async function extractFromScraper(
   const videoUrl = formats[0]?.url ?? toSafeMediaUrl(json.videoUrl);
   if (!videoUrl) return null;
 
+  const scraperId =
+    typeof json.id === "string" ? json.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "";
+
   return {
-    id: shortcode,
+    id: knownId || scraperId || "video",
     videoUrl,
     thumbnailUrl: toSafeMediaUrl(json.thumbnail) ?? "",
     title: truncate(typeof json.title === "string" ? json.title : null),

@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Instagram Reels Downloader — Free, Fast, No Watermark",
-    "description": "Paste any Instagram Reel link and download it in HD, free, with no watermark, no login and no app install required.",
-    "ogAlt": "Instagram Reels Downloader tool preview"
+    "title": "Social Media Video Downloader — Instagram, YouTube, TikTok & More",
+    "description": "Download videos from Instagram, YouTube, Facebook, Threads, X, Pinterest and TikTok for free. Paste a link and save an MP4 — no login, no app install.",
+    "ogAlt": "Social media video downloader tool preview"
   },
   "nav": {
     "language": "Select language",
@@ -10,14 +10,50 @@
   },
   "hero": {
     "badge": "100% Free · No Login Required",
-    "title": "Download Instagram Reels in Seconds",
-    "subtitle": "Paste a Reel link below to fetch an HD, watermark-free video ready to save to your device.",
-    "placeholder": "Paste Instagram Reel link here…",
+    "subtitle": "Paste a video link below and save an HD MP4 to your device. Works with Instagram, YouTube, Facebook, Threads, X, Pinterest and TikTok.",
     "pasteButton": "Paste",
     "downloadCta": "Get Video",
     "loading": "Fetching your video…",
-    "errorGeneric": "Couldn't fetch that Reel. Check the link and try again.",
-    "errorInvalid": "That doesn't look like a valid Instagram Reel link."
+    "errorGeneric": "Couldn't fetch that video. Check the link and try again.",
+    "errorInvalid": "That doesn't look like a supported video link."
+  },
+  "platforms": {
+    "label": "Choose a platform",
+    "instagram": {
+      "name": "Instagram",
+      "title": "Download Instagram Reels in Seconds",
+      "placeholder": "Paste Instagram Reel link here…"
+    },
+    "youtube": {
+      "name": "YouTube",
+      "title": "Download YouTube Shorts & Videos in Seconds",
+      "placeholder": "Paste YouTube video or Shorts link here…"
+    },
+    "facebook": {
+      "name": "Facebook",
+      "title": "Download Facebook Videos in Seconds",
+      "placeholder": "Paste Facebook video or Reel link here…"
+    },
+    "threads": {
+      "name": "Threads",
+      "title": "Download Threads Videos in Seconds",
+      "placeholder": "Paste Threads post link here…"
+    },
+    "x": {
+      "name": "X (Twitter)",
+      "title": "Download X (Twitter) Videos in Seconds",
+      "placeholder": "Paste X or Twitter post link here…"
+    },
+    "pinterest": {
+      "name": "Pinterest",
+      "title": "Download Pinterest Videos in Seconds",
+      "placeholder": "Paste Pinterest pin link here…"
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "title": "Download TikTok Videos in Seconds",
+      "placeholder": "Paste TikTok video link here…"
+    }
   },
   "preview": {
     "title": "Your video is ready",
@@ -28,11 +64,11 @@
     "thumbnailAlt": "Reel thumbnail"
   },
   "seo": {
-    "heading": "The fastest way to save Instagram Reels",
+    "heading": "The fastest way to save social media videos",
     "paragraphs": [
-      "Instagram doesn't give you a built-in way to save someone else's Reel to your camera roll. Our tool solves that in one paste: drop in the link, and we pull the original MP4 file directly from Instagram's servers so you get a clean, watermark-free copy in the same quality it was uploaded in.",
-      "It works entirely in your browser — there's nothing to install, no account to create, and no personal data required. Just the public link to the Reel you want. That makes it safe to use on any device, whether you're on a phone between classes or at a desktop editing a compilation.",
-      "Creators use it to archive their own content before it disappears from trending feeds, marketers use it to build swipe files of ad creative, and everyday users use it to keep a copy of a Reel a friend sent them before it gets deleted. Whatever the reason, the flow stays the same: paste, preview, download."
+      "Most social platforms don't give you a built-in way to save someone else's video to your device. Our tool solves that in one paste: drop in the link from Instagram, YouTube, Facebook, Threads, X, Pinterest or TikTok, and we fetch the video file so you get a clean MP4 you can watch offline.",
+      "It works entirely in your browser — there's nothing to install, no account to create, and no personal data required. Just the public link to the video you want. That makes it safe to use on any device, whether you're on a phone between classes or at a desktop editing a compilation.",
+      "Creators use it to archive their own content before it disappears from feeds, marketers use it to build swipe files of ad creative, and everyday users use it to keep a copy of a clip a friend sent them before it gets deleted. Whatever the reason, the flow stays the same: paste, preview, download."
     ]
   },
   "faq": {
@@ -43,16 +79,16 @@
         "a": "Yes. There's no subscription, no watermark added, and no limit tied to an account, since no account is needed at all."
       },
       {
-        "q": "Do I need to log in to my Instagram account?",
-        "a": "No. You only need the public link to the Reel. We never ask for your Instagram username or password."
+        "q": "Do I need to log in to any account?",
+        "a": "No. You only need the public link to the video. We never ask for your username or password on any platform."
       },
       {
-        "q": "Can I download private Reels?",
-        "a": "No. This tool only works on public Reels, since private content is intentionally restricted by Instagram and isn't accessible via a shared link."
+        "q": "Can I download private videos?",
+        "a": "No. This tool only works on public videos, since private content is intentionally restricted by each platform and isn't accessible via a shared link."
       },
       {
         "q": "What video quality do I get?",
-        "a": "You get the original resolution the creator uploaded, typically HD, with no re-compression or added branding."
+        "a": "You get the best quality available as a single MP4 file with sound — typically HD for short clips and Reels. Some long videos may be limited to a lower resolution."
       },
       {
         "q": "Is it legal to download Reels?",
@@ -65,7 +101,7 @@
     ]
   },
   "footer": {
-    "disclaimer": "This tool is not affiliated with, endorsed by, or sponsored by Instagram or Meta. Use it only to download content you have the right to save.",
+    "disclaimer": "This tool is not affiliated with, endorsed by, or sponsored by Instagram, Meta, YouTube, Google, X, Pinterest, TikTok or any other platform. Use it only to download content you have the right to save.",
     "rights": "All rights reserved.",
     "links": {
       "privacy": "Privacy Policy",
@@ -85,13 +121,13 @@
         {
           "heading": "Overview",
           "body": [
-            "SaveReelsFast (savereelsfast.com) is a free tool for saving publicly available Instagram Reels. You do not need an account, and we never ask for your Instagram username or password. This policy explains what limited information is processed when you use the site."
+            "SaveReelsFast (savereelsfast.com) is a free tool for saving publicly available videos from popular social platforms. You do not need an account, and we never ask for your social media username or password. This policy explains what limited information is processed when you use the site."
           ]
         },
         {
           "heading": "Information we process",
           "body": [
-            "Links you submit: when you paste a Reel link, it is sent to our server so we can look up the public video. We do not keep the link or the video once the request is finished.",
+            "Links you submit: when you paste a video link, it is sent to our server, and to a backend service that runs on our behalf, so we can look up the public video. We do not keep the link or the video once the request is finished.",
             "Technical data: like most websites, our hosting provider may automatically record your IP address, browser type, and the time of each request for security and reliability purposes."
           ]
         },
@@ -111,7 +147,7 @@
         {
           "heading": "Third parties",
           "body": [
-            "Videos are retrieved from Instagram's public servers. We are not affiliated with Instagram or Meta, and their own privacy policies apply to their services. Our site is hosted by a third-party provider that processes technical data on our behalf."
+            "Videos are retrieved from the public servers of the platform they come from (for example Instagram, YouTube or TikTok). We are not affiliated with any of these platforms, and their own privacy policies apply to their services. Our site and backend are hosted by third-party providers that process technical data on our behalf."
           ]
         },
         {
@@ -148,7 +184,7 @@
         {
           "heading": "The service",
           "body": [
-            "SaveReelsFast helps you download publicly available Instagram Reels to your own device. It works only with public content and does not bypass privacy settings or logins."
+            "SaveReelsFast helps you download publicly available videos from supported social platforms to your own device. It works only with public content and does not bypass privacy settings or logins."
           ]
         },
         {
@@ -172,7 +208,7 @@
         {
           "heading": "No affiliation",
           "body": [
-            "SaveReelsFast is an independent tool. It is not affiliated with, endorsed by, or sponsored by Instagram or Meta Platforms, Inc. Instagram is a trademark of its respective owner."
+            "SaveReelsFast is an independent tool. It is not affiliated with, endorsed by, or sponsored by Instagram, Meta Platforms, Inc., YouTube, Google, X Corp., Pinterest, TikTok or any other platform. All trademarks belong to their respective owners."
           ]
         },
         {

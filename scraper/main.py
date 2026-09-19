@@ -1,5 +1,5 @@
 import re
-from urllib.parse import urlparse
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 import yt_dlp
 from fastapi import FastAPI, HTTPException, Query
@@ -30,23 +30,64 @@ YDL_OPTS = {
 
 POST_PATH_REGEX = re.compile(r"(?:^|/)(reel|reels|p|tv)/([A-Za-z0-9_-]+)", re.I)
 
-ALLOWED_HOSTS = ("instagram.com", "www.instagram.com", "m.instagram.com")
+# yt-dlp is only ever pointed at these platforms.
+ALLOWED_DOMAINS = (
+    "instagram.com",
+    "youtube.com",
+    "youtu.be",
+    "facebook.com",
+    "fb.watch",
+    "threads.net",
+    "threads.com",
+    "twitter.com",
+    "x.com",
+    "pinterest.com",
+    "pin.it",
+    "tiktok.com",
+)
+PINTEREST_COUNTRY_HOST = re.compile(r"(^|\.)pinterest\.[a-z]{2,3}(\.[a-z]{2})?$")
+
+TRACKING_PARAMS = {
+    "igsh", "igshid", "si", "feature", "fbclid", "gclid", "s", "t", "ref",
+    "ref_src", "ref_url", "mibextid", "share_id", "is_from_webapp",
+    "sender_device", "_r", "_t",
+}
+
+UNSUPPORTED_MESSAGE = (
+    "Please provide a supported video URL (Instagram, YouTube, Facebook, "
+    "Threads, X, Pinterest or TikTok)."
+)
+
+
+def _host_allowed(host: str) -> bool:
+    host = host.lower()
+    return any(host == d or host.endswith("." + d) for d in ALLOWED_DOMAINS) or bool(
+        PINTEREST_COUNTRY_HOST.search(host)
+    )
 
 
 def _normalize_url(url: str) -> str:
-    """Validate the host and reduce the link to https://www.instagram.com/<kind>/<code>/."""
+    """Validate the host and strip tracking parameters / fragments from the link."""
     parsed = urlparse(url)
-    if parsed.scheme not in ("http", "https") or parsed.hostname not in ALLOWED_HOSTS:
-        raise HTTPException(
-            status_code=400, detail="Please provide a valid Instagram Reel URL."
-        )
-    match = POST_PATH_REGEX.search(parsed.path)
-    if not match:
-        raise HTTPException(
-            status_code=400, detail="Please provide a valid Instagram Reel URL."
-        )
-    kind = "reel" if match.group(1).lower() == "reels" else match.group(1).lower()
-    return f"https://www.instagram.com/{kind}/{match.group(2)}/"
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise HTTPException(status_code=400, detail=UNSUPPORTED_MESSAGE)
+    if not _host_allowed(parsed.hostname):
+        raise HTTPException(status_code=400, detail=UNSUPPORTED_MESSAGE)
+
+    host = parsed.hostname.lower()
+    if host == "instagram.com" or host.endswith(".instagram.com"):
+        match = POST_PATH_REGEX.search(parsed.path)
+        if not match:
+            raise HTTPException(status_code=400, detail=UNSUPPORTED_MESSAGE)
+        kind = "reel" if match.group(1).lower() == "reels" else match.group(1).lower()
+        return f"https://www.instagram.com/{kind}/{match.group(2)}/"
+
+    query = [
+        (k, v)
+        for k, v in parse_qsl(parsed.query, keep_blank_values=True)
+        if not k.lower().startswith("utm_") and k.lower() not in TRACKING_PARAMS
+    ]
+    return urlunparse(parsed._replace(query=urlencode(query), fragment=""))
 
 
 def _is_direct_video(fmt: dict) -> bool:
@@ -98,7 +139,7 @@ def health() -> dict:
 
 # Plain `def` so FastAPI runs the blocking yt-dlp call in its threadpool.
 @app.get("/extract")
-def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> dict:
+def extract(url: str = Query(..., description="Public video URL (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok)")) -> dict:
     url = url.strip()
     url = _normalize_url(url)
 
@@ -109,7 +150,7 @@ def extract(url: str = Query(..., description="Public Instagram Reel URL")) -> d
         message = str(exc).replace("ERROR: ", "").strip()
         raise HTTPException(
             status_code=400,
-            detail=f"Couldn't extract this Reel. It may be private, deleted, or "
+            detail=f"Couldn't extract this video. It may be private, deleted, or "
             f"rate-limited. ({message[:200]})",
         )
     except Exception as exc:  # noqa: BLE001 - never leak a raw 500 to the client

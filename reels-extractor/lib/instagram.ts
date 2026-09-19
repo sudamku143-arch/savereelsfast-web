@@ -25,9 +25,31 @@ export function parseShortcode(url: string): string | null {
 }
 
 /**
- * Only Instagram/Facebook CDN hosts may be fetched or proxied. This keeps the
- * download proxy from being used to reach arbitrary or internal addresses.
+ * CDN hosts we are willing to fetch or proxy. Everything else is refused, which
+ * keeps the download proxy from being used to reach arbitrary or internal addresses.
  */
+const MEDIA_HOST_SUFFIXES = [
+  // Instagram / Facebook / Threads
+  "cdninstagram.com",
+  "fbcdn.net",
+  // YouTube
+  "googlevideo.com",
+  "ytimg.com",
+  // X / Twitter
+  "twimg.com",
+  // Pinterest
+  "pinimg.com",
+  // TikTok
+  "tiktokcdn.com",
+  "tiktokcdn-us.com",
+  "tiktokv.com",
+  "tiktokv.us",
+  "tiktok.com",
+  "byteoversea.com",
+  "ibytedtos.com",
+  "muscdn.com",
+];
+
 export function isAllowedMediaUrl(raw: string): boolean {
   let parsed: URL;
   try {
@@ -37,11 +59,23 @@ export function isAllowedMediaUrl(raw: string): boolean {
   }
   if (parsed.protocol !== "https:" || parsed.port) return false;
   const host = parsed.hostname.toLowerCase();
-  return (
-    host.endsWith(".cdninstagram.com") ||
-    host.endsWith(".fbcdn.net") ||
-    host === "cdninstagram.com"
+  return MEDIA_HOST_SUFFIXES.some(
+    (suffix) => host === suffix || host.endsWith(`.${suffix}`)
   );
+}
+
+/** Referer that the CDN for `mediaUrl` expects. */
+export function refererFor(mediaUrl: string): string {
+  try {
+    const host = new URL(mediaUrl).hostname.toLowerCase();
+    if (/tiktok|byteoversea|ibytedtos|muscdn/.test(host)) return "https://www.tiktok.com/";
+    if (host.endsWith("googlevideo.com") || host.endsWith("ytimg.com")) return "https://www.youtube.com/";
+    if (host.endsWith("twimg.com")) return "https://x.com/";
+    if (host.endsWith("pinimg.com")) return "https://www.pinterest.com/";
+  } catch {
+    // fall through
+  }
+  return "https://www.instagram.com/";
 }
 
 /** Turns a JSON-escaped fragment such as `https:\/\/a.com\/x?y=1&z=2` into a plain string. */

@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Descargador de Reels de Instagram — Gratis, Rápido, Sin Marca de Agua",
-    "description": "Pega el enlace de cualquier Reel de Instagram y descárgalo en HD, gratis, sin marca de agua, sin iniciar sesión y sin instalar apps.",
-    "ogAlt": "Vista previa de la herramienta de descarga de Reels de Instagram"
+    "title": "Descargador de Videos de Redes Sociales — Instagram, YouTube, TikTok y más",
+    "description": "Descarga videos de Instagram, YouTube, Facebook, Threads, X, Pinterest y TikTok gratis. Pega un enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
+    "ogAlt": "Vista previa del descargador de videos de redes sociales"
   },
   "nav": {
     "language": "Seleccionar idioma",
@@ -10,14 +10,50 @@
   },
   "hero": {
     "badge": "100% Gratis · Sin Inicio de Sesión",
-    "title": "Descarga Reels de Instagram en Segundos",
-    "subtitle": "Pega el enlace de un Reel abajo para obtener un video en HD, sin marca de agua, listo para guardar.",
-    "placeholder": "Pega aquí el enlace del Reel de Instagram…",
+    "subtitle": "Pega el enlace de un video y guarda un MP4 en HD en tu dispositivo. Funciona con Instagram, YouTube, Facebook, Threads, X, Pinterest y TikTok.",
     "pasteButton": "Pegar",
     "downloadCta": "Obtener Video",
     "loading": "Buscando tu video…",
-    "errorGeneric": "No pudimos obtener ese Reel. Revisa el enlace e intenta de nuevo.",
-    "errorInvalid": "Eso no parece ser un enlace válido de un Reel de Instagram."
+    "errorGeneric": "No pudimos obtener ese video. Revisa el enlace e inténtalo de nuevo.",
+    "errorInvalid": "Ese no parece un enlace de video compatible."
+  },
+  "platforms": {
+    "label": "Elige una plataforma",
+    "instagram": {
+      "name": "Instagram",
+      "title": "Descarga Reels de Instagram en segundos",
+      "placeholder": "Pega aquí el enlace del Reel de Instagram…"
+    },
+    "youtube": {
+      "name": "YouTube",
+      "title": "Descarga Shorts y videos de YouTube en segundos",
+      "placeholder": "Pega aquí el enlace del video o Short de YouTube…"
+    },
+    "facebook": {
+      "name": "Facebook",
+      "title": "Descarga videos de Facebook en segundos",
+      "placeholder": "Pega aquí el enlace del video o Reel de Facebook…"
+    },
+    "threads": {
+      "name": "Threads",
+      "title": "Descarga videos de Threads en segundos",
+      "placeholder": "Pega aquí el enlace de la publicación de Threads…"
+    },
+    "x": {
+      "name": "X (Twitter)",
+      "title": "Descarga videos de X (Twitter) en segundos",
+      "placeholder": "Pega aquí el enlace de la publicación de X o Twitter…"
+    },
+    "pinterest": {
+      "name": "Pinterest",
+      "title": "Descarga videos de Pinterest en segundos",
+      "placeholder": "Pega aquí el enlace del pin de Pinterest…"
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "title": "Descarga videos de TikTok en segundos",
+      "placeholder": "Pega aquí el enlace del video de TikTok…"
+    }
   },
   "preview": {
     "title": "Tu video está listo",
@@ -28,11 +64,11 @@
     "thumbnailAlt": "Miniatura del Reel"
   },
   "seo": {
-    "heading": "La forma más rápida de guardar Reels de Instagram",
+    "heading": "La forma más rápida de guardar videos de redes sociales",
     "paragraphs": [
-      "Instagram no ofrece una manera integrada de guardar el Reel de otra persona en tu galería. Nuestra herramienta lo resuelve con solo pegar un enlace: obtenemos el archivo MP4 original directamente de los servidores de Instagram para darte una copia limpia y sin marca de agua, en la misma calidad con la que fue subida.",
-      "Funciona completamente en tu navegador — no hay nada que instalar, ninguna cuenta que crear, ni datos personales requeridos. Solo el enlace público del Reel que quieres. Eso lo hace seguro de usar en cualquier dispositivo, ya sea en el celular o en una computadora de escritorio.",
-      "Creadores lo usan para archivar su propio contenido antes de que desaparezca de las tendencias, especialistas en marketing arman bancos de referencias creativas, y usuarios comunes guardan una copia de un Reel que les enviaron antes de que se elimine. Sea cual sea el motivo, el proceso es el mismo: pegar, previsualizar, descargar."
+      "La mayoría de las redes sociales no ofrecen una forma integrada de guardar en tu dispositivo el video de otra persona. Nuestra herramienta lo resuelve con un solo pegado: coloca el enlace de Instagram, YouTube, Facebook, Threads, X, Pinterest o TikTok y obtenemos el archivo de video para que tengas un MP4 limpio que puedes ver sin conexión.",
+      "Funciona por completo en tu navegador: no hay nada que instalar, ninguna cuenta que crear y no se requieren datos personales. Solo el enlace público del video que quieres. Por eso es seguro usarlo en cualquier dispositivo, ya sea desde el móvil entre clases o desde un ordenador editando una recopilación.",
+      "Los creadores lo usan para archivar su propio contenido antes de que desaparezca de los feeds, los profesionales del marketing para armar archivos de referencia de anuncios, y los usuarios comunes para conservar una copia de un clip que les envió un amigo antes de que lo borren. Sea cual sea el motivo, el proceso es el mismo: pegar, previsualizar, descargar."
     ]
   },
   "faq": {
@@ -43,16 +79,16 @@
         "a": "Sí. No hay suscripción, no se agrega marca de agua y no hay límites de cuenta, porque no se necesita ninguna cuenta."
       },
       {
-        "q": "¿Necesito iniciar sesión en mi cuenta de Instagram?",
-        "a": "No. Solo necesitas el enlace público del Reel. Nunca pedimos tu usuario ni contraseña de Instagram."
+        "q": "¿Necesito iniciar sesión en alguna cuenta?",
+        "a": "No. Solo necesitas el enlace público del video. Nunca te pedimos tu usuario ni tu contraseña de ninguna plataforma."
       },
       {
-        "q": "¿Puedo descargar Reels privados?",
-        "a": "No. Esta herramienta solo funciona con Reels públicos, ya que el contenido privado está restringido intencionalmente por Instagram."
+        "q": "¿Puedo descargar videos privados?",
+        "a": "No. Esta herramienta solo funciona con videos públicos, ya que cada plataforma restringe intencionadamente el contenido privado y no es accesible mediante un enlace compartido."
       },
       {
         "q": "¿Qué calidad de video obtengo?",
-        "a": "Obtienes la resolución original que subió el creador, típicamente HD, sin recompresión ni marcas añadidas."
+        "a": "Obtienes la mejor calidad disponible en un único archivo MP4 con sonido, normalmente HD en clips cortos y Reels. Algunos videos largos pueden estar limitados a una resolución menor."
       },
       {
         "q": "¿Es legal descargar Reels?",
@@ -65,7 +101,7 @@
     ]
   },
   "footer": {
-    "disclaimer": "Esta herramienta no está afiliada, respaldada ni patrocinada por Instagram o Meta. Úsala solo para descargar contenido que tengas derecho a guardar.",
+    "disclaimer": "Esta herramienta no está afiliada, respaldada ni patrocinada por Instagram, Meta, YouTube, Google, X, Pinterest, TikTok ni ninguna otra plataforma. Úsala solo para descargar contenido que tengas derecho a guardar.",
     "rights": "Todos los derechos reservados.",
     "links": {
       "privacy": "Política de privacidad",
@@ -85,13 +121,13 @@
         {
           "heading": "Resumen",
           "body": [
-            "SaveReelsFast (savereelsfast.com) es una herramienta gratuita para guardar Reels públicos de Instagram. No necesitas una cuenta y nunca te pedimos tu usuario ni tu contraseña de Instagram. Esta política explica qué información limitada se procesa cuando usas el sitio."
+            "SaveReelsFast (savereelsfast.com) es una herramienta gratuita para guardar videos públicos de las redes sociales más populares. No necesitas una cuenta y nunca te pedimos tu usuario ni tu contraseña de redes sociales. Esta política explica qué información limitada se procesa cuando usas el sitio."
           ]
         },
         {
           "heading": "Información que procesamos",
           "body": [
-            "Enlaces que envías: al pegar el enlace de un Reel, se envía a nuestro servidor para localizar el video público. No conservamos el enlace ni el video una vez terminada la solicitud.",
+            "Enlaces que envías: al pegar el enlace de un video, se envía a nuestro servidor y a un servicio de backend que funciona en nuestro nombre, para poder localizar el video público. No conservamos el enlace ni el video una vez terminada la solicitud.",
             "Datos técnicos: como la mayoría de los sitios web, nuestro proveedor de alojamiento puede registrar automáticamente tu dirección IP, el tipo de navegador y la hora de cada solicitud por motivos de seguridad y fiabilidad."
           ]
         },
@@ -111,7 +147,7 @@
         {
           "heading": "Terceros",
           "body": [
-            "Los videos se obtienen de los servidores públicos de Instagram. No estamos afiliados a Instagram ni a Meta, y sus propias políticas de privacidad se aplican a sus servicios. Nuestro sitio está alojado por un proveedor externo que procesa datos técnicos en nuestro nombre."
+            "Los videos se obtienen de los servidores públicos de la plataforma de origen (por ejemplo, Instagram, YouTube o TikTok). No estamos afiliados a ninguna de estas plataformas y sus propias políticas de privacidad se aplican a sus servicios. Nuestro sitio y nuestro backend están alojados por proveedores externos que procesan datos técnicos en nuestro nombre."
           ]
         },
         {
@@ -148,7 +184,7 @@
         {
           "heading": "El servicio",
           "body": [
-            "SaveReelsFast te ayuda a descargar Reels públicos de Instagram en tu propio dispositivo. Funciona solo con contenido público y no elude configuraciones de privacidad ni inicios de sesión."
+            "SaveReelsFast te ayuda a descargar videos públicos de redes sociales compatibles en tu propio dispositivo. Funciona solo con contenido público y no elude configuraciones de privacidad ni inicios de sesión."
           ]
         },
         {
@@ -172,7 +208,7 @@
         {
           "heading": "Sin afiliación",
           "body": [
-            "SaveReelsFast es una herramienta independiente. No está afiliada, respaldada ni patrocinada por Instagram ni por Meta Platforms, Inc. Instagram es una marca de su respectivo titular."
+            "SaveReelsFast es una herramienta independiente. No está afiliada, respaldada ni patrocinada por Instagram, Meta Platforms, Inc., YouTube, Google, X Corp., Pinterest, TikTok ni ninguna otra plataforma. Todas las marcas pertenecen a sus respectivos titulares."
           ]
         },
         {

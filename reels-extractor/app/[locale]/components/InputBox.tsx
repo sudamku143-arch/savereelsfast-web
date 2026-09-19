@@ -1,32 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { normalizeInstagramUrl } from "@/lib/instagram";
+import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 
 type Dict = {
-  placeholder: string;
   pasteButton: string;
   downloadCta: string;
   errorInvalid: string;
 };
 
-const REEL_URL_REGEX =
-  /https?:\/\/(www\.)?instagram\.com\/(reel|reels|p|tv)\/[a-zA-Z0-9_-]+/i;
-
-// The manual "Get Video" button stays lenient and also accepts links without a scheme.
-const MANUAL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[a-zA-Z0-9_-]+/i;
-
 // Wait for typing to pause before auto-fetching, so a half-typed link
-// (which already matches the regex after one character of the ID) never fires.
+// (which can already look valid after a few characters) never fires.
 const TYPING_DEBOUNCE_MS = 600;
 
 export default function InputBox({
   dict,
+  placeholder,
   onSubmit,
+  onDetectPlatform,
   disabled,
 }: {
   dict: Dict;
+  placeholder: string;
   onSubmit: (url: string) => void;
+  onDetectPlatform: (platform: PlatformId) => void;
   disabled?: boolean;
 }) {
   const [url, setUrl] = useState("");
@@ -43,25 +40,25 @@ export default function InputBox({
 
   useEffect(() => clearTimer, []);
 
-  function submit(value: string) {
+  /** Detects the platform, cleans the link and starts the fetch immediately. */
+  function submit(value: string): boolean {
     clearTimer();
-    // Strip tracking parameters (?igsh=…, utm_*) so only the canonical link is sent.
-    const clean = normalizeInstagramUrl(value) ?? value;
-    lastSubmittedRef.current = clean;
-    setUrl(clean);
+    const parsed = parseSupportedUrl(value);
+    if (!parsed) return false;
+
+    lastSubmittedRef.current = parsed.url;
+    setUrl(parsed.url);
     setLocalError(null);
-    onSubmit(clean);
+    onDetectPlatform(parsed.platform);
+    onSubmit(parsed.url);
+    return true;
   }
 
   async function handlePaste() {
     try {
       const text = (await navigator.clipboard.readText()).trim();
       setUrl(text);
-      if (REEL_URL_REGEX.test(text)) {
-        submit(text);
-      } else if (text) {
-        setLocalError(dict.errorInvalid);
-      }
+      if (!submit(text) && text) setLocalError(dict.errorInvalid);
     } catch {
       // Clipboard access denied — user can paste manually
     }
@@ -69,9 +66,8 @@ export default function InputBox({
 
   function handleInputPaste(e: React.ClipboardEvent<HTMLInputElement>) {
     const text = e.clipboardData.getData("text").trim();
-    if (!REEL_URL_REGEX.test(text)) return; // let the browser paste normally
+    if (!parseSupportedUrl(text)) return; // let the browser paste normally
     e.preventDefault();
-    setUrl(text);
     submit(text);
   }
 
@@ -81,20 +77,19 @@ export default function InputBox({
     setLocalError(null);
     clearTimer();
 
-    const trimmed = value.trim();
-    if (REEL_URL_REGEX.test(trimmed) && trimmed !== lastSubmittedRef.current) {
-      timerRef.current = setTimeout(() => submit(trimmed), TYPING_DEBOUNCE_MS);
+    const parsed = parseSupportedUrl(value);
+    if (parsed) {
+      // Highlight the platform right away; the fetch waits for typing to pause.
+      onDetectPlatform(parsed.platform);
+      if (parsed.url !== lastSubmittedRef.current) {
+        timerRef.current = setTimeout(() => submit(value), TYPING_DEBOUNCE_MS);
+      }
     }
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const trimmed = url.trim();
-    if (!MANUAL_URL_REGEX.test(trimmed)) {
-      setLocalError(dict.errorInvalid);
-      return;
-    }
-    submit(trimmed);
+    if (!submit(url)) setLocalError(dict.errorInvalid);
   }
 
   return (
@@ -107,8 +102,8 @@ export default function InputBox({
           value={url}
           onChange={handleChange}
           onPaste={handleInputPaste}
-          placeholder={dict.placeholder}
-          aria-label={dict.placeholder}
+          placeholder={placeholder}
+          aria-label={placeholder}
           aria-invalid={localError ? true : undefined}
           disabled={disabled}
           className="glass min-w-0 flex-1 rounded-xl px-4 py-3.5 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 disabled:opacity-60 sm:text-base"

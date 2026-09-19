@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BROWSER_UA, isAllowedMediaUrl } from "@/lib/instagram";
+import { BROWSER_UA, isAllowedMediaUrl, refererFor } from "@/lib/instagram";
 
 // Edge runtime streams the body straight through, so large videos are not
 // subject to the buffered-response size limit of serverless functions.
@@ -18,7 +18,7 @@ function fail(message: string, status: number) {
 }
 
 /**
- * GET /api/download?url=<Instagram CDN video URL>&id=<reel shortcode>
+ * GET /api/download?url=<CDN video URL>&id=<reel shortcode>
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -43,8 +43,7 @@ export async function GET(request: NextRequest) {
     upstream = await fetch(target, {
       headers: {
         "User-Agent": BROWSER_UA,
-        Referer: "https://www.instagram.com/",
-        Origin: "https://www.instagram.com",
+        Referer: refererFor(target),
         Accept: "video/mp4,video/*;q=0.9,*/*;q=0.5",
         "Accept-Language": "en-US,en;q=0.9",
       },
