@@ -137,7 +137,8 @@ async function main() {
   for (const locale of LOCALES) {
     for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/downloader/${slug}`))]) {
       const ads = countAds(await (await get(page)).text(), locale);
-      check(ads >= 2, `[${locale}] ${page} server HTML has ${ads} ad slots (expected the leaderboard and a native card)`);
+      // The leaderboard is always present; the others may be hidden while no network is configured for them.
+      check(ads >= 1, `[${locale}] ${page} server HTML has ${ads} ad slots (expected at least the leaderboard)`);
     }
     for (const legal of ["/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact"]) {
       const ads = countAds(await (await get(path(locale, legal))).text(), locale);

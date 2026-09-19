@@ -96,7 +96,10 @@ function AAdsUnit({
   const desktop = useIsDesktop();
   if (desktop === null) return null; // wait until we know which unit to load (never load both)
   const unit = desktop ? desktopUnit : (mobileUnit ?? desktopUnit);
-  const dimension = size === "native" ? "Adaptive" : desktop ? "728x90" : "320x50";
+  // "Adaptive" is what A-ADS's own embed code requests: the unit sizes itself to the space it gets
+  // (a 728x90 box on desktop, 320x50 on phones), and it works for units created as Adaptive.
+  const dimension = "Adaptive";
+  void size;
   return (
     <iframe
       key={unit}
