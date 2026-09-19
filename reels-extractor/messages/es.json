@@ -69,10 +69,18 @@
     "title": "Tu video está listo",
     "author": "Por",
     "duration": "Duración",
-    "downloadButton": "Descargar MP4 (HD)",
+    "downloadButton": "Descargar video (MP4 HD)",
     "newSearch": "Descargar otro",
     "thumbnailAlt": "Miniatura del Reel",
-    "noAudio": "Descargado sin audio (la plataforma restringe el flujo de audio)"
+    "noAudio": "Descargado sin audio (la plataforma restringe el flujo de audio)",
+    "downloadAudio": "Descargar audio ({format})",
+    "postItems": "{n} videos en esta publicación",
+    "itemTitle": "Video {n}",
+    "downloadItem": "Descargar",
+    "downloadItemAudio": "Solo audio",
+    "downloadAll": "Descargar todo ({n})",
+    "downloadAllBusy": "Iniciando descargas…",
+    "downloadAllHint": "Tu navegador puede pedirte que permitas varias descargas."
   },
   "errors": {
     "LOGIN_REQUIRED": {
@@ -114,6 +122,13 @@
       "reportSubject": "Reporte de problema con un enlace",
       "reportBody": "Este enlace no funcionó en SaveReelsFast:"
     }
+  },
+  "pwa": {
+    "title": "Instala la app SaveReelsFast",
+    "body": "Añádela a tu pantalla de inicio para descargar con un toque.",
+    "install": "Instalar",
+    "dismiss": "Ahora no",
+    "iosHint": "Toca Compartir y luego «Añadir a pantalla de inicio»."
   },
   "seo": {
     "heading": "La forma más rápida de guardar videos de redes sociales",

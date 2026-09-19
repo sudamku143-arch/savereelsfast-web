@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "../globals.css";
 import {
@@ -12,6 +12,7 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import InstallPrompt from "./components/InstallPrompt";
 
 // Unknown locales 404 instead of rendering the default language.
 export const dynamicParams = false;
@@ -26,6 +27,11 @@ type Props = {
 };
 
 const OG_IMAGE = `${SITE_URL}/api/og`;
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  colorScheme: "dark",
+};
 
 export async function generateMetadata({
   params,
@@ -44,6 +50,12 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(SITE_URL),
+    applicationName: SITE_NAME,
+    appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "black-translucent" },
+    icons: {
+      icon: [{ url: "/api/icon?size=192", sizes: "192x192", type: "image/png" }],
+      apple: [{ url: "/api/icon?size=180", sizes: "180x180", type: "image/png" }],
+    },
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
@@ -85,6 +97,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Header locale={locale} dict={dict.nav} />
         {children}
         <Footer locale={locale} dict={dict.footer} />
+        <InstallPrompt dict={dict.pwa} />
       </body>
     </html>
   );

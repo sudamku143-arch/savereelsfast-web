@@ -9,6 +9,7 @@ import {
 } from "@/lib/instagram";
 import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import { isErrorCode, type ErrorCode, type ResultWarning } from "@/lib/errors";
+import { isAudioExtension } from "@/lib/download";
 
 export const runtime = "nodejs";
 export const maxDuration = 40;
@@ -29,8 +30,12 @@ export const maxDuration = 40;
  *     title: string | null,       // caption
  *     author: string | null,      // handle without "@"
  *     durationSeconds: number | null,
+ *     quality?: string,           // e.g. "720p"
  *     audio?: "yes" | "no" | "unknown",
  *     warning?: "NO_AUDIO",       // only a video-only stream was available
+ *     audioUrl?: string,          // separate audio-only stream (M4A/WebM; not transcoded)
+ *     audioExt?: string,
+ *     items?: ReelItem[],         // present only for multi-video posts (carousels)
  *     formats?: { quality, url, width, height }[]   // best first
  *   }
  *
@@ -51,6 +56,20 @@ export type ReelFormat = {
   height: number | null;
 };
 
+/** One video of a multi-video post (Instagram carousel, multi-video tweet). */
+export type ReelItem = {
+  id: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  title: string | null;
+  durationSeconds: number | null;
+  quality?: string;
+  audio?: "yes" | "no" | "unknown";
+  warning?: ResultWarning;
+  audioUrl?: string;
+  audioExt?: string;
+};
+
 export type ReelData = {
   id: string;
   videoUrl: string;
@@ -59,8 +78,12 @@ export type ReelData = {
   author: string | null;
   durationSeconds: number | null;
   formats?: ReelFormat[]; // best first; UI falls back to videoUrl when absent
+  quality?: string;
   audio?: "yes" | "no" | "unknown";
   warning?: ResultWarning;
+  audioUrl?: string;
+  audioExt?: string;
+  items?: ReelItem[];
 };
 
 const FETCH_TIMEOUT_MS = 8000;
@@ -294,6 +317,19 @@ function getScraperBaseUrl(): string | null {
   return raw && /^https?:\/\//i.test(raw) ? raw : null;
 }
 
+type ScraperItem = {
+  id?: string | null;
+  title?: string | null;
+  thumbnail?: string | null;
+  duration?: number | null;
+  videoUrl?: string | null;
+  quality?: string | null;
+  audio?: string | null;
+  warning?: string | null;
+  audioUrl?: string | null;
+  audioExt?: string | null;
+};
+
 type ScraperResponse = {
   success?: boolean;
   id?: string | null;
@@ -304,6 +340,10 @@ type ScraperResponse = {
   videoUrl?: string | null;
   audio?: "yes" | "no" | "unknown";
   warning?: string | null;
+  quality?: string | null;
+  audioUrl?: string | null;
+  audioExt?: string | null;
+  items?: ScraperItem[];
   formats?: { quality?: string; url?: string; width?: number | null; height?: number | null }[];
 };
 
@@ -311,6 +351,39 @@ type ScraperResponse = {
 function scraperHeaders(): Record<string, string> {
   const key = process.env.SCRAPER_SHARED_SECRET;
   return key ? { "X-Scraper-Key": key } : {};
+}
+
+function audioFields(raw: { audioUrl?: string | null; audioExt?: string | null }) {
+  const url = toSafeMediaUrl(raw.audioUrl);
+  const ext = raw.audioExt;
+  return url && isAudioExtension(ext) ? { audioUrl: url, audioExt: ext } : {};
+}
+
+function cleanQuality(value: string | null | undefined) {
+  return typeof value === "string" && /^\d{3,4}p$/.test(value) ? { quality: value } : {};
+}
+
+function cleanAudioState(
+  value: string | null | undefined
+): { audio?: "yes" | "no" | "unknown" } {
+  return value === "yes" || value === "no" || value === "unknown" ? { audio: value } : {};
+}
+
+function mapScraperItem(raw: ScraperItem, fallbackId: string, index: number): ReelItem | null {
+  const videoUrl = toSafeMediaUrl(raw.videoUrl);
+  if (!videoUrl) return null;
+  const id = typeof raw.id === "string" ? raw.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "";
+  return {
+    id: id || `${fallbackId}-${index + 1}`,
+    videoUrl,
+    thumbnailUrl: toSafeMediaUrl(raw.thumbnail) ?? "",
+    title: truncate(typeof raw.title === "string" ? raw.title : null),
+    durationSeconds: typeof raw.duration === "number" ? raw.duration : null,
+    ...cleanQuality(raw.quality),
+    ...cleanAudioState(raw.audio),
+    ...(raw.warning === "NO_AUDIO" ? { warning: "NO_AUDIO" as const } : {}),
+    ...audioFields(raw),
+  };
 }
 
 /**
@@ -381,6 +454,12 @@ async function extractFromScraper(
   const videoUrl = formats[0]?.url ?? toSafeMediaUrl(json.videoUrl);
   if (!videoUrl) return null;
 
+  const postId =
+    knownId || (typeof json.id === "string" ? json.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "") || "video";
+  const items = (json.items ?? [])
+    .map((raw, index) => mapScraperItem(raw, postId, index))
+    .filter((item): item is ReelItem => item !== null);
+
   const scraperId =
     typeof json.id === "string" ? json.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "";
 
@@ -391,10 +470,11 @@ async function extractFromScraper(
     title: truncate(typeof json.title === "string" ? json.title : null),
     author: typeof json.author === "string" ? json.author : null,
     durationSeconds: typeof json.duration === "number" ? json.duration : null,
-    ...(json.audio === "yes" || json.audio === "no" || json.audio === "unknown"
-      ? { audio: json.audio }
-      : {}),
+    ...cleanQuality(json.quality),
+    ...cleanAudioState(json.audio),
     ...(json.warning === "NO_AUDIO" ? { warning: "NO_AUDIO" as const } : {}),
+    ...audioFields(json),
+    ...(items.length > 1 ? { items } : {}),
     ...(formats.length > 0 ? { formats } : {}),
   };
 }

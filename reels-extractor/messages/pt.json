@@ -69,10 +69,18 @@
     "title": "Seu vídeo está pronto",
     "author": "Por",
     "duration": "Duração",
-    "downloadButton": "Baixar MP4 (HD)",
+    "downloadButton": "Baixar vídeo (MP4 HD)",
     "newSearch": "Baixar outro",
     "thumbnailAlt": "Miniatura do Reel",
-    "noAudio": "Baixado sem áudio (a plataforma restringe o fluxo de áudio)"
+    "noAudio": "Baixado sem áudio (a plataforma restringe o fluxo de áudio)",
+    "downloadAudio": "Baixar áudio ({format})",
+    "postItems": "{n} vídeos nesta publicação",
+    "itemTitle": "Vídeo {n}",
+    "downloadItem": "Baixar",
+    "downloadItemAudio": "Só áudio",
+    "downloadAll": "Baixar tudo ({n})",
+    "downloadAllBusy": "Iniciando downloads…",
+    "downloadAllHint": "Seu navegador pode pedir permissão para vários downloads."
   },
   "errors": {
     "LOGIN_REQUIRED": {
@@ -114,6 +122,13 @@
       "reportSubject": "Relato de problema com link",
       "reportBody": "Este link não funcionou no SaveReelsFast:"
     }
+  },
+  "pwa": {
+    "title": "Instale o app SaveReelsFast",
+    "body": "Adicione à tela inicial para baixar com um toque.",
+    "install": "Instalar",
+    "dismiss": "Agora não",
+    "iosHint": "Toque em Compartilhar e depois em “Adicionar à Tela de Início”."
   },
   "seo": {
     "heading": "A forma mais rápida de salvar vídeos de redes sociais",

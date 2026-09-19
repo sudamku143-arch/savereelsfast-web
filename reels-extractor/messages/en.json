@@ -69,10 +69,18 @@
     "title": "Your video is ready",
     "author": "By",
     "duration": "Duration",
-    "downloadButton": "Download MP4 (HD)",
+    "downloadButton": "Download Video (HD MP4)",
     "newSearch": "Download another",
     "thumbnailAlt": "Reel thumbnail",
-    "noAudio": "Downloaded without audio (audio stream restricted by platform)"
+    "noAudio": "Downloaded without audio (audio stream restricted by platform)",
+    "downloadAudio": "Download Audio ({format})",
+    "postItems": "{n} videos in this post",
+    "itemTitle": "Video {n}",
+    "downloadItem": "Download",
+    "downloadItemAudio": "Audio only",
+    "downloadAll": "Download all ({n})",
+    "downloadAllBusy": "Starting downloads…",
+    "downloadAllHint": "Your browser may ask you to allow multiple downloads."
   },
   "errors": {
     "LOGIN_REQUIRED": {
@@ -114,6 +122,13 @@
       "reportSubject": "Link problem report",
       "reportBody": "This link didn't work on SaveReelsFast:"
     }
+  },
+  "pwa": {
+    "title": "Install SaveReelsFast App",
+    "body": "Add it to your home screen for one-tap downloads.",
+    "install": "Install",
+    "dismiss": "Not now",
+    "iosHint": "Tap Share, then “Add to Home Screen”."
   },
   "seo": {
     "heading": "The fastest way to save social media videos",

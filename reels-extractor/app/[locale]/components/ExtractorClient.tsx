@@ -6,7 +6,7 @@ import { isErrorCode } from "@/lib/errors";
 import InputBox from "./InputBox";
 import PlatformTabs from "./PlatformTabs";
 import SkeletonLoader from "./SkeletonLoader";
-import PreviewCard, { type ReelResult } from "./PreviewCard";
+import PreviewCard, { type PreviewDict, type ReelResult } from "./PreviewCard";
 import ErrorCard, { type ErrorsDict, type UiErrorCode } from "./ErrorCard";
 
 type HeroDict = {
@@ -23,16 +23,6 @@ type PlatformsDict = { label: string } & Record<
   PlatformId,
   { name: string; title: string; placeholder: string }
 >;
-
-type PreviewDict = {
-  title: string;
-  author: string;
-  duration: string;
-  downloadButton: string;
-  newSearch: string;
-  thumbnailAlt: string;
-  noAudio: string;
-};
 
 export default function ExtractorClient({
   heroDict,
@@ -155,7 +145,13 @@ export default function ExtractorClient({
         )}
 
         {status === "done" && result && (
-          <PreviewCard result={result} dict={previewDict} onReset={handleReset} />
+          <PreviewCard
+            result={result}
+            dict={previewDict}
+            platform={result.platform ?? platform}
+            platformName={platformsDict[result.platform ?? platform].name}
+            onReset={handleReset}
+          />
         )}
       </div>
     </div>

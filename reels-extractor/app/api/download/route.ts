@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BROWSER_UA, isAllowedMediaUrl, refererFor } from "@/lib/instagram";
 import { parseSupportedUrl } from "@/lib/platforms";
 import type { ErrorCode } from "@/lib/errors";
+import { isAudioExtension } from "@/lib/download";
 
 // Edge runtime streams the body straight through, so large videos are not
 // subject to the buffered-response size limit of serverless functions.
@@ -21,9 +22,21 @@ function isIpBound(target: string): boolean {
   return IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
 }
 
-function safeFilename(rawId: string | null): string {
+const AUDIO_CONTENT_TYPES: Record<string, string> = {
+  m4a: "audio/mp4",
+  mp4: "audio/mp4",
+  aac: "audio/aac",
+  mp3: "audio/mpeg",
+  webm: "audio/webm",
+  ogg: "audio/ogg",
+  opus: "audio/ogg",
+};
+
+type Media = { kind: "video" | "audio"; ext: string; contentType: string };
+
+function safeFilename(rawId: string | null, media: Media): string {
   const id = (rawId ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
-  return `savereelsfast-${id || "reel"}.mp4`;
+  return `savereelsfast-${id || "reel"}.${media.ext}`;
 }
 
 function fail(message: string, status: number, code: ErrorCode) {
@@ -35,9 +48,9 @@ function scraperBase(): string | null {
   return raw && /^https?:\/\//i.test(raw) ? raw : null;
 }
 
-function attachmentHeaders(filename: string, length: number): Headers {
+function attachmentHeaders(filename: string, length: number, contentType: string): Headers {
   const headers = new Headers({
-    "Content-Type": "video/mp4",
+    "Content-Type": contentType,
     "Content-Disposition": `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
     "Cache-Control": "private, no-store",
     "X-Content-Type-Options": "nosniff",
@@ -62,7 +75,7 @@ async function fetchWithHeaderTimeout(
 }
 
 /** Try the CDN URL directly. Returns a streaming response, or null when it can't be used. */
-async function tryDirect(target: string, filename: string): Promise<Response | null> {
+async function tryDirect(target: string, filename: string, media: Media): Promise<Response | null> {
   let upstream: Response;
   try {
     upstream = await fetchWithHeaderTimeout(
@@ -71,7 +84,8 @@ async function tryDirect(target: string, filename: string): Promise<Response | n
         headers: {
           "User-Agent": BROWSER_UA,
           Referer: refererFor(target),
-          Accept: "video/mp4,video/*;q=0.9,*/*;q=0.5",
+          Accept:
+            media.kind === "audio" ? "audio/*,*/*;q=0.5" : "video/mp4,video/*;q=0.9,*/*;q=0.5",
           "Accept-Language": "en-US,en;q=0.9",
         },
         redirect: "manual", // never follow a redirect off the allow-list
@@ -90,12 +104,19 @@ async function tryDirect(target: string, filename: string): Promise<Response | n
   }
 
   const type = upstream.headers.get("content-type") ?? "";
-  if (!type.startsWith("video/") && !type.startsWith("application/octet-stream")) return null;
+  const accepted =
+    media.kind === "audio"
+      ? ["audio/", "video/mp4", "video/webm", "application/octet-stream"]
+      : ["video/", "application/octet-stream"];
+  if (!accepted.some((prefix) => type.startsWith(prefix))) return null;
 
   const length = Number(upstream.headers.get("content-length") ?? 0);
   if (length > MAX_BYTES) return null;
 
-  return new Response(upstream.body, { status: 200, headers: attachmentHeaders(filename, length) });
+  return new Response(upstream.body, {
+    status: 200,
+    headers: attachmentHeaders(filename, length, media.contentType),
+  });
 }
 
 type ScraperFailure = { status: number; code: ErrorCode; message: string };
@@ -103,7 +124,8 @@ type ScraperFailure = { status: number; code: ErrorCode; message: string };
 /** Call a streaming scraper endpoint and return its body as our attachment response. */
 async function fromScraper(
   path: string,
-  filename: string
+  filename: string,
+  media: Media
 ): Promise<Response | ScraperFailure> {
   const base = scraperBase();
   if (!base) {
@@ -142,35 +164,38 @@ async function fromScraper(
   }
 
   const length = Number(res.headers.get("content-length") ?? 0);
-  return new Response(res.body, { status: 200, headers: attachmentHeaders(filename, length) });
+  return new Response(res.body, {
+    status: 200,
+    headers: attachmentHeaders(filename, length, media.contentType),
+  });
 }
 
 /**
  * Stream the CDN URL through the scraper (`/stream`). The scraper fetches it
  * from its own IP, which is the one the link was issued to.
  */
-function viaScraperStream(target: string, id: string | null, filename: string) {
-  return fromScraper(
-    `/stream?url=${encodeURIComponent(target)}&referer=${encodeURIComponent(
-      refererFor(target)
-    )}&id=${encodeURIComponent(id ?? "video")}`,
-    filename
-  );
+function viaScraperStream(target: string, id: string | null, filename: string, media: Media) {
+  const params = new URLSearchParams({
+    url: target,
+    referer: refererFor(target),
+    id: id ?? "video",
+    kind: media.kind,
+    ext: media.ext,
+  });
+  return fromScraper(`/stream?${params.toString()}`, filename, media);
 }
 
 /**
  * Last resort: have the scraper re-resolve the post itself (`/download`), for
  * links that expired or that the CDN refuses even from the scraper.
  */
-function viaScraperResolve(sourceUrl: string, id: string | null, filename: string) {
-  return fromScraper(
-    `/download?url=${encodeURIComponent(sourceUrl)}&id=${encodeURIComponent(id ?? "video")}`,
-    filename
-  );
+function viaScraperResolve(sourceUrl: string, id: string | null, filename: string, media: Media) {
+  const params = new URLSearchParams({ url: sourceUrl, id: id ?? "video", kind: media.kind });
+  return fromScraper(`/download?${params.toString()}`, filename, media);
 }
 
 /**
- * GET /api/download?url=<CDN video URL>&id=<post id>&src=<post URL>
+ * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio&ext=m4a
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -191,23 +216,32 @@ export async function GET(request: NextRequest) {
   }
 
   const id = searchParams.get("id");
-  const filename = safeFilename(id);
+  const requestedExt = searchParams.get("ext");
+  const media: Media =
+    searchParams.get("kind") === "audio"
+      ? {
+          kind: "audio",
+          ext: isAudioExtension(requestedExt) ? requestedExt : "m4a",
+          contentType: AUDIO_CONTENT_TYPES[isAudioExtension(requestedExt) ? requestedExt : "m4a"],
+        }
+      : { kind: "video", ext: "mp4", contentType: "video/mp4" };
+  const filename = safeFilename(id, media);
 
   if (!isIpBound(target)) {
-    const direct = await tryDirect(target, filename);
+    const direct = await tryDirect(target, filename, media);
     if (direct) return direct;
   }
 
   let failure: ScraperFailure | null = null;
 
-  const streamed = await viaScraperStream(target, id, filename);
+  const streamed = await viaScraperStream(target, id, filename, media);
   if (streamed instanceof Response) return streamed;
   failure = streamed;
 
   const src = searchParams.get("src");
   const parsedSource = src ? parseSupportedUrl(src) : null;
   if (parsedSource) {
-    const resolved = await viaScraperResolve(parsedSource.url, id, filename);
+    const resolved = await viaScraperResolve(parsedSource.url, id, filename, media);
     if (resolved instanceof Response) return resolved;
     failure = resolved;
   }
