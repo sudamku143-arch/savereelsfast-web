@@ -67,9 +67,155 @@
     ]
   },
   "footer": {
-    "disclaimer": "Esta ferramenta não é afiliada, endossada ou patrocinada pelo Instagram ou Meta. Use apenas para baixar conteúdo que você tem o direito de salvar."
+    "disclaimer": "Esta ferramenta não é afiliada, endossada ou patrocinada pelo Instagram ou Meta. Use apenas para baixar conteúdo que você tem o direito de salvar.",
+    "rights": "Todos os direitos reservados.",
+    "links": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço",
+      "contact": "Contato"
+    }
   },
   "ad": {
     "label": "Publicidade"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Política de Privacidade",
+      "description": "Como o SaveReelsFast trata as informações limitadas envolvidas no uso do site.",
+      "updated": "Última atualização: 19 de setembro de 2026",
+      "sections": [
+        {
+          "heading": "Visão geral",
+          "body": [
+            "O SaveReelsFast (savereelsfast.com) é uma ferramenta gratuita para salvar Reels públicos do Instagram. Você não precisa de conta e nunca pedimos seu usuário ou senha do Instagram. Esta política explica quais informações limitadas são processadas quando você usa o site."
+          ]
+        },
+        {
+          "heading": "Informações que processamos",
+          "body": [
+            "Links que você envia: ao colar o link de um Reel, ele é enviado ao nosso servidor para localizar o vídeo público. Não guardamos o link nem o vídeo depois que a solicitação termina.",
+            "Dados técnicos: como a maioria dos sites, nosso provedor de hospedagem pode registrar automaticamente seu endereço IP, o tipo de navegador e o horário de cada solicitação por motivos de segurança e confiabilidade."
+          ]
+        },
+        {
+          "heading": "Cookies e armazenamento local",
+          "body": [
+            "Usamos um cookie funcional, NEXT_LOCALE, para lembrar o idioma que você escolhe. Ele não contém informações pessoais.",
+            "Se no futuro exibirmos publicidade, nossos parceiros de anúncios poderão definir seus próprios cookies. Quando a lei exigir, pediremos seu consentimento antes de usar cookies não essenciais."
+          ]
+        },
+        {
+          "heading": "Como usamos as informações",
+          "body": [
+            "Usamos as informações acima apenas para operar o serviço, mantê-lo seguro, evitar abusos e entender seu desempenho geral. Não vendemos suas informações pessoais."
+          ]
+        },
+        {
+          "heading": "Terceiros",
+          "body": [
+            "Os vídeos são obtidos dos servidores públicos do Instagram. Não somos afiliados ao Instagram nem à Meta, e as políticas de privacidade deles se aplicam aos serviços deles. Nosso site é hospedado por um provedor terceirizado que processa dados técnicos em nosso nome."
+          ]
+        },
+        {
+          "heading": "Seus direitos",
+          "body": [
+            "Dependendo de onde você mora, você pode ter o direito de acessar, corrigir ou excluir dados pessoais que mantemos sobre você, ou de se opor ao tratamento deles. Para fazer uma solicitação, fale conosco pelos dados da página de Contato."
+          ]
+        },
+        {
+          "heading": "Crianças",
+          "body": [
+            "Este serviço não é direcionado a menores de 13 anos e não coletamos intencionalmente informações pessoais deles."
+          ]
+        },
+        {
+          "heading": "Alterações nesta política",
+          "body": [
+            "Podemos atualizar esta política de tempos em tempos. A data no topo mostra quando ela foi alterada pela última vez."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Termos de Serviço e Aviso Legal",
+      "description": "As regras para usar o SaveReelsFast e avisos importantes.",
+      "updated": "Última atualização: 19 de setembro de 2026",
+      "sections": [
+        {
+          "heading": "Aceitação dos termos",
+          "body": [
+            "Ao usar o SaveReelsFast, você concorda com estes termos. Se não concordar, não use o serviço."
+          ]
+        },
+        {
+          "heading": "O serviço",
+          "body": [
+            "O SaveReelsFast ajuda você a baixar Reels públicos do Instagram para o seu próprio dispositivo. Funciona apenas com conteúdo público e não contorna configurações de privacidade nem logins."
+          ]
+        },
+        {
+          "heading": "Uso permitido",
+          "body": [
+            "Use o serviço apenas para conteúdo seu ou que você tenha permissão para salvar, e para fins pessoais e não comerciais, como assistir offline ou arquivar seu próprio trabalho. Você é responsável pelo uso que fizer do conteúdo baixado."
+          ]
+        },
+        {
+          "heading": "Uso proibido",
+          "body": [
+            "Você não pode usar o serviço para violar a lei, infringir direitos autorais ou outros direitos, republicar conteúdo de terceiros sem permissão, assediar outras pessoas, nem sobrecarregar ou tentar interromper o serviço com solicitações automatizadas ou abusivas."
+          ]
+        },
+        {
+          "heading": "Propriedade intelectual",
+          "body": [
+            "Todos os vídeos, legendas e imagens pertencem aos seus respectivos criadores. Não reivindicamos a propriedade de nenhum conteúdo que você baixar. Credite sempre o criador original ao compartilhar o trabalho dele."
+          ]
+        },
+        {
+          "heading": "Sem afiliação",
+          "body": [
+            "O SaveReelsFast é uma ferramenta independente. Não é afiliado, endossado nem patrocinado pelo Instagram ou pela Meta Platforms, Inc. Instagram é marca registrada de seu respectivo titular."
+          ]
+        },
+        {
+          "heading": "Isenção de garantias",
+          "body": [
+            "O serviço é fornecido \"como está\" e \"conforme disponível\", sem garantias de qualquer tipo. Não garantimos que funcionará sem interrupções, sem erros ou que conseguirá baixar todos os Reels, pois a disponibilidade depende do Instagram."
+          ]
+        },
+        {
+          "heading": "Limitação de responsabilidade",
+          "body": [
+            "Na máxima extensão permitida por lei, o SaveReelsFast não é responsável por danos indiretos, incidentais ou consequenciais decorrentes do uso do serviço ou de qualquer conteúdo baixado com ele."
+          ]
+        },
+        {
+          "heading": "Direitos autorais e pedidos de remoção",
+          "body": [
+            "Se você acredita que um conteúdo está sendo tratado de forma que viola seus direitos, entre em contato conosco com os detalhes e analisaremos seu pedido com prontidão."
+          ]
+        },
+        {
+          "heading": "Alterações nestes termos",
+          "body": [
+            "Podemos atualizar estes termos de tempos em tempos. Continuar usando o serviço após as alterações significa que você aceita os termos atualizados."
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Fale conosco",
+      "description": "Entre em contato com a equipe do SaveReelsFast.",
+      "intro": "Tem uma dúvida, sugestão ou um pedido de direitos autorais ou remoção de conteúdo? Envie um e-mail e responderemos.",
+      "emailLabel": "E-mail",
+      "responseTime": "Fazemos o possível para responder em alguns dias úteis.",
+      "topicsHeading": "Motivos para entrar em contato",
+      "topics": [
+        "Dúvidas sobre como a ferramenta funciona",
+        "Relatos de erros e sugestões de recursos",
+        "Pedidos de direitos autorais ou remoção de conteúdo",
+        "Solicitações de privacidade sobre seus dados"
+      ]
+    }
   }
 }

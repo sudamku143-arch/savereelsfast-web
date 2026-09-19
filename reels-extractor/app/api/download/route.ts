@@ -1,0 +1,87 @@
+import { NextRequest, NextResponse } from "next/server";
+import { BROWSER_UA, isAllowedMediaUrl } from "@/lib/instagram";
+
+// Edge runtime streams the body straight through, so large videos are not
+// subject to the buffered-response size limit of serverless functions.
+export const runtime = "edge";
+
+const HEADER_TIMEOUT_MS = 10000;
+const MAX_BYTES = 200 * 1024 * 1024;
+
+function safeFilename(raw: string | null): string {
+  const base = (raw ?? "")
+    .replace(/\.mp4$/i, "")
+    .replace(/[^A-Za-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+  return `${base || "reel"}.mp4`;
+}
+
+function fail(message: string, status: number) {
+  return NextResponse.json({ success: false, error: message }, { status });
+}
+
+/**
+ * GET /api/download?url=<Instagram CDN video URL>&filename=<name>
+ *
+ * Streams the video back from our own origin with
+ * `Content-Disposition: attachment`, which is what makes browsers save the
+ * file instead of playing it (the `download` attribute is ignored for
+ * cross-origin URLs).
+ */
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const target = searchParams.get("url");
+
+  if (!target || !isAllowedMediaUrl(target)) {
+    return fail("Invalid or unsupported video URL.", 400);
+  }
+
+  const filename = safeFilename(searchParams.get("filename"));
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), HEADER_TIMEOUT_MS);
+
+  let upstream: Response;
+  try {
+    upstream = await fetch(target, {
+      headers: { "User-Agent": BROWSER_UA, Accept: "video/mp4,video/*;q=0.9,*/*;q=0.5" },
+      redirect: "manual", // never follow a redirect off the allow-list
+      signal: controller.signal,
+    });
+  } catch {
+    clearTimeout(timer);
+    return fail("Couldn't fetch the video. Please try again.", 502);
+  }
+  clearTimeout(timer);
+
+  if (!upstream.ok || !upstream.body) {
+    const status = upstream.status === 404 || upstream.status === 410 ? 404 : 502;
+    return fail(
+      status === 404
+        ? "This video link has expired. Please fetch the Reel again."
+        : "Couldn't fetch the video. Please try again.",
+      status
+    );
+  }
+
+  const type = upstream.headers.get("content-type") ?? "";
+  if (!type.startsWith("video/") && !type.startsWith("application/octet-stream")) {
+    return fail("The requested file is not a video.", 415);
+  }
+
+  const length = Number(upstream.headers.get("content-length") ?? 0);
+  if (length > MAX_BYTES) {
+    return fail("This video is too large to download.", 413);
+  }
+
+  const headers = new Headers({
+    "Content-Type": "video/mp4",
+    "Content-Disposition": `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
+    "Cache-Control": "private, no-store",
+    "X-Content-Type-Options": "nosniff",
+  });
+  if (length > 0) headers.set("Content-Length", String(length));
+
+  return new Response(upstream.body, { status: 200, headers });
+}

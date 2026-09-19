@@ -47,10 +47,6 @@ export default async function LocalePage({
 
       <FaqAccordion heading={dict.faq.heading} items={dict.faq.items} />
 
-      <footer className="mt-16 max-w-2xl text-center text-xs text-zinc-500">
-        {dict.footer.disclaimer}
-      </footer>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

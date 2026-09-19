@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "../globals.css";
-import { locales, isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
+import {
+  locales,
+  isLocale,
+  defaultLocale,
+  localePath,
+  type Locale,
+} from "@/lib/i18n-config";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+// Unknown locales 404 instead of rendering the default language.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -14,7 +25,7 @@ type Props = {
   params: { locale: string };
 };
 
-const SITE_URL = "https://savereelsfast.com";
+const OG_IMAGE = `${SITE_URL}/api/og`;
 
 export async function generateMetadata({
   params,
@@ -26,29 +37,40 @@ export async function generateMetadata({
 
   const languages: Record<string, string> = {};
   locales.forEach((l) => {
-    languages[l] = l === defaultLocale ? `${SITE_URL}/` : `${SITE_URL}/${l}`;
+    languages[l] = `${SITE_URL}${localePath(l)}`;
   });
 
-  const canonicalPath = locale === defaultLocale ? "" : `/${locale}`;
+  const canonicalUrl = `${SITE_URL}${localePath(locale)}`;
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
-      canonical: `${SITE_URL}${canonicalPath}`,
+      canonical: canonicalUrl,
       languages,
     },
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      url: `${SITE_URL}${canonicalPath}`,
+      url: canonicalUrl,
+      siteName: SITE_NAME,
       locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : "pt_BR",
       type: "website",
+      images: [
+        {
+          url: OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: dict.meta.ogAlt,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description,
+      images: [OG_IMAGE],
     },
   };
 }
@@ -62,6 +84,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
         <Header locale={locale} dict={dict.nav} />
         {children}
+        <Footer locale={locale} dict={dict.footer} />
       </body>
     </html>
   );

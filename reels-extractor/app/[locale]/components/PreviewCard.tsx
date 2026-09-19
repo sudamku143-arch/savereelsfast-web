@@ -69,6 +69,11 @@ export default function PreviewCard({
 
   const [selected, setSelected] = useState(0);
   const current = options[Math.min(selected, options.length - 1)];
+  const filename = `savereelsfast-${result.author ?? "reel"}.mp4`;
+  // Same-origin proxy: cross-origin CDN links ignore the `download` attribute.
+  const downloadHref = `/api/download?url=${encodeURIComponent(
+    current.url
+  )}&filename=${encodeURIComponent(filename)}`;
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
 
@@ -152,9 +157,8 @@ export default function PreviewCard({
 
       <div className="mt-4 flex gap-2">
         <a
-          href={current.url}
-          download
-          rel="noopener noreferrer"
+          href={downloadHref}
+          download={filename}
           className="flex-1 rounded-xl bg-brand-500 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300"
         >
           {dict.downloadButton}
