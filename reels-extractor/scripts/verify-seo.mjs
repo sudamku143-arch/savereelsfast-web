@@ -116,6 +116,35 @@ async function main() {
     }
   }
 
+  // The footer: three columns, with every legal page linked from every language.
+  for (const locale of LOCALES) {
+    const html = await (await get(home(locale))).text();
+    const footer = html.slice(html.indexOf('<footer'));
+    for (const legal of ["/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact"]) {
+      check(footer.includes(`href="${path(locale, legal)}"`), `[${locale}] footer has no link to ${legal}`);
+    }
+    for (const slug of Object.values(SLUGS)) {
+      check(footer.includes(`href="${path(locale, `/downloader/${slug}`)}"`), `[${locale}] footer has no link to the ${slug} tool`);
+    }
+    check(/href="mailto:[^"]+\?subject=/.test(footer), `[${locale}] footer has no "report a broken link" mailto`);
+    const headings = [...footer.matchAll(/<h2[^>]*>([^<]*)<\/h2>/g)].map((m) => m[1]);
+    check(headings.length === 3, `[${locale}] footer should have 3 columns, found ${headings.length}`);
+  }
+
+  // Ad slots must be in the server-rendered HTML (a client-only slot causes a hydration error
+  // and shifts the layout), and must never appear on the legal pages.
+  const countAds = (html, locale) => (html.match(new RegExp(`<aside aria-label="${messages[locale].ad.label}"`, "g")) ?? []).length;
+  for (const locale of LOCALES) {
+    for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/downloader/${slug}`))]) {
+      const ads = countAds(await (await get(page)).text(), locale);
+      check(ads >= 2, `[${locale}] ${page} server HTML has ${ads} ad slots (expected the leaderboard and a native card)`);
+    }
+    for (const legal of ["/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact"]) {
+      const ads = countAds(await (await get(path(locale, legal))).text(), locale);
+      check(ads === 0, `[${locale}] ${legal} must not show ads (found ${ads})`);
+    }
+  }
+
   // Routing edge cases.
   const legacy = await get("/downloader/x");
   check([301, 308].includes(legacy.status) && legacy.headers.get("location")?.endsWith("/downloader/twitter"), `/downloader/x should redirect to /twitter (got ${legacy.status} ${legacy.headers.get("location")})`);
@@ -134,7 +163,7 @@ async function main() {
   const xml = await sitemapRes.text();
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
   const locs = entries.map((e) => e.match(/<loc>([^<]*)<\/loc>/)?.[1]);
-  check(entries.length === 13 * LOCALES.length, `sitemap has ${entries.length} URLs (expected ${13 * LOCALES.length})`);
+  check(entries.length === 15 * LOCALES.length, `sitemap has ${entries.length} URLs (expected ${15 * LOCALES.length})`);
   check(new Set(locs).size === locs.length, "sitemap has duplicate URLs");
   for (const locale of LOCALES) {
     for (const slug of Object.values(SLUGS)) {

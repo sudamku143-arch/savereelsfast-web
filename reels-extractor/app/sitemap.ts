@@ -15,6 +15,8 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number }[] = 
   })),
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/dmca", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/disclaimer", changeFrequency: "yearly", priority: 0.3 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.3 },
 ];
 

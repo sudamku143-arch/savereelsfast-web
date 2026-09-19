@@ -4,7 +4,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import ExtractorClient from "./components/ExtractorClient";
 import SeoContent from "./components/SeoContent";
 import FaqAccordion from "./components/FaqAccordion";
-import AdSlot from "./components/AdSlot";
+import AdBanner from "./components/AdBanner";
 import InstallBanner from "./components/InstallBanner";
 import PlatformLinks from "./components/PlatformLinks";
 
@@ -32,6 +32,8 @@ export default async function LocalePage({
 
   return (
     <main className="flex flex-col items-center px-4 pb-16 pt-12 sm:pt-20">
+      <AdBanner variant="leaderboard" dict={dict.ad} className="mb-8" />
+
       <div className="w-full max-w-2xl">
         <ExtractorClient
           heroDict={dict.hero}
@@ -39,16 +41,15 @@ export default async function LocalePage({
           previewDict={dict.preview}
           errorsDict={dict.errors}
           downloadDict={dict.download}
+          adDict={dict.ad}
         />
       </div>
 
       <InstallBanner dict={dict.pwa} />
 
-      <AdSlot label={dict.ad.label} size="leaderboard" />
-
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
 
-      <AdSlot label={dict.ad.label} size="rectangle" />
+      <AdBanner variant="native" dict={dict.ad} className="mt-10" />
 
       <PlatformLinks
         locale={locale}
@@ -58,6 +59,9 @@ export default async function LocalePage({
       />
 
       <FaqAccordion heading={dict.faq.heading} items={dict.faq.items} />
+
+      {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}
+      <AdBanner variant="sticky" dict={dict.ad} />
 
       <script
         type="application/ld+json"

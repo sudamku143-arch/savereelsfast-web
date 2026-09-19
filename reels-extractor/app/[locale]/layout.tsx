@@ -13,6 +13,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import InstallProvider from "./components/InstallProvider";
+import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import IosInstallModal from "./components/IosInstallModal";
 
 // Unknown locales 404 instead of rendering the default language.
@@ -94,6 +95,9 @@ export async function generateMetadata({
 export default async function LocaleLayout({ children, params }: Props) {
   const locale: Locale = isLocale(params.locale) ? params.locale : defaultLocale;
   const dict = await getDictionary(locale);
+  const platformNames = Object.fromEntries(
+    PLATFORM_IDS.map((id) => [id, dict.platforms[id].name])
+  ) as Record<PlatformId, string>;
 
   return (
     <html lang={locale}>
@@ -101,7 +105,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} />
           {children}
-          <Footer locale={locale} dict={dict.footer} />
+          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} />
           <IosInstallModal dict={dict.pwa} />
         </InstallProvider>
       </body>

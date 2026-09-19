@@ -14,7 +14,7 @@ import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import ExtractorClient from "../../components/ExtractorClient";
 import FaqAccordion from "../../components/FaqAccordion";
-import AdSlot from "../../components/AdSlot";
+import AdBanner from "../../components/AdBanner";
 import PlatformLinks from "../../components/PlatformLinks";
 
 type Props = { params: { locale: string; platform: string } };
@@ -129,6 +129,8 @@ export default async function PlatformLandingPage({ params }: Props) {
         </ol>
       </nav>
 
+      <AdBanner variant="leaderboard" dict={dict.ad} className="mb-8" />
+
       <div className="w-full max-w-2xl">
         <ExtractorClient
           heroDict={dict.hero}
@@ -136,12 +138,11 @@ export default async function PlatformLandingPage({ params }: Props) {
           previewDict={dict.preview}
           errorsDict={dict.errors}
           downloadDict={dict.download}
+          adDict={dict.ad}
           initialPlatform={id}
           fixedHeading={{ title: content.h1, subtitle: content.lead }}
         />
       </div>
-
-      <AdSlot label={dict.ad.label} size="leaderboard" />
 
       <section className="mt-16 w-full max-w-2xl">
         <h2 className="mb-4 text-xl font-bold text-zinc-50">
@@ -161,6 +162,8 @@ export default async function PlatformLandingPage({ params }: Props) {
           ))}
         </ol>
       </section>
+
+      <AdBanner variant="native" dict={dict.ad} className="mt-10" />
 
       <section className="mt-16 w-full max-w-2xl">
         <h2 className="mb-4 text-xl font-bold text-zinc-50">
@@ -188,6 +191,9 @@ export default async function PlatformLandingPage({ params }: Props) {
         currentId={id}
         currentLabel={common.here}
       />
+
+      {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}
+      <AdBanner variant="sticky" dict={dict.ad} />
 
       <script
         type="application/ld+json"

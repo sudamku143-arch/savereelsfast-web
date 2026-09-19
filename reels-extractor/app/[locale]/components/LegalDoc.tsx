@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type Section = { heading: string; body: string[] };
 
 export default function LegalDoc({
@@ -5,11 +7,13 @@ export default function LegalDoc({
   updated,
   intro,
   sections,
+  children,
 }: {
   title: string;
   updated?: string;
   intro?: string;
   sections: Section[];
+  children?: ReactNode;
 }) {
   return (
     <main className="mx-auto w-full max-w-2xl px-4 pb-8 pt-12 sm:pt-16">
@@ -36,6 +40,7 @@ export default function LegalDoc({
           </section>
         ))}
       </div>
+      {children}
     </main>
   );
 }

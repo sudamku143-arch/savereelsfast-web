@@ -438,60 +438,93 @@
     "links": {
       "privacy": "Política de privacidad",
       "terms": "Términos del servicio",
-      "contact": "Contacto"
-    }
+      "dmca": "DMCA",
+      "disclaimer": "Aviso legal",
+      "contact": "Contáctanos",
+      "report": "Reportar un enlace roto"
+    },
+    "columns": {
+      "tools": "Herramientas compatibles",
+      "legal": "Legal y políticas",
+      "company": "Empresa y contacto"
+    },
+    "reportSubject": "Reporte de enlace roto"
   },
   "ad": {
-    "label": "Publicidad"
+    "label": "Publicidad",
+    "close": "Cerrar anuncio",
+    "collapse": "Contraer anuncio",
+    "expand": "Mostrar anuncio"
   },
   "legal": {
     "privacy": {
       "title": "Política de privacidad",
-      "description": "Cómo trata SaveReelsFast la información limitada que interviene al usar el sitio.",
-      "updated": "Última actualización: 19 de septiembre de 2026",
+      "description": "Qué procesa SaveReelsFast cuando lo usas, cuánto tiempo se conservan los datos temporales (hasta 90 minutos), que no se almacena ningún contenido multimedia y tus opciones de privacidad.",
+      "updated": "Última actualización: 20 de septiembre de 2026",
       "sections": [
         {
           "heading": "Resumen",
           "body": [
-            "SaveReelsFast (savereelsfast.com) es una herramienta gratuita para guardar videos públicos de las redes sociales más populares. No necesitas una cuenta y nunca te pedimos tu usuario ni tu contraseña de redes sociales. Esta política explica qué información limitada se procesa cuando usas el sitio."
+            "SaveReelsFast (savereelsfast.com) es una herramienta gratuita para guardar videos públicos de las redes sociales más populares. No necesitas una cuenta y nunca te pedimos tu usuario ni tu contraseña de redes sociales. Esta política explica qué información se procesa cuando usas el sitio, cuánto tiempo se conserva y qué opciones tienes."
           ]
         },
         {
-          "heading": "Información que procesamos",
+          "heading": "Qué procesamos",
           "body": [
-            "Enlaces que envías: al pegar el enlace de un video, se envía a nuestro servidor y a un servicio de backend que funciona en nuestro nombre, para poder localizar el video público. Para acelerar las solicitudes repetidas, el resultado de esa búsqueda (el enlace, el título y las direcciones de descarga temporales) se conserva en memoria hasta 90 minutos y después se descarta. Nunca almacenamos los videos en sí.",
-            "Datos técnicos: como la mayoría de los sitios web, nuestro proveedor de alojamiento puede registrar automáticamente tu dirección IP, el tipo de navegador y la hora de cada solicitud por motivos de seguridad y fiabilidad."
+            "Enlaces que envías: al pegar el enlace de un video, se envía a nuestro servidor y a un servicio de backend que funciona en nuestro nombre, para poder localizar el video público.",
+            "Datos técnicos: como la mayoría de los sitios web, nuestros proveedores de alojamiento pueden registrar automáticamente tu dirección IP, el tipo de navegador y de dispositivo y la hora de cada solicitud, por motivos de seguridad, prevención de abusos y fiabilidad.",
+            "Lo que no recopilamos: no tenemos cuentas de usuario, no te pedimos nombre ni correo para usar la herramienta y no creamos perfiles publicitarios por nuestra cuenta."
+          ]
+        },
+        {
+          "heading": "Caché temporal y conservación",
+          "body": [
+            "Para que las solicitudes repetidas sean rápidas y para proteger el servicio de la sobrecarga, el resultado de una búsqueda (el enlace, el título, la dirección de la miniatura y las direcciones de descarga temporales) se conserva en la memoria del servidor hasta 90 minutos y después se descarta automáticamente. Nunca se escribe en una base de datos.",
+            "No se almacena ningún contenido multimedia. Los videos y el audio se transmiten desde la plataforma de origen, a través de nuestros servidores, hasta tu dispositivo en tiempo real y no se guardan en nuestros sistemas, ni siquiera de forma temporal en disco.",
+            "Los registros de servidor que guardan nuestros proveedores de alojamiento se conservan según sus propios plazos. Los datos almacenados en tu navegador (véase más abajo) permanecen en tu dispositivo."
           ]
         },
         {
           "heading": "Cookies y almacenamiento local",
           "body": [
-            "Usamos una cookie funcional, NEXT_LOCALE, para recordar el idioma que eliges. No contiene información personal. El almacenamiento local y de sesión de tu navegador también guarda algunos ajustes de comodidad (tus resultados recientes y si cerraste el aviso de instalación); esos datos permanecen en tu dispositivo.",
-            "Si en el futuro mostramos publicidad, nuestros socios publicitarios podrían instalar sus propias cookies. Cuando la ley lo exija, pediremos tu consentimiento antes de usar cookies no esenciales."
+            "Usamos una cookie funcional, NEXT_LOCALE, para recordar el idioma que eliges. No contiene información personal y caduca al cabo de un año.",
+            "El almacenamiento local y de sesión de tu navegador guarda algunos ajustes de comodidad: tus resultados más recientes (se borran al cerrar la pestaña) y si cerraste el aviso de instalación o el anuncio fijo. Estos datos nunca salen de tu dispositivo y puedes borrarlos en cualquier momento desde los ajustes de tu navegador.",
+            "No usamos analítica ni cookies de seguimiento propias."
           ]
         },
         {
-          "heading": "Cómo usamos la información",
+          "heading": "Publicidad",
           "body": [
-            "Usamos la información anterior solo para operar el servicio, mantenerlo seguro, evitar abusos y entender su rendimiento general. No vendemos tu información personal."
+            "SaveReelsFast es gratuito porque puede mostrar anuncios. Los anuncios los sirven redes publicitarias de terceros (por ejemplo, Google AdSense u otras similares). Estas redes pueden instalar o leer cookies y usar identificadores como tu dirección IP para mostrar anuncios, limitar la frecuencia con que los ves y medir resultados.",
+            "Los enlaces que pegas nunca se comparten con anunciantes. Las redes publicitarias solo reciben lo que envía tu navegador al cargar un anuncio. Cuando la ley exija tu consentimiento para las cookies publicitarias no esenciales (por ejemplo, en la UE, el EEE y el Reino Unido), se solicitará antes de usarlas.",
+            "Puedes gestionar la personalización de anuncios en adssettings.google.com o en los ajustes de tu navegador y dispositivo, y darte de baja de la publicidad basada en intereses en optout.aboutads.info (EE. UU.) o youronlinechoices.eu (UE)."
           ]
         },
         {
           "heading": "Terceros",
           "body": [
-            "Los videos se obtienen de los servidores públicos de la plataforma de origen (por ejemplo, Instagram, YouTube o TikTok). No estamos afiliados a ninguna de estas plataformas y sus propias políticas de privacidad se aplican a sus servicios. Nuestro sitio y nuestro backend están alojados por proveedores externos que procesan datos técnicos en nuestro nombre."
+            "Los videos se obtienen de los servidores públicos de la plataforma de origen (por ejemplo, Instagram, YouTube o TikTok). No estamos afiliados a estas plataformas y sus propias políticas de privacidad se aplican a sus servicios.",
+            "Nuestro sitio y nuestro servicio de backend están alojados por proveedores externos que procesan datos técnicos en nuestro nombre conforme a sus propias condiciones de privacidad. No vendemos tu información personal."
           ]
         },
         {
           "heading": "Tus derechos",
           "body": [
-            "Según el lugar donde vivas, puedes tener derecho a acceder, corregir o eliminar los datos personales que tengamos sobre ti, o a oponerte a su tratamiento. Para hacer una solicitud, contáctanos con los datos de la página de Contacto."
+            "Según dónde vivas (por ejemplo, conforme al RGPD, al RGPD del Reino Unido, a la CCPA/CPRA o a la LGPD de Brasil), puedes tener derecho a acceder a tus datos personales, corregirlos o eliminarlos, a oponerte a su tratamiento o limitarlo, a la portabilidad y a retirar tu consentimiento. No vendemos información personal.",
+            "Como no mantenemos cuentas ni perfiles, normalmente hay pocos datos que podamos vincular contigo. Para hacer una solicitud, escríbenos con los datos de la página de Contacto y, si puedes, indica la hora aproximada de tu visita. También puedes presentar una reclamación ante tu autoridad local de protección de datos."
           ]
         },
         {
           "heading": "Menores de edad",
           "body": [
             "Este servicio no está dirigido a menores de 13 años y no recopilamos a sabiendas información personal de ellos."
+          ]
+        },
+        {
+          "heading": "Tratamiento internacional y seguridad",
+          "body": [
+            "Nuestros proveedores pueden tratar datos en Estados Unidos y en otros países. Cuando la ley lo exija, nos basamos en las garantías adecuadas que ofrecen esos proveedores.",
+            "Todo el tráfico usa HTTPS y mantenemos la recopilación de datos al mínimo. Ningún sistema es perfectamente seguro, pero no almacenar contenido multimedia ni cuentas limita lo que podría llegar a quedar expuesto."
           ]
         },
         {
@@ -503,9 +536,9 @@
       ]
     },
     "terms": {
-      "title": "Términos del servicio y aviso legal",
-      "description": "Las normas para usar SaveReelsFast y avisos importantes.",
-      "updated": "Última actualización: 19 de septiembre de 2026",
+      "title": "Términos del servicio",
+      "description": "Las normas para usar SaveReelsFast: uso legítimo, tu responsabilidad sobre el contenido descargado y nuestra independencia de Meta, Google, TikTok, X y otras plataformas.",
+      "updated": "Última actualización: 20 de septiembre de 2026",
       "sections": [
         {
           "heading": "Aceptación de los términos",
@@ -516,37 +549,49 @@
         {
           "heading": "El servicio",
           "body": [
-            "SaveReelsFast te ayuda a descargar videos públicos de redes sociales compatibles en tu propio dispositivo. Funciona solo con contenido público y no elude configuraciones de privacidad ni inicios de sesión."
+            "SaveReelsFast te ayuda a descargar en tu propio dispositivo videos públicos de redes sociales compatibles. Funciona solo con contenido público y no elude configuraciones de privacidad, muros de pago ni inicios de sesión."
           ]
         },
         {
-          "heading": "Uso permitido",
+          "heading": "Uso legítimo y uso permitido",
           "body": [
-            "Usa el servicio solo con contenido que sea tuyo o que tengas permiso para guardar, y con fines personales y no comerciales, como verlo sin conexión o archivar tu propio trabajo. Eres responsable del uso que hagas del contenido descargado."
+            "El servicio está pensado para un uso personal y no comercial, como ver contenido sin conexión o archivar tu propio trabajo. Guardar contenido que no es tuyo puede estar permitido como uso legítimo o bajo excepciones similares en algunos países, pero eso depende de tu legislación local y del uso que hagas del archivo. Nada en estos términos te concede derechos sobre contenido de terceros."
+          ]
+        },
+        {
+          "heading": "Tu responsabilidad",
+          "body": [
+            "Eres el único responsable de los enlaces que envías y de lo que hagas con el contenido descargado. Antes de descargar, asegúrate de tener derecho a guardarlo y usarlo. Te comprometes a respetar los derechos de autor, las marcas, la privacidad y otros derechos, las condiciones de la plataforma de la que procede el contenido y la legislación aplicable."
           ]
         },
         {
           "heading": "Uso prohibido",
           "body": [
-            "No puedes usar el servicio para infringir la ley, vulnerar derechos de autor u otros derechos, volver a publicar contenido ajeno sin permiso, acosar a otras personas, ni sobrecargar o intentar interrumpir el servicio mediante solicitudes automatizadas o abusivas."
+            "No puedes usar el servicio para infringir la ley, vulnerar derechos de autor u otros derechos, volver a publicar contenido ajeno sin permiso, acosar a otras personas, descargar contenido de menores de forma perjudicial, ni sobrecargar o intentar interrumpir el servicio mediante solicitudes automatizadas o abusivas."
           ]
         },
         {
-          "heading": "Propiedad intelectual",
+          "heading": "Propiedad intelectual y derechos de autor",
           "body": [
-            "Todos los videos, descripciones e imágenes pertenecen a sus respectivos creadores. No reclamamos la propiedad de ningún contenido que descargues. Menciona siempre al creador original cuando compartas su trabajo."
+            "Todos los videos, descripciones e imágenes pertenecen a sus respectivos creadores o titulares de derechos. SaveReelsFast no aloja, posee ni reclama derechos sobre ningún contenido que descargues. Si eres titular de derechos y crees que un contenido se está tratando de forma que infringe tus derechos, consulta nuestra página de DMCA."
           ]
         },
         {
           "heading": "Sin afiliación",
           "body": [
-            "SaveReelsFast es una herramienta independiente. No está afiliada, respaldada ni patrocinada por Instagram, Meta Platforms, Inc., YouTube, Google, X Corp., Pinterest, TikTok ni ninguna otra plataforma. Todas las marcas pertenecen a sus respectivos titulares."
+            "SaveReelsFast es una herramienta independiente. No está afiliada, respaldada ni patrocinada por Meta Platforms, Inc. (Instagram, Facebook, Threads), Google LLC (YouTube), TikTok Ltd. o ByteDance Ltd., X Corp. (X, antes Twitter), Pinterest, Inc., Reddit, Inc., Snap Inc. ni ninguna otra plataforma. Todos los nombres de productos, logotipos y marcas son propiedad de sus respectivos titulares y se usan solo para identificar los servicios con los que funciona nuestra herramienta."
           ]
         },
         {
-          "heading": "Exención de garantías",
+          "heading": "Publicidad y servicios de terceros",
           "body": [
-            "El servicio se ofrece «tal cual» y «según disponibilidad», sin garantías de ningún tipo. No garantizamos que funcione sin interrupciones, sin errores ni que pueda descargar todos los Reels, ya que la disponibilidad depende de Instagram."
+            "El sitio puede mostrar anuncios y enlaces a sitios web de terceros. No controlamos ni somos responsables del contenido, los productos o las prácticas de terceros."
+          ]
+        },
+        {
+          "heading": "Disponibilidad y exención de garantías",
+          "body": [
+            "El servicio se ofrece «tal cual» y «según disponibilidad», sin garantías de ningún tipo. No garantizamos que funcione sin interrupciones, sin errores ni que pueda descargar todos los videos, ya que la disponibilidad depende de las plataformas de origen."
           ]
         },
         {
@@ -556,9 +601,9 @@
           ]
         },
         {
-          "heading": "Derechos de autor y solicitudes de retirada",
+          "heading": "Bloqueo y terminación",
           "body": [
-            "Si crees que un contenido se está tratando de forma que infringe tus derechos, contáctanos con los detalles y revisaremos tu solicitud con prontitud."
+            "Podemos limitar o bloquear el acceso, o dejar de procesar enlaces concretos, en cualquier momento, por ejemplo para evitar abusos o responder a un aviso de derechos de autor."
           ]
         },
         {
@@ -581,6 +626,112 @@
         "Informes de errores y sugerencias de funciones",
         "Solicitudes de derechos de autor o de retirada de contenido",
         "Solicitudes de privacidad sobre tus datos"
+      ]
+    },
+    "dmca": {
+      "title": "DMCA y política de derechos de autor",
+      "description": "Cómo denunciar una infracción de derechos de autor a SaveReelsFast. No alojamos contenido en video; aquí encontrarás el procedimiento de retirada y los datos de contacto de nuestro agente designado.",
+      "updated": "Última actualización: 20 de septiembre de 2026",
+      "intro": "Esta página explica cómo pueden los titulares de derechos de autor denunciar contenido y cómo responde SaveReelsFast. Respetamos la propiedad intelectual y seguimos el proceso de notificación y retirada de la Digital Millennium Copyright Act (17 U.S.C. § 512).",
+      "sections": [
+        {
+          "heading": "No alojamos ningún contenido",
+          "body": [
+            "SaveReelsFast es una herramienta, no una biblioteca de videos. No alojamos, almacenamos, subimos, indexamos ni ponemos a disposición ningún archivo de video, audio o imagen en nuestros servidores. Cuando descargas algo, el archivo se transmite en tiempo real desde los servidores de la plataforma de origen hasta tu dispositivo y nosotros no lo guardamos."
+          ]
+        },
+        {
+          "heading": "Denuncia en el origen",
+          "body": [
+            "Como el video permanece en la plataforma de origen (por ejemplo, Instagram, YouTube, TikTok o X), la forma más eficaz de que se retire un contenido infractor es denunciarlo a esa plataforma mediante sus propias herramientas de derechos de autor. Una vez retirado allí, el video tampoco podrá descargarse a través de SaveReelsFast."
+          ]
+        },
+        {
+          "heading": "Qué debe incluir una notificación de retirada",
+          "body": [
+            "Para pedirnos que dejemos de procesar un enlace concreto, envía una notificación por escrito que contenga todo lo siguiente:",
+            "1. La firma física o electrónica del titular de los derechos de autor o de una persona autorizada para actuar en su nombre.",
+            "2. La identificación de la obra protegida que consideras infringida.",
+            "3. La identificación del material que consideras infractor, con información suficiente para que podamos localizarlo, como el enlace (URL) exacto que se envió a SaveReelsFast.",
+            "4. Tu nombre, dirección postal, número de teléfono y correo electrónico.",
+            "5. Una declaración de que crees de buena fe que el uso no está autorizado por el titular de los derechos, su agente o la ley.",
+            "6. Una declaración, hecha bajo pena de perjurio, de que la información de tu notificación es exacta y de que eres el titular de los derechos o estás autorizado para actuar en su nombre."
+          ]
+        },
+        {
+          "heading": "Qué hacemos con una notificación",
+          "body": [
+            "Revisamos con prontitud las notificaciones completas. Cuando procede, dejamos de procesar los enlaces concretos identificados, de modo que ya no puedan obtenerse a través de SaveReelsFast, y podemos conservar un registro de la notificación. Las notificaciones incompletas pueden no ser tramitables y podemos pedirte más información."
+          ]
+        },
+        {
+          "heading": "Contranotificación",
+          "body": [
+            "Si crees que un enlace se bloqueó por error o por una identificación equivocada, puedes enviar una contranotificación que contenga: tu firma; la identificación del enlace bloqueado; una declaración bajo pena de perjurio de que crees de buena fe que se bloqueó por error o por identificación equivocada; tu nombre, dirección, teléfono y correo electrónico; y tu consentimiento a la jurisdicción del tribunal federal de tu domicilio (o, fuera de Estados Unidos, de los tribunales donde nos encontremos) y a aceptar el emplazamiento de la persona que envió la notificación original."
+          ]
+        },
+        {
+          "heading": "Infracciones reiteradas",
+          "body": [
+            "Podemos bloquear enlaces, orígenes o redes que sean objeto de notificaciones válidas reiteradas o que hagan un uso abusivo del servicio."
+          ]
+        },
+        {
+          "heading": "Reclamaciones falsas",
+          "body": [
+            "Conforme a 17 U.S.C. § 512(f), quien afirme a sabiendas y falsamente que un material es infractor, o que se retiró por error, puede ser responsable de daños. Valora consultar con un abogado antes de enviar una notificación."
+          ]
+        }
+      ],
+      "agent": {
+        "heading": "Agente designado",
+        "label": "Envía las notificaciones a",
+        "subject": "Notificación de retirada DMCA",
+        "note": "Si es posible, escribe en inglés e incluye los seis puntos anteriores. Las notificaciones enviadas a otras direcciones pueden retrasarse. Esta página es información general, no asesoramiento jurídico."
+      }
+    },
+    "disclaimer": {
+      "title": "Aviso legal",
+      "description": "SaveReelsFast es una herramienta independiente sin afiliación con las redes sociales. Consulta la propiedad del contenido, la disponibilidad y tu responsabilidad.",
+      "updated": "Última actualización: 20 de septiembre de 2026",
+      "intro": "Lee este aviso junto con nuestros Términos del servicio y nuestra Política de privacidad.",
+      "sections": [
+        {
+          "heading": "Información general",
+          "body": [
+            "SaveReelsFast ofrece una herramienta técnica que te ayuda a guardar videos públicos para uso personal. La información de este sitio se ofrece de buena fe con fines generales y no constituye asesoramiento jurídico, profesional ni financiero."
+          ]
+        },
+        {
+          "heading": "Sin afiliación con ninguna plataforma",
+          "body": [
+            "SaveReelsFast no está afiliada, respaldada ni patrocinada por Meta (Instagram, Facebook, Threads), Google (YouTube), TikTok, X, Pinterest, Reddit, Snap ni ninguna otra plataforma. Sus nombres y logotipos son marcas de sus titulares y se usan solo para describir con qué funciona nuestra herramienta."
+          ]
+        },
+        {
+          "heading": "Contenido y derechos de autor",
+          "body": [
+            "No alojamos, poseemos ni controlamos los videos que descargas. Todo pertenece a sus creadores o titulares de derechos. Eres responsable de asegurarte de que puedes guardarlos y usarlos, y de mencionar al creador cuando corresponda."
+          ]
+        },
+        {
+          "heading": "Sin garantía de disponibilidad",
+          "body": [
+            "Las redes sociales cambian con frecuencia, así que la herramienta puede no funcionar con todos los enlaces, ser más lenta a veces o devolver una calidad menor o un video sin sonido. No garantizamos la disponibilidad, la exactitud ni la idoneidad para un fin concreto."
+          ]
+        },
+        {
+          "heading": "Enlaces externos y publicidad",
+          "body": [
+            "Este sitio puede contener anuncios y enlaces a otros sitios web. No somos responsables de su contenido, exactitud o prácticas, y un anuncio no implica respaldo."
+          ]
+        },
+        {
+          "heading": "Uso bajo tu propio riesgo",
+          "body": [
+            "Usas SaveReelsFast bajo tu propio riesgo. En la medida permitida por la ley, no somos responsables de ninguna pérdida derivada del uso de la herramienta o del contenido descargado."
+          ]
+        }
       ]
     }
   }

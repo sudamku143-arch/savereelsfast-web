@@ -15,6 +15,7 @@ import SkeletonLoader from "./SkeletonLoader";
 import PreviewCard, { type PreviewDict, type ReelResult } from "./PreviewCard";
 import ErrorCard, { type ErrorsDict, type UiErrorCode } from "./ErrorCard";
 import type { DownloadDict } from "./DownloadButton";
+import AdBanner, { type AdDict } from "./AdBanner";
 
 type HeroDict = {
   badge: string;
@@ -37,6 +38,7 @@ export default function ExtractorClient({
   previewDict,
   errorsDict,
   downloadDict,
+  adDict,
   initialPlatform = "instagram",
   fixedHeading,
 }: {
@@ -45,6 +47,7 @@ export default function ExtractorClient({
   previewDict: PreviewDict;
   errorsDict: ErrorsDict;
   downloadDict: DownloadDict;
+  adDict: AdDict;
   /** Platform tab selected on first render (platform landing pages preselect theirs). */
   initialPlatform?: PlatformId;
   /**
@@ -190,15 +193,19 @@ export default function ExtractorClient({
         )}
 
         {status === "done" && result && (
-          <PreviewCard
-            result={result}
-            dict={previewDict}
-            downloadDict={downloadDict}
-            errorsDict={errorsDict}
-            platform={result.platform ?? platform}
-            platformName={platformsDict[result.platform ?? platform].name}
-            onReset={handleReset}
-          />
+          <>
+            <PreviewCard
+              result={result}
+              dict={previewDict}
+              downloadDict={downloadDict}
+              errorsDict={errorsDict}
+              platform={result.platform ?? platform}
+              platformName={platformsDict[result.platform ?? platform].name}
+              onReset={handleReset}
+            />
+            {/* Slot 2: right where attention is, directly below the result. */}
+            <AdBanner variant="native" dict={adDict} className="mt-4" />
+          </>
         )}
       </div>
     </div>

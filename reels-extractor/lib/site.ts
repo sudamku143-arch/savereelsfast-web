@@ -4,3 +4,7 @@ export const SITE_NAME = "SaveReelsFast";
 // Override in Vercel (Settings → Environment Variables) once a real mailbox exists.
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@savereelsfast.com";
+
+// Where copyright takedown notices go. Register this address as your DMCA agent with the
+// US Copyright Office to qualify for safe harbor; falls back to the contact address.
+export const DMCA_EMAIL = process.env.NEXT_PUBLIC_DMCA_EMAIL ?? CONTACT_EMAIL;
