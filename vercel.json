@@ -1,0 +1,5 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd reels-extractor && npm run build",
+  "outputDirectory": "reels-extractor/.next"
+}
