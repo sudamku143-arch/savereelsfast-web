@@ -5,7 +5,7 @@ import { locales, isLocale, defaultLocale, type Locale } from "@/lib/i18n-config
 import { getDictionary } from "@/lib/get-dictionary";
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return [{ locale: 'en' }, { locale: 'es' }, { locale: 'pt' };
 }
 
 type Props = {
