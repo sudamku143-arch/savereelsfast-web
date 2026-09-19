@@ -45,7 +45,7 @@ export type ReelData = {
   formats?: ReelFormat[]; // optional; UI falls back to videoUrl when absent
 };
 
-const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p)\/[A-Za-z0-9_-]+/i;
+const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
 
 export async function POST(request: NextRequest) {
   let body: ExtractRequestBody;

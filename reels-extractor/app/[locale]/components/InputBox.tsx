@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Dict = {
   placeholder: string;
@@ -9,7 +9,15 @@ type Dict = {
   errorInvalid: string;
 };
 
-const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p)\/[A-Za-z0-9_-]+/i;
+const REEL_URL_REGEX =
+  /https?:\/\/(www\.)?instagram\.com\/(reel|reels|p|tv)\/[a-zA-Z0-9_-]+/i;
+
+// The manual "Get Video" button stays lenient and also accepts links without a scheme.
+const MANUAL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[a-zA-Z0-9_-]+/i;
+
+// Wait for typing to pause before auto-fetching, so a half-typed link
+// (which already matches the regex after one character of the ID) never fires.
+const TYPING_DEBOUNCE_MS = 600;
 
 export default function InputBox({
   dict,
@@ -22,26 +30,67 @@ export default function InputBox({
 }) {
   const [url, setUrl] = useState("");
   const [localError, setLocalError] = useState<string | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSubmittedRef = useRef<string | null>(null);
+
+  function clearTimer() {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }
+
+  useEffect(() => clearTimer, []);
+
+  function submit(value: string) {
+    clearTimer();
+    lastSubmittedRef.current = value;
+    setLocalError(null);
+    onSubmit(value);
+  }
 
   async function handlePaste() {
     try {
-      const text = await navigator.clipboard.readText();
+      const text = (await navigator.clipboard.readText()).trim();
       setUrl(text);
-      setLocalError(null);
+      if (REEL_URL_REGEX.test(text)) {
+        submit(text);
+      } else if (text) {
+        setLocalError(dict.errorInvalid);
+      }
     } catch {
       // Clipboard access denied — user can paste manually
+    }
+  }
+
+  function handleInputPaste(e: React.ClipboardEvent<HTMLInputElement>) {
+    const text = e.clipboardData.getData("text").trim();
+    if (!REEL_URL_REGEX.test(text)) return; // let the browser paste normally
+    e.preventDefault();
+    setUrl(text);
+    submit(text);
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setUrl(value);
+    setLocalError(null);
+    clearTimer();
+
+    const trimmed = value.trim();
+    if (REEL_URL_REGEX.test(trimmed) && trimmed !== lastSubmittedRef.current) {
+      timerRef.current = setTimeout(() => submit(trimmed), TYPING_DEBOUNCE_MS);
     }
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = url.trim();
-    if (!REEL_URL_REGEX.test(trimmed)) {
+    if (!MANUAL_URL_REGEX.test(trimmed)) {
       setLocalError(dict.errorInvalid);
       return;
     }
-    setLocalError(null);
-    onSubmit(trimmed);
+    submit(trimmed);
   }
 
   return (
@@ -52,7 +101,8 @@ export default function InputBox({
           inputMode="url"
           autoComplete="off"
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={handleChange}
+          onPaste={handleInputPaste}
           placeholder={dict.placeholder}
           aria-label={dict.placeholder}
           aria-invalid={localError ? true : undefined}
