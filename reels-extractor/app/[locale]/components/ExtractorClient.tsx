@@ -20,6 +20,9 @@ type PreviewDict = {
   duration: string;
   downloadButton: string;
   newSearch: string;
+  quality: string;
+  original: string;
+  thumbnailAlt: string;
 };
 
 export default function ExtractorClient({
@@ -82,7 +85,7 @@ export default function ExtractorClient({
       {status === "loading" && <SkeletonLoader label={heroDict.loading} />}
 
       {status === "error" && error && (
-        <p className="mt-4 text-sm text-red-600">{error}</p>
+        <p role="alert" className="mt-4 text-sm text-red-400">{error}</p>
       )}
 
       {status === "done" && result && (

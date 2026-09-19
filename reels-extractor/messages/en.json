@@ -4,6 +4,10 @@
     "description": "Paste any Instagram Reel link and download it in HD, free, with no watermark, no login and no app install required.",
     "ogAlt": "Instagram Reels Downloader tool preview"
   },
+  "nav": {
+    "language": "Select language",
+    "homeLabel": "SaveReelsFast home"
+  },
   "hero": {
     "badge": "100% Free · No Login Required",
     "title": "Download Instagram Reels in Seconds",
@@ -20,7 +24,10 @@
     "author": "By",
     "duration": "Duration",
     "downloadButton": "Download MP4",
-    "newSearch": "Download another"
+    "newSearch": "Download another",
+    "quality": "Quality",
+    "original": "Original",
+    "thumbnailAlt": "Reel thumbnail"
   },
   "seo": {
     "heading": "The fastest way to save Instagram Reels",
@@ -61,5 +68,8 @@
   },
   "footer": {
     "disclaimer": "This tool is not affiliated with, endorsed by, or sponsored by Instagram or Meta. Use it only to download content you have the right to save."
+  },
+  "ad": {
+    "label": "Advertisement"
   }
 }

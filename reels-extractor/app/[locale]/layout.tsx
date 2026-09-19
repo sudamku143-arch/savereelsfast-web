@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "../globals.css";
 import { locales, isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
+import Header from "./components/Header";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -52,12 +53,16 @@ export async function generateMetadata({
   };
 }
 
-export default function LocaleLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, params }: Props) {
   const locale: Locale = isLocale(params.locale) ? params.locale : defaultLocale;
+  const dict = await getDictionary(locale);
 
   return (
     <html lang={locale}>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+        <Header locale={locale} dict={dict.nav} />
+        {children}
+      </body>
     </html>
   );
 }

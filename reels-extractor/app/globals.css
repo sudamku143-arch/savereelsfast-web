@@ -2,16 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: #fafafa;
-  color: #18181b;
+  background-color: #09090b;
+  background-image:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(225, 48, 108, 0.18), transparent 70%),
+    radial-gradient(40rem 24rem at 90% 30%, rgba(129, 60, 255, 0.1), transparent 70%);
+  background-repeat: no-repeat;
+  color: #f4f4f5;
+}
+
+@layer components {
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+  background: linear-gradient(90deg, #18181b 25%, #27272a 37%, #18181b 63%);
   background-size: 1000px 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-shimmer,
+  .animate-fade-in-up {
+    animation: none;
+  }
 }

@@ -46,35 +46,41 @@ export default function InputBox({
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="flex flex-col sm:flex-row gap-2 w-full">
-        <div className="relative flex-1">
-          <input
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder={dict.placeholder}
+      <div className="flex w-full flex-col gap-2 sm:flex-row">
+        <input
+          type="text"
+          inputMode="url"
+          autoComplete="off"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder={dict.placeholder}
+          aria-label={dict.placeholder}
+          aria-invalid={localError ? true : undefined}
+          disabled={disabled}
+          className="glass min-w-0 flex-1 rounded-xl px-4 py-3.5 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 disabled:opacity-60 sm:text-base"
+        />
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handlePaste}
             disabled={disabled}
-            className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm sm:text-base shadow-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:opacity-60"
-          />
+            className="glass flex-1 rounded-xl px-4 py-3.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500 disabled:opacity-60 sm:flex-none"
+          >
+            {dict.pasteButton}
+          </button>
+          <button
+            type="submit"
+            disabled={disabled}
+            className="flex-1 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none sm:flex-none"
+          >
+            {dict.downloadCta}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={handlePaste}
-          disabled={disabled}
-          className="rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-50 disabled:opacity-60"
-        >
-          {dict.pasteButton}
-        </button>
-        <button
-          type="submit"
-          disabled={disabled}
-          className="rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600 disabled:opacity-60"
-        >
-          {dict.downloadCta}
-        </button>
       </div>
       {localError && (
-        <p className="mt-2 text-sm text-red-600">{localError}</p>
+        <p role="alert" className="mt-2 text-sm text-red-400">
+          {localError}
+        </p>
       )}
     </form>
   );

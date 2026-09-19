@@ -15,7 +15,8 @@ export const runtime = "nodejs";
  *       thumbnailUrl: string,
  *       caption: string | null,
  *       author: string | null,   // Instagram handle without "@"
- *       durationSeconds: number | null
+ *       durationSeconds: number | null,
+ *       formats?: { label, url, width, height, sizeBytes }[]  // best first
  *     }
  *   }
  *
@@ -27,12 +28,21 @@ type ExtractRequestBody = {
   url?: string;
 };
 
+export type ReelFormat = {
+  label: string; // e.g. "720p"
+  url: string;
+  width: number | null;
+  height: number | null;
+  sizeBytes: number | null;
+};
+
 export type ReelData = {
   videoUrl: string;
   thumbnailUrl: string;
   caption: string | null;
   author: string | null;
   durationSeconds: number | null;
+  formats?: ReelFormat[]; // optional; UI falls back to videoUrl when absent
 };
 
 const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p)\/[A-Za-z0-9_-]+/i;

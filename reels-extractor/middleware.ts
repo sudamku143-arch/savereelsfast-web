@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { locales, defaultLocale } from "./lib/i18n-config";
 
 function getLocaleFromHeader(request: NextRequest): string {
+  // An explicit choice made in the language selector wins over the browser.
+  const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
+  if (cookieLocale && (locales as readonly string[]).includes(cookieLocale)) {
+    return cookieLocale;
+  }
+
   const acceptLang = request.headers.get("accept-language");
   if (!acceptLang) return defaultLocale;
 

@@ -4,6 +4,10 @@
     "description": "Cole o link de qualquer Reel do Instagram e baixe em HD, grátis, sem marca d'água, sem login e sem instalar aplicativos.",
     "ogAlt": "Prévia da ferramenta de download de Reels do Instagram"
   },
+  "nav": {
+    "language": "Selecionar idioma",
+    "homeLabel": "Início do SaveReelsFast"
+  },
   "hero": {
     "badge": "100% Grátis · Sem Login",
     "title": "Baixe Reels do Instagram em Segundos",
@@ -20,7 +24,10 @@
     "author": "Por",
     "duration": "Duração",
     "downloadButton": "Baixar MP4",
-    "newSearch": "Baixar outro"
+    "newSearch": "Baixar outro",
+    "quality": "Qualidade",
+    "original": "Original",
+    "thumbnailAlt": "Miniatura do Reel"
   },
   "seo": {
     "heading": "A forma mais rápida de salvar Reels do Instagram",
@@ -61,5 +68,8 @@
   },
   "footer": {
     "disclaimer": "Esta ferramenta não é afiliada, endossada ou patrocinada pelo Instagram ou Meta. Use apenas para baixar conteúdo que você tem o direito de salvar."
+  },
+  "ad": {
+    "label": "Publicidade"
   }
 }
