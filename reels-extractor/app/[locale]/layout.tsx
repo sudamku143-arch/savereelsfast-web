@@ -4,8 +4,8 @@ import "../globals.css";
 import { locales, isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
 
-export async function generateStaticParams() {
-  return ['en', 'es', 'pt'].map((locale) => ({ locale }));
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
   params: { locale: string };
 };
 
-const SITE_URL = "https://example.com"; // TODO: replace with production domain
+const SITE_URL = "https://savereelsfast.com";
 
 export async function generateMetadata({
   params,
@@ -61,4 +61,3 @@ export default function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
-export const dynamicParams = true;
