@@ -177,3 +177,66 @@ def resolve_url(url: str, expand: Callable[[str], str] = expand_redirects) -> st
     if needs_expansion(url):
         url = expand(url)
     return normalize_url(url)
+
+
+# CDN hosts we are willing to fetch/proxy (kept in sync with MEDIA_HOST_SUFFIXES in
+# reels-extractor/lib/instagram.ts; tests/test_stream.py checks the two lists match).
+MEDIA_HOST_SUFFIXES = (
+    "cdninstagram.com",
+    "fbcdn.net",
+    "googlevideo.com",
+    "ytimg.com",
+    "twimg.com",
+    "pinimg.com",
+    "tiktokcdn.com",
+    "tiktokcdn-us.com",
+    "tiktokv.com",
+    "tiktokv.us",
+    "tiktok.com",
+    "byteoversea.com",
+    "ibytedtos.com",
+    "muscdn.com",
+    "redd.it",
+    "redditmedia.com",
+    "sc-cdn.net",
+)
+
+
+def is_allowed_media_url(raw: str) -> bool:
+    """https-only, no explicit port, host must be a known platform CDN."""
+    try:
+        parsed = urlparse(raw)
+        port = parsed.port
+    except ValueError:
+        return False
+    if parsed.scheme != "https" or port or not parsed.hostname:
+        return False
+    host = parsed.hostname.lower()
+    return any(_host_matches(host, suffix) for suffix in MEDIA_HOST_SUFFIXES)
+
+
+def referer_for(media_url: str) -> str:
+    """The Referer a platform's CDN expects."""
+    host = (urlparse(media_url).hostname or "").lower()
+    if re.search(r"tiktok|byteoversea|ibytedtos|muscdn", host):
+        return "https://www.tiktok.com/"
+    if host.endswith("googlevideo.com") or host.endswith("ytimg.com"):
+        return "https://www.youtube.com/"
+    if host.endswith("twimg.com"):
+        return "https://x.com/"
+    if host.endswith("pinimg.com"):
+        return "https://www.pinterest.com/"
+    if host.endswith("redd.it") or host.endswith("redditmedia.com"):
+        return "https://www.reddit.com/"
+    if host.endswith("sc-cdn.net"):
+        return "https://www.snapchat.com/"
+    return "https://www.instagram.com/"
+
+
+def safe_referer(requested: str | None, media_url: str) -> str:
+    """Use the caller's Referer only if it is a supported platform page; else the default."""
+    if requested:
+        parsed = urlparse(requested)
+        if parsed.scheme in ("http", "https") and host_allowed(parsed.hostname or ""):
+            return requested
+    return referer_for(media_url)

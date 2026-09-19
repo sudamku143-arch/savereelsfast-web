@@ -11,6 +11,16 @@ const HEADER_TIMEOUT_MS = 10000;
 const FALLBACK_HEADER_TIMEOUT_MS = 30000; // the scraper re-resolves the post first
 const MAX_BYTES = 200 * 1024 * 1024;
 
+// CDNs whose links are bound to the IP that resolved them. The scraper resolved
+// these, so they can only be downloaded from the scraper's IP: skip the direct
+// attempt (it would just 403) and stream through the scraper.
+const IP_BOUND_HOSTS = ["googlevideo.com"];
+
+function isIpBound(target: string): boolean {
+  const host = new URL(target).hostname.toLowerCase();
+  return IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+}
+
 function safeFilename(rawId: string | null): string {
   const id = (rawId ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   return `savereelsfast-${id || "reel"}.mp4`;
@@ -88,16 +98,13 @@ async function tryDirect(target: string, filename: string): Promise<Response | n
   return new Response(upstream.body, { status: 200, headers: attachmentHeaders(filename, length) });
 }
 
-/**
- * Fallback: ask the scraper service to fetch the video itself and stream it
- * back. It re-resolves the post from its own IP with yt-dlp's session, which
- * sidesteps IP-bound links (YouTube) and header-bound CDNs (TikTok, Facebook).
- */
-async function tryScraperStream(
-  sourceUrl: string,
-  id: string | null,
+type ScraperFailure = { status: number; code: ErrorCode; message: string };
+
+/** Call a streaming scraper endpoint and return its body as our attachment response. */
+async function fromScraper(
+  path: string,
   filename: string
-): Promise<Response | { status: number; code: ErrorCode; message: string }> {
+): Promise<Response | ScraperFailure> {
   const base = scraperBase();
   if (!base) {
     return {
@@ -111,7 +118,7 @@ async function tryScraperStream(
   let res: Response;
   try {
     res = await fetchWithHeaderTimeout(
-      `${base}/download?url=${encodeURIComponent(sourceUrl)}&id=${encodeURIComponent(id ?? "video")}`,
+      `${base}${path}`,
       { headers: key ? { "X-Scraper-Key": key } : {}, cache: "no-store" },
       FALLBACK_HEADER_TIMEOUT_MS
     );
@@ -139,13 +146,41 @@ async function tryScraperStream(
 }
 
 /**
+ * Stream the CDN URL through the scraper (`/stream`). The scraper fetches it
+ * from its own IP, which is the one the link was issued to.
+ */
+function viaScraperStream(target: string, id: string | null, filename: string) {
+  return fromScraper(
+    `/stream?url=${encodeURIComponent(target)}&referer=${encodeURIComponent(
+      refererFor(target)
+    )}&id=${encodeURIComponent(id ?? "video")}`,
+    filename
+  );
+}
+
+/**
+ * Last resort: have the scraper re-resolve the post itself (`/download`), for
+ * links that expired or that the CDN refuses even from the scraper.
+ */
+function viaScraperResolve(sourceUrl: string, id: string | null, filename: string) {
+  return fromScraper(
+    `/download?url=${encodeURIComponent(sourceUrl)}&id=${encodeURIComponent(id ?? "video")}`,
+    filename
+  );
+}
+
+/**
  * GET /api/download?url=<CDN video URL>&id=<post id>&src=<post URL>
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
  * file instead of playing it (the `download` attribute is ignored for
- * cross-origin URLs). If the CDN refuses us (403, expired or IP-bound link),
- * `src` lets us fall back to streaming through the scraper service.
+ * cross-origin URLs).
+ *
+ * Order of attempts:
+ *   1. Direct from the CDN (skipped for IP-bound CDNs such as YouTube).
+ *   2. Through the scraper's /stream, so the CDN sees the IP that resolved the link.
+ *   3. Through the scraper's /download, which re-resolves the post (needs `src`).
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -158,20 +193,28 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get("id");
   const filename = safeFilename(id);
 
-  const direct = await tryDirect(target, filename);
-  if (direct) return direct;
+  if (!isIpBound(target)) {
+    const direct = await tryDirect(target, filename);
+    if (direct) return direct;
+  }
+
+  let failure: ScraperFailure | null = null;
+
+  const streamed = await viaScraperStream(target, id, filename);
+  if (streamed instanceof Response) return streamed;
+  failure = streamed;
 
   const src = searchParams.get("src");
   const parsedSource = src ? parseSupportedUrl(src) : null;
   if (parsedSource) {
-    const fallback = await tryScraperStream(parsedSource.url, id, filename);
-    if (fallback instanceof Response) return fallback;
-    return fail(fallback.message, fallback.status, fallback.code);
+    const resolved = await viaScraperResolve(parsedSource.url, id, filename);
+    if (resolved instanceof Response) return resolved;
+    failure = resolved;
   }
 
   return fail(
-    "This video link has expired or was blocked. Please fetch the video again.",
-    502,
-    "STREAM_EXPIRED_OR_BLOCKED"
+    failure.message || "This video link has expired or was blocked. Please fetch the video again.",
+    failure.status,
+    failure.code
   );
 }

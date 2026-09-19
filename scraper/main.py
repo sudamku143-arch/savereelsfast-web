@@ -4,8 +4,9 @@ import socket
 import urllib.error
 import urllib.request
 from typing import Iterator
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
+import httpx
 import yt_dlp
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,7 +16,14 @@ from yt_dlp.utils import DownloadError, ExtractorError
 import errors
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
-from urls import BROWSER_UA, UnsupportedUrl, is_threads_host, resolve_url
+from urls import (
+    BROWSER_UA,
+    UnsupportedUrl,
+    is_allowed_media_url,
+    is_threads_host,
+    resolve_url,
+    safe_referer,
+)
 
 app = FastAPI(title="SaveReelsFast scraper")
 
@@ -307,21 +315,8 @@ def _open_stream(page_url: str) -> OpenStream:
         raise _failure_from_exception(exc)
 
 
-@app.get("/download")
-def download(
-    url: str = Query(..., description="The post URL (not a CDN URL); it is re-resolved here"),
-    id: str = Query("video", max_length=60),
-    x_scraper_key: str | None = Header(default=None),
-) -> StreamingResponse:
-    """Stream the video through this server (fallback when the CDN refuses other IPs)."""
-    _check_key(x_scraper_key)
-
-    try:
-        stream = _open_stream(url)
-    except ScraperError as err:
-        raise _http_error(err)
-
-    safe_id = "".join(c for c in id if c.isalnum() or c in "-_")[:40] or "video"
+def _attachment_response(stream: OpenStream, video_id: str) -> StreamingResponse:
+    safe_id = "".join(c for c in video_id if c.isalnum() or c in "-_")[:40] or "video"
     headers = {
         "Content-Disposition": f'attachment; filename="savereelsfast-{safe_id}.mp4"',
         "Cache-Control": "private, no-store",
@@ -329,5 +324,112 @@ def download(
     }
     if stream.length and stream.length <= MAX_STREAM_BYTES:
         headers["Content-Length"] = str(stream.length)
-
     return StreamingResponse(stream.chunks(), media_type="video/mp4", headers=headers)
+
+
+@app.get("/download")
+def download(
+    url: str = Query(..., description="The post URL (not a CDN URL); it is re-resolved here"),
+    id: str = Query("video", max_length=60),
+    x_scraper_key: str | None = Header(default=None),
+) -> StreamingResponse:
+    """Re-resolve the post from this server's IP and stream the best video."""
+    _check_key(x_scraper_key)
+
+    try:
+        stream = _open_stream(url)
+    except ScraperError as err:
+        raise _http_error(err)
+
+    return _attachment_response(stream, id)
+
+
+class _HttpxReader:
+    """Adapts an httpx streaming response to the .read(n) interface OpenStream expects."""
+
+    def __init__(self, response: httpx.Response):
+        self._chunks = response.iter_raw(CHUNK_SIZE)
+
+    def read(self, _amount: int = -1) -> bytes:
+        return next(self._chunks, b"")
+
+
+def _open_cdn_stream(media_url: str, referer: str | None) -> OpenStream:
+    """
+    Open a CDN video URL from THIS server's IP.
+
+    YouTube (and some TikTok / Facebook) links are bound to the IP that
+    resolved them. /extract resolves them here, so they must be downloaded
+    from here as well. Only known platform CDNs are allowed, redirects are
+    followed by hand and must stay on those CDNs.
+    """
+    if not is_allowed_media_url(media_url):
+        raise ScraperError(errors.INVALID_URL, "That media URL isn't supported.")
+
+    headers = {
+        "User-Agent": BROWSER_UA,
+        "Referer": safe_referer(referer, media_url),
+        "Accept": "video/mp4,video/*;q=0.9,*/*;q=0.5",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    client = httpx.Client(timeout=httpx.Timeout(15.0, read=30.0), follow_redirects=False)
+    try:
+        current = media_url
+        response = None
+        for _ in range(4):
+            response = client.send(client.build_request("GET", current, headers=headers), stream=True)
+            if not response.is_redirect:
+                break
+            target = urljoin(current, response.headers.get("location", ""))
+            response.close()
+            if not is_allowed_media_url(target):
+                raise ScraperError(errors.STREAM_EXPIRED_OR_BLOCKED)
+            current = target
+        else:
+            raise ScraperError(errors.PLATFORM_TIMEOUT)
+
+        if response.status_code >= 400:
+            status = response.status_code
+            response.close()
+            raise ScraperError(
+                errors.STREAM_EXPIRED_OR_BLOCKED
+                if status in (401, 403, 404, 410, 429)
+                else errors.PLATFORM_TIMEOUT
+            )
+
+        content_type = response.headers.get("content-type", "")
+        if not (content_type.startswith("video/") or content_type.startswith("application/octet-stream")):
+            response.close()
+            raise ScraperError(errors.UNSUPPORTED_POST, "The requested file is not a video.")
+
+        raw_length = response.headers.get("content-length", "")
+        length = int(raw_length) if raw_length.isdigit() else None
+        if length and length > MAX_STREAM_BYTES:
+            response.close()
+            raise ScraperError(errors.EXTRACTION_FAILED, "This video is too large to download.")
+
+        return OpenStream(_HttpxReader(response), length, [response.close, client.close])
+    except ScraperError:
+        client.close()
+        raise
+    except httpx.HTTPError:
+        client.close()
+        raise ScraperError(errors.PLATFORM_TIMEOUT)
+
+
+@app.get("/stream")
+def stream(
+    url: str = Query(..., description="Video URL on a platform CDN, as returned by /extract"),
+    referer: str | None = Query(None, description="Page the video came from (optional)"),
+    id: str = Query("video", max_length=60),
+    x_scraper_key: str | None = Header(default=None),
+) -> StreamingResponse:
+    """Stream a CDN URL through this server so the CDN sees the scraper's IP."""
+    _check_key(x_scraper_key)
+
+    try:
+        opened = _open_cdn_stream(url, referer)
+    except ScraperError as err:
+        raise _http_error(err)
+
+    return _attachment_response(opened, id)
