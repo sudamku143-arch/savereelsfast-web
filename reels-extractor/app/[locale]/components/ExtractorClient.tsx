@@ -178,6 +178,9 @@ export default function ExtractorClient({
         />
       </div>
 
+      {/* Slot 1: directly under the hero and the search box. */}
+      <AdBanner variant="leaderboard" dict={adDict} className="mt-6" />
+
       <div className="flex w-full flex-col items-center" aria-live="polite">
         {status === "loading" && <SkeletonLoader label={heroDict.loading} />}
 
@@ -203,7 +206,7 @@ export default function ExtractorClient({
               platformName={platformsDict[result.platform ?? platform].name}
               onReset={handleReset}
             />
-            {/* Slot 2: right where attention is, directly below the result. */}
+            {/* Slot 2: directly below the download result. */}
             <AdBanner variant="native" dict={adDict} className="mt-4" />
           </>
         )}

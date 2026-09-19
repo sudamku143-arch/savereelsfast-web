@@ -32,8 +32,6 @@ export default async function LocalePage({
 
   return (
     <main className="flex flex-col items-center px-4 pb-16 pt-12 sm:pt-20">
-      <AdBanner variant="leaderboard" dict={dict.ad} className="mb-8" />
-
       <div className="w-full max-w-2xl">
         <ExtractorClient
           heroDict={dict.hero}
@@ -48,8 +46,6 @@ export default async function LocalePage({
       <InstallBanner dict={dict.pwa} />
 
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
-
-      <AdBanner variant="native" dict={dict.ad} className="mt-10" />
 
       <PlatformLinks
         locale={locale}

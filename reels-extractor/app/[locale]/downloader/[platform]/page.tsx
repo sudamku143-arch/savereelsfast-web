@@ -129,8 +129,6 @@ export default async function PlatformLandingPage({ params }: Props) {
         </ol>
       </nav>
 
-      <AdBanner variant="leaderboard" dict={dict.ad} className="mb-8" />
-
       <div className="w-full max-w-2xl">
         <ExtractorClient
           heroDict={dict.hero}
@@ -162,8 +160,6 @@ export default async function PlatformLandingPage({ params }: Props) {
           ))}
         </ol>
       </section>
-
-      <AdBanner variant="native" dict={dict.ad} className="mt-10" />
 
       <section className="mt-16 w-full max-w-2xl">
         <h2 className="mb-4 text-xl font-bold text-zinc-50">

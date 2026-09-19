@@ -108,7 +108,7 @@ function AAdsUnit({
       src={`https://acceptable.a-ads.com/${unit}/?size=${dimension}`}
       loading="lazy"
       className="h-full w-full border-0 p-0"
-      style={{ overflow: "hidden" }}
+      style={{ overflow: "hidden", backgroundColor: "transparent" }}
     />
   );
 }

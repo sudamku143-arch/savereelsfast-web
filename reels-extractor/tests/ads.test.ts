@@ -106,14 +106,23 @@ describe("placeholders and placement", () => {
 describe("where the slots live", () => {
   const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
-  it("puts ads on the home page and the landing pages", () => {
+  it("puts the banner under the search box and the native card under the result", () => {
+    const tool = source("app/[locale]/components/ExtractorClient.tsx");
+    const banner = tool.indexOf('variant="leaderboard"');
+    const inputs = tool.indexOf("<InputBox");
+    const result = tool.indexOf("<PreviewCard");
+    const native = tool.indexOf('variant="native"');
+    assert.ok(inputs > 0 && banner > inputs, "the banner must come after the search box");
+    assert.ok(result > banner, "the result must come after the banner");
+    assert.ok(native > result, "the native card must come after the result");
+  });
+
+  it("keeps the home and landing pages to those two slots plus the sticky banner", () => {
     for (const file of ["app/[locale]/page.tsx", "app/[locale]/downloader/[platform]/page.tsx"]) {
       const page = source(file);
-      for (const variant of ["leaderboard", "native", "sticky"]) {
-        assert.ok(page.includes(`variant="${variant}"`), `${file} is missing the ${variant} slot`);
-      }
+      assert.ok(page.includes('variant="sticky"'), `${file} lost the sticky slot`);
+      assert.ok(!page.includes('variant="leaderboard"') && !page.includes('variant="native"'), `${file} shows an extra ad`);
     }
-    assert.ok(source("app/[locale]/components/ExtractorClient.tsx").includes('variant="native"'), "no native slot under the result card");
   });
 
   it("keeps ads off the legal pages and out of the shared layout", () => {
