@@ -41,7 +41,13 @@ export async function GET(request: NextRequest) {
   let upstream: Response;
   try {
     upstream = await fetch(target, {
-      headers: { "User-Agent": BROWSER_UA, Accept: "video/mp4,video/*;q=0.9,*/*;q=0.5" },
+      headers: {
+        "User-Agent": BROWSER_UA,
+        Referer: "https://www.instagram.com/",
+        Origin: "https://www.instagram.com",
+        Accept: "video/mp4,video/*;q=0.9,*/*;q=0.5",
+        "Accept-Language": "en-US,en;q=0.9",
+      },
       redirect: "manual", // never follow a redirect off the allow-list
       signal: controller.signal,
     });
@@ -52,12 +58,16 @@ export async function GET(request: NextRequest) {
   clearTimeout(timer);
 
   if (!upstream.ok || !upstream.body) {
-    const status = upstream.status === 404 || upstream.status === 410 ? 404 : 502;
+    console.warn(
+      `[/api/download] CDN responded ${upstream.status} for ${new URL(target).hostname}`
+    );
+    // Signed CDN links expire (or get refused) — fetching the Reel again issues a fresh one.
+    const expired = [403, 404, 410].includes(upstream.status);
     return fail(
-      status === 404
+      expired
         ? "This video link has expired. Please fetch the Reel again."
         : "Couldn't fetch the video. Please try again.",
-      status
+      expired ? 404 : 502
     );
   }
 
