@@ -6,7 +6,8 @@
   },
   "nav": {
     "language": "Select language",
-    "homeLabel": "SaveReelsFast home"
+    "homeLabel": "SaveReelsFast home",
+    "install": "Install App"
   },
   "hero": {
     "badge": "100% Free · No Login Required",
@@ -136,10 +137,13 @@
   },
   "pwa": {
     "title": "Install SaveReelsFast App",
-    "body": "Add it to your home screen for one-tap downloads.",
-    "install": "Install",
-    "dismiss": "Not now",
-    "iosHint": "Tap Share, then “Add to Home Screen”."
+    "body": "Add it to your home screen for one-tap downloads, even from other apps.",
+    "install": "Install App",
+    "dismiss": "Dismiss",
+    "iosTitle": "Add SaveReelsFast to your Home Screen",
+    "iosStep1": "Tap the Share icon at the bottom of the screen",
+    "iosStep2": "Scroll down and tap “Add to Home Screen”",
+    "iosClose": "Got it"
   },
   "seo": {
     "heading": "The fastest way to save social media videos",

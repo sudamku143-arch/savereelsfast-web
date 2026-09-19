@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { locales, defaultLocale, type Locale } from "@/lib/i18n-config";
+import InstallButton from "./InstallButton";
 
 type Dict = {
   language: string;
   homeLabel: string;
+  install: string;
 };
 
 const LOCALE_LABELS: Record<Locale, string> = {
@@ -97,6 +99,8 @@ export default function Header({
           </span>
         </a>
 
+        <div className="flex items-center gap-2">
+        <InstallButton label={dict.install} />
         <div ref={rootRef} className="relative">
           <button
             type="button"
@@ -160,6 +164,7 @@ export default function Header({
               ))}
             </ul>
           )}
+        </div>
         </div>
       </nav>
     </header>

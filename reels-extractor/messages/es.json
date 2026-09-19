@@ -6,7 +6,8 @@
   },
   "nav": {
     "language": "Seleccionar idioma",
-    "homeLabel": "Inicio de SaveReelsFast"
+    "homeLabel": "Inicio de SaveReelsFast",
+    "install": "Instalar app"
   },
   "hero": {
     "badge": "100% Gratis · Sin Inicio de Sesión",
@@ -137,9 +138,12 @@
   "pwa": {
     "title": "Instala la app SaveReelsFast",
     "body": "Añádela a tu pantalla de inicio para descargar con un toque.",
-    "install": "Instalar",
-    "dismiss": "Ahora no",
-    "iosHint": "Toca Compartir y luego «Añadir a pantalla de inicio»."
+    "install": "Instalar app",
+    "dismiss": "Cerrar",
+    "iosTitle": "Añade SaveReelsFast a tu pantalla de inicio",
+    "iosStep1": "Toca el icono Compartir en la parte inferior de la pantalla",
+    "iosStep2": "Desplázate y toca «Añadir a pantalla de inicio»",
+    "iosClose": "Entendido"
   },
   "seo": {
     "heading": "La forma más rápida de guardar videos de redes sociales",

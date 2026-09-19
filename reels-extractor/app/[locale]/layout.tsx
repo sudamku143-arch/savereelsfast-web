@@ -12,7 +12,8 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import InstallPrompt from "./components/InstallPrompt";
+import InstallProvider from "./components/InstallProvider";
+import IosInstallModal from "./components/IosInstallModal";
 
 // Unknown locales 404 instead of rendering the default language.
 export const dynamicParams = false;
@@ -53,8 +54,11 @@ export async function generateMetadata({
     applicationName: SITE_NAME,
     appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "black-translucent" },
     icons: {
-      icon: [{ url: "/api/icon?size=192", sizes: "192x192", type: "image/png" }],
-      apple: [{ url: "/api/icon?size=180", sizes: "180x180", type: "image/png" }],
+      icon: [
+        { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+      ],
+      apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
     title: dict.meta.title,
     description: dict.meta.description,
@@ -94,10 +98,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
-        <Header locale={locale} dict={dict.nav} />
-        {children}
-        <Footer locale={locale} dict={dict.footer} />
-        <InstallPrompt dict={dict.pwa} />
+        <InstallProvider>
+          <Header locale={locale} dict={dict.nav} />
+          {children}
+          <Footer locale={locale} dict={dict.footer} />
+          <IosInstallModal dict={dict.pwa} />
+        </InstallProvider>
       </body>
     </html>
   );

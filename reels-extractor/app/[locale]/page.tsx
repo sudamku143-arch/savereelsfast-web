@@ -4,6 +4,7 @@ import ExtractorClient from "./components/ExtractorClient";
 import SeoContent from "./components/SeoContent";
 import FaqAccordion from "./components/FaqAccordion";
 import AdSlot from "./components/AdSlot";
+import InstallBanner from "./components/InstallBanner";
 
 export default async function LocalePage({
   params,
@@ -34,6 +35,8 @@ export default async function LocalePage({
           downloadDict={dict.download}
         />
       </div>
+
+      <InstallBanner dict={dict.pwa} />
 
       <AdSlot label={dict.ad.label} size="leaderboard" />
 
