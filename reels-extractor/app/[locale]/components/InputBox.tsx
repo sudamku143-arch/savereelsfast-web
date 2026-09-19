@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { normalizeInstagramUrl } from "@/lib/instagram";
 
 type Dict = {
   placeholder: string;
@@ -44,9 +45,12 @@ export default function InputBox({
 
   function submit(value: string) {
     clearTimer();
-    lastSubmittedRef.current = value;
+    // Strip tracking parameters (?igsh=…, utm_*) so only the canonical link is sent.
+    const clean = normalizeInstagramUrl(value) ?? value;
+    lastSubmittedRef.current = clean;
+    setUrl(clean);
     setLocalError(null);
-    onSubmit(value);
+    onSubmit(clean);
   }
 
   async function handlePaste() {

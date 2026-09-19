@@ -4,6 +4,22 @@ export const BROWSER_UA =
 const SHORTCODE_REGEX =
   /instagram\.com\/(?:reel|reels|p|tv)\/([A-Za-z0-9_-]+)/i;
 
+/**
+ * Reduces any Instagram post link to its canonical form, dropping tracking
+ * parameters (igsh, utm_*, …), fragments and username prefixes:
+ *   https://www.instagram.com/reel/SHORTCODE/  or  /p/SHORTCODE/  or  /tv/SHORTCODE/
+ * Returns null when the input is not an Instagram post link.
+ */
+export function normalizeInstagramUrl(raw: string): string | null {
+  const match =
+    /instagram\.com\/(?:[A-Za-z0-9._]+\/)?(reel|reels|p|tv)\/([A-Za-z0-9_-]+)/i.exec(
+      raw
+    );
+  if (!match) return null;
+  const kind = match[1].toLowerCase() === "reels" ? "reel" : match[1].toLowerCase();
+  return `https://www.instagram.com/${kind}/${match[2]}/`;
+}
+
 export function parseShortcode(url: string): string | null {
   return SHORTCODE_REGEX.exec(url)?.[1] ?? null;
 }

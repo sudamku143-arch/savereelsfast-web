@@ -4,6 +4,7 @@ import {
   decodeHtmlEntities,
   findFirst,
   isAllowedMediaUrl,
+  normalizeInstagramUrl,
   parseShortcode,
   unescapeJsonFragment,
 } from "@/lib/instagram";
@@ -99,7 +100,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const data = await extractReelData(url);
+    const data = await extractReelData(normalizeInstagramUrl(url) ?? url);
 
     if (!data) {
       return NextResponse.json(
