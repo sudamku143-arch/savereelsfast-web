@@ -8,6 +8,7 @@ import {
   unescapeJsonFragment,
 } from "@/lib/instagram";
 import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
+import { isErrorCode, type ErrorCode, type ResultWarning } from "@/lib/errors";
 
 export const runtime = "nodejs";
 export const maxDuration = 40;
@@ -21,18 +22,22 @@ export const maxDuration = 40;
  *   {
  *     success: true,
  *     id: string,                 // post/video id, used for the download filename
+ *     platform: string,           // instagram | youtube | facebook | …
+ *     sourceUrl: string,          // canonical post URL (lets /api/download fall back to the scraper)
  *     videoUrl: string,           // direct MP4 URL on the platform's CDN
  *     thumbnailUrl: string,       // "" when none could be found
  *     title: string | null,       // caption
  *     author: string | null,      // handle without "@"
  *     durationSeconds: number | null,
+ *     audio?: "yes" | "no" | "unknown",
+ *     warning?: "NO_AUDIO",       // only a video-only stream was available
  *     formats?: { quality, url, width, height }[]   // best first
  *   }
  *
- * Error response: { success: false, error: string }
- *   400 missing/unsupported link, 404 private/deleted/unavailable,
- *   429 the platform is rate-limiting us, 500 upstream or unexpected failure,
- *   503 the scraper service needed for a non-Instagram platform isn't configured.
+ * Error response: { success: false, error: string, code: ErrorCode }
+ *   LOGIN_REQUIRED 403, UNSUPPORTED_POST 422, STREAM_EXPIRED_OR_BLOCKED 429/502,
+ *   PLATFORM_TIMEOUT 504, EXTRACTION_FAILED 404, INVALID_URL 400,
+ *   NOT_CONFIGURED 503, unexpected failures 500.
  */
 
 type ExtractRequestBody = {
@@ -54,6 +59,8 @@ export type ReelData = {
   author: string | null;
   durationSeconds: number | null;
   formats?: ReelFormat[]; // best first; UI falls back to videoUrl when absent
+  audio?: "yes" | "no" | "unknown";
+  warning?: ResultWarning;
 };
 
 const FETCH_TIMEOUT_MS = 8000;
@@ -64,7 +71,8 @@ const SCRAPER_TIMEOUT_MS = 10000;
 class ExtractionError extends Error {
   constructor(
     message: string,
-    readonly status: number
+    readonly status: number,
+    readonly code: ErrorCode
   ) {
     super(message);
     this.name = "ExtractionError";
@@ -87,7 +95,7 @@ export async function POST(request: NextRequest) {
 
   if (!url) {
     return NextResponse.json(
-      { success: false, error: "Please provide a video link." },
+      { success: false, error: "Please provide a video link.", code: "INVALID_URL" },
       { status: 400 }
     );
   }
@@ -99,6 +107,7 @@ export async function POST(request: NextRequest) {
         success: false,
         error:
           "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat).",
+        code: "INVALID_URL",
       },
       { status: 400 }
     );
@@ -113,22 +122,32 @@ export async function POST(request: NextRequest) {
           success: false,
           error:
             "Couldn't extract this video. It may be private, deleted, or region-restricted.",
+          code: "EXTRACTION_FAILED",
         },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, ...data });
+    return NextResponse.json({
+      success: true,
+      ...data,
+      platform: parsed.platform,
+      sourceUrl: parsed.url,
+    });
   } catch (err) {
     if (err instanceof ExtractionError) {
       return NextResponse.json(
-        { success: false, error: err.message },
+        { success: false, error: err.message, code: err.code },
         { status: err.status }
       );
     }
     console.error("[/api/extract] unexpected failure:", err);
     return NextResponse.json(
-      { success: false, error: "Something went wrong while fetching this video." },
+      {
+        success: false,
+        error: "Something went wrong while fetching this video.",
+        code: "EXTRACTION_FAILED",
+      },
       { status: 500 }
     );
   }
@@ -171,19 +190,24 @@ async function extractReelData(
   } else if (!scraperConfigured) {
     throw new ExtractionError(
       "Downloads from this platform aren't available right now. Please try again later.",
-      503
+      503,
+      "NOT_CONFIGURED"
     );
   }
 
   let throttled = false;
   let networkFailures = 0;
+  let scraperFailure: ScraperFailure | null = null;
 
   for (const [name, strategy] of strategies) {
     try {
       const data = await strategy(fallbackId ?? "");
       if (data) return data;
     } catch (err) {
-      if (err instanceof HttpStatusError && [403, 429].includes(err.status)) {
+      if (err instanceof ScraperFailure) {
+        scraperFailure = err;
+        if (err.code === "PLATFORM_TIMEOUT") networkFailures += 1;
+      } else if (err instanceof HttpStatusError && [403, 429].includes(err.status)) {
         throttled = true;
       } else if (!(err instanceof HttpStatusError)) {
         networkFailures += 1;
@@ -192,19 +216,45 @@ async function extractReelData(
     }
   }
 
+  // The scraper's diagnosis is the most specific one we have (it saw the real
+  // yt-dlp error), so it wins over the built-in strategies' guesses.
+  const specific: ErrorCode[] = [
+    "LOGIN_REQUIRED",
+    "UNSUPPORTED_POST",
+    "STREAM_EXPIRED_OR_BLOCKED",
+    "PLATFORM_TIMEOUT",
+  ];
+  if (scraperFailure && specific.includes(scraperFailure.code)) {
+    throw new ExtractionError(scraperFailure.message, scraperFailure.status, scraperFailure.code);
+  }
+
   if (throttled) {
     throw new ExtractionError(
       "The platform is temporarily limiting requests. Please try again in a minute.",
-      429
+      429,
+      "STREAM_EXPIRED_OR_BLOCKED"
     );
   }
   if (networkFailures === strategies.length) {
     throw new ExtractionError(
       "Couldn't reach the platform right now. Please try again shortly.",
-      500
+      504,
+      "PLATFORM_TIMEOUT"
     );
   }
   return null;
+}
+
+/** A coded failure reported by the scraper service. */
+class ScraperFailure extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+    readonly code: ErrorCode
+  ) {
+    super(message);
+    this.name = "ScraperFailure";
+  }
 }
 
 class HttpStatusError extends Error {
@@ -252,8 +302,16 @@ type ScraperResponse = {
   thumbnail?: string | null;
   duration?: number | null;
   videoUrl?: string | null;
+  audio?: "yes" | "no" | "unknown";
+  warning?: string | null;
   formats?: { quality?: string; url?: string; width?: number | null; height?: number | null }[];
 };
+
+/** Sent with every scraper call when SCRAPER_SHARED_SECRET is configured. */
+function scraperHeaders(): Record<string, string> {
+  const key = process.env.SCRAPER_SHARED_SECRET;
+  return key ? { "X-Scraper-Key": key } : {};
+}
 
 /**
  * Strategy 0: the external yt-dlp microservice (see /scraper). Any failure,
@@ -271,20 +329,34 @@ async function extractFromScraper(
   const timer = setTimeout(() => controller.abort(), SCRAPER_TIMEOUT_MS);
   let json: ScraperResponse;
   try {
-    const res = await fetch(
-      `${base}/extract?url=${encodeURIComponent(reelUrl)}`,
-      {
-        headers: { Accept: "application/json" },
-        cache: "no-store",
-        signal: controller.signal,
-      }
-    );
+    const res = await fetch(`${base}/extract?url=${encodeURIComponent(reelUrl)}`, {
+      headers: { Accept: "application/json", ...scraperHeaders() },
+      cache: "no-store",
+      signal: controller.signal,
+    });
     if (!res.ok) {
-      // The service answers 400 when yt-dlp can't extract; try the built-ins.
-      console.warn(`[/api/extract] scraper service responded ${res.status}`);
-      return null;
+      // Error bodies look like { detail: { code, message } }.
+      const body = (await res.json().catch(() => null)) as {
+        detail?: { code?: string; message?: string } | string;
+      } | null;
+      const detail = body && typeof body.detail === "object" ? body.detail : null;
+      const code: ErrorCode = isErrorCode(detail?.code) ? detail.code : "EXTRACTION_FAILED";
+      console.warn(`[/api/extract] scraper service responded ${res.status} (${detail?.code ?? "no code"})`);
+      throw new ScraperFailure(
+        detail?.message ?? "Couldn't extract this video.",
+        res.status >= 400 && res.status < 600 ? res.status : 404,
+        code
+      );
     }
     json = (await res.json()) as ScraperResponse;
+  } catch (err) {
+    if (err instanceof ScraperFailure) throw err;
+    // Timeout or network error reaching the scraper itself.
+    throw new ScraperFailure(
+      "The platform didn't respond in time. Please try again shortly.",
+      504,
+      "PLATFORM_TIMEOUT"
+    );
   } finally {
     clearTimeout(timer);
   }
@@ -319,6 +391,10 @@ async function extractFromScraper(
     title: truncate(typeof json.title === "string" ? json.title : null),
     author: typeof json.author === "string" ? json.author : null,
     durationSeconds: typeof json.duration === "number" ? json.duration : null,
+    ...(json.audio === "yes" || json.audio === "no" || json.audio === "unknown"
+      ? { audio: json.audio }
+      : {}),
+    ...(json.warning === "NO_AUDIO" ? { warning: "NO_AUDIO" as const } : {}),
     ...(formats.length > 0 ? { formats } : {}),
   };
 }

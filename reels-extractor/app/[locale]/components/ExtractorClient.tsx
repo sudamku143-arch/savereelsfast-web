@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
+import { isErrorCode } from "@/lib/errors";
 import InputBox from "./InputBox";
 import PlatformTabs from "./PlatformTabs";
 import SkeletonLoader from "./SkeletonLoader";
 import PreviewCard, { type ReelResult } from "./PreviewCard";
+import ErrorCard, { type ErrorsDict, type UiErrorCode } from "./ErrorCard";
 
 type HeroDict = {
   badge: string;
@@ -29,31 +31,38 @@ type PreviewDict = {
   downloadButton: string;
   newSearch: string;
   thumbnailAlt: string;
+  noAudio: string;
 };
 
 export default function ExtractorClient({
   heroDict,
   platformsDict,
   previewDict,
+  errorsDict,
 }: {
   heroDict: HeroDict;
   platformsDict: PlatformsDict;
   previewDict: PreviewDict;
+  errorsDict: ErrorsDict;
 }) {
   const [platform, setPlatform] = useState<PlatformId>("instagram");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
     "idle"
   );
   const [result, setResult] = useState<ReelResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<UiErrorCode | null>(null);
+  // Remounting the input clears it; "Try again" reuses the last link.
+  const [inputKey, setInputKey] = useState(0);
+  const lastUrlRef = useRef<string | null>(null);
 
   const names = Object.fromEntries(
     PLATFORM_IDS.map((id) => [id, platformsDict[id].name])
   ) as Record<PlatformId, string>;
 
   async function handleSubmit(url: string) {
+    lastUrlRef.current = url;
     setStatus("loading");
-    setError(null);
+    setErrorCode(null);
     setResult(null);
 
     try {
@@ -66,7 +75,7 @@ export default function ExtractorClient({
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error ?? heroDict.errorGeneric);
+        setErrorCode(isErrorCode(data.code) ? data.code : "EXTRACTION_FAILED");
         setStatus("error");
         return;
       }
@@ -74,22 +83,29 @@ export default function ExtractorClient({
       setResult(data as ReelResult);
       setStatus("done");
     } catch {
-      setError(heroDict.errorGeneric);
+      setErrorCode("NETWORK");
       setStatus("error");
     }
   }
 
+  /** Back to a clean slate: no result, no error, empty input. */
   function handleReset() {
     setStatus("idle");
     setResult(null);
-    setError(null);
+    setErrorCode(null);
+    lastUrlRef.current = null;
+    setInputKey((k) => k + 1);
+  }
+
+  function handleRetry() {
+    if (lastUrlRef.current) void handleSubmit(lastUrlRef.current);
   }
 
   function handleSelectPlatform(id: PlatformId) {
     setPlatform(id);
     if (status === "error") {
       setStatus("idle");
-      setError(null);
+      setErrorCode(null);
     }
   }
 
@@ -115,6 +131,7 @@ export default function ExtractorClient({
           onSelect={handleSelectPlatform}
         />
         <InputBox
+          key={inputKey}
           dict={heroDict}
           placeholder={active.placeholder}
           onSubmit={handleSubmit}
@@ -126,10 +143,15 @@ export default function ExtractorClient({
       <div className="flex w-full flex-col items-center" aria-live="polite">
         {status === "loading" && <SkeletonLoader label={heroDict.loading} />}
 
-        {status === "error" && error && (
-          <p role="alert" className="mt-4 text-center text-sm text-red-400">
-            {error}
-          </p>
+        {status === "error" && errorCode && (
+          <ErrorCard
+            code={errorCode}
+            platformName={active.name}
+            dict={errorsDict}
+            link={lastUrlRef.current}
+            onRetry={handleRetry}
+            onClear={handleReset}
+          />
         )}
 
         {status === "done" && result && (

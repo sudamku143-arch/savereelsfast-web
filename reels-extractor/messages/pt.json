@@ -71,7 +71,49 @@
     "duration": "Duração",
     "downloadButton": "Baixar MP4 (HD)",
     "newSearch": "Baixar outro",
-    "thumbnailAlt": "Miniatura do Reel"
+    "thumbnailAlt": "Miniatura do Reel",
+    "noAudio": "Baixado sem áudio (a plataforma restringe o fluxo de áudio)"
+  },
+  "errors": {
+    "LOGIN_REQUIRED": {
+      "title": "Privado ou exige login",
+      "message": "Esta publicação é privada ou exige login no {platform}. Tente um link público."
+    },
+    "UNSUPPORTED_POST": {
+      "title": "Nenhum vídeo encontrado",
+      "message": "Esta publicação contém apenas imagens ou texto. Só são aceitos links de vídeos ou reels."
+    },
+    "STREAM_EXPIRED_OR_BLOCKED": {
+      "title": "Download bloqueado",
+      "message": "O {platform} bloqueou ou expirou o link de download deste vídeo. Tente novamente em instantes."
+    },
+    "PLATFORM_TIMEOUT": {
+      "title": "{platform} não está respondendo",
+      "message": "Não conseguimos acessar o {platform} a tempo. Tente novamente em breve."
+    },
+    "EXTRACTION_FAILED": {
+      "title": "Não foi possível obter o vídeo",
+      "message": "Não conseguimos extrair este vídeo. Ele pode ser privado, ter sido apagado ou ter restrição de região."
+    },
+    "INVALID_URL": {
+      "title": "Link não compatível",
+      "message": "Isso não parece um link de vídeo compatível. Cole o link de uma publicação com vídeo."
+    },
+    "NOT_CONFIGURED": {
+      "title": "Temporariamente indisponível",
+      "message": "Os downloads do {platform} não estão disponíveis no momento. Tente novamente mais tarde."
+    },
+    "NETWORK": {
+      "title": "Problema de conexão",
+      "message": "Não conseguimos acessar nosso servidor. Verifique sua conexão e tente novamente."
+    },
+    "actions": {
+      "retry": "Tentar novamente",
+      "clear": "Limpar e recomeçar",
+      "report": "Denunciar este link",
+      "reportSubject": "Relato de problema com link",
+      "reportBody": "Este link não funcionou no SaveReelsFast:"
+    }
   },
   "seo": {
     "heading": "A forma mais rápida de salvar vídeos de redes sociais",

@@ -71,7 +71,49 @@
     "duration": "Duration",
     "downloadButton": "Download MP4 (HD)",
     "newSearch": "Download another",
-    "thumbnailAlt": "Reel thumbnail"
+    "thumbnailAlt": "Reel thumbnail",
+    "noAudio": "Downloaded without audio (audio stream restricted by platform)"
+  },
+  "errors": {
+    "LOGIN_REQUIRED": {
+      "title": "Private or login required",
+      "message": "This post is private or requires login on {platform}. Try a public link."
+    },
+    "UNSUPPORTED_POST": {
+      "title": "No video found",
+      "message": "This post contains only images or text. Only video/reels links are supported."
+    },
+    "STREAM_EXPIRED_OR_BLOCKED": {
+      "title": "Download blocked",
+      "message": "{platform} blocked or expired this video's download link. Please try again in a moment."
+    },
+    "PLATFORM_TIMEOUT": {
+      "title": "{platform} isn't responding",
+      "message": "We couldn't reach {platform} in time. Please try again shortly."
+    },
+    "EXTRACTION_FAILED": {
+      "title": "Couldn't get this video",
+      "message": "We couldn't extract this video. It may be private, deleted, or region-restricted."
+    },
+    "INVALID_URL": {
+      "title": "Link not supported",
+      "message": "That doesn't look like a supported video link. Paste a link to a video post."
+    },
+    "NOT_CONFIGURED": {
+      "title": "Temporarily unavailable",
+      "message": "Downloads from {platform} aren't available right now. Please try again later."
+    },
+    "NETWORK": {
+      "title": "Connection problem",
+      "message": "We couldn't reach our server. Check your connection and try again."
+    },
+    "actions": {
+      "retry": "Try again",
+      "clear": "Clear and start over",
+      "report": "Report this link",
+      "reportSubject": "Link problem report",
+      "reportBody": "This link didn't work on SaveReelsFast:"
+    }
   },
   "seo": {
     "heading": "The fastest way to save social media videos",

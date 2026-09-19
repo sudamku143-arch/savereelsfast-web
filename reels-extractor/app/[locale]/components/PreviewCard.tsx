@@ -7,6 +7,8 @@ export type ReelResult = {
   title: string | null;
   author: string | null;
   durationSeconds: number | null;
+  sourceUrl?: string;
+  warning?: "NO_AUDIO";
 };
 
 type Dict = {
@@ -16,6 +18,7 @@ type Dict = {
   downloadButton: string;
   newSearch: string;
   thumbnailAlt: string;
+  noAudio: string;
 };
 
 function formatDuration(totalSeconds: number): string {
@@ -36,9 +39,10 @@ export default function PreviewCard({
 }) {
   const filename = `savereelsfast-${result.id}.mp4`;
   // Same-origin proxy: cross-origin CDN links ignore the `download` attribute.
-  const downloadHref = `/api/download?url=${encodeURIComponent(
-    result.videoUrl
-  )}&id=${encodeURIComponent(result.id)}`;
+  // `src` lets the server fall back to streaming through the scraper if the CDN refuses it.
+  const downloadHref =
+    `/api/download?url=${encodeURIComponent(result.videoUrl)}&id=${encodeURIComponent(result.id)}` +
+    (result.sourceUrl ? `&src=${encodeURIComponent(result.sourceUrl)}` : "");
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
 
@@ -80,6 +84,28 @@ export default function PreviewCard({
           )}
         </div>
       </div>
+
+      {result.warning === "NO_AUDIO" && (
+        <p
+          role="status"
+          className="mt-4 flex items-start gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-xs leading-relaxed text-amber-200"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mt-0.5 h-4 w-4 shrink-0"
+            aria-hidden="true"
+          >
+            <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+            <path d="m22 9-6 6M16 9l6 6" />
+          </svg>
+          <span>{dict.noAudio}</span>
+        </p>
+      )}
 
       <div className="mt-4 flex gap-2">
         <a

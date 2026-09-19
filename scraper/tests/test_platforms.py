@@ -283,13 +283,13 @@ class ScraperConfigTests(unittest.TestCase):
 
         info = {"formats": [fmt("dash1080", 1080, "none"), fmt("prog720", 720, "mp4a"),
                             fmt("hls", 1080, "mp4a", proto="m3u8_native")]}
-        url, has_audio = self.main._pick_video(info)
+        url, audio = self.main._pick_video(info)
         self.assertTrue(url.endswith("prog720"))
-        self.assertTrue(has_audio)
+        self.assertEqual(audio, "yes")
 
-        url, has_audio = self.main._pick_video({"formats": [fmt("dash1080", 1080, "none")]})
+        url, audio = self.main._pick_video({"formats": [fmt("dash1080", 1080, "none")]})
         self.assertTrue(url.endswith("dash1080"))
-        self.assertFalse(has_audio)
+        self.assertEqual(audio, "no")
 
     def test_endpoint_rejects_unsupported_links_with_400(self):
         try:
@@ -301,7 +301,9 @@ class ScraperConfigTests(unittest.TestCase):
             with self.subTest(url=bad):
                 response = client.get("/extract", params={"url": bad})
                 self.assertEqual(response.status_code, 400)
-                self.assertIn("supported", response.json()["detail"])
+                detail = response.json()["detail"]
+                self.assertEqual(detail["code"], "INVALID_URL")
+                self.assertIn("supported", detail["message"])
 
 
 @unittest.skipUnless(

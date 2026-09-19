@@ -71,7 +71,49 @@
     "duration": "Duración",
     "downloadButton": "Descargar MP4 (HD)",
     "newSearch": "Descargar otro",
-    "thumbnailAlt": "Miniatura del Reel"
+    "thumbnailAlt": "Miniatura del Reel",
+    "noAudio": "Descargado sin audio (la plataforma restringe el flujo de audio)"
+  },
+  "errors": {
+    "LOGIN_REQUIRED": {
+      "title": "Privado o requiere iniciar sesión",
+      "message": "Esta publicación es privada o requiere iniciar sesión en {platform}. Prueba con un enlace público."
+    },
+    "UNSUPPORTED_POST": {
+      "title": "No se encontró video",
+      "message": "Esta publicación solo contiene imágenes o texto. Solo se admiten enlaces de videos o reels."
+    },
+    "STREAM_EXPIRED_OR_BLOCKED": {
+      "title": "Descarga bloqueada",
+      "message": "{platform} bloqueó o hizo caducar el enlace de descarga de este video. Inténtalo de nuevo en un momento."
+    },
+    "PLATFORM_TIMEOUT": {
+      "title": "{platform} no responde",
+      "message": "No pudimos conectar con {platform} a tiempo. Inténtalo de nuevo en breve."
+    },
+    "EXTRACTION_FAILED": {
+      "title": "No se pudo obtener el video",
+      "message": "No pudimos extraer este video. Puede ser privado, haber sido eliminado o tener restricciones regionales."
+    },
+    "INVALID_URL": {
+      "title": "Enlace no compatible",
+      "message": "Ese no parece un enlace de video compatible. Pega el enlace de una publicación con video."
+    },
+    "NOT_CONFIGURED": {
+      "title": "Temporalmente no disponible",
+      "message": "Las descargas de {platform} no están disponibles en este momento. Inténtalo más tarde."
+    },
+    "NETWORK": {
+      "title": "Problema de conexión",
+      "message": "No pudimos conectar con nuestro servidor. Revisa tu conexión e inténtalo de nuevo."
+    },
+    "actions": {
+      "retry": "Reintentar",
+      "clear": "Borrar y empezar de nuevo",
+      "report": "Reportar este enlace",
+      "reportSubject": "Reporte de problema con un enlace",
+      "reportBody": "Este enlace no funcionó en SaveReelsFast:"
+    }
   },
   "seo": {
     "heading": "La forma más rápida de guardar videos de redes sociales",

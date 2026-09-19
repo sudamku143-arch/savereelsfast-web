@@ -30,6 +30,7 @@ export default async function LocalePage({
           heroDict={dict.hero}
           platformsDict={dict.platforms}
           previewDict={dict.preview}
+          errorsDict={dict.errors}
         />
       </div>
 
