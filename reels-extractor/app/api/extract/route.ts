@@ -9,7 +9,7 @@ import {
 } from "@/lib/instagram";
 
 export const runtime = "nodejs";
-export const maxDuration = 20;
+export const maxDuration = 40;
 
 /**
  * Request contract:
@@ -56,6 +56,8 @@ export type ReelData = {
 
 const REEL_URL_REGEX = /instagram\.com\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
 const FETCH_TIMEOUT_MS = 8000;
+// Render's free tier can cold-start slowly; past this we fall back to the built-in extractor.
+const SCRAPER_TIMEOUT_MS = 10000;
 
 /** An error that carries the HTTP status and user-facing message to return. */
 class ExtractionError extends Error {
@@ -141,6 +143,9 @@ async function extractReelData(reelUrl: string): Promise<ReelData | null> {
   if (!shortcode) return null;
 
   const strategies: [string, Strategy][] = [
+    ...(getScraperBaseUrl()
+      ? ([["scraper", (code) => extractFromScraper(code, reelUrl)]] as [string, Strategy][])
+      : []),
     ["embed", extractFromEmbed],
     ["graphql", extractFromGraphql],
     ["page-meta", extractFromPageMeta],
@@ -208,6 +213,87 @@ async function fetchText(
   } finally {
     clearTimeout(timer);
   }
+}
+
+function getScraperBaseUrl(): string | null {
+  const raw = process.env.SCRAPER_SERVICE_URL?.trim().replace(/\/+$/, "");
+  return raw && /^https?:\/\//i.test(raw) ? raw : null;
+}
+
+type ScraperResponse = {
+  success?: boolean;
+  id?: string | null;
+  title?: string | null;
+  author?: string | null;
+  thumbnail?: string | null;
+  duration?: number | null;
+  videoUrl?: string | null;
+  formats?: { quality?: string; url?: string; width?: number | null; height?: number | null }[];
+};
+
+/**
+ * Strategy 0: the external yt-dlp microservice (see /scraper). Any failure,
+ * timeout or unusable payload returns null/throws so the built-in strategies
+ * below take over.
+ */
+async function extractFromScraper(
+  shortcode: string,
+  reelUrl: string
+): Promise<ReelData | null> {
+  const base = getScraperBaseUrl();
+  if (!base) return null;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SCRAPER_TIMEOUT_MS);
+  let json: ScraperResponse;
+  try {
+    const res = await fetch(
+      `${base}/extract?url=${encodeURIComponent(reelUrl)}`,
+      {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+        signal: controller.signal,
+      }
+    );
+    if (!res.ok) {
+      // The service answers 400 when yt-dlp can't extract; try the built-ins.
+      console.warn(`[/api/extract] scraper service responded ${res.status}`);
+      return null;
+    }
+    json = (await res.json()) as ScraperResponse;
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!json || json.success === false) return null;
+
+  const formats: ReelFormat[] = [];
+  for (const f of json.formats ?? []) {
+    const url = toSafeMediaUrl(f.url);
+    if (!url) continue;
+    formats.push({
+      quality: f.quality || (f.height ? `${f.height}p` : "HD"),
+      url,
+      width: typeof f.width === "number" ? f.width : null,
+      height: typeof f.height === "number" ? f.height : null,
+    });
+  }
+  formats.sort(
+    (a, b) => (b.height ?? 0) * (b.width ?? 0) - (a.height ?? 0) * (a.width ?? 0)
+  );
+
+  const videoUrl = formats[0]?.url ?? toSafeMediaUrl(json.videoUrl);
+  if (!videoUrl) return null;
+
+  return {
+    id: shortcode,
+    videoUrl,
+    thumbnailUrl: toSafeMediaUrl(json.thumbnail) ?? "",
+    title: truncate(typeof json.title === "string" ? json.title : null),
+    author: typeof json.author === "string" ? json.author : null,
+    durationSeconds: typeof json.duration === "number" ? json.duration : null,
+    ...(formats.length > 0 ? { formats } : {}),
+  };
 }
 
 function toSafeMediaUrl(value: unknown): string | null {
