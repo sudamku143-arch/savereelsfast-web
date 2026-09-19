@@ -7,6 +7,15 @@ const nextConfig = {
       { protocol: "https", hostname: "**.fbcdn.net" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/en",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
