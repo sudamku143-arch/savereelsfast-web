@@ -8,6 +8,7 @@ export const ERROR_CODES = [
   "INVALID_URL", // not a supported video link
   "NOT_CONFIGURED", // scraper service needed for this platform isn't set up
   "SERVER_BUSY", // the scraper is at capacity; retry in a few seconds
+  "FILE_TOO_LARGE", // a YouTube video bigger than the per-file limit for downloads that cost proxy bandwidth
   "RATE_LIMITED", // this visitor sent too many requests too quickly
 ] as const;
 

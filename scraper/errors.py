@@ -9,6 +9,7 @@ PLATFORM_TIMEOUT = "PLATFORM_TIMEOUT"
 EXTRACTION_FAILED = "EXTRACTION_FAILED"
 INVALID_URL = "INVALID_URL"
 SERVER_BUSY = "SERVER_BUSY"  # too many extractions/streams in flight; retry shortly
+FILE_TOO_LARGE = "FILE_TOO_LARGE"  # bigger than the per-file limit for downloads that cost proxy bandwidth
 
 # NO_AUDIO is not a failure: it is a warning attached to a successful result
 # when only a video-only stream could be offered.
@@ -22,6 +23,7 @@ STATUS = {
     EXTRACTION_FAILED: 404,
     INVALID_URL: 400,
     SERVER_BUSY: 503,
+    FILE_TOO_LARGE: 413,
 }
 
 MESSAGES = {
@@ -32,6 +34,7 @@ MESSAGES = {
     EXTRACTION_FAILED: "Couldn't extract this video. It may be private, deleted, or region-restricted.",
     INVALID_URL: "Please provide a supported video URL.",
     SERVER_BUSY: "The service is busy right now. Please try again in a few seconds.",
+    FILE_TOO_LARGE: "This video is too large to download here. Try a shorter one.",
 }
 
 # Order matters: the first matching group wins.

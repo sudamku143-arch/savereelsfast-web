@@ -46,7 +46,7 @@ export const maxDuration = 40;
  * Error response: { success: false, error: string, code: ErrorCode }
  *   LOGIN_REQUIRED 403, UNSUPPORTED_POST 422, STREAM_EXPIRED_OR_BLOCKED 429/502,
  *   PLATFORM_TIMEOUT 504, EXTRACTION_FAILED 404, INVALID_URL 400,
- *   NOT_CONFIGURED 503, SERVER_BUSY 503 (with Retry-After), unexpected failures 500.
+ *   NOT_CONFIGURED 503, SERVER_BUSY 503 (with Retry-After), FILE_TOO_LARGE 413, unexpected failures 500.
  */
 
 type ExtractRequestBody = {
@@ -353,6 +353,7 @@ async function extractReelDataWithinBudget(
     "STREAM_EXPIRED_OR_BLOCKED",
     "PLATFORM_TIMEOUT",
     "SERVER_BUSY",
+    "FILE_TOO_LARGE",
     "NOT_CONFIGURED",
   ];
   if (scraperFailure && specific.includes(scraperFailure.code)) {

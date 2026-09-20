@@ -397,6 +397,10 @@
     "RATE_LIMITED": {
       "title": "Doucement",
       "message": "Vous avez envoyé beaucoup de requêtes en peu de temps. Veuillez patienter une minute et réessayer."
+    },
+    "FILE_TOO_LARGE": {
+      "title": "Cette vidéo est trop volumineuse",
+      "message": "Cette vidéo est trop longue ou trop lourde pour être téléchargée ici. Essayez-en une plus courte."
     }
   },
   "pwa": {

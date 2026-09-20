@@ -397,6 +397,10 @@
     "RATE_LIMITED": {
       "title": "Pelan-pelan dulu",
       "message": "Anda mengirim terlalu banyak permintaan dalam waktu singkat. Silakan tunggu semenit lalu coba lagi."
+    },
+    "FILE_TOO_LARGE": {
+      "title": "Video ini terlalu besar",
+      "message": "Video ini terlalu panjang atau besar untuk diunduh di sini. Coba video yang lebih pendek."
     }
   },
   "pwa": {

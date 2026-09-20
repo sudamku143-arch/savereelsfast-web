@@ -909,6 +909,11 @@ async def extract(
     items = _describe_items(info)
     if not items:
         raise _http_error(_no_video_error(info))
+    if YTDLP_PROXY and is_youtube_host(urlparse(_resolved).hostname or "") and info.get("_via") != "cobalt":
+        try:  # refuse now, before the visitor is offered a download that would cost more than we allow
+            _refuse_if_too_large_for_proxy(_proxy_size_of(info))
+        except ScraperError as err:
+            raise _http_error(err)
 
     first = items[0]
     return {
@@ -958,6 +963,9 @@ class OpenStream:
 
     def chunks(self) -> Iterator[bytes]:
         sent = 0
+        limit = MAX_STREAM_BYTES
+        if self.via_proxy and _proxy_file_limit_bytes():
+            limit = min(limit, _proxy_file_limit_bytes())  # a paid-proxy download that outgrows its allowance is cut off
         try:
             while True:
                 chunk = self.response.read(CHUNK_SIZE)
@@ -966,7 +974,7 @@ class OpenStream:
                 sent += len(chunk)
                 if self.via_proxy:
                     _proxy_note_bytes(len(chunk))
-                if sent > MAX_STREAM_BYTES:
+                if sent > limit:
                     # Ending the response normally would hand the visitor a silently cut-off video.
                     # Raising aborts the connection, so the browser reports the download as failed.
                     raise StreamTooLarge(f"stream exceeded {MAX_STREAM_BYTES} bytes")
@@ -1023,8 +1031,17 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
             _proxy_check_budget()
         ydl = yt_dlp.YoutubeDL(_ydl_options(use_proxy=via_proxy))
         headers = dict(fmt.get("http_headers") or {})
+        if via_proxy:
+            _refuse_if_too_large_for_proxy(fmt.get("filesize") or fmt.get("filesize_approx"))
         response = ydl.urlopen(yt_dlp.networking.Request(media_url, headers=headers))
         length = response.headers.get("Content-Length")
+        if via_proxy:
+            try:
+                _refuse_if_too_large_for_proxy(int(length) if length else None)
+            except ScraperError:
+                response.close()
+                ydl.close()
+                raise
         return OpenStream(response, int(length) if length else None, [response.close, ydl.close], ext, via_proxy=via_proxy)
     except ScraperError:
         raise
@@ -1199,6 +1216,16 @@ def _open_cdn_stream(
         if length and length > MAX_STREAM_BYTES:
             response.close()
             raise ScraperError(errors.EXTRACTION_FAILED, "This video is too large to download.")
+        if via_proxy:
+            total = length
+            span = re.fullmatch(r"bytes \d+-\d+/(\d+)", response.headers.get("content-range", "").strip())
+            if span:  # a resumed download: judge the whole file, not the part
+                total = int(span.group(1))
+            try:
+                _refuse_if_too_large_for_proxy(total)
+            except ScraperError:
+                response.close()
+                raise
 
         return OpenStream(
             _HttpxReader(response),
@@ -1273,6 +1300,9 @@ def _youtube_cache_ttl(info: dict) -> float:
 # The proxy is billed by traffic. These counters show where it goes (see /stats); the optional daily limit
 # stops YouTube downloads (never lookups from the cache) once a day's allowance is used.
 PROXY_DAILY_LIMIT_MB = _env_number("YOUTUBE_PROXY_DAILY_LIMIT_MB", 0)  # 0 = no limit
+# The biggest YouTube file we will pull through the paid proxy (0 = no limit). One long video can cost as much
+# as a thousand lookups, so it is refused up front (from its reported size) and, failing that, cut off mid-stream.
+PROXY_MAX_FILE_MB = _env_number("YOUTUBE_PROXY_MAX_FILE_MB", 60)
 _proxy_lock = threading.Lock()
 _proxy_usage = {"lookups": 0, "streams": 0, "streamBytes": 0, "day": "", "todayBytes": 0}
 
@@ -1298,6 +1328,23 @@ def _proxy_note_bytes(count: int) -> None:
         _proxy_roll_day()
         _proxy_usage["streamBytes"] += count
         _proxy_usage["todayBytes"] += count
+
+
+def _proxy_file_limit_bytes() -> int:
+    return int(PROXY_MAX_FILE_MB * 1024 * 1024) if PROXY_MAX_FILE_MB > 0 else 0
+
+
+def _refuse_if_too_large_for_proxy(size: int | None) -> None:
+    limit = _proxy_file_limit_bytes()
+    if limit and size and size > limit:
+        _proxy_usage["refused"] = _proxy_usage.get("refused", 0) + 1
+        raise ScraperError(errors.FILE_TOO_LARGE)
+
+
+def _proxy_size_of(info: dict) -> int | None:
+    """The reported size of the video we would download, when the platform says (None when it does not)."""
+    fmt, _audio = _pick_format((_entries(info) or [info])[0])
+    return (fmt.get("filesize") or fmt.get("filesize_approx")) if fmt else None
 
 
 def _proxy_check_budget() -> None:
@@ -1331,6 +1378,8 @@ def _proxy_stats() -> dict:
             "downloads": _proxy_usage["streams"],
             "downloadedMb": round(_proxy_usage["streamBytes"] / 1024 / 1024, 1),
             "todayMb": round(_proxy_usage["todayBytes"] / 1024 / 1024, 1),
+            "maxFileMb": PROXY_MAX_FILE_MB or None,
+            "refusedTooLarge": _proxy_usage.get("refused", 0),
             "dailyLimitMb": PROXY_DAILY_LIMIT_MB or None,
         }
 

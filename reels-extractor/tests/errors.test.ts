@@ -52,6 +52,11 @@ describe("error messages are for people", () => {
 });
 
 describe("failures are shown fast; only a busy server is retried", () => {
+  it("a video over the scraper's per-file limit reaches the visitor as FILE_TOO_LARGE, not a generic failure", () => {
+    assert.ok((ERROR_CODES as readonly string[]).includes("FILE_TOO_LARGE"));
+    assert.match(source("app/api/extract/route.ts"), /"SERVER_BUSY",\s*"FILE_TOO_LARGE",\s*"NOT_CONFIGURED"/);
+  });
+
   it("the extract route retries only SERVER_BUSY, once", () => {
     const route = source("app/api/extract/route.ts");
     assert.match(route, /TRANSIENT_CODES: ErrorCode\[\] = \["SERVER_BUSY"\]/);

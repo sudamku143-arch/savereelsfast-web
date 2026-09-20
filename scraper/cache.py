@@ -173,6 +173,7 @@ _INFO_KEYS = (
 )
 _FORMAT_KEYS = (
     "format_id", "url", "ext", "protocol", "vcodec", "acodec", "height", "width", "abr", "http_headers",
+    "filesize", "filesize_approx",
 )
 
 

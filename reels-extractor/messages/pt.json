@@ -397,6 +397,10 @@
     "RATE_LIMITED": {
       "title": "Vá um pouco mais devagar",
       "message": "Você fez muitas solicitações em pouco tempo. Aguarde um minuto e tente novamente."
+    },
+    "FILE_TOO_LARGE": {
+      "title": "Este vídeo é grande demais",
+      "message": "Este vídeo é longo ou pesado demais para baixar aqui. Tente um mais curto."
     }
   },
   "pwa": {
