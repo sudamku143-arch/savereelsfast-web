@@ -6,6 +6,8 @@ import logging
 import os
 import re
 import socket
+import tempfile
+import threading
 import time
 import weakref
 import urllib.error
@@ -26,6 +28,7 @@ from cache import CircuitBreaker, SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
 from memory import rss_mb
+from telegram_bot import MAX_UPLOAD_BYTES, TEMP_PREFIX, BotUserError, Media, TelegramBot, delete_quietly, valid_token
 from urls import (
     BROWSER_UA,
     expand_redirects,
@@ -410,6 +413,7 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
         "extractions": {"active": _active, "waiting": _waiting, "limit": MAX_CONCURRENT_EXTRACTIONS},
         "streams": {"active": STREAM_SLOTS.active, "limit": STREAM_SLOTS.size},
         "memory": {"rssMb": None if rss_mb() is None else round(rss_mb(), 1), "softLimitMb": MEMORY_SOFT_LIMIT_MB},
+        "telegram": {"enabled": True, **_telegram_bot.stats} if _telegram_bot else {"enabled": False},
     }
 
 
@@ -985,3 +989,112 @@ async def stream(
     opened.add_closer(lease.release)
 
     return _attachment_response(opened, id, kind, ext)
+
+
+# ------------------------------------------------------------------------------------- Telegram bot
+# @savereelsfast_bot: paste a link in Telegram, get the video back. It only runs when TELEGRAM_BOT_TOKEN is
+# set on the host. It goes through the same pipeline as the website (cache, concurrency limits, the memory
+# guard, stream slots); the bot itself lives in telegram_bot.py and never touches the API's request handling.
+
+_BOT_MESSAGES = {
+    errors.LOGIN_REQUIRED: "🔒 That video is private, age-restricted or needs a login, so I can't download it. Try a public link.",
+    errors.UNSUPPORTED_POST: "🎞️ I couldn't find a video in that link. Only video posts are supported.",
+    errors.STREAM_EXPIRED_OR_BLOCKED: "⏳ The platform is limiting downloads right now. Please try again in a minute.",
+    errors.PLATFORM_TIMEOUT: "⏳ The platform didn't answer in time. Please try again shortly.",
+    errors.EXTRACTION_FAILED: "😕 I couldn't get that video. It may be private, deleted or region-restricted.",
+    errors.INVALID_URL: "That doesn't look like a supported video link. Try Instagram, YouTube, TikTok, Facebook, X, Reddit, Pinterest, Threads or Snapchat.",
+    errors.SERVER_BUSY: "I'm a bit busy right now. Please try again in a few seconds.",
+}
+
+
+def _bot_message(err: ScraperError) -> str:
+    return _BOT_MESSAGES.get(err.code, _BOT_MESSAGES[errors.EXTRACTION_FAILED])
+
+
+def _save_stream_to_file(stream: "OpenStream", cap: int, cancelled: threading.Event) -> tuple[str | None, int]:
+    """
+    Write a video to a temporary file in small chunks (RAM stays flat whatever the size). Returns
+    (path, size), or (None, size) when the video is over `cap` or the job was cancelled. Blocking.
+    """
+    fd, path = tempfile.mkstemp(prefix=TEMP_PREFIX, suffix=".mp4")
+    size = 0
+    keep = False
+    try:
+        with os.fdopen(fd, "wb") as out:
+            for chunk in stream.chunks():
+                if cancelled.is_set():
+                    return None, size
+                size += len(chunk)
+                if size > cap:
+                    return None, size
+                out.write(chunk)
+        keep = size > 0 and not cancelled.is_set()
+        return (path if keep else None), size
+    finally:
+        stream.close()
+        if not keep:
+            delete_quietly(path)
+
+
+async def _telegram_fetch(url: str) -> Media:
+    """Link -> the video (as a temporary file when it fits Telegram's 50 MB, else a direct link)."""
+    cancelled = threading.Event()
+    try:
+        _shed_load_if_low_on_memory()
+        _resolved, info, _cached = await _acquire_info(url)
+        items = _describe_items(info)
+        if not items:
+            raise _no_video_error(info)
+        first = items[0]
+        media = Media(title=first.get("title"), media_url=first["videoUrl"], audio=first.get("audio") or "unknown")
+
+        lease = STREAM_SLOTS.acquire()
+        if lease is None:
+            raise ScraperError(errors.SERVER_BUSY)
+        try:
+            stream = await _open_stream(url, "video", 0)
+        except BaseException:
+            lease.release()
+            raise
+        stream.add_closer(lease.release)
+
+        if stream.length and stream.length > MAX_UPLOAD_BYTES:
+            stream.close()  # too big to upload: the caller answers with the direct link
+            media.size = stream.length
+            return media
+        media.path, media.size = await asyncio.to_thread(_save_stream_to_file, stream, MAX_UPLOAD_BYTES, cancelled)
+        return media
+    except asyncio.CancelledError:
+        cancelled.set()  # the worker thread stops and deletes its file at the next chunk
+        raise
+    except ScraperError as err:
+        raise BotUserError(_bot_message(err))
+
+
+_telegram_bot: TelegramBot | None = None
+_telegram_task: "asyncio.Task | None" = None
+
+
+@app.on_event("startup")
+async def _start_telegram_bot() -> None:
+    global _telegram_bot, _telegram_task
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    if not token:
+        return
+    if not valid_token(token):
+        _log.warning("TELEGRAM_BOT_TOKEN is set but does not look like a bot token: the Telegram bot is off.")
+        return
+    # httpx logs every request address at INFO level, and Telegram's contain the token.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    _telegram_bot = TelegramBot(token, _telegram_fetch)
+    _telegram_task = asyncio.ensure_future(_telegram_bot.run_forever())
+    _log.info("Telegram bot enabled (long polling).")
+
+
+@app.on_event("shutdown")
+async def _stop_telegram_bot() -> None:
+    global _telegram_bot, _telegram_task
+    if _telegram_task is not None:
+        _telegram_task.cancel()
+        await asyncio.gather(_telegram_task, return_exceptions=True)
+    _telegram_bot, _telegram_task = None, None
