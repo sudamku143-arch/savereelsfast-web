@@ -12,7 +12,7 @@ import httpx
 import yt_dlp
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from starlette.background import BackgroundTask
 from yt_dlp.utils import DownloadError, ExtractorError
 
@@ -249,6 +249,22 @@ def _describe_items(info: dict) -> list[dict]:
     for index, item in enumerate(items, start=1):
         item["index"] = index
     return items
+
+
+# Keep-alive target for uptime pingers (cron-job.org, UptimeRobot, Render health checks).
+# The body is a constant 15 bytes: pingers such as cron-job.org disable a job whose response
+# is "too big". No auth header is required (pingers can't send one), and nothing here touches
+# the cache, yt-dlp or the network, so it answers instantly even when the service is busy.
+_HEALTH_BODY = b'{"status":"ok"}'
+
+
+@app.api_route("/health", methods=["GET", "HEAD"], include_in_schema=False)
+def health_check() -> Response:
+    return Response(
+        content=_HEALTH_BODY,
+        media_type="application/json",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/")
