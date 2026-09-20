@@ -19,7 +19,7 @@ describe("what a tab switch shows, in every language", () => {
   for (const locale of locales) {
     it(`${locale}: every platform has its own heading, helper text, title and language-prefixed address`, () => {
       const content = messages(locale).landing.platforms;
-      const info = buildPlatformInfo(content, (id) => localePath(locale as Locale, `/downloader/${PLATFORM_SLUGS[id]}`));
+      const info = buildPlatformInfo(content, (id) => localePath(locale as Locale, `/${PLATFORM_SLUGS[id]}`));
       assert.deepEqual(Object.keys(info).sort(), [...ids].sort());
       const hrefs = new Set<string>();
       for (const id of ids) {
@@ -29,7 +29,7 @@ describe("what a tab switch shows, in every language", () => {
           assert.equal(entry[field], content[id][field], `${locale}/${id}: ${field} differs from the landing page`);
         }
         // the language is part of the address, so it survives the switch
-        const expected = locale === "en" ? `/downloader/${PLATFORM_SLUGS[id]}` : `/${locale}/downloader/${PLATFORM_SLUGS[id]}`;
+        const expected = locale === "en" ? `/${PLATFORM_SLUGS[id]}` : `/${locale}/${PLATFORM_SLUGS[id]}`;
         assert.equal(entry.href, expected);
         hrefs.add(entry.href);
       }
@@ -46,9 +46,9 @@ describe("what a tab switch shows, in every language", () => {
 
 describe("switching language keeps the page", () => {
   it("swaps only the language prefix", () => {
-    assert.equal(switchLocalePath("/es/downloader/youtube", "hi"), "/hi/downloader/youtube");
-    assert.equal(switchLocalePath("/es/downloader/youtube", "en"), "/downloader/youtube");
-    assert.equal(switchLocalePath("/downloader/twitter", "ar"), "/ar/downloader/twitter");
+    assert.equal(switchLocalePath("/es/youtube-video-downloader", "hi"), "/hi/youtube-video-downloader");
+    assert.equal(switchLocalePath("/es/youtube-video-downloader", "en"), "/youtube-video-downloader");
+    assert.equal(switchLocalePath("/twitter-x-video-downloader", "ar"), "/ar/twitter-x-video-downloader");
     assert.equal(switchLocalePath("/dmca", "fr"), "/fr/dmca");
   });
 
@@ -60,15 +60,15 @@ describe("switching language keeps the page", () => {
   });
 
   it("does not mistake a path segment for a language", () => {
-    assert.equal(switchLocalePath("/downloader/tiktok", "es"), "/es/downloader/tiktok");
-    assert.equal(switchLocalePath("/xx/downloader/tiktok", "es"), "/es/xx/downloader/tiktok");
+    assert.equal(switchLocalePath("/tiktok-video-downloader", "es"), "/es/tiktok-video-downloader");
+    assert.equal(switchLocalePath("/xx/tiktok-video-downloader", "es"), "/es/xx/tiktok-video-downloader");
   });
 
   it("round-trips through every language", () => {
     for (const from of locales) {
       for (const to of locales) {
-        const there = switchLocalePath(localePath(from, "/downloader/reddit"), to);
-        assert.equal(there, localePath(to, "/downloader/reddit"), `${from} -> ${to}`);
+        const there = switchLocalePath(localePath(from, "/reddit-video-downloader"), to);
+        assert.equal(there, localePath(to, "/reddit-video-downloader"), `${from} -> ${to}`);
       }
     }
   });
@@ -119,7 +119,7 @@ describe("the tab component", () => {
   });
 
   it("both page types hand over the data, built with language-prefixed addresses", () => {
-    for (const file of ["app/[locale]/page.tsx", "app/[locale]/downloader/[platform]/page.tsx"]) {
+    for (const file of ["app/[locale]/page.tsx", "app/[locale]/[platform]/page.tsx"]) {
       const page = source(file);
       assert.match(page, /buildPlatformInfo\(dict\.landing\.platforms, \(pid\) => localePath\(locale, landingPath\(pid\)\)\)/, file);
     }

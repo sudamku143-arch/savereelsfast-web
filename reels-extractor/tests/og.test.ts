@@ -8,7 +8,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { locales } from "../lib/i18n-config.ts";
-import { PLATFORM_SLUGS } from "../lib/landing.ts";
+import { PLATFORM_KEYS } from "../lib/landing.ts";
 
 const route = readFileSync(new URL("../app/api/og/route.tsx", import.meta.url), "utf8");
 
@@ -33,7 +33,7 @@ describe("share image route", () => {
 
   it("names every platform slug and nothing else", () => {
     const keys = [...names.matchAll(/^\s*(\w+):/gm)].map((m) => m[1]).sort();
-    assert.deepEqual(keys, Object.values(PLATFORM_SLUGS).sort());
+    assert.deepEqual(keys, Object.values(PLATFORM_KEYS).sort());
   });
 
   it("only draws characters the renderer's font has (Latin), never Indic or Arabic script", () => {
@@ -54,8 +54,8 @@ describe("share image route", () => {
 
   it("every localized page points its share image at its own language and platform", () => {
     const meta = readFileSync(new URL("../lib/legal-metadata.ts", import.meta.url), "utf8");
-    assert.match(meta, /\?p=\$\{slug\}&l=\$\{locale\}/);
-    const page = readFileSync(new URL("../app/[locale]/downloader/[platform]/page.tsx", import.meta.url), "utf8");
-    assert.match(page, /platformOgImage\(PLATFORM_SLUGS\[id\], locale\)/);
+    assert.match(meta, /\?p=\$\{key\}&l=\$\{locale\}/);
+    const page = readFileSync(new URL("../app/[locale]/[platform]/page.tsx", import.meta.url), "utf8");
+    assert.match(page, /platformOgImage\(PLATFORM_KEYS\[id\], locale\)/);
   });
 });

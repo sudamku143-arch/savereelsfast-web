@@ -5,9 +5,9 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 const OG_IMAGE = `${SITE_URL}/api/og`;
 
-/** Share image for a platform's landing page (see app/api/og/route.tsx for the accepted values). */
-export function platformOgImage(slug: string, locale: Locale): string {
-  return `${OG_IMAGE}?p=${slug}&l=${locale}`;
+/** Share image for a platform's landing page (see app/api/og/route.tsx for the accepted keys). */
+export function platformOgImage(key: string, locale: Locale): string {
+  return `${OG_IMAGE}?p=${key}&l=${locale}`;
 }
 
 /**

@@ -3,21 +3,21 @@ import { locales, localePath, defaultLocale, LEGAL_TRANSLATED } from "@/lib/i18n
 import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
 import { SITE_URL } from "@/lib/site";
 
-type Frequency = "daily" | "weekly" | "yearly";
+type Frequency = "daily" | "weekly" | "monthly";
 
 const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal?: boolean }[] = [
-  { path: "", changeFrequency: "daily", priority: 1 },
+  { path: "", changeFrequency: "daily", priority: 1.0 },
   // One landing page per platform, in every language.
   ...LANDING_PLATFORMS.map((id) => ({
     path: landingPath(id),
     changeFrequency: "daily" as const,
     priority: 0.9,
   })),
-  { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3, legal: true },
-  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3, legal: true },
-  { path: "/dmca", changeFrequency: "yearly", priority: 0.3, legal: true },
-  { path: "/disclaimer", changeFrequency: "yearly", priority: 0.3, legal: true },
-  { path: "/contact", changeFrequency: "yearly", priority: 0.3, legal: true },
+  { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.3, legal: true },
+  { path: "/terms-of-service", changeFrequency: "monthly", priority: 0.3, legal: true },
+  { path: "/dmca", changeFrequency: "monthly", priority: 0.3, legal: true },
+  { path: "/disclaimer", changeFrequency: "monthly", priority: 0.3, legal: true },
+  { path: "/contact", changeFrequency: "monthly", priority: 0.3, legal: true },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -37,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}${localePath(locale, path)}`,
       lastModified,
       changeFrequency,
-      priority: locale === "en" ? priority : Math.max(priority - 0.1, 0.1),
+      priority, // the same in every language: a Hindi home page matters as much as the English one
       alternates: { languages },
     }));
   });

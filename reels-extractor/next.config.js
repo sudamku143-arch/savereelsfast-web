@@ -35,11 +35,26 @@ const nextConfig = {
     unoptimized: true,
   },
   async redirects() {
-    // "twitter" is the slug people search for; keep the old id-based URL working.
-    return [
-      { source: "/downloader/x", destination: "/downloader/twitter", permanent: true },
-      { source: "/:locale(es|pt)/downloader/x", destination: "/:locale/downloader/twitter", permanent: true },
-    ];
+    // Platform pages used to live at /downloader/<name>. They now live at /<name>-video-downloader; every
+    // old address (in every language) is redirected permanently, so old links and search results still work.
+    // tests/sitemap.test.ts checks these tables against lib/landing.ts.
+    const LANGUAGES = "es|pt|hi|bn|te|ta|mr|id|fr|ar";
+    const LEGACY = {
+      instagram: "instagram-video-downloader",
+      youtube: "youtube-video-downloader",
+      facebook: "facebook-video-downloader",
+      threads: "threads-video-downloader",
+      twitter: "twitter-x-video-downloader",
+      x: "twitter-x-video-downloader",
+      pinterest: "pinterest-video-downloader",
+      tiktok: "tiktok-video-downloader",
+      reddit: "reddit-video-downloader",
+      snapchat: "snapchat-video-downloader",
+    };
+    return Object.entries(LEGACY).flatMap(([old, current]) => [
+      { source: `/downloader/${old}`, destination: `/${current}`, permanent: true },
+      { source: `/:locale(${LANGUAGES})/downloader/${old}`, destination: `/:locale/${current}`, permanent: true },
+    ]);
   },
   async headers() {
     return [

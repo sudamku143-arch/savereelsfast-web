@@ -58,12 +58,12 @@ describe("landing routes", () => {
     assert.deepEqual([...LANDING_PLATFORMS].sort(), [...EXPECTED_IDS].sort());
     const slugs = Object.values(PLATFORM_SLUGS);
     assert.equal(new Set(slugs).size, slugs.length, "slugs must be unique");
-    for (const slug of slugs) assert.match(slug, /^[a-z]+$/, `unsafe slug: ${slug}`);
+    for (const slug of slugs) assert.match(slug, /^[a-z]+(-[a-z]+)*-video-downloader$/, `unsafe slug: ${slug}`);
   });
 
-  it("uses the searchable word 'twitter' for X", () => {
-    assert.equal(PLATFORM_SLUGS.x, "twitter");
-    assert.equal(landingPath("x"), "/downloader/twitter");
+  it("uses both searchable names, twitter and x, for X", () => {
+    assert.equal(PLATFORM_SLUGS.x, "twitter-x-video-downloader");
+    assert.equal(landingPath("x"), "/twitter-x-video-downloader");
   });
 
   it("resolves slugs both ways and rejects unknown ones", () => {

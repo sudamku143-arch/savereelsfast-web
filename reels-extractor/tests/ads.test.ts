@@ -118,7 +118,7 @@ describe("where the slots live", () => {
   });
 
   it("keeps the home and landing pages to those two slots plus the sticky banner", () => {
-    for (const file of ["app/[locale]/page.tsx", "app/[locale]/downloader/[platform]/page.tsx"]) {
+    for (const file of ["app/[locale]/page.tsx", "app/[locale]/[platform]/page.tsx"]) {
       const page = source(file);
       assert.ok(page.includes('variant="sticky"'), `${file} lost the sticky slot`);
       assert.ok(!page.includes('variant="leaderboard"') && !page.includes('variant="native"'), `${file} shows an extra ad`);

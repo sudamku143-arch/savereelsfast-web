@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { pageMetadata, platformOgImage } from "@/lib/legal-metadata";
 import {
   LANDING_PLATFORMS,
+  PLATFORM_KEYS,
   PLATFORM_SLUGS,
   fillTemplate,
   landingPath,
@@ -13,10 +14,10 @@ import {
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { buildPlatformInfo } from "@/lib/platform-info";
-import ExtractorClient from "../../components/ExtractorClient";
-import FaqAccordion from "../../components/FaqAccordion";
-import AdBanner from "../../components/AdBanner";
-import PlatformLinks from "../../components/PlatformLinks";
+import ExtractorClient from "../components/ExtractorClient";
+import FaqAccordion from "../components/FaqAccordion";
+import AdBanner from "../components/AdBanner";
+import PlatformLinks from "../components/PlatformLinks";
 
 type Props = { params: { locale: string; platform: string } };
 
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     landingPath(id),
     content.metaTitle,
     content.metaDescription,
-    platformOgImage(PLATFORM_SLUGS[id], locale)
+    platformOgImage(PLATFORM_KEYS[id], locale)
   );
 }
 

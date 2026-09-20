@@ -25,8 +25,8 @@ export function localeDir(locale: Locale): "rtl" | "ltr" {
 }
 
 /**
- * The same page in another language: "/es/downloader/youtube" -> "/downloader/youtube" (English) or
- * "/hi/downloader/youtube". Pages that do not exist in every language (there are none today) would 404,
+ * The same page in another language: "/es/youtube-video-downloader" -> "/youtube-video-downloader" (English) or
+ * "/hi/youtube-video-downloader". Pages that do not exist in every language (there are none today) would 404,
  * so this only swaps the prefix and leaves the rest alone.
  */
 export function switchLocalePath(pathname: string, next: Locale): string {

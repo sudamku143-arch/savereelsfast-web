@@ -18,7 +18,15 @@ const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar
 const LEGAL_LOCALES = ["en", "es", "pt", "hi"];
 const RTL = ["ar"];
 const OG_LOCALE = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
-const SLUGS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
+const SLUGS = {
+  instagram: "instagram-video-downloader", youtube: "youtube-video-downloader", facebook: "facebook-video-downloader",
+  threads: "threads-video-downloader", x: "twitter-x-video-downloader", pinterest: "pinterest-video-downloader",
+  tiktok: "tiktok-video-downloader", reddit: "reddit-video-downloader", snapchat: "snapchat-video-downloader",
+};
+// The share-image key of each platform (not a page address).
+const KEYS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
+// Where each old /downloader/<name> address now redirects to.
+const LEGACY = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", twitter: "x", x: "x", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
 
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"))])
@@ -98,8 +106,8 @@ async function verifyShareImages() {
     return { status: res.status, type: res.headers.get("content-type"), size: bytes.length, signature, width: view.getUint32(16), height: view.getUint32(20) };
   };
   for (const locale of LOCALES) {
-    for (const slug of Object.values(SLUGS)) {
-      const url = `/api/og?p=${slug}&l=${locale}`;
+    for (const key of Object.values(KEYS)) {
+      const url = `/api/og?p=${key}&l=${locale}`;
       const img = await png(url);
       check(img.status === 200 && /image\/png/.test(img.type ?? "") && img.signature, `share image ${url} is not a PNG (${img.status} ${img.type})`);
       check(img.width === 1200 && img.height === 630, `share image ${url} is ${img.width}x${img.height}`);
@@ -113,7 +121,7 @@ async function verifyShareImages() {
 }
 
 async function verifyLanding(locale, id, slug) {
-  const url = path(locale, `/downloader/${slug}`);
+  const url = path(locale, `/${slug}`);
   const tag = `[${locale}/${id}]`;
   const res = await get(url);
   check(res.status === 200, `${tag} ${url} returned ${res.status}`);
@@ -130,15 +138,15 @@ async function verifyLanding(locale, id, slug) {
   check(new RegExp(`<html[^>]+dir="${RTL.includes(locale) ? "rtl" : "ltr"}"`).test(html), `${tag} <html dir> is wrong`);
 
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
-  check(canonical === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} canonical is ${canonical}`);
+  check(canonical === `${SITE}${path(locale, `/${slug}`)}`, `${tag} canonical is ${canonical}`);
   for (const l of LOCALES) {
-    const expected = `${SITE}${path(l, `/downloader/${slug}`)}`;
+    const expected = `${SITE}${path(l, `/${slug}`)}`;
     check(html.includes(`hrefLang="${l}" href="${expected}"`) || html.includes(`hreflang="${l}" href="${expected}"`), `${tag} missing hreflang ${l}`);
   }
-  check(hasAlternate(html, "x-default", `${SITE}/downloader/${slug}`), `${tag} hreflang x-default should point at the English page`);
+  check(hasAlternate(html, "x-default", `${SITE}/${slug}`), `${tag} hreflang x-default should point at the English page`);
   check(meta(html, "property", "og:title") === content.metaTitle, `${tag} og:title differs`);
-  check(meta(html, "property", "og:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} og:image is ${meta(html, "property", "og:image")}`);
-  check(meta(html, "name", "twitter:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} twitter:image missing`);
+  check(meta(html, "property", "og:image") === `${SITE}/api/og?p=${KEYS[id]}&l=${locale}`, `${tag} og:image is ${meta(html, "property", "og:image")}`);
+  check(meta(html, "name", "twitter:image") === `${SITE}/api/og?p=${KEYS[id]}&l=${locale}`, `${tag} twitter:image missing`);
   check(meta(html, "name", "twitter:card") === "summary_large_image", `${tag} twitter:card missing`);
 
   const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)].map((m) => decode(m[1].replace(/<[^>]+>/g, "")));
@@ -159,7 +167,7 @@ async function verifyLanding(locale, id, slug) {
   check(!app || !("aggregateRating" in app), `${tag} must not invent an aggregateRating`);
   check(faq?.mainEntity?.length === 6, `${tag} FAQPage has ${faq?.mainEntity?.length} questions (expected 6)`);
   check(crumbs?.itemListElement?.length === 2, `${tag} BreadcrumbList incomplete`);
-  check(app?.url === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} schema url mismatch`);
+  check(app?.url === `${SITE}${path(locale, `/${slug}`)}`, `${tag} schema url mismatch`);
   check(app?.inLanguage === locale && faq?.inLanguage === locale, `${tag} schema inLanguage is ${app?.inLanguage}/${faq?.inLanguage}, expected ${locale}`);
   check(faq?.mainEntity?.[0]?.name === content.faq[0].q, `${tag} the FAQ schema is not in ${locale}`);
   check(app?.alternateName === content.metaTitle, `${tag} schema alternateName "${app?.alternateName}" differs from the title`);
@@ -170,7 +178,7 @@ async function verifyLanding(locale, id, slug) {
 
   for (const other of Object.values(SLUGS)) {
     if (other === slug) continue;
-    check(html.includes(`href="${path(locale, `/downloader/${other}`)}"`), `${tag} no internal link to ${other}`);
+    check(html.includes(`href="${path(locale, `/${other}`)}"`), `${tag} no internal link to ${other}`);
   }
 }
 
@@ -204,7 +212,7 @@ async function main() {
   for (const locale of LOCALES) {
     const html = await (await get(home(locale))).text();
     for (const slug of Object.values(SLUGS)) {
-      check(html.includes(`href="${path(locale, `/downloader/${slug}`)}"`), `[${locale}] home page has no link to ${slug}`);
+      check(html.includes(`href="${path(locale, `/${slug}`)}"`), `[${locale}] home page has no link to ${slug}`);
     }
   }
 
@@ -216,7 +224,7 @@ async function main() {
       check(footer.includes(`href="${path(locale, legal)}"`), `[${locale}] footer has no link to ${legal}`);
     }
     for (const slug of Object.values(SLUGS)) {
-      check(footer.includes(`href="${path(locale, `/downloader/${slug}`)}"`), `[${locale}] footer has no link to the ${slug} tool`);
+      check(footer.includes(`href="${path(locale, `/${slug}`)}"`), `[${locale}] footer has no link to the ${slug} tool`);
     }
     check(/href="mailto:[^"]+\?subject=/.test(footer), `[${locale}] footer has no "report a broken link" mailto`);
     const headings = [...footer.matchAll(/<h2[^>]*>([^<]*)<\/h2>/g)].map((m) => m[1]);
@@ -227,7 +235,7 @@ async function main() {
   // and shifts the layout), and must never appear on the legal pages.
   const countAds = (html, locale) => (html.match(new RegExp(`<aside aria-label="${messages[locale].ad.label}"`, "g")) ?? []).length;
   for (const locale of LOCALES) {
-    for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/downloader/${slug}`))]) {
+    for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/${slug}`))]) {
       const ads = countAds(await (await get(page)).text(), locale);
       // The leaderboard is always present; the others may be hidden while no network is configured for them.
       check(ads >= 1, `[${locale}] ${page} server HTML has ${ads} ad slots (expected at least the leaderboard)`);
@@ -247,7 +255,7 @@ async function main() {
 </div>
 <!-- END AADS AD UNIT ${unit} -->`;
     for (const locale of LOCALES) {
-      for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/downloader/${slug}`))]) {
+      for (const page of [home(locale), ...Object.values(SLUGS).map((slug) => path(locale, `/${slug}`))]) {
         const html = await (await get(page)).text();
         check(html.includes(snippet), `[${locale}] ${page}: raw HTML lacks the exact A-ADS snippet for unit ${unit}`);
         check((html.match(/id="frame"/g) ?? []).length === 1, `[${locale}] ${page}: id="frame" must appear exactly once`);
@@ -257,15 +265,15 @@ async function main() {
 
   // Routing edge cases.
   const legacy = await get("/downloader/x");
-  check([301, 308].includes(legacy.status) && legacy.headers.get("location")?.endsWith("/downloader/twitter"), `/downloader/x should redirect to /twitter (got ${legacy.status} ${legacy.headers.get("location")})`);
+  check([301, 308].includes(legacy.status) && legacy.headers.get("location")?.endsWith("/twitter-x-video-downloader"), `/downloader/x should redirect to /twitter-x-video-downloader (got ${legacy.status} ${legacy.headers.get("location")})`);
   const legacyEs = await get("/es/downloader/x");
-  check([301, 308].includes(legacyEs.status) && legacyEs.headers.get("location")?.endsWith("/es/downloader/twitter"), `/es/downloader/x redirect (got ${legacyEs.status} ${legacyEs.headers.get("location")})`);
-  for (const bad of ["/downloader/vimeo", "/es/downloader/xyz", "/downloader"]) {
+  check([301, 308].includes(legacyEs.status) && legacyEs.headers.get("location")?.endsWith("/es/twitter-x-video-downloader"), `/es/downloader/x redirect (got ${legacyEs.status} ${legacyEs.headers.get("location")})`);
+  for (const bad of ["/vimeo-video-downloader", "/es/xyz-video-downloader", "/downloader/vimeo"]) {
     const res = await get(bad);
     check(res.status === 404, `${bad} should be 404 (got ${res.status})`);
   }
-  const explicitEn = await get("/en/downloader/youtube");
-  check(explicitEn.status === 308 && explicitEn.headers.get("location")?.endsWith("/downloader/youtube"), `/en/... should redirect to the unprefixed URL (got ${explicitEn.status})`);
+  const explicitEn = await get("/en/youtube-video-downloader");
+  check(explicitEn.status === 308 && explicitEn.headers.get("location")?.endsWith("/youtube-video-downloader"), `/en/... should redirect to the unprefixed URL (got ${explicitEn.status})`);
 
   // sitemap.xml
   const sitemapRes = await get("/sitemap.xml");
@@ -278,7 +286,7 @@ async function main() {
   check(new Set(locs).size === locs.length, "sitemap has duplicate URLs");
   for (const locale of LOCALES) {
     for (const slug of Object.values(SLUGS)) {
-      const loc = `${SITE}${path(locale, `/downloader/${slug}`)}`;
+      const loc = `${SITE}${path(locale, `/${slug}`)}`;
       const entry = entries.find((e) => e.includes(`<loc>${loc}</loc>`));
       check(!!entry, `sitemap is missing ${loc}`);
       if (entry) {
@@ -291,6 +299,23 @@ async function main() {
     check(locs.includes(`${SITE}${home(locale)}`), `sitemap is missing the ${locale} home page`);
   }
   check(locs.every((l) => l?.startsWith(SITE)), "sitemap contains non-production URLs");
+
+  // The exact shape asked for: /<slug> in English, /<language>/<slug> elsewhere; frequency and priority by page type.
+  for (const locale of LOCALES) {
+    check(entries.some((e) => e.includes(`<loc>${SITE}${home(locale)}</loc>`) || e.includes(`<loc>${SITE}${home(locale)}/</loc>`)), `sitemap is missing the ${locale} home page`);
+  }
+  for (const entry of entries) {
+    const loc = entry.match(/<loc>([^<]*)<\/loc>/)?.[1] ?? "";
+    const rest = loc.replace(SITE, "").replace(/^\/(es|pt|hi|bn|te|ta|mr|id|fr|ar)(?=\/|$)/, "");
+    const isHome = rest === "" || rest === "/";
+    const isPlatform = Object.values(SLUGS).includes(rest.replace(/^\//, ""));
+    const changefreq = entry.match(/<changefreq>([^<]*)</)?.[1];
+    const priority = Number(entry.match(/<priority>([^<]*)</)?.[1]);
+    if (isHome) check(changefreq === "daily" && priority === 1, `${loc}: home should be daily / 1.0 (got ${changefreq} / ${priority})`);
+    else if (isPlatform) check(changefreq === "daily" && priority === 0.9, `${loc}: platform page should be daily / 0.9 (got ${changefreq} / ${priority})`);
+    else check(changefreq === "monthly", `${loc}: legal page should be monthly (got ${changefreq})`);
+    check(!/\/downloader\//.test(loc), `${loc}: still uses the old /downloader/ address`);
+  }
 
   // Every sitemap URL must actually exist on this server.
   for (const loc of locs) {
@@ -308,6 +333,20 @@ async function main() {
       check(/<meta name="robots" content="noindex/.test(html), `[${locale}] ${legal} should be noindex`);
       check(!locs.includes(`${SITE}${path(locale, legal)}`), `[${locale}] ${legal} must not be in the sitemap`);
     }
+  }
+
+  // The old /downloader/<name> addresses must lead to the new pages with a permanent redirect, in every language.
+  for (const locale of LOCALES) {
+    for (const [old, id] of Object.entries(LEGACY)) {
+      const from = path(locale, `/downloader/${old}`);
+      const res = await get(from);
+      const location = res.headers.get("location") ?? "";
+      check(res.status === 308 && sameUrl(new URL(location, BASE).pathname, path(locale, `/${SLUGS[id]}`)), `${from} should redirect (308) to ${path(locale, `/${SLUGS[id]}`)}, got ${res.status} ${location}`);
+    }
+  }
+  // Nothing else answers at the old prefix, and unknown platform names are a 404, not an empty page.
+  for (const bad of ["/downloader", "/instagram", "/es/tiktok-downloader", "/fr/not-a-platform-video-downloader"]) {
+    check((await get(bad)).status === 404, `${bad} should be a 404`);
   }
 
   // robots.txt
