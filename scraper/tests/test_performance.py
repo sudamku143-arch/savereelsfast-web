@@ -317,7 +317,7 @@ class ConcurrencyTests(AsyncApiCase):
         infos = iter([make_info("v1"), make_info("v1", title="fresh")])
         calls = []
 
-        def fake(url):
+        def fake(url, route=0):
             calls.append(url)
             return next(infos)
 

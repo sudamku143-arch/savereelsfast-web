@@ -101,6 +101,11 @@ def host_allowed(host: str) -> bool:
     )
 
 
+def is_youtube_host(host: str) -> bool:
+    host = (host or "").lower()
+    return _host_matches(host, "youtube.com") or _host_matches(host, "youtu.be")
+
+
 def is_threads_host(host: str) -> bool:
     host = (host or "").lower()
     return _host_matches(host, "threads.net") or _host_matches(host, "threads.com")

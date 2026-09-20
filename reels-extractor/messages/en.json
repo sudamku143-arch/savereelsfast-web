@@ -350,8 +350,8 @@
       "message": "This post contains only images or text. Only video/reels links are supported."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
-      "title": "Download blocked",
-      "message": "{platform} blocked or expired this video's download link. Please try again in a moment."
+      "title": "Couldn't get this video just now",
+      "message": "{platform} is limiting downloads at the moment. Please try again in a minute. If it keeps happening, try another link to the same video or come back a little later."
     },
     "PLATFORM_TIMEOUT": {
       "title": "{platform} isn't responding",

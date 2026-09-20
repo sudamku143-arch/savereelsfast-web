@@ -350,8 +350,8 @@
       "message": "Postingan ini hanya berisi gambar atau teks. Hanya tautan video/Reels yang didukung."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
-      "title": "Unduhan diblokir",
-      "message": "{platform} memblokir atau membuat tautan unduhan video ini kedaluwarsa. Silakan coba lagi sebentar lagi."
+      "title": "Video ini belum bisa diambil sekarang",
+      "message": "{platform} sedang membatasi unduhan saat ini. Silakan coba lagi dalam semenit. Jika terus terjadi, coba tautan lain untuk video yang sama atau kembali beberapa saat lagi."
     },
     "PLATFORM_TIMEOUT": {
       "title": "{platform} tidak merespons",

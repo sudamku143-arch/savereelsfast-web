@@ -90,7 +90,12 @@ export type ReelData = {
 
 const FETCH_TIMEOUT_MS = 8000;
 // Render's free tier can cold-start slowly; past this we fall back to the built-in extractor.
-const SCRAPER_TIMEOUT_MS = 10000;
+// Room for the scraper's own second YouTube route (about 3 s each, slower on a small host), while two
+// attempts plus the pause still fit inside maxDuration.
+const SCRAPER_TIMEOUT_MS = 16000;
+// Failures that often clear up by themselves: a YouTube block on one route, a busy or slow scraper.
+const TRANSIENT_CODES: ErrorCode[] = ["STREAM_EXPIRED_OR_BLOCKED", "PLATFORM_TIMEOUT", "SERVER_BUSY"];
+const RETRY_PAUSE_MS = 1500;
 
 /** An error that carries the HTTP status and user-facing message to return. */
 class ExtractionError extends Error {
@@ -452,6 +457,21 @@ function mapScraperItem(raw: ScraperItem, fallbackId: string, index: number): Re
  * below take over.
  */
 async function extractFromScraper(
+  knownId: string,
+  reelUrl: string
+): Promise<ReelData | null> {
+  // One quiet second attempt, so a passing block is not shown to the visitor as an error.
+  try {
+    return await extractFromScraperOnce(knownId, reelUrl);
+  } catch (err) {
+    if (!(err instanceof ScraperFailure) || !TRANSIENT_CODES.includes(err.code)) throw err;
+    console.warn(`[/api/extract] ${err.code}: retrying once`);
+    await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
+    return await extractFromScraperOnce(knownId, reelUrl);
+  }
+}
+
+async function extractFromScraperOnce(
   knownId: string,
   reelUrl: string
 ): Promise<ReelData | null> {

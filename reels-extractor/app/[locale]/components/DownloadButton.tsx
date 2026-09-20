@@ -20,6 +20,8 @@ type Variant = "primary" | "secondary" | "compact" | "compact-secondary";
 const MAX_IN_MEMORY_BYTES = 80 * 1024 * 1024;
 const PROGRESS_INTERVAL_MS = 120;
 const SAVED_FLASH_MS = 2500;
+const RETRY_PAUSE_MS = 1500;
+const RETRYABLE = ["STREAM_EXPIRED_OR_BLOCKED", "PLATFORM_TIMEOUT", "SERVER_BUSY"];
 
 const STYLES: Record<Variant, string> = {
   primary:
@@ -96,7 +98,7 @@ export default function DownloadButton({
     []
   );
 
-  async function start() {
+  async function start(retried = false) {
     const controller = new AbortController();
     controllerRef.current = controller;
     setState({ phase: "preparing" });
@@ -106,10 +108,15 @@ export default function DownloadButton({
 
       if (!response.ok) {
         const body = (await response.json().catch(() => null)) as { code?: string } | null;
-        setState({
-          phase: "error",
-          code: isErrorCode(body?.code) ? body.code : "STREAM_EXPIRED_OR_BLOCKED",
-        });
+        const code = isErrorCode(body?.code) ? body.code : "STREAM_EXPIRED_OR_BLOCKED";
+        if (!retried && RETRYABLE.includes(code)) {
+          // Blocks and busy signals often pass within a moment (the server also tries another route
+          // on the second call), so try once more before showing anything.
+          await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
+          if (controller.signal.aborted) return;
+          return await start(true);
+        }
+        setState({ phase: "error", code });
         return;
       }
 

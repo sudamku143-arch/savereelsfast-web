@@ -350,8 +350,8 @@
       "message": "Cette publication ne contient que des images ou du texte. Seuls les liens de vidéos ou de Reels sont pris en charge."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
-      "title": "Téléchargement bloqué",
-      "message": "{platform} a bloqué ou fait expirer le lien de téléchargement de cette vidéo. Veuillez réessayer dans un instant."
+      "title": "Impossible d'obtenir cette vidéo pour le moment",
+      "message": "{platform} limite les téléchargements en ce moment. Réessayez dans une minute. Si cela continue, essayez un autre lien de la même vidéo ou revenez un peu plus tard."
     },
     "PLATFORM_TIMEOUT": {
       "title": "{platform} ne répond pas",

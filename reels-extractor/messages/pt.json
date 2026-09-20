@@ -350,8 +350,8 @@
       "message": "Esta publicação contém apenas imagens ou texto. Só são aceitos links de vídeos ou reels."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
-      "title": "Download bloqueado",
-      "message": "O {platform} bloqueou ou expirou o link de download deste vídeo. Tente novamente em instantes."
+      "title": "Não foi possível obter este vídeo agora",
+      "message": "O {platform} está limitando os downloads neste momento. Tente novamente em um minuto. Se continuar, tente outro link do mesmo vídeo ou volte mais tarde."
     },
     "PLATFORM_TIMEOUT": {
       "title": "{platform} não está respondendo",
