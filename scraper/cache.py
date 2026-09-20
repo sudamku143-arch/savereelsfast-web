@@ -169,7 +169,7 @@ class SlotPool:
 _INFO_KEYS = (
     "id", "title", "description", "uploader", "channel", "thumbnail", "duration",
     "url", "ext", "acodec", "vcodec", "protocol", "height", "width", "abr",
-    "http_headers", "_type", "_messages",
+    "http_headers", "_type", "_messages", "_via",
 )
 _FORMAT_KEYS = (
     "format_id", "url", "ext", "protocol", "vcodec", "acodec", "height", "width", "abr", "http_headers",

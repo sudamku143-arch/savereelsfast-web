@@ -537,6 +537,7 @@
           "heading": "Terceros",
           "body": [
             "Los videos se obtienen de los servidores públicos de la plataforma de origen (por ejemplo, Instagram, YouTube o TikTok). No estamos afiliados a estas plataformas y sus propias políticas de privacidad se aplican a sus servicios.",
+            "En algunos videos de YouTube, cuando no podemos obtener el video directamente, podemos enviar el ID público de ese video a un servicio de descarga de terceros (una instancia de la herramienta de código abierto Cobalt) para obtener el archivo. Solo enviamos ese ID: ni cookies, ni datos de cuenta, ni otra información sobre ti. Ese servicio lo gestiona un tercero conforme a sus propias condiciones.",
             "Nuestro sitio y nuestro servicio de backend están alojados por proveedores externos que procesan datos técnicos en nuestro nombre conforme a sus propias condiciones de privacidad. No vendemos tu información personal."
           ]
         },

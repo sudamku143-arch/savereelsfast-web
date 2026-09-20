@@ -26,6 +26,7 @@ from starlette.background import BackgroundTask
 from yt_dlp.utils import DownloadError, ExtractorError
 
 import errors
+from cobalt import Cobalt, CobaltUnavailable, parse_instances
 from cache import CircuitBreaker, SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
@@ -43,6 +44,7 @@ from urls import (
     is_youtube_media_host,
     resolve_url,
     safe_referer,
+    youtube_video_id,
 )
 
 app = FastAPI(title="SaveReelsFast scraper", docs_url=None, redoc_url=None, openapi_url=None)
@@ -383,6 +385,21 @@ CACHE_MAX_ENTRIES = int(_env_number("CACHE_MAX_ENTRIES", 500))
 # A YouTube lookup goes through the paid proxy, so its result is kept longer: a repeat costs no proxy bandwidth.
 # Never longer than the link itself stays valid (see _youtube_cache_ttl). The privacy policy states this limit.
 YOUTUBE_CACHE_TTL_SECONDS = _env_number("YOUTUBE_CACHE_TTL_SECONDS", 10800)  # 3 hours
+
+# Optional YouTube fallback through a Cobalt instance (see cobalt.py). Off unless COBALT_API_URL is set.
+COBALT = Cobalt(
+    parse_instances(os.environ.get("COBALT_API_URL")),
+    os.environ.get("COBALT_API_KEY"),
+    timeout=min(max(_env_number("COBALT_TIMEOUT_SECONDS", 4.0), 1.0), 8.0),
+)
+COBALT_LINK_TTL_SECONDS = 60.0  # a Cobalt download link is short-lived; never cache it like a yt-dlp lookup
+# Failures worth a second opinion: a block, a stall, or "sign in to confirm you're not a bot" (a datacenter block).
+_COBALT_ON = {errors.PLATFORM_TIMEOUT, errors.STREAM_EXPIRED_OR_BLOCKED, errors.LOGIN_REQUIRED}
+
+
+def _media_url_allowed(raw: str) -> bool:
+    """A platform CDN, or a download link on a configured Cobalt instance."""
+    return is_allowed_media_url(raw) or COBALT.is_media_url(raw)
 # Render's free instance has 512 MB. Above this resident size new work is refused (after dropping the
 # caches), so the service answers "busy" instead of being killed by the out-of-memory reaper.
 MEMORY_SOFT_LIMIT_MB = _env_number("MEMORY_SOFT_LIMIT_MB", 400)
@@ -582,6 +599,7 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
             "cacheHours": round(YOUTUBE_CACHE_TTL_SECONDS / 3600, 1),
         },
         "proxy": _proxy_stats(),
+        "cobalt": COBALT.stats(),
     }
 
 
@@ -655,13 +673,42 @@ def _has_download(info: dict) -> bool:
 
 
 def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
+    """yt-dlp first; for YouTube, a Cobalt instance as the fallback when yt-dlp is blocked or stalls. Raises ScraperError."""
+    try:
+        return _resolve_and_extract_ytdlp(url, first_route)
+    except ScraperError as err:
+        fallback = _cobalt_fallback(url, err)
+        if fallback is None:
+            raise
+        return fallback
+
+
+def _cobalt_fallback(url: str, failure: ScraperError) -> tuple[str, dict] | None:
+    if not COBALT.enabled or failure.code not in _COBALT_ON or _bypass_breaker.get():
+        return None  # (the diagnostic wants yt-dlp's own answer)
+    video_id = youtube_video_id(url)
+    if not video_id:
+        return None
+    try:
+        info = COBALT.fetch(video_id, COBALT.timeout)
+    except CobaltUnavailable as exc:
+        _log.info("YouTube fallback (Cobalt) had no answer: %s (yt-dlp failed with %s)", exc, failure.code)
+        return None
+    _log.info("YouTube served by the Cobalt fallback after yt-dlp failed with %s.", failure.code)
+    return url, info
+
+
+def _resolve_and_extract_ytdlp(url: str, first_route: int = 0) -> tuple[str, dict]:
     """
     Validate/expand the link and fetch its metadata. Raises ScraperError.
 
     YouTube is looked up on each route from `first_route` on until one yields something downloadable, so a
     block on one client fingerprint is not the end. Other platforms have a single route.
     """
-    _deadline.set(time.monotonic() + _extraction_budget(url))
+    budget = _extraction_budget(url)
+    if COBALT.enabled and is_youtube_host(urlparse(url.strip()).hostname or ""):
+        budget -= min(COBALT.timeout, max(0.0, budget - 5.0))  # leave the fallback its share of the same overall budget
+    _deadline.set(time.monotonic() + budget)
     try:
         # Share links may need a few redirects followed; that time comes out of the same budget.
         url = resolve_url(url, expand=lambda u: expand_redirects(u, timeout=_time_left(3.0), max_hops=3))
@@ -956,7 +1003,7 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
 
     media_url = fmt["url"]
     # Defence in depth: whatever an extractor returned, only stream from a platform's own CDN over https.
-    if not is_allowed_media_url(media_url):
+    if not _media_url_allowed(media_url):
         raise ScraperError(errors.UNSUPPORTED_POST, "That video is hosted somewhere we don't download from.")
     ext = fmt.get("ext")
     try:
@@ -968,7 +1015,8 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
             length = response.headers.get("Content-Length")
             return OpenStream(response, int(length) if length else None, [response.close], ext)
 
-        via_proxy = bool(YTDLP_PROXY) and (
+        # A Cobalt link is fetched directly: it is not tied to our IP, and it would only spend paid proxy traffic.
+        via_proxy = bool(YTDLP_PROXY) and not COBALT.is_media_url(media_url) and (
             is_youtube_host(urlparse(resolved).hostname or "") or is_youtube_media_host(urlparse(media_url).hostname or "")
         )
         if via_proxy:
@@ -1095,7 +1143,7 @@ def _open_cdn_stream(
     from here as well. Only known platform CDNs are allowed, redirects are
     followed by hand and must stay on those CDNs.
     """
-    if not is_allowed_media_url(media_url):
+    if not _media_url_allowed(media_url):
         raise ScraperError(errors.INVALID_URL, "That media URL isn't supported.")
 
     headers = {
@@ -1122,7 +1170,7 @@ def _open_cdn_stream(
                 break
             target = urljoin(current, response.headers.get("location", ""))
             response.close()
-            if not is_allowed_media_url(target):
+            if not _media_url_allowed(target):
                 raise ScraperError(errors.STREAM_EXPIRED_OR_BLOCKED)
             current = target
         else:
@@ -1210,6 +1258,8 @@ def _youtube_cache_ttl(info: dict) -> float:
     How long to keep a YouTube lookup: YOUTUBE_CACHE_TTL_SECONDS, but never longer than its own video links
     stay valid (they carry an `expire=` timestamp; a cached link that died would only cost a second lookup).
     """
+    if info.get("_via") == "cobalt":
+        return min(COBALT_LINK_TTL_SECONDS, YOUTUBE_CACHE_TTL_SECONDS)
     expiries = []
     for fmt in (info.get("formats") or []) + (info.get("requested_formats") or []):
         match = re.search(r"[?&]expire=(\d+)", str(fmt.get("url") or ""))

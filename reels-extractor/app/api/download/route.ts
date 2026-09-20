@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BROWSER_UA, isAllowedMediaUrl, refererFor } from "@/lib/instagram";
+import { BROWSER_UA, isAllowedMediaUrl, isCobaltUrl, refererFor } from "@/lib/instagram";
 import { parseSupportedUrl } from "@/lib/platforms";
 import type { ErrorCode } from "@/lib/errors";
 import { isAudioExtension } from "@/lib/download";
@@ -26,7 +26,8 @@ const IP_BOUND_HOSTS = ["googlevideo.com"];
 
 function isIpBound(target: string): boolean {
   const host = new URL(target).hostname.toLowerCase();
-  return IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  // A Cobalt link is not bound to an IP, but it is fetched by the scraper only, never straight from this site.
+  return isCobaltUrl(target) || IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
 }
 
 const AUDIO_CONTENT_TYPES: Record<string, string> = {

@@ -537,6 +537,7 @@
           "heading": "Third parties",
           "body": [
             "Videos are retrieved from the public servers of the platform they come from (for example Instagram, YouTube or TikTok). We are not affiliated with these platforms, and their own privacy policies apply to their services.",
+            "For some YouTube videos, when we cannot retrieve the video directly, we may send that video's public YouTube ID to a third-party download service (an instance of the open-source Cobalt tool) to obtain the file. We send only that ID: no cookies, account details or other information about you. That service is run by a third party under its own terms.",
             "Our site and backend service are hosted by third-party providers that process technical data on our behalf under their own privacy terms. We do not sell your personal information."
           ]
         },

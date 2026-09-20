@@ -57,6 +57,32 @@ const MEDIA_HOST_SUFFIXES = [
   "sc-cdn.net",
 ];
 
+/**
+ * Hosts of the optional Cobalt fallback (YouTube, when yt-dlp is blocked). The same COBALT_API_URL setting the
+ * scraper reads; empty when the fallback is off. Only https instance hosts count.
+ */
+export function cobaltHosts(env: string | undefined = process.env.COBALT_API_URL): string[] {
+  const hosts: string[] = [];
+  for (const part of (env ?? "").split(",")) {
+    try {
+      const url = new URL(part.trim());
+      if (url.protocol === "https:" && !url.username && !url.password && !url.port) hosts.push(url.hostname.toLowerCase());
+    } catch {
+      // not a URL: ignore it
+    }
+  }
+  return hosts;
+}
+
+export function isCobaltUrl(raw: string, env?: string): boolean {
+  try {
+    const parsed = new URL(raw);
+    return parsed.protocol === "https:" && !parsed.port && cobaltHosts(env).includes(parsed.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
 export function isAllowedMediaUrl(raw: string): boolean {
   let parsed: URL;
   try {
@@ -66,8 +92,9 @@ export function isAllowedMediaUrl(raw: string): boolean {
   }
   if (parsed.protocol !== "https:" || parsed.port) return false;
   const host = parsed.hostname.toLowerCase();
-  return MEDIA_HOST_SUFFIXES.some(
-    (suffix) => host === suffix || host.endsWith(`.${suffix}`)
+  return (
+    MEDIA_HOST_SUFFIXES.some((suffix) => host === suffix || host.endsWith(`.${suffix}`)) ||
+    cobaltHosts().includes(host)
   );
 }
 
