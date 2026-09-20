@@ -15,7 +15,7 @@ import weakref
 import urllib.error
 import urllib.request
 from typing import Iterator
-from urllib.parse import urljoin, urlparse
+from urllib.parse import quote, urljoin, urlparse
 
 import httpx
 import yt_dlp
@@ -206,27 +206,63 @@ def _time_left(default: float) -> float:
 #   YTDLP_PROXY   e.g. http://user:pass@residential-proxy:port  (used for lookups AND downloads)
 #   cookies       a Netscape cookies.txt of a throw-away YouTube account, picked up automatically from
 #                 /etc/secrets/youtube_cookies.txt (Render "Secret Files"), or from YOUTUBE_COOKIES_FILE
-def _clean_proxy(raw: str | None) -> str | None:
-    """The configured proxy URL, or None when unset or malformed (a bad value must not break every lookup)."""
+_HOST = r"[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?"
+
+
+def _parse_proxy(raw: str | None) -> tuple[str | None, str]:
+    """
+    (proxy URL, status) for the YTDLP_PROXY setting. Status: "unset", "ok", "converted" or "rejected".
+
+    Accepts a proper URL (http://user:pass@host:port, also https/socks). Also accepts the forms proxy providers
+    actually show on their dashboards and converts them, because pasting one of those is the commonest mistake:
+        host:port:user:pass     (Webshare's list format)      ->  http://user:pass@host:port
+        user:pass@host:port                                    ->  http://user:pass@host:port
+        host:port                                              ->  http://host:port
+    User names and passwords are percent-encoded, so characters like @ : / in a password cannot break the URL.
+    """
     value = (raw or "").strip()
     if not value:
-        return None
-    try:
-        parsed = urlparse(value)
-        valid = parsed.scheme in ("http", "https", "socks4", "socks5", "socks5h") and bool(parsed.hostname)
-        parsed.port  # noqa: B018 - raises ValueError for a non-numeric port
-    except ValueError:
-        valid = False
-    if not valid:
-        _log.warning("YTDLP_PROXY is set but is not a valid proxy URL (expected e.g. http://user:pass@host:port): ignoring it.")
-        return None
-    return value
+        return None, "unset"
+    if "://" in value:
+        try:
+            parsed = urlparse(value)
+            valid = parsed.scheme in ("http", "https", "socks4", "socks5", "socks5h") and bool(parsed.hostname)
+            parsed.port  # noqa: B018 - raises ValueError for a non-numeric port
+        except ValueError:
+            valid = False
+        return (value, "ok") if valid else (None, "rejected")
+    four = re.fullmatch(rf"({_HOST}):(\d{{1,5}}):([^:\s]+):(\S+)", value)  # the password may itself contain ":"
+    if four and 0 < int(four.group(2)) < 65536:
+        host, port, user, password = four.groups()
+        return f"http://{quote(user, safe='')}:{quote(password, safe='')}@{host}:{port}", "converted"
+    at = re.fullmatch(rf"([^:@\s]+):([^@\s]+)@({_HOST}):(\d{{1,5}})", value)
+    if at and 0 < int(at.group(4)) < 65536:
+        user, password, host, port = at.groups()
+        return f"http://{quote(user, safe='%')}:{quote(password, safe='%')}@{host}:{port}", "converted"
+    two = re.fullmatch(rf"({_HOST}):(\d{{1,5}})", value)
+    if two and 0 < int(two.group(2)) < 65536:
+        return f"http://{value}", "converted"
+    return None, "rejected"
+
+
+def _clean_proxy(raw: str | None) -> str | None:
+    """The proxy URL to use, or None when unset or unusable (a bad value must not break every lookup)."""
+    url, status = _parse_proxy(raw)
+    if status == "rejected":
+        _log.warning(
+            "YTDLP_PROXY is set but is not usable: expected http://user:pass@host:port "
+            "(host:port:user:pass is accepted too). The proxy is OFF and YouTube is fetched directly."
+        )
+    elif status == "converted":
+        _log.info("YTDLP_PROXY was given as host:port[:user:pass]; using it as an http:// proxy URL.")
+    return url
 
 
 # The proxy is used for YouTube ONLY (its lookups, and the download of YouTube's own video files, which are tied
 # to the IP that asked for them). Every other platform goes direct, so the proxy's metered bandwidth is not spent
 # on them.
 YTDLP_PROXY = _clean_proxy(os.environ.get("YTDLP_PROXY"))
+PROXY_SETTING_STATUS = _parse_proxy(os.environ.get("YTDLP_PROXY"))[1]  # "unset" | "ok" | "converted" | "rejected"
 YOUTUBE_COOKIES_DEFAULT_PATH = "/etc/secrets/youtube_cookies.txt"
 
 
@@ -1224,12 +1260,22 @@ def _proxy_check_budget() -> None:
         raise ScraperError(errors.SERVER_BUSY)
 
 
+def _proxy_setting() -> str:
+    """"off", "ok", "converted" (host:port:user:pass form) or "rejected" (set, but unusable: the proxy is not in use)."""
+    if PROXY_SETTING_STATUS == "rejected" and not YTDLP_PROXY:
+        return "rejected"
+    if not YTDLP_PROXY:
+        return "off"
+    return "converted" if PROXY_SETTING_STATUS == "converted" else "ok"
+
+
 def _proxy_stats() -> dict:
     """Proxy use for /stats: the host (never the credentials) and how much traffic went through it."""
     with _proxy_lock:
         _proxy_roll_day()
         return {
             "configured": bool(YTDLP_PROXY),
+            "setting": _proxy_setting(),
             "host": proxy_host(YTDLP_PROXY),
             "lookups": _proxy_usage["lookups"],
             "downloads": _proxy_usage["streams"],
@@ -1398,6 +1444,7 @@ async def diagnose_youtube(
             "ytDlp": yt_dlp.version.__version__,
             "cookies": cookies,
             "proxyConfigured": bool(YTDLP_PROXY),
+            "proxySetting": _proxy_setting(),
             "proxy": proxy,
             "routes": [{"clients": args["player_client"], "sendsCookies": sends} for args, sends in _youtube_route_plan()],
             "budgetSeconds": YOUTUBE_EXTRACTION_TIMEOUT_SECONDS,
@@ -1405,7 +1452,7 @@ async def diagnose_youtube(
             "network": network,
             "lookup": {"ok": ok, "code": code, "seconds": seconds},
             "trace": trace,
-            "reading": interpret(network, ok, code, trace, cookies, proxy),
+            "reading": interpret(network, ok, code, trace, cookies, proxy, _proxy_setting()),
         }
     finally:
         _diagnose_lock.release()
@@ -1413,7 +1460,9 @@ async def diagnose_youtube(
 
 @app.on_event("startup")
 def _report_youtube_proxy() -> None:
-    if YTDLP_PROXY:
+    if _proxy_setting() == "rejected":
+        _log.warning("YouTube proxy: the YTDLP_PROXY setting was REJECTED (see the earlier warning): YouTube is fetched directly.")
+    elif YTDLP_PROXY:
         _log.info(
             "YouTube proxy: configured (%s); used for YouTube only. Cache %.0f h. Daily limit: %s.",
             proxy_host(YTDLP_PROXY),

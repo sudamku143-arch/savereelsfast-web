@@ -152,8 +152,15 @@ def probe_network(host: str = "www.youtube.com", timeout: float = 5.0) -> dict:
     return result
 
 
-def interpret(network: dict, lookup_ok: bool, code: str | None, trace: list[dict], cookies: dict, proxy: dict | None = None) -> str:
+def interpret(network: dict, lookup_ok: bool, code: str | None, trace: list[dict], cookies: dict,
+              proxy: dict | None = None, proxy_setting: str | None = None) -> str:
     """One plain-language reading of the evidence."""
+    if proxy_setting == "rejected":
+        rejected = ("YTDLP_PROXY is set but could not be used, so YouTube is being fetched directly (no proxy). "
+                    "Write it as http://USERNAME:PASSWORD@HOST:PORT (Webshare's HOST:PORT:USERNAME:PASSWORD is accepted too).")
+        if lookup_ok:
+            return "YouTube works from this host, but " + rejected[0].lower() + rejected[1:]
+        return rejected
     if lookup_ok:
         return "YouTube works from this host." if not proxy else "YouTube works through the proxy."
     if proxy and not proxy.get("ok"):

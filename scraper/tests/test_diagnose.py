@@ -366,6 +366,16 @@ class ProxyProbeTests(unittest.TestCase):
         self.assertNotIn("hunter2", json.dumps(result))
         self.assertIn("could not be reached", diagnose.interpret({}, False, None, [], {}, result))
 
+    def test_a_rejected_proxy_setting_is_named_in_the_reading(self):
+        for lookup_ok in (False, True):
+            reading = diagnose.interpret({}, lookup_ok, None, [], {}, None, "rejected")
+            self.assertIn("YTDLP_PROXY is set but could not be used", reading.replace("YouTube works from this host, but y", "Y"))
+            self.assertIn("HOST:PORT:USERNAME:PASSWORD", reading)
+
+    def test_a_usable_setting_does_not_trigger_the_rejected_reading(self):
+        for setting in (None, "off", "ok", "converted"):
+            self.assertNotIn("could not be used", diagnose.interpret({}, True, None, [], {}, {"ok": True}, setting))
+
     def test_success_through_the_proxy_says_so(self):
         reading = diagnose.interpret({}, True, None, [], {}, {"ok": True})
         self.assertIn("through the proxy", reading)

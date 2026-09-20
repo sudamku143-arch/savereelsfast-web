@@ -10,6 +10,7 @@ import json
 import os
 import sys
 import time
+from urllib.parse import unquote, urlparse
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -108,10 +109,41 @@ class ProxySettingTests(Base):
     def test_unset_or_broken_values_switch_the_proxy_off_instead_of_breaking_every_lookup(self):
         self.assertIsNone(self.main._clean_proxy(None))
         self.assertIsNone(self.main._clean_proxy(""))
-        for bad in ("not a url", "ftp://host:21", "http://:80", "http://host:abc", "p.webshare.io:80", "javascript:alert(1)"):
+        for bad in ("not a url", "ftp://host:21", "http://:80", "http://host:abc", "p.webshare.io:99999:u:p", "javascript:alert(1)", "two words:80"):
             with self.assertLogs("uvicorn.error", level="WARNING") as logs:
                 self.assertIsNone(self.main._clean_proxy(bad), bad)
             self.assertNotIn(bad, "\n".join(logs.output), "the bad value is never echoed into the log")
+
+    def test_webshares_host_port_user_pass_format_is_converted_to_a_proxy_url(self):
+        with self.assertLogs("uvicorn.error", level="INFO") as logs:
+            self.assertEqual(self.main._clean_proxy("p.webshare.io:80:webuser:hunter2"), "http://webuser:hunter2@p.webshare.io:80")
+        self.assertNotIn("hunter2", chr(10).join(logs.output), "the login is never logged")
+        self.assertEqual(self.main._parse_proxy("p.webshare.io:80:webuser:hunter2")[1], "converted")
+
+    def test_other_dashboard_forms_are_converted_too(self):
+        cases = {
+            "user:pw@p.webshare.io:80": "http://user:pw@p.webshare.io:80",
+            "185.199.229.156:7492:abcd:efgh": "http://abcd:efgh@185.199.229.156:7492",
+            "p.webshare.io:80": "http://p.webshare.io:80",
+        }
+        for raw, expected in cases.items():
+            self.assertEqual(self.main._parse_proxy(raw), (expected, "converted"), raw)
+
+    def test_special_characters_in_the_password_are_encoded_so_they_cannot_break_the_url(self):
+        url, status = self.main._parse_proxy("p.webshare.io:80:webuser:pa:ss@w/rd#1")
+        self.assertEqual(status, "converted")
+        parsed = urlparse(url)
+        self.assertEqual((parsed.hostname, parsed.port, parsed.username), ("p.webshare.io", 80, "webuser"))
+        self.assertEqual(unquote(parsed.password), "pa:ss@w/rd#1")
+
+    def test_a_rejected_setting_is_reported_not_silently_ignored(self):
+        self.assertEqual(self.main._parse_proxy("garbage value"), (None, "rejected"))
+        self.assertEqual(self.main._parse_proxy(""), (None, "unset"))
+        with mock.patch.object(self.main, "PROXY_SETTING_STATUS", "rejected"), mock.patch.object(self.main, "YTDLP_PROXY", None):
+            self.assertEqual(self.main._proxy_setting(), "rejected")
+            self.assertEqual(self.main._proxy_stats()["setting"], "rejected")
+        with mock.patch.object(self.main, "PROXY_SETTING_STATUS", "unset"), mock.patch.object(self.main, "YTDLP_PROXY", None):
+            self.assertEqual(self.main._proxy_setting(), "off")
 
     def test_host_is_shown_without_credentials(self):
         self.assertEqual(diagnose.proxy_host(PROXY), "p.webshare.io:80")
