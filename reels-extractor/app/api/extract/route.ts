@@ -10,6 +10,7 @@ import {
 import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import { isErrorCode, type ErrorCode, type ResultWarning } from "@/lib/errors";
 import { isAudioExtension } from "@/lib/download";
+import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 40;
@@ -103,6 +104,23 @@ class ExtractionError extends Error {
   }
 }
 
+// Per-visitor limits. CDN-cached repeats never reach this code, so only real lookups count.
+const EXTRACT_LIMIT = 20;
+const EXTRACT_WINDOW_MS = 60_000;
+const MAX_BODY_BYTES = 4096;
+const limiterStore: RateLimitStore = new Map();
+
+function rateLimited(request: NextRequest): NextResponse | null {
+  const ip = clientIp(request.headers);
+  if (!ip) return null;
+  const result = checkRateLimit(limiterStore, ip, EXTRACT_LIMIT, EXTRACT_WINDOW_MS);
+  if (result.allowed) return null;
+  return NextResponse.json(
+    { success: false, error: "Too many requests. Please wait a moment and try again.", code: "RATE_LIMITED" },
+    { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": String(result.retryAfterSeconds) } }
+  );
+}
+
 // Identical successful lookups are served from Vercel's edge cache for an hour (and may be
 // served stale for a day while a fresh copy is fetched). Errors are never cached.
 const CACHE_CONTROL_OK = "public, s-maxage=3600, stale-while-revalidate=86400";
@@ -187,15 +205,29 @@ async function handleExtract(rawUrl: string, cacheable: boolean) {
  * CDN: a viral link is extracted once per hour, not once per visitor.
  */
 export async function GET(request: NextRequest) {
+  const limited = rateLimited(request);
+  if (limited) return limited;
   const url = request.nextUrl.searchParams.get("url")?.trim() ?? "";
   return handleExtract(url, true);
 }
 
 /** POST { url } — same result as GET, never cached (kept for API clients). */
 export async function POST(request: NextRequest) {
+  const limited = rateLimited(request);
+  if (limited) return limited;
+
+  // A link is tiny; refuse anything big before parsing it.
+  const declared = Number(request.headers.get("content-length") ?? 0);
+  if (declared > MAX_BODY_BYTES) {
+    return respond({ success: false, error: "Request body is too large.", code: "INVALID_URL" }, 413);
+  }
   let body: ExtractRequestBody;
   try {
-    body = await request.json();
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return respond({ success: false, error: "Request body is too large.", code: "INVALID_URL" }, 413);
+    }
+    body = JSON.parse(raw);
   } catch {
     return respond({ success: false, error: "Request body must be valid JSON." }, 400);
   }
@@ -273,6 +305,7 @@ async function extractReelData(
     "STREAM_EXPIRED_OR_BLOCKED",
     "PLATFORM_TIMEOUT",
     "SERVER_BUSY",
+    "NOT_CONFIGURED",
   ];
   if (scraperFailure && specific.includes(scraperFailure.code)) {
     throw new ExtractionError(scraperFailure.message, scraperFailure.status, scraperFailure.code);
@@ -440,6 +473,19 @@ async function extractFromScraper(
         detail?: { code?: string; message?: string } | string;
       } | null;
       const detail = body && typeof body.detail === "object" ? body.detail : null;
+      if (res.status === 401 || detail?.code === "NOT_CONFIGURED") {
+        // Our key was refused, or the scraper is locked because it has none: a deployment mistake,
+        // not the visitor's fault. Say so in the logs and don't blame their link. (A busy scraper is
+        // also a 503, but it says SERVER_BUSY and is handled like any other coded failure below.)
+        console.error(
+          `[/api/extract] scraper answered ${res.status}: SCRAPER_SHARED_SECRET on this site and on the scraper do not match, or the scraper has none.`
+        );
+        throw new ScraperFailure(
+          "Downloads are temporarily unavailable. Please try again later.",
+          503,
+          "NOT_CONFIGURED"
+        );
+      }
       const code: ErrorCode = isErrorCode(detail?.code) ? detail.code : "EXTRACTION_FAILED";
       console.warn(`[/api/extract] scraper service responded ${res.status} (${detail?.code ?? "no code"})`);
       throw new ScraperFailure(

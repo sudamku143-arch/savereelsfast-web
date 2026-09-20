@@ -3,6 +3,7 @@ import { BROWSER_UA, isAllowedMediaUrl, refererFor } from "@/lib/instagram";
 import { parseSupportedUrl } from "@/lib/platforms";
 import type { ErrorCode } from "@/lib/errors";
 import { isAudioExtension } from "@/lib/download";
+import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
 
 // Edge runtime streams the body straight through, so large videos are not
 // subject to the buffered-response size limit of serverless functions.
@@ -11,6 +12,12 @@ export const runtime = "edge";
 const HEADER_TIMEOUT_MS = 10000;
 const FALLBACK_HEADER_TIMEOUT_MS = 30000; // the scraper re-resolves the post first
 const MAX_BYTES = 200 * 1024 * 1024;
+
+// Downloads are the expensive endpoint (bandwidth), so they get the tighter guard. A carousel's
+// "Download all" starts one download a second, which stays well inside this.
+const DOWNLOAD_LIMIT = 40;
+const DOWNLOAD_WINDOW_MS = 60_000;
+const limiterStore: RateLimitStore = new Map();
 
 // CDNs whose links are bound to the IP that resolved them. The scraper resolved
 // these, so they can only be downloaded from the scraper's IP: skip the direct
@@ -190,6 +197,11 @@ async function fromScraper(
     const body = (await res.json().catch(() => null)) as {
       detail?: { code?: ErrorCode; message?: string };
     } | null;
+    if (res.status === 401 || body?.detail?.code === "NOT_CONFIGURED") {
+      console.error(
+        `[/api/download] scraper answered ${res.status}: check that SCRAPER_SHARED_SECRET matches on the site and the scraper.`
+      );
+    }
     return {
       status: res.status >= 400 ? res.status : 502,
       code: body?.detail?.code ?? "STREAM_EXPIRED_OR_BLOCKED",
@@ -244,6 +256,17 @@ function viaScraperResolve(sourceUrl: string, id: string | null, filename: strin
  *   3. Through the scraper's /download, which re-resolves the post (needs `src`).
  */
 export async function GET(request: NextRequest) {
+  const ip = clientIp(request.headers);
+  if (ip) {
+    const result = checkRateLimit(limiterStore, ip, DOWNLOAD_LIMIT, DOWNLOAD_WINDOW_MS);
+    if (!result.allowed) {
+      return NextResponse.json(
+        { success: false, error: "Too many downloads. Please wait a moment and try again.", code: "RATE_LIMITED" },
+        { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": String(result.retryAfterSeconds) } }
+      );
+    }
+  }
+
   const { searchParams } = request.nextUrl;
   const target = searchParams.get("url");
 

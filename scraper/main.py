@@ -1,4 +1,6 @@
 import asyncio
+import hmac
+import logging
 import os
 import re
 import socket
@@ -30,14 +32,30 @@ from urls import (
     safe_referer,
 )
 
-app = FastAPI(title="SaveReelsFast scraper")
+app = FastAPI(title="SaveReelsFast scraper", docs_url=None, redoc_url=None, openapi_url=None)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Only our own server calls this service, never a browser, so no origin needs CORS access. Without
+# CORS headers, scripts on other websites cannot use a visitor's browser to reach it. Set
+# SCRAPER_ALLOWED_ORIGINS (comma-separated) only if that ever changes.
+_ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("SCRAPER_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+if _ALLOWED_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_ALLOWED_ORIGINS,
+        allow_methods=["GET"],
+        allow_headers=["X-Scraper-Key", "Range"],
+    )
+
+_log = logging.getLogger("uvicorn.error")
+
+
+@app.on_event("startup")
+def _warn_when_open() -> None:
+    if not os.environ.get("SCRAPER_SHARED_SECRET"):
+        _log.warning(
+            "SCRAPER_SHARED_SECRET is not set: /extract, /download, /stream and /stats are OPEN to anyone. "
+            "Set it (and the same value on the website) and set SCRAPER_REQUIRE_SECRET=1."
+        )
 
 # Only the metadata is needed (we read URLs from `info["formats"]` ourselves),
 # so the selector just has to match *something* - a selector that matches
@@ -128,9 +146,24 @@ _active = 0  # extractions currently running
 
 
 def _check_key(key: str | None) -> None:
-    """Optional shared secret so the service isn't an open proxy (set SCRAPER_SHARED_SECRET)."""
-    secret = os.environ.get("SCRAPER_SHARED_SECRET")
-    if secret and key != secret:
+    """
+    Gate for every endpoint except /health and /.
+
+    With SCRAPER_SHARED_SECRET set, a request must carry the same value in X-Scraper-Key; the
+    comparison is constant-time so the secret can't be guessed from response timing.
+
+    With SCRAPER_REQUIRE_SECRET=1 the service fails CLOSED: if the secret is missing (a deleted
+    variable, a botched deploy) every protected endpoint answers 503 instead of silently opening up.
+    """
+    secret = os.environ.get("SCRAPER_SHARED_SECRET", "")
+    if not secret:
+        if os.environ.get("SCRAPER_REQUIRE_SECRET", "").lower() in ("1", "true", "yes"):
+            raise HTTPException(
+                status_code=503,
+                detail={"code": "NOT_CONFIGURED", "message": "The service is locked: no shared secret is configured."},
+            )
+        return
+    if not key or not hmac.compare_digest(key.encode("utf-8"), secret.encode("utf-8")):
         raise HTTPException(status_code=401, detail={"code": "UNAUTHORIZED", "message": "Invalid key."})
 
 
@@ -267,8 +300,16 @@ def health_check() -> Response:
     )
 
 
-@app.get("/")
-def health() -> dict:
+@app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
+def root() -> Response:
+    """Public and tiny (some platforms use "/" as their health check); reveals nothing."""
+    return health_check()
+
+
+@app.get("/stats", include_in_schema=False)
+def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
+    """Cache hit rate and queue depth. Protected: it describes the service's internals."""
+    _check_key(x_scraper_key)
     return {
         "status": "ok",
         "cache": INFO_CACHE.stats(),
@@ -534,6 +575,9 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
             raise _no_video_error(info)
 
     media_url = fmt["url"]
+    # Defence in depth: whatever an extractor returned, only stream from a platform's own CDN over https.
+    if not is_allowed_media_url(media_url):
+        raise ScraperError(errors.UNSUPPORTED_POST, "That video is hosted somewhere we don't download from.")
     ext = fmt.get("ext")
     try:
         if is_threads_host(urlparse(resolved).hostname or ""):

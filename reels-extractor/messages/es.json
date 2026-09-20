@@ -383,6 +383,10 @@
     "SERVER_BUSY": {
       "title": "Estamos algo ocupados",
       "message": "Hay mucha gente descargando ahora mismo. Inténtalo de nuevo en unos segundos."
+    },
+    "RATE_LIMITED": {
+      "title": "Ve un poco más despacio",
+      "message": "Has hecho muchas solicitudes en poco tiempo. Espera un minuto e inténtalo de nuevo."
     }
   },
   "pwa": {

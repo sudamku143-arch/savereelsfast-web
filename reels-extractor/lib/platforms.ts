@@ -136,7 +136,8 @@ export type ParsedVideoUrl = {
  */
 export function parseSupportedUrl(raw: string): ParsedVideoUrl | null {
   let text = raw.trim();
-  if (!text || text.length > 500 || /\s/.test(text)) return null;
+  // Whitespace and control characters (newlines, NUL, ...) never belong in a video link.
+  if (!text || text.length > 500 || /[\s\u0000-\u001f\u007f]/.test(text)) return null;
   if (!/^https?:\/\//i.test(text)) {
     if (!/^[a-z0-9.-]+\.[a-z]{2,}\//i.test(text)) return null;
     text = `https://${text}`;
@@ -149,6 +150,9 @@ export function parseSupportedUrl(raw: string): ParsedVideoUrl | null {
     return null;
   }
   if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+  // No embedded credentials (https://user:pass@youtube.com/...) and no custom ports: neither
+  // belongs in a video link, and both are classic tricks for smuggling a request elsewhere.
+  if (parsed.username || parsed.password || parsed.port) return null;
 
   const platform = platformForHost(parsed.hostname.toLowerCase());
   if (!platform || !looksLikeVideoLink(platform, parsed)) return null;

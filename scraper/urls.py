@@ -64,6 +64,32 @@ class UnsupportedUrl(ValueError):
     """The link is malformed or not from a supported platform."""
 
 
+MAX_URL_LENGTH = 2048
+
+
+def check_url_shape(url: str) -> None:
+    """
+    Reject links that are suspicious in form, before anything is fetched.
+
+    No control characters, whitespace or backslashes (parser-confusion tricks such as
+    ``https://good.example\\@evil.example``), no embedded credentials
+    (``https://youtube.com@evil.example/``), no custom ports, and a sane length.
+    """
+    if not isinstance(url, str) or not url or len(url) > MAX_URL_LENGTH:
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    if re.search(r"[\x00-\x20\x7f\\]", url):
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    try:
+        parsed = urlparse(url)
+        port = parsed.port
+    except ValueError:  # e.g. a non-numeric port
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    if parsed.username is not None or parsed.password is not None:
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    if port not in (None, 80, 443):
+        raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+
+
 def _host_matches(host: str, domain: str) -> bool:
     return host == domain or host.endswith("." + domain)
 
@@ -117,6 +143,8 @@ def expand_redirects(
         host = urlparse(current).hostname or ""
         if not host_ok(host):
             raise UnsupportedUrl("That link redirects to an unsupported site.")
+        if host_ok is host_allowed:  # the tests use a local server, which has a port
+            check_url_shape(current)
 
         request = urllib.request.Request(
             current,
@@ -160,6 +188,7 @@ def cache_key(url: str) -> str:
     (stripped of tracking), so repeat requests for a viral short link are hits
     even though resolving it would need a redirect lookup.
     """
+    check_url_shape(url.strip())
     parsed = urlparse(url.strip())
     if parsed.scheme not in ("http", "https") or not host_allowed(parsed.hostname or ""):
         raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
@@ -170,6 +199,7 @@ def cache_key(url: str) -> str:
 
 def normalize_url(url: str) -> str:
     """Validate the host and strip tracking parameters / fragments from the link."""
+    check_url_shape(url.strip())
     parsed = urlparse(url.strip())
     if parsed.scheme not in ("http", "https") or not parsed.hostname:
         raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
@@ -191,6 +221,7 @@ def normalize_url(url: str) -> str:
 
 def resolve_url(url: str, expand: Callable[[str], str] = expand_redirects) -> str:
     """Validate, expand short/share links, and return the clean canonical URL."""
+    check_url_shape(url.strip())
     first = urlparse(url.strip())
     if first.scheme not in ("http", "https") or not host_allowed(first.hostname or ""):
         raise UnsupportedUrl(UNSUPPORTED_MESSAGE)

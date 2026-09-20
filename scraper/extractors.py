@@ -5,6 +5,9 @@ import json
 import re
 import urllib.error
 import urllib.request
+from urllib.parse import urlparse
+
+from urls import host_allowed, is_allowed_media_url
 
 # Meta serves server-rendered Open Graph tags to link-preview crawlers, while
 # regular browsers get a JavaScript shell.
@@ -13,6 +16,15 @@ CRAWLER_UA = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uate
 _META_TAG = re.compile(r"<meta\b[^>]*>", re.I)
 _ATTR = re.compile(r'(property|name|content)\s*=\s*(?:"([^"]*)"|\'([^\']*)\')', re.I)
 _VIDEO_VERSIONS = re.compile(r'"video_versions"\s*:\s*(\[[^\]]*\])')
+
+
+class _SafeRedirects(urllib.request.HTTPRedirectHandler):
+    """Follow redirects only while they stay on a supported platform."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not host_allowed(urlparse(newurl).hostname or ""):
+            raise urllib.error.URLError("redirect to an unsupported host")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
 def _meta(page: str, key: str) -> str | None:
@@ -37,7 +49,7 @@ def extract_threads(url: str, timeout: float = 12.0) -> dict | None:
         headers={"User-Agent": CRAWLER_UA, "Accept": "text/html,*/*;q=0.8"},
     )
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as resp:
+        with urllib.request.build_opener(_SafeRedirects).open(request, timeout=timeout) as resp:
             page = resp.read(3_000_000).decode("utf-8", errors="replace")
     except (urllib.error.URLError, OSError, TimeoutError):
         return None
@@ -80,6 +92,8 @@ def extract_threads(url: str, timeout: float = 12.0) -> dict | None:
                 }
             )
 
+    # Only ever hand out links on the platform's own CDN: this text came from a web page.
+    formats = [f for f in formats if is_allowed_media_url(str(f.get("url", "")))]
     if not formats:
         return None
 

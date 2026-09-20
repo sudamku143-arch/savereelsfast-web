@@ -235,7 +235,7 @@ class ExtractCacheTests(AsyncApiCase):
         with mock.patch.object(self.main, "_extract_info", lambda url: make_info("v1")):
             await self.extract(url_for("v1"))
             await self.extract(url_for("v1"))
-        health = (await self.client.get("/")).json()
+        health = (await self.client.get("/stats")).json()
         self.assertEqual(health["cache"]["hits"], 1)
         self.assertGreaterEqual(health["cache"]["size"], 1)
         self.assertIn("limit", health["extractions"])

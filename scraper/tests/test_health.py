@@ -71,8 +71,8 @@ class HealthEndpointTests(unittest.TestCase):
                 mock.patch.object(self.main, "_waiting", self.main.MAX_QUEUED_EXTRACTIONS):
             self.assertEqual(self.client.get("/health").status_code, 200)
 
-    def test_is_not_advertised_in_the_api_docs(self):
-        self.assertNotIn("/health", self.client.get("/openapi.json").json()["paths"])
+    def test_api_docs_are_switched_off(self):
+        self.assertEqual(self.client.get("/openapi.json").status_code, 404)
 
 
 if __name__ == "__main__":
