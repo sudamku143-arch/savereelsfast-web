@@ -51,24 +51,31 @@ describe("error messages are for people", () => {
   });
 });
 
-describe("transient failures are retried quietly", () => {
-  it("the extract route retries a block, a timeout or a busy scraper once before failing", () => {
+describe("failures are shown fast; only a busy server is retried", () => {
+  it("the extract route retries only SERVER_BUSY, once", () => {
     const route = source("app/api/extract/route.ts");
-    assert.match(route, /TRANSIENT_CODES[^;]*STREAM_EXPIRED_OR_BLOCKED[^;]*PLATFORM_TIMEOUT[^;]*SERVER_BUSY/s);
+    assert.match(route, /TRANSIENT_CODES: ErrorCode\[\] = \["SERVER_BUSY"\]/);
     assert.match(route, /extractFromScraperOnce\(knownId, reelUrl\)[\s\S]{0,400}extractFromScraperOnce\(knownId, reelUrl\)/);
   });
 
-  it("two scraper attempts still fit inside the route's time limit", () => {
+  it("the site never waits much longer than the scraper's own 5 second limit", () => {
     const route = source("app/api/extract/route.ts");
-    const maxDuration = Number(route.match(/maxDuration = (\d+)/)?.[1]);
     const timeout = Number(route.match(/SCRAPER_TIMEOUT_MS = (\d+)/)?.[1]);
+    assert.ok(timeout >= 6000 && timeout <= 8000, `scraper timeout is ${timeout} ms`);
+    const maxDuration = Number(route.match(/maxDuration = (\d+)/)?.[1]);
     const pause = Number(route.match(/RETRY_PAUSE_MS = (\d+)/)?.[1]);
-    assert.ok(2 * timeout + pause < maxDuration * 1000, `${2 * timeout + pause} ms must be under ${maxDuration * 1000} ms`);
+    assert.ok(2 * timeout + pause < maxDuration * 1000);
   });
 
-  it("the download button retries once before showing an error, and only once", () => {
+  it("the download fallback does not wait 30 seconds for the scraper any more", () => {
+    const route = source("app/api/download/route.ts");
+    const wait = Number(route.match(/FALLBACK_HEADER_TIMEOUT_MS = (\d+)/)?.[1]);
+    assert.ok(wait <= 12000, `fallback waits ${wait} ms`);
+  });
+
+  it("the download button retries only a busy signal, and only once", () => {
     const button = source("app/[locale]/components/DownloadButton.tsx");
-    assert.match(button, /RETRYABLE = \[[^\]]*STREAM_EXPIRED_OR_BLOCKED[^\]]*\]/);
+    assert.match(button, /RETRYABLE = \["SERVER_BUSY"\]/);
     assert.match(button, /async function start\(retried = false\)/);
     assert.match(button, /!retried && RETRYABLE\.includes\(code\)/);
     assert.match(button, /start\(true\)/);

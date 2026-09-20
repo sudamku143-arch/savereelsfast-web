@@ -49,6 +49,7 @@ export async function generateMetadata({
   locales.forEach((l) => {
     languages[l] = `${SITE_URL}${localePath(l)}`;
   });
+  languages["x-default"] = `${SITE_URL}${localePath(defaultLocale)}`;
 
   const canonicalUrl = `${SITE_URL}${localePath(locale)}`;
 

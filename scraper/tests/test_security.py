@@ -121,6 +121,7 @@ class SharedSecretTests(unittest.TestCase):
 
     def setUp(self):
         self.main.INFO_CACHE.clear()
+        self.main.YOUTUBE_BREAKER.reset()
         self.main.NEGATIVE_CACHE.clear()
 
     def env(self, **values):

@@ -51,6 +51,40 @@ function jsonLd(html) {
   return blocks.map((b) => JSON.parse(b));
 }
 
+// "https://example.com" and "https://example.com/" are the same address; Next writes the root without the slash.
+const sameUrl = (a, b) => a.replace(/\/$/, "") === b.replace(/\/$/, "");
+
+function hasAlternate(html, lang, href) {
+  const found = [...html.matchAll(/<link rel="alternate" hrefLang="([^"]*)" href="([^"]*)"/gi)];
+  return found.some(([, l, h]) => l === lang && sameUrl(h, href));
+}
+
+async function verifyHome(locale) {
+  const tag = `[${locale}/home]`;
+  const url = home(locale);
+  const res = await get(url);
+  check(res.status === 200, `${tag} ${url} returned ${res.status}`);
+  if (res.status !== 200) return;
+  const html = await res.text();
+  const dict = messages[locale].meta;
+  const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "");
+  check(title === dict.title, `${tag} <title> is "${title}"`);
+  check([...title].length < 60, `${tag} <title> is ${[...title].length} characters (limit: under 60)`);
+  check(meta(html, "name", "description") === dict.description, `${tag} meta description differs`);
+  check([...dict.description].length < 160, `${tag} description is ${[...dict.description].length} characters (limit: under 160)`);
+  const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
+  check(canonical && sameUrl(canonical, `${SITE}${home(locale)}`), `${tag} canonical is ${canonical}`);
+  for (const l of LOCALES) check(hasAlternate(html, l, `${SITE}${home(l)}`), `${tag} missing hreflang ${l}`);
+  check(hasAlternate(html, "x-default", `${SITE}/`), `${tag} hreflang x-default should point at the English home page`);
+  check(meta(html, "property", "og:title") === dict.title, `${tag} og:title differs`);
+  const graph = jsonLd(html).flatMap((d) => d["@graph"] ?? [d]);
+  const app = graph.find((n) => n["@type"] === "SoftwareApplication");
+  const faq = graph.find((n) => n["@type"] === "FAQPage");
+  check(!!app && app.url === `${SITE}${home(locale)}` && app.inLanguage === locale && app.offers?.price === "0", `${tag} SoftwareApplication missing or wrong`);
+  check(!!faq && faq.inLanguage === locale && faq.mainEntity?.length === messages[locale].faq.items.length, `${tag} FAQPage missing or wrong`);
+  check(faq?.mainEntity?.[0]?.name === messages[locale].faq.items[0].q, `${tag} the FAQ schema is not in ${locale}`);
+}
+
 async function verifyLanding(locale, id, slug) {
   const url = path(locale, `/downloader/${slug}`);
   const tag = `[${locale}/${id}]`;
@@ -63,6 +97,8 @@ async function verifyLanding(locale, id, slug) {
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
   check(title && decode(title) === content.metaTitle, `${tag} <title> is "${title}"`);
   check(meta(html, "name", "description") === content.metaDescription, `${tag} meta description differs`);
+  check([...decode(title ?? "")].length < 60, `${tag} <title> is ${[...decode(title ?? "")].length} characters (limit: under 60)`);
+  check([...content.metaDescription].length < 160, `${tag} description is ${[...content.metaDescription].length} characters (limit: under 160)`);
   check(new RegExp(`<html[^>]+lang="${locale}"`).test(html), `${tag} <html lang> is not ${locale}`);
   check(new RegExp(`<html[^>]+dir="${RTL.includes(locale) ? "rtl" : "ltr"}"`).test(html), `${tag} <html dir> is wrong`);
 
@@ -72,6 +108,7 @@ async function verifyLanding(locale, id, slug) {
     const expected = `${SITE}${path(l, `/downloader/${slug}`)}`;
     check(html.includes(`hrefLang="${l}" href="${expected}"`) || html.includes(`hreflang="${l}" href="${expected}"`), `${tag} missing hreflang ${l}`);
   }
+  check(hasAlternate(html, "x-default", `${SITE}/downloader/${slug}`), `${tag} hreflang x-default should point at the English page`);
   check(meta(html, "property", "og:title") === content.metaTitle, `${tag} og:title differs`);
   check(meta(html, "property", "og:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} og:image is ${meta(html, "property", "og:image")}`);
   check(meta(html, "name", "twitter:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} twitter:image missing`);
@@ -96,6 +133,8 @@ async function verifyLanding(locale, id, slug) {
   check(faq?.mainEntity?.length === 6, `${tag} FAQPage has ${faq?.mainEntity?.length} questions (expected 6)`);
   check(crumbs?.itemListElement?.length === 2, `${tag} BreadcrumbList incomplete`);
   check(app?.url === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} schema url mismatch`);
+  check(app?.inLanguage === locale && faq?.inLanguage === locale, `${tag} schema inLanguage is ${app?.inLanguage}/${faq?.inLanguage}, expected ${locale}`);
+  check(faq?.mainEntity?.[0]?.name === content.faq[0].q, `${tag} the FAQ schema is not in ${locale}`);
   // Every FAQ in the markup must also be visible on the page (Google requires it).
   const visible = decode(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
   check((faq?.mainEntity ?? []).every((q) => visible.includes(q.name)), `${tag} an FAQ question is in the schema but not on the page`);
@@ -110,7 +149,17 @@ async function main() {
   console.log(`Verifying ${BASE}\n`);
 
   for (const locale of LOCALES) {
+    await verifyHome(locale);
     for (const [id, slug] of Object.entries(SLUGS)) await verifyLanding(locale, id, slug);
+  }
+
+  // Translated legal pages: same length limits as every other page.
+  for (const locale of LEGAL_LOCALES) {
+    for (const [key, legalPath] of [["privacy", "/privacy-policy"], ["terms", "/terms-of-service"], ["dmca", "/dmca"], ["disclaimer", "/disclaimer"]]) {
+      const doc = messages[locale].legal[key];
+      check([...doc.title].length < 60, `[${locale}] ${legalPath} title is ${[...doc.title].length} characters`);
+      check([...doc.description].length < 160, `[${locale}] ${legalPath} description is ${[...doc.description].length} characters`);
+    }
   }
 
   // Home pages link to every landing page.
@@ -198,6 +247,7 @@ async function main() {
         check(/<changefreq>daily<\/changefreq>/.test(entry), `${loc} changefreq is not daily`);
         check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(entry), `${loc} lastmod missing`);
         check(LOCALES.every((l) => new RegExp(`hreflang="${l}"`).test(entry)), `${loc} lacks hreflang alternates`);
+        check(/hreflang="x-default"/.test(entry), `${loc} lacks the x-default alternate`);
       }
     }
     check(locs.includes(`${SITE}${home(locale)}`), `sitemap is missing the ${locale} home page`);

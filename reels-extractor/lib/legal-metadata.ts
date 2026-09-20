@@ -29,6 +29,7 @@ export function pageMetadata(
   translated.forEach((l) => {
     languages[l] = `${SITE_URL}${localePath(l, path)}`;
   });
+  languages["x-default"] = `${SITE_URL}${localePath(defaultLocale, path)}`;
   // A page shown in a language it has not been translated into duplicates the English one.
   const shown = translated.includes(locale) ? locale : defaultLocale;
   const url = `${SITE_URL}${localePath(shown, path)}`;

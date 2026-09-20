@@ -52,7 +52,10 @@ _PATTERNS: list[tuple[str, re.Pattern]] = [
             r"timed? ?out|timeout|connection (reset|refused|aborted)|temporary failure|"
             r"name or service not known|network is unreachable|http error 5\d\d|"
             r"remote end closed|read error|getaddrinfo|unable to connect|"
-            r"transporterror|urlopen error",
+            r"transporterror|urlopen error|"
+            # yt-dlp's closing line when every YouTube player request failed or stalled: transient, and
+            # not evidence that the video is private or gone.
+            r"failed to extract any player response|deadline reached",
             re.I,
         ),
     ),

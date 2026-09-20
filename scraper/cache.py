@@ -75,6 +75,45 @@ class TTLCache:
             }
 
 
+class CircuitBreaker:
+    """
+    Stops asking a service that keeps refusing us.
+
+    After `threshold` failures within `window` seconds the breaker opens for `cooldown` seconds, during which
+    callers are told "no" immediately instead of each spending a request (and seconds) on a certain failure.
+    A success closes it again. This is what turns a YouTube block into an instant answer, and it also stops us
+    hammering a host that has just blocked our IP.
+    """
+
+    def __init__(self, threshold: int = 3, window: float = 30.0, cooldown: float = 15.0,
+                 clock: Callable[[], float] = time.monotonic):
+        self.threshold, self.window, self.cooldown = threshold, window, cooldown
+        self._clock = clock
+        self._failures: list[float] = []
+        self._open_until = 0.0
+        self._lock = threading.Lock()
+
+    def is_open(self) -> bool:
+        with self._lock:
+            return self._clock() < self._open_until
+
+    def record_failure(self) -> None:
+        with self._lock:
+            now = self._clock()
+            self._failures = [t for t in self._failures if now - t <= self.window] + [now]
+            if len(self._failures) >= self.threshold:
+                self._open_until = now + self.cooldown
+                self._failures = []
+
+    def record_success(self) -> None:
+        with self._lock:
+            self._failures = []
+            self._open_until = 0.0
+
+    def reset(self) -> None:
+        self.record_success()
+
+
 class Lease:
     """One occupied slot. release() is idempotent, so double-closing can't free a second slot."""
 

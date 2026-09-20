@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Descargador de Videos de Redes Sociales — Instagram, YouTube, TikTok y más",
-    "description": "Descarga videos de Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit y Snapchat gratis. Pega un enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
+    "title": "Descargar Videos de Instagram, YouTube y TikTok",
+    "description": "Descarga gratis videos de Instagram, YouTube, Facebook, TikTok, X, Reddit y más. Pega el enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
     "ogAlt": "Vista previa del descargador de videos de redes sociales"
   },
   "nav": {
@@ -118,8 +118,8 @@
     "platforms": {
       "instagram": {
         "noun": "Reels y videos de Instagram",
-        "metaTitle": "Descargar Reels de Instagram — Guarda Reels y Videos Gratis",
-        "metaDescription": "Descargador gratuito de Reels de Instagram. Pega el enlace de un Reel, video o publicación y guárdalo como MP4 en tu móvil o computadora. Sin iniciar sesión ni instalar apps.",
+        "metaTitle": "Descargar Reels de Instagram - Videos HD Gratis",
+        "metaDescription": "Descargador gratuito de Reels de Instagram. Pega el enlace de un Reel, video o publicación y guárdalo en MP4. Sin iniciar sesión ni instalar apps.",
         "h1": "Descargador de Reels de Instagram Gratis",
         "lead": "Pega el enlace de cualquier Reel, video o IGTV público de Instagram y guárdalo como MP4 en segundos. Funciona en iPhone, Android y computadora, sin iniciar sesión y sin instalar nada.",
         "copyHint": "En la app de Instagram, abre el Reel, toca Compartir y luego Copiar enlace.",
@@ -140,7 +140,7 @@
       },
       "youtube": {
         "noun": "Shorts y videos de YouTube",
-        "metaTitle": "Descargar Shorts y Videos de YouTube — MP4 Gratis",
+        "metaTitle": "Descargar Videos de YouTube - Shorts y MP4 Gratis",
         "metaDescription": "Descarga Shorts y videos de YouTube en MP4 gratis. Pega un enlace de youtube.com o youtu.be y guárdalo con sonido. Sin iniciar sesión ni programas.",
         "h1": "Descarga Shorts de YouTube en Segundos",
         "lead": "Pega el enlace de un Short o video de YouTube (youtube.com o youtu.be) y guárdalo como MP4 con sonido. Es gratis, no necesita cuenta y funciona en cualquier navegador.",
@@ -162,7 +162,7 @@
       },
       "facebook": {
         "noun": "videos y Reels de Facebook",
-        "metaTitle": "Descargar Videos de Facebook — Guarda Videos y Reels Gratis",
+        "metaTitle": "Descargar Videos de Facebook - Gratis en HD",
         "metaDescription": "Descargador gratuito de videos de Facebook. Pega el enlace de un video, Reel o fb.watch y guárdalo como MP4. Sin iniciar sesión ni instalar apps.",
         "h1": "Descargador de Videos de Facebook Gratis",
         "lead": "Pega el enlace de un video, Reel o fb.watch público de Facebook y guárdalo como MP4. Funciona en móviles y computadoras, y no necesitas iniciar sesión en nada.",
@@ -184,7 +184,7 @@
       },
       "threads": {
         "noun": "videos de Threads",
-        "metaTitle": "Descargar Videos de Threads — Guarda Videos de Threads (MP4)",
+        "metaTitle": "Descargar Videos de Threads - Gratis en HD",
         "metaDescription": "Descarga videos de publicaciones de Threads en MP4 gratis. Pega un enlace de threads.net o threads.com. Sin iniciar sesión ni apps.",
         "h1": "Descarga Videos de Threads en Segundos",
         "lead": "Pega el enlace de una publicación pública de Threads con video y guárdalo como MP4. Funcionan tanto los enlaces de threads.net como los de threads.com, y no hay nada que instalar.",
@@ -206,7 +206,7 @@
       },
       "x": {
         "noun": "videos de Twitter (X)",
-        "metaTitle": "Descargar Videos de Twitter (X) — Guarda Videos de Tuits en MP4",
+        "metaTitle": "Descargar Videos de Twitter (X) - Gratis en HD",
         "metaDescription": "Descarga videos de Twitter y X en MP4 gratis. Pega el enlace de una publicación de x.com o twitter.com. Sin iniciar sesión ni apps.",
         "h1": "Descarga Videos de Twitter (X) en Segundos",
         "lead": "Pega el enlace de una publicación pública de X (antes Twitter) y guarda su video como MP4. Funcionan los enlaces de x.com y de twitter.com, y no hace falta iniciar sesión.",
@@ -228,7 +228,7 @@
       },
       "pinterest": {
         "noun": "videos de Pinterest",
-        "metaTitle": "Descargar Videos de Pinterest — Guarda Pines en MP4 Gratis",
+        "metaTitle": "Descargar Videos de Pinterest - Gratis en HD",
         "metaDescription": "Descargador gratuito de videos de Pinterest. Pega el enlace de un pin o pin.it y guarda el video como MP4. Sin iniciar sesión ni apps.",
         "h1": "Descarga Videos de Pinterest en Segundos",
         "lead": "Pega el enlace de un pin de video de Pinterest y guárdalo como MP4 en segundos. También funcionan los enlaces cortos pin.it, y nunca necesitas iniciar sesión.",
@@ -250,7 +250,7 @@
       },
       "tiktok": {
         "noun": "videos de TikTok",
-        "metaTitle": "Descargar Videos de TikTok — Guarda Videos de TikTok en MP4",
+        "metaTitle": "Descargar Videos de TikTok - Gratis en HD",
         "metaDescription": "Descargador gratuito de videos de TikTok. Pega un enlace de TikTok o vm.tiktok.com y guarda el video como MP4. Sin iniciar sesión ni apps.",
         "h1": "Descargador de Videos de TikTok Gratis",
         "lead": "Pega un enlace público de TikTok y guarda el video como MP4 en segundos. También funcionan los enlaces cortos de la app de TikTok, y no necesitas una cuenta.",
@@ -272,7 +272,7 @@
       },
       "reddit": {
         "noun": "videos de Reddit",
-        "metaTitle": "Descargar Videos de Reddit — Guarda Videos v.redd.it en MP4",
+        "metaTitle": "Descargar Videos de Reddit - Gratis en HD",
         "metaDescription": "Descarga videos de Reddit gratis. Pega el enlace de una publicación de Reddit o de v.redd.it y guarda el MP4 y, si existe, la pista de audio por separado.",
         "h1": "Descargador de Videos de Reddit Gratis",
         "lead": "Pega el enlace de una publicación de video de Reddit o de v.redd.it y guarda el video como MP4. No hace falta cuenta ni app, y si Reddit ofrece una pista de audio aparte también puedes guardarla.",
@@ -294,7 +294,7 @@
       },
       "snapchat": {
         "noun": "videos de Snapchat Spotlight",
-        "metaTitle": "Descargar Snapchat Spotlight — Guarda Videos de Spotlight",
+        "metaTitle": "Descargar Snapchat Spotlight - Videos HD Gratis",
         "metaDescription": "Descargador gratuito de Snapchat Spotlight. Pega un enlace público de Spotlight y guarda el video como MP4. Sin iniciar sesión ni apps.",
         "h1": "Descarga Videos de Snapchat Spotlight",
         "lead": "Pega el enlace de un video público de Snapchat Spotlight y guárdalo como MP4. También funcionan los enlaces cortos de la app de Snapchat, y no necesitas una cuenta.",
@@ -463,7 +463,7 @@
   "legal": {
     "privacy": {
       "title": "Política de privacidad",
-      "description": "Qué procesa SaveReelsFast cuando lo usas, cuánto tiempo se conservan los datos temporales (hasta 90 minutos), que no se almacena ningún contenido multimedia y tus opciones de privacidad.",
+      "description": "Qué datos procesa SaveReelsFast, cuánto tiempo se guardan (hasta 90 minutos), que no se almacena ningún archivo y tus opciones de privacidad.",
       "updated": "Última actualización: 20 de septiembre de 2026",
       "sections": [
         {
@@ -541,7 +541,7 @@
     },
     "terms": {
       "title": "Términos del servicio",
-      "description": "Las normas para usar SaveReelsFast: uso legítimo, tu responsabilidad sobre el contenido descargado y nuestra independencia de Meta, Google, TikTok, X y otras plataformas.",
+      "description": "Las reglas para usar SaveReelsFast: uso justo, tu responsabilidad sobre lo descargado y nuestra independencia de Meta, Google, TikTok y X.",
       "updated": "Última actualización: 20 de septiembre de 2026",
       "sections": [
         {
@@ -634,7 +634,7 @@
     },
     "dmca": {
       "title": "DMCA y política de derechos de autor",
-      "description": "Cómo denunciar una infracción de derechos de autor a SaveReelsFast. No alojamos contenido en video; aquí encontrarás el procedimiento de retirada y los datos de contacto de nuestro agente designado.",
+      "description": "Cómo denunciar infracciones de derechos de autor en SaveReelsFast. No alojamos videos: consulta el procedimiento de retirada y el contacto del agente.",
       "updated": "Última actualización: 20 de septiembre de 2026",
       "intro": "Esta página explica cómo pueden los titulares de derechos de autor denunciar contenido y cómo responde SaveReelsFast. Respetamos la propiedad intelectual y seguimos el proceso de notificación y retirada de la Digital Millennium Copyright Act (17 U.S.C. § 512).",
       "sections": [
@@ -696,7 +696,7 @@
     },
     "disclaimer": {
       "title": "Aviso legal",
-      "description": "SaveReelsFast es una herramienta independiente sin afiliación con las redes sociales. Consulta la propiedad del contenido, la disponibilidad y tu responsabilidad.",
+      "description": "SaveReelsFast es una herramienta independiente, sin vínculo con las redes sociales. Lo que debes saber sobre contenido, disponibilidad y responsabilidad.",
       "updated": "Última actualización: 20 de septiembre de 2026",
       "intro": "Lee este aviso junto con nuestros Términos del servicio y nuestra Política de privacidad.",
       "sections": [

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Téléchargeur de vidéos de réseaux sociaux — Instagram, YouTube, TikTok et plus",
-    "description": "Téléchargez gratuitement des vidéos Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit et Snapchat. Collez un lien et enregistrez un MP4, sans connexion ni application.",
+    "title": "Télécharger Vidéos Instagram, YouTube, TikTok",
+    "description": "Téléchargez gratuitement des vidéos Instagram, YouTube, Facebook, TikTok, X et Reddit. Collez un lien, enregistrez un MP4, sans connexion ni appli.",
     "ogAlt": "Aperçu de l'outil de téléchargement de vidéos de réseaux sociaux"
   },
   "nav": {
@@ -119,7 +119,7 @@
       "instagram": {
         "noun": "les Reels et vidéos Instagram",
         "metaTitle": "Téléchargeur Reels Instagram - Vidéo HD Gratuite",
-        "metaDescription": "Téléchargeur gratuit de Reels Instagram. Collez le lien d'un Reel, d'une vidéo ou d'une publication et enregistrez-le en MP4 sur votre appareil. Sans connexion ni appli.",
+        "metaDescription": "Téléchargeur gratuit de Reels Instagram. Collez le lien d'un Reel, d'une vidéo ou d'une publication et enregistrez-le en MP4. Sans connexion ni appli.",
         "h1": "Téléchargeur gratuit de Reels Instagram",
         "lead": "Collez le lien de n'importe quel Reel, vidéo ou IGTV Instagram public et enregistrez-le en MP4 en quelques secondes. Ça marche sur iPhone, Android et ordinateur, sans connexion et sans rien installer.",
         "copyHint": "Dans l'appli Instagram, ouvrez le Reel, touchez Partager, puis Copier le lien.",
@@ -141,7 +141,7 @@
       "youtube": {
         "noun": "les Shorts et vidéos YouTube",
         "metaTitle": "Télécharger Vidéo YouTube - Shorts et MP4 Gratuit",
-        "metaDescription": "Téléchargez gratuitement des Shorts et vidéos YouTube en MP4. Collez un lien youtube.com ou youtu.be et enregistrez la vidéo avec le son. Sans connexion ni logiciel.",
+        "metaDescription": "Téléchargez gratuitement des Shorts et vidéos YouTube en MP4. Collez un lien youtube.com ou youtu.be et gardez le son. Sans connexion ni logiciel.",
         "h1": "Téléchargez des Shorts YouTube en quelques secondes",
         "lead": "Collez le lien d'un Short ou d'une vidéo YouTube (youtube.com ou youtu.be) et enregistrez-le en MP4 avec le son. C'est gratuit, sans compte, et cela fonctionne dans n'importe quel navigateur.",
         "copyHint": "Dans l'appli YouTube, touchez Partager, puis Copier le lien. Sur ordinateur, copiez l'adresse dans la barre du navigateur.",

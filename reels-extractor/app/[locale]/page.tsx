@@ -1,4 +1,5 @@
-import { isLocale, defaultLocale, type Locale } from "@/lib/i18n-config";
+import { isLocale, defaultLocale, localePath, type Locale } from "@/lib/i18n-config";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { getDictionary } from "@/lib/get-dictionary";
 import ExtractorClient from "./components/ExtractorClient";
@@ -20,14 +21,36 @@ export default async function LocalePage({
     PLATFORM_IDS.map((id) => [id, dict.platforms[id].name])
   ) as Record<PlatformId, string>;
 
-  const faqJsonLd = {
+  const homeUrl = `${SITE_URL}${localePath(locale)}`;
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: dict.faq.items.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${homeUrl}#app`,
+        name: SITE_NAME,
+        url: homeUrl,
+        description: dict.meta.description,
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Any (web browser)",
+        browserRequirements: "Requires JavaScript",
+        inLanguage: locale,
+        isAccessibleForFree: true,
+        image: `${SITE_URL}/icons/icon-512.png`,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${homeUrl}#faq`,
+        inLanguage: locale,
+        mainEntity: dict.faq.items.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
   };
 
   return (
@@ -62,7 +85,7 @@ export default async function LocalePage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
     </main>

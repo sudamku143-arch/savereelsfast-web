@@ -90,12 +90,13 @@ export type ReelData = {
 
 const FETCH_TIMEOUT_MS = 8000;
 // Render's free tier can cold-start slowly; past this we fall back to the built-in extractor.
-// Room for the scraper's own second YouTube route (about 3 s each, slower on a small host), while two
-// attempts plus the pause still fit inside maxDuration.
-const SCRAPER_TIMEOUT_MS = 16000;
-// Failures that often clear up by themselves: a YouTube block on one route, a busy or slow scraper.
-const TRANSIENT_CODES: ErrorCode[] = ["STREAM_EXPIRED_OR_BLOCKED", "PLATFORM_TIMEOUT", "SERVER_BUSY"];
-const RETRY_PAUSE_MS = 1500;
+// The scraper gives every lookup a hard 5 s limit and answers a block or a stall on its own, so the site
+// waits only a little longer than that. A visitor never sits through a long hang.
+const SCRAPER_TIMEOUT_MS = 7000;
+// Only "busy" is worth a quiet second try. A block or a timeout would just repeat, and waiting twice is
+// exactly the slow failure this is meant to avoid: the visitor gets the clear message straight away.
+const TRANSIENT_CODES: ErrorCode[] = ["SERVER_BUSY"];
+const RETRY_PAUSE_MS = 1000;
 
 /** An error that carries the HTTP status and user-facing message to return. */
 class ExtractionError extends Error {

@@ -20,8 +20,9 @@ type Variant = "primary" | "secondary" | "compact" | "compact-secondary";
 const MAX_IN_MEMORY_BYTES = 80 * 1024 * 1024;
 const PROGRESS_INTERVAL_MS = 120;
 const SAVED_FLASH_MS = 2500;
-const RETRY_PAUSE_MS = 1500;
-const RETRYABLE = ["STREAM_EXPIRED_OR_BLOCKED", "PLATFORM_TIMEOUT", "SERVER_BUSY"];
+const RETRY_PAUSE_MS = 1000;
+// Only a busy signal is retried quietly; a block or timeout is shown at once instead of after a second wait.
+const RETRYABLE = ["SERVER_BUSY"];
 
 const STYLES: Record<Variant, string> = {
   primary:
@@ -110,8 +111,7 @@ export default function DownloadButton({
         const body = (await response.json().catch(() => null)) as { code?: string } | null;
         const code = isErrorCode(body?.code) ? body.code : "STREAM_EXPIRED_OR_BLOCKED";
         if (!retried && RETRYABLE.includes(code)) {
-          // Blocks and busy signals often pass within a moment (the server also tries another route
-          // on the second call), so try once more before showing anything.
+          // The scraper is momentarily full: one more try after a short pause usually gets a slot.
           await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
           if (controller.signal.aborted) return;
           return await start(true);

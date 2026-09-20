@@ -142,6 +142,7 @@ class AsyncApiCase(unittest.IsolatedAsyncioTestCase):
             self.skipTest(f"dependencies missing: {exc}")
         self.main = main
         main.INFO_CACHE.clear()
+        main.YOUTUBE_BREAKER.reset()
         main.NEGATIVE_CACHE.clear()
         self.client = httpx.AsyncClient(transport=httpx.ASGITransport(app=main.app), base_url="http://scraper", timeout=30)
 

@@ -105,10 +105,11 @@ for (const locale of LOCALES) {
     it("keeps titles and descriptions inside search-result limits", () => {
       for (const id of ids) {
         const c = landing.platforms[id];
-        assert.ok(c.metaTitle.length >= 25 && c.metaTitle.length <= 70, `${id} title is ${c.metaTitle.length} chars`);
+        // Strict: a search result cuts a title at about 60 characters and a description at about 160.
+        assert.ok([...c.metaTitle].length >= 25 && [...c.metaTitle].length < 60, `${id} title is ${[...c.metaTitle].length} chars`);
         assert.ok(
-          c.metaDescription.length >= 90 && c.metaDescription.length <= 175,
-          `${id} description is ${c.metaDescription.length} chars`
+          [...c.metaDescription].length >= 90 && [...c.metaDescription].length < 160,
+          `${id} description is ${[...c.metaDescription].length} chars`
         );
       }
     });

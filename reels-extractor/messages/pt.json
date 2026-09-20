@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Baixador de Vídeos de Redes Sociais — Instagram, YouTube, TikTok e mais",
-    "description": "Baixe vídeos do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat de graça. Cole um link e salve um MP4, sem login e sem instalar apps.",
+    "title": "Baixar Vídeos do Instagram, YouTube e TikTok",
+    "description": "Baixe grátis vídeos do Instagram, YouTube, Facebook, TikTok, X, Reddit e mais. Cole o link e salve um MP4, sem login e sem instalar apps.",
     "ogAlt": "Prévia da ferramenta de download de vídeos de redes sociais"
   },
   "nav": {
@@ -118,8 +118,8 @@
     "platforms": {
       "instagram": {
         "noun": "Reels e vídeos do Instagram",
-        "metaTitle": "Baixar Reels do Instagram — Salve Reels e Vídeos Grátis",
-        "metaDescription": "Baixador gratuito de Reels do Instagram. Cole o link de um Reel, vídeo ou publicação e salve como MP4 no celular ou no computador. Sem login e sem instalar apps.",
+        "metaTitle": "Baixar Reels do Instagram - Vídeos em HD Grátis",
+        "metaDescription": "Baixador gratuito de Reels do Instagram. Cole o link de um Reel, vídeo ou publicação e salve como MP4. Sem login e sem instalar apps.",
         "h1": "Baixador de Reels do Instagram Grátis",
         "lead": "Cole o link de qualquer Reel, vídeo ou IGTV público do Instagram e salve como MP4 em segundos. Funciona no iPhone, no Android e no computador, sem login e sem instalar nada.",
         "copyHint": "No app do Instagram, abra o Reel, toque em Compartilhar e depois em Copiar link.",
@@ -140,7 +140,7 @@
       },
       "youtube": {
         "noun": "Shorts e vídeos do YouTube",
-        "metaTitle": "Baixar Shorts e Vídeos do YouTube — MP4 Grátis",
+        "metaTitle": "Baixar Vídeos do YouTube - Shorts e MP4 Grátis",
         "metaDescription": "Baixe Shorts e vídeos do YouTube em MP4 de graça. Cole um link do youtube.com ou youtu.be e salve com som. Sem login e sem programas.",
         "h1": "Baixe Shorts do YouTube em Segundos",
         "lead": "Cole o link de um Short ou vídeo do YouTube (youtube.com ou youtu.be) e salve como MP4 com som. É grátis, não exige conta e funciona em qualquer navegador.",
@@ -162,7 +162,7 @@
       },
       "facebook": {
         "noun": "vídeos e Reels do Facebook",
-        "metaTitle": "Baixar Vídeos do Facebook — Salve Vídeos e Reels Grátis",
+        "metaTitle": "Baixar Vídeos do Facebook - Grátis em HD",
         "metaDescription": "Baixador gratuito de vídeos do Facebook. Cole o link de um vídeo, Reel ou fb.watch e salve como MP4. Sem login e sem instalar apps.",
         "h1": "Baixador de Vídeos do Facebook Grátis",
         "lead": "Cole o link de um vídeo, Reel ou fb.watch público do Facebook e salve como MP4. Funciona em celulares e computadores, e você não precisa entrar em nenhuma conta.",
@@ -184,7 +184,7 @@
       },
       "threads": {
         "noun": "vídeos do Threads",
-        "metaTitle": "Baixar Vídeos do Threads — Salve Vídeos do Threads (MP4)",
+        "metaTitle": "Baixar Vídeos do Threads - Grátis em HD",
         "metaDescription": "Baixe vídeos de publicações do Threads em MP4 de graça. Cole um link do threads.net ou threads.com. Sem login e sem apps.",
         "h1": "Baixe Vídeos do Threads em Segundos",
         "lead": "Cole o link de uma publicação pública do Threads com vídeo e salve como MP4. Funcionam links do threads.net e do threads.com, e não há nada para instalar.",
@@ -206,7 +206,7 @@
       },
       "x": {
         "noun": "vídeos do Twitter (X)",
-        "metaTitle": "Baixar Vídeos do Twitter (X) — Salve Vídeos de Tweets em MP4",
+        "metaTitle": "Baixar Vídeos do Twitter (X) - Grátis em HD",
         "metaDescription": "Baixe vídeos do Twitter e do X em MP4 de graça. Cole o link de uma publicação do x.com ou twitter.com. Sem login e sem apps.",
         "h1": "Baixe Vídeos do Twitter (X) em Segundos",
         "lead": "Cole o link de uma publicação pública no X (antigo Twitter) e salve o vídeo como MP4. Funcionam links do x.com e do twitter.com, e não é preciso fazer login.",
@@ -228,7 +228,7 @@
       },
       "pinterest": {
         "noun": "vídeos do Pinterest",
-        "metaTitle": "Baixar Vídeos do Pinterest — Salve Pins em MP4 Grátis",
+        "metaTitle": "Baixar Vídeos do Pinterest - Grátis em HD",
         "metaDescription": "Baixador gratuito de vídeos do Pinterest. Cole o link de um pin ou pin.it e salve o vídeo como MP4. Sem login e sem apps.",
         "h1": "Baixe Vídeos do Pinterest em Segundos",
         "lead": "Cole o link de um pin de vídeo do Pinterest e salve como MP4 em segundos. Links curtos pin.it também funcionam, e você nunca precisa entrar em uma conta.",
@@ -250,7 +250,7 @@
       },
       "tiktok": {
         "noun": "vídeos do TikTok",
-        "metaTitle": "Baixar Vídeos do TikTok — Salve Vídeos do TikTok em MP4",
+        "metaTitle": "Baixar Vídeos do TikTok - Grátis em HD",
         "metaDescription": "Baixador gratuito de vídeos do TikTok. Cole um link do TikTok ou vm.tiktok.com e salve o vídeo como MP4. Sem login e sem apps.",
         "h1": "Baixador de Vídeos do TikTok Grátis",
         "lead": "Cole um link público do TikTok e salve o vídeo como MP4 em segundos. Links curtos do app do TikTok também funcionam, e você não precisa de conta.",
@@ -272,7 +272,7 @@
       },
       "reddit": {
         "noun": "vídeos do Reddit",
-        "metaTitle": "Baixar Vídeos do Reddit — Salve Vídeos v.redd.it em MP4",
+        "metaTitle": "Baixar Vídeos do Reddit - Grátis em HD",
         "metaDescription": "Baixe vídeos do Reddit de graça. Cole o link de uma publicação do Reddit ou do v.redd.it e salve o MP4 e, quando existir, a faixa de áudio separada.",
         "h1": "Baixador de Vídeos do Reddit Grátis",
         "lead": "Cole o link de uma publicação de vídeo do Reddit ou do v.redd.it e salve o vídeo como MP4. Não é preciso conta nem app, e se o Reddit fornecer uma faixa de áudio separada, você também pode salvá-la.",
@@ -294,7 +294,7 @@
       },
       "snapchat": {
         "noun": "vídeos do Snapchat Spotlight",
-        "metaTitle": "Baixar Snapchat Spotlight — Salve Vídeos do Spotlight",
+        "metaTitle": "Baixar Snapchat Spotlight - Vídeos HD Grátis",
         "metaDescription": "Baixador gratuito de Snapchat Spotlight. Cole um link público do Spotlight e salve o vídeo como MP4. Sem login e sem apps.",
         "h1": "Baixe Vídeos do Snapchat Spotlight",
         "lead": "Cole o link de um vídeo público do Snapchat Spotlight e salve como MP4. Links curtos do app do Snapchat também funcionam, e você não precisa de conta.",
@@ -463,7 +463,7 @@
   "legal": {
     "privacy": {
       "title": "Política de Privacidade",
-      "description": "O que o SaveReelsFast processa quando você o usa, por quanto tempo os dados temporários ficam guardados (até 90 minutos), que nenhuma mídia é armazenada e suas opções de privacidade.",
+      "description": "O que o SaveReelsFast processa, por quanto tempo os dados temporários ficam guardados (até 90 minutos), que nada é armazenado e suas opções.",
       "updated": "Última atualização: 20 de setembro de 2026",
       "sections": [
         {
@@ -541,7 +541,7 @@
     },
     "terms": {
       "title": "Termos de Serviço",
-      "description": "As regras para usar o SaveReelsFast: uso justo, sua responsabilidade sobre o conteúdo baixado e nossa independência em relação a Meta, Google, TikTok, X e outras plataformas.",
+      "description": "As regras para usar o SaveReelsFast: uso justo, sua responsabilidade pelo que baixa e nossa independência de Meta, Google, TikTok e X.",
       "updated": "Última atualização: 20 de setembro de 2026",
       "sections": [
         {
@@ -634,7 +634,7 @@
     },
     "dmca": {
       "title": "DMCA e Política de Direitos Autorais",
-      "description": "Como denunciar uma violação de direitos autorais ao SaveReelsFast. Não hospedamos conteúdo em vídeo; veja aqui o procedimento de remoção e os dados de contato do nosso agente designado.",
+      "description": "Como denunciar violação de direitos autorais no SaveReelsFast. Não hospedamos vídeos: veja o procedimento de remoção e o contato do agente.",
       "updated": "Última atualização: 20 de setembro de 2026",
       "intro": "Esta página explica como os titulares de direitos autorais podem denunciar conteúdo e como o SaveReelsFast responde. Respeitamos a propriedade intelectual e seguimos o processo de notificação e remoção da Digital Millennium Copyright Act (17 U.S.C. § 512).",
       "sections": [

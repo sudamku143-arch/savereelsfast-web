@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "சமூக ஊடக வீடியோ டவுன்லோடர் — Instagram, YouTube, TikTok மற்றும் பல",
-    "description": "Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat வீடியோக்களை இலவசமாக டவுன்லோடு செய்யுங்கள். இணைப்பை ஒட்டி MP4 சேமியுங்கள் — உள்நுழைவு தேவையில்லை, செயலி நிறுவ வேண்டாம்.",
+    "title": "Video Download - Instagram, YouTube, TikTok இலவசம்",
+    "description": "Instagram, YouTube, Facebook, TikTok, X, Reddit வீடியோக்களை இலவசமாக டவுன்லோடு செய்யுங்கள். இணைப்பை ஒட்டி MP4 சேமியுங்கள் — உள்நுழைவு தேவையில்லை.",
     "ogAlt": "சமூக ஊடக வீடியோ டவுன்லோடர் கருவியின் முன்னோட்டம்"
   },
   "nav": {
@@ -118,7 +118,7 @@
     "platforms": {
       "instagram": {
         "noun": "Instagram Reels, வீடியோக்கள்",
-        "metaTitle": "Instagram Reels Download செய்யுங்கள் - Free HD Video Downloader",
+        "metaTitle": "Instagram Reels Download - இலவச HD டவுன்லோடர்",
         "metaDescription": "Instagram Reels டவுன்லோடு செய்யும் இலவசக் கருவி. Reel, வீடியோ அல்லது பதிவின் இணைப்பை ஒட்டி MP4-ஐச் சேமியுங்கள். உள்நுழைவு, செயலி, பதிவு எதுவும் தேவையில்லை.",
         "h1": "இலவச Instagram Reels டவுன்லோடர்",
         "lead": "எந்தப் பொது Instagram Reel, வீடியோ பதிவு அல்லது IGTV வீடியோவின் இணைப்பையும் ஒட்டி நொடிகளில் MP4-ஆகச் சேமியுங்கள். iPhone, Android, டெஸ்க்டாப்பில் வேலை செய்யும், உள்நுழைவு இல்லாமல், எதையும் நிறுவாமல்.",
@@ -140,8 +140,8 @@
       },
       "youtube": {
         "noun": "YouTube Shorts, வீடியோக்கள்",
-        "metaTitle": "YouTube Video Download செய்யுங்கள் - Shorts & MP4 Downloader",
-        "metaDescription": "YouTube Shorts, வீடியோக்களை இலவசமாக MP4-ஆக டவுன்லோடு செய்யுங்கள். youtube.com அல்லது youtu.be இணைப்பை ஒட்டி ஒலியுடன் சேமியுங்கள். உள்நுழைவு, மென்பொருள் தேவையில்லை.",
+        "metaTitle": "YouTube Video Download - Shorts, MP4 டவுன்லோடர்",
+        "metaDescription": "YouTube Shorts, வீடியோக்களை இலவசமாக MP4-ஆக டவுன்லோடு செய்யுங்கள். இணைப்பை ஒட்டி ஒலியுடன் சேமியுங்கள். உள்நுழைவு தேவையில்லை.",
         "h1": "YouTube Shorts-ஐ நொடிகளில் டவுன்லோடு செய்யுங்கள்",
         "lead": "YouTube Shorts அல்லது வீடியோ இணைப்பை (youtube.com அல்லது youtu.be) ஒட்டி ஒலியுடன் MP4-ஆகச் சேமியுங்கள். இது இலவசம், கணக்கு தேவையில்லை, எந்த உலாவியிலும் இயங்கும்.",
         "copyHint": "YouTube செயலியில் Share-ஐத் தட்டி Copy link-ஐத் தேர்ந்தெடுங்கள். கணினியில் உலாவியின் முகவரிப் பட்டியிலிருந்து இணைப்பை நகலெடுங்கள்.",
@@ -163,7 +163,7 @@
       "facebook": {
         "noun": "Facebook வீடியோக்கள், Reels",
         "metaTitle": "Facebook Video Download செய்வது எப்படி - எளிய வழி",
-        "metaDescription": "Facebook வீடியோக்களை டவுன்லோடு செய்யும் இலவசக் கருவி. Facebook வீடியோ, Reel அல்லது fb.watch இணைப்பை ஒட்டி MP4 சேமியுங்கள். உள்நுழைவு தேவையில்லை, செயலி நிறுவ வேண்டாம்.",
+        "metaDescription": "Facebook வீடியோக்களை டவுன்லோடு செய்யும் இலவசக் கருவி. வீடியோ, Reel அல்லது fb.watch இணைப்பை ஒட்டி MP4 சேமியுங்கள். உள்நுழைவு தேவையில்லை.",
         "h1": "இலவச Facebook வீடியோ டவுன்லோடர்",
         "lead": "பொது Facebook வீடியோ, Reel அல்லது fb.watch இணைப்பை ஒட்டி MP4-ஆகச் சேமியுங்கள். தொலைபேசிகளிலும் கணினிகளிலும் வேலை செய்யும், எங்கும் உள்நுழைய வேண்டியதில்லை.",
         "copyHint": "வீடியோவின் கீழே Share-ஐத் தட்டி, Copy link-ஐத் தேர்ந்தெடுங்கள்.",
@@ -184,7 +184,7 @@
       },
       "threads": {
         "noun": "Threads வீடியோக்கள்",
-        "metaTitle": "Threads Video Download செய்யுங்கள் - Free HD Video Downloader",
+        "metaTitle": "Threads Video Download - இலவச HD டவுன்லோடர்",
         "metaDescription": "Threads பதிவுகளிலுள்ள வீடியோக்களை இலவசமாக MP4-ஆக டவுன்லோடு செய்யுங்கள். threads.net அல்லது threads.com இணைப்பை ஒட்டுங்கள். உள்நுழைவு, செயலி தேவையில்லை.",
         "h1": "Threads வீடியோக்களை நொடிகளில் டவுன்லோடு செய்யுங்கள்",
         "lead": "வீடியோ உள்ள பொது Threads பதிவின் இணைப்பை ஒட்டி MP4-ஆகச் சேமியுங்கள். threads.net, threads.com இரண்டு இணைப்புகளும் வேலை செய்யும், எதையும் நிறுவ வேண்டியதில்லை.",
@@ -206,7 +206,7 @@
       },
       "x": {
         "noun": "Twitter (X) வீடியோக்கள்",
-        "metaTitle": "Twitter Video Download செய்யுங்கள் - X Video Downloader Free",
+        "metaTitle": "Twitter Video Download - X வீடியோ டவுன்லோடர்",
         "metaDescription": "Twitter, X வீடியோக்களை இலவசமாக MP4-ஆக டவுன்லோடு செய்யுங்கள். x.com அல்லது twitter.com பதிவு இணைப்பை ஒட்டுங்கள். உள்நுழைவு, செயலி தேவையில்லை.",
         "h1": "Twitter (X) வீடியோக்களை நொடிகளில் டவுன்லோடு செய்யுங்கள்",
         "lead": "X (முன்பு Twitter)-இல் உள்ள பொதுப் பதிவின் இணைப்பை ஒட்டி அதன் வீடியோவை MP4-ஆகச் சேமியுங்கள். x.com, twitter.com இரண்டு இணைப்புகளும் வேலை செய்யும், உள்நுழைவு தேவையில்லை.",
@@ -228,7 +228,7 @@
       },
       "pinterest": {
         "noun": "Pinterest வீடியோக்கள்",
-        "metaTitle": "Pinterest Video Download செய்யுங்கள் - Free HD Video Downloader",
+        "metaTitle": "Pinterest Video Download - இலவச HD டவுன்லோடர்",
         "metaDescription": "Pinterest வீடியோக்களை டவுன்லோடு செய்யும் இலவசக் கருவி. பின் அல்லது pin.it இணைப்பை ஒட்டி வீடியோவை MP4-ஆகச் சேமியுங்கள். உள்நுழைவு, செயலி தேவையில்லை.",
         "h1": "Pinterest வீடியோக்களை நொடிகளில் டவுன்லோடு செய்யுங்கள்",
         "lead": "Pinterest வீடியோ பின்னின் இணைப்பை ஒட்டி நொடிகளில் MP4-ஆகச் சேமியுங்கள். pin.it குறுகிய இணைப்புகளும் வேலை செய்யும், நீங்கள் ஒருபோதும் உள்நுழைய வேண்டியதில்லை.",
@@ -250,7 +250,7 @@
       },
       "tiktok": {
         "noun": "TikTok வீடியோக்கள்",
-        "metaTitle": "TikTok Video Download செய்யுங்கள் - Free HD Video Downloader",
+        "metaTitle": "TikTok Video Download - இலவச HD டவுன்லோடர்",
         "metaDescription": "TikTok வீடியோக்களை டவுன்லோடு செய்யும் இலவசக் கருவி. TikTok அல்லது vm.tiktok.com இணைப்பை ஒட்டி வீடியோவை MP4-ஆகச் சேமியுங்கள். உள்நுழைவு, செயலி தேவையில்லை.",
         "h1": "இலவச TikTok வீடியோ டவுன்லோடர்",
         "lead": "பொது TikTok இணைப்பை ஒட்டி வீடியோவை நொடிகளில் MP4-ஆகச் சேமியுங்கள். TikTok செயலியின் குறுகிய இணைப்புகளும் வேலை செய்யும், கணக்கு தேவையில்லை.",
@@ -273,7 +273,7 @@
       "reddit": {
         "noun": "Reddit வீடியோக்கள்",
         "metaTitle": "Reddit Video Download செய்யுங்கள் - Free Video Downloader",
-        "metaDescription": "Reddit வீடியோக்களை இலவசமாக டவுன்லோடு செய்யுங்கள். Reddit பதிவு அல்லது v.redd.it இணைப்பை ஒட்டி MP4 சேமியுங்கள்; ஆடியோ டிராக் இருந்தால் அதையும் தனியாகச் சேமிக்கலாம்.",
+        "metaDescription": "Reddit வீடியோக்களை இலவசமாக டவுன்லோடு செய்யுங்கள். பதிவு அல்லது v.redd.it இணைப்பை ஒட்டி MP4 சேமியுங்கள்; ஆடியோ டிராக் இருந்தால் தனியாகவும் சேமிக்கலாம்.",
         "h1": "இலவச Reddit வீடியோ டவுன்லோடர்",
         "lead": "Reddit வீடியோ பதிவு அல்லது v.redd.it இணைப்பை ஒட்டி வீடியோவை MP4-ஆகச் சேமியுங்கள். கணக்கு அல்லது செயலி தேவையில்லை, Reddit தனி ஆடியோ டிராக் தந்தால் அதையும் சேமிக்கலாம்.",
         "copyHint": "பதிவில் Share-ஐத் தட்டி, Copy link-ஐத் தேர்ந்தெடுங்கள்.",

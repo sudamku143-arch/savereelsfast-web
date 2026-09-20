@@ -10,7 +10,7 @@ import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit"
 export const runtime = "edge";
 
 const HEADER_TIMEOUT_MS = 10000;
-const FALLBACK_HEADER_TIMEOUT_MS = 30000; // the scraper re-resolves the post first
+const FALLBACK_HEADER_TIMEOUT_MS = 12000; // the scraper re-resolves the post first (its own limit is 5 s)
 const MAX_BYTES = 200 * 1024 * 1024;
 
 // Downloads are the expensive endpoint (bandwidth), so they get the tighter guard. A carousel's

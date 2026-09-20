@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { locales, localePath, LEGAL_TRANSLATED } from "@/lib/i18n-config";
+import { locales, localePath, defaultLocale, LEGAL_TRANSLATED } from "@/lib/i18n-config";
 import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
 import { SITE_URL } from "@/lib/site";
 
@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     available.forEach((l) => {
       languages[l] = `${SITE_URL}${localePath(l, path)}`;
     });
+    languages["x-default"] = `${SITE_URL}${localePath(defaultLocale, path)}`;
 
     return available.map((locale) => ({
       url: `${SITE_URL}${localePath(locale, path)}`,

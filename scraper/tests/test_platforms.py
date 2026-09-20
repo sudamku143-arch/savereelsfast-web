@@ -272,7 +272,7 @@ class ScraperConfigTests(unittest.TestCase):
 
     def test_youtube_player_clients_and_user_agent(self):
         opts = self.main.YDL_OPTS
-        self.assertEqual(opts["extractor_args"], {"youtube": {"player_client": ["android", "ios", "tv"], "player_skip": ["webpage", "configs"]}})
+        self.assertEqual(opts["extractor_args"], {"youtube": {"player_client": ["android"], "player_skip": ["webpage", "configs", "initial_data", "js"]}})
         self.assertIn("Mozilla/5.0", opts["http_headers"]["User-Agent"])
         self.assertTrue(opts["skip_download"])
 
