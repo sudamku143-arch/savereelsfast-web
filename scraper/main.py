@@ -1,10 +1,12 @@
 import asyncio
+import contextlib
 import contextvars
 import gc
 import hmac
 import logging
 import os
 import re
+import shutil
 import socket
 import tempfile
 import threading
@@ -19,7 +21,7 @@ import httpx
 import yt_dlp
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from starlette.background import BackgroundTask
 from yt_dlp.utils import DownloadError, ExtractorError
 
@@ -58,6 +60,20 @@ if _ALLOWED_ORIGINS:
 _log = logging.getLogger("uvicorn.error")
 
 
+@app.exception_handler(Exception)
+async def _structured_error(request, exc: Exception) -> JSONResponse:
+    """
+    Any error nobody planned for still answers with the same JSON shape as every other failure
+    ({"detail": {"code", "message"}}), never an HTML page or a hung request. The message is fixed: nothing from
+    the exception (paths, tokens, yt-dlp internals) reaches the caller.
+    """
+    _log.warning("Unhandled error on %s: %s", request.url.path, type(exc).__name__)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": {"code": errors.EXTRACTION_FAILED, "message": "Something went wrong on our side. Please try again."}},
+    )
+
+
 @app.on_event("startup")
 def _warn_when_open() -> None:
     if not os.environ.get("SCRAPER_SHARED_SECRET"):
@@ -92,36 +108,45 @@ YDL_OPTS = {
     "extractor_args": {},  # YouTube's are filled in below, from YOUTUBE_ROUTES
 }
 
-# YouTube: one light route. Measured against yt-dlp 2026.08 on real videos, `android` is the only client that
-# returns a ready-made MP4 with sound; `ios` and `tv` need a proof-of-origin token, return no formats, and
-# each cost extra requests (the tv client also downloads the player script). Skipping the web page, player
-# configs, the "next" call (chapters, heatmap, like counts: unused here) and the player script took a lookup
-# from 3.5 s to 0.8 s for the identical download. The only thing lost is the uploader's name.
-YOUTUBE_ROUTES: list[dict | None] = [
-    {"player_client": ["android"], "player_skip": ["webpage", "configs", "initial_data", "js"]},
-]
-# A second, heavier route (yt-dlp's default client mix) exists for hosts that have a residential proxy. It is
-# off by default: on a blocked datacenter IP it only adds seconds before the same failure.
-if os.environ.get("YOUTUBE_SECOND_ROUTE", "").lower() in ("1", "true", "yes"):
-    YOUTUBE_ROUTES.append(None)
-YDL_OPTS["extractor_args"] = {"youtube": YOUTUBE_ROUTES[0]}
+# YouTube is tried on up to two routes. Measured against yt-dlp 2026.08 on real videos (no cookies):
+#   LEAN  android only, skipping the page, player configs, the "next" call and the player script:
+#         0.8 s for a 360p MP4 with sound.
+#   FULL  android + ios + web_creator: the very same download in 2.8-3.5 s. ios and web_creator need a
+#         proof-of-origin token or a login to offer more, so without cookies they only cost time.
+# With a cookies file, yt-dlp SKIPS the android client ("does not support cookies"), so LEAN alone would fail at
+# once. The order therefore depends on whether cookies are configured: see _youtube_route_plan().
+YOUTUBE_LEAN = {"player_client": ["android"], "player_skip": ["webpage", "configs", "initial_data", "js"]}
+YOUTUBE_FULL = {"player_client": ["android", "ios", "web_creator"]}
+YOUTUBE_ROUTES: list[dict] = [YOUTUBE_LEAN, YOUTUBE_FULL]  # the order without cookies
+YDL_OPTS["extractor_args"] = {"youtube": YOUTUBE_LEAN}
 
-# YouTube's own API answers in well under a second, so a request that has been silent for 3 s is a block or a
-# stall: give up inside the 4 s the visitor should wait at most.
-YOUTUBE_SOCKET_TIMEOUT = 3
+# YouTube's requests get a longer leash than other platforms': 8 s per request and one retry, because a small
+# host (Render's free tier has a fraction of a CPU) can be slow to complete a TLS handshake without being blocked.
+YOUTUBE_SOCKET_TIMEOUT = 8
+YOUTUBE_RETRIES = 1
 
 # Hard ceiling for one whole lookup (link expansion + extraction). It is enforced inside the work, not just
 # around it, so a stalled lookup stops instead of quietly holding a worker.
-def _extraction_timeout(raw: str | None) -> float:
-    """The configured limit, forced into 2-6 seconds so no setting can bring the long hangs back."""
+def _extraction_timeout(raw: str | None, default: float = 5.0, low: float = 2.0, high: float = 6.0) -> float:
+    """The configured limit, forced into a fixed band so no setting can bring the long hangs back."""
     try:
-        value = float(raw) if raw else 5.0
+        value = float(raw) if raw else default
     except ValueError:
-        value = 5.0
-    return min(max(value, 2.0), 6.0)
+        value = default
+    return min(max(value, low), high)
 
 
 EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(os.environ.get("EXTRACTION_TIMEOUT_SECONDS"))
+# YouTube needs room for its 8 s socket timeout and a second route, so its ceiling is higher (band 6-15 s).
+YOUTUBE_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
+    os.environ.get("YOUTUBE_EXTRACTION_TIMEOUT_SECONDS"), default=10.0, low=6.0, high=15.0
+)
+
+
+def _extraction_budget(url: str) -> float:
+    """Seconds one lookup of this link may take in total."""
+    youtube = is_youtube_host(urlparse(url.strip()).hostname or "")
+    return YOUTUBE_EXTRACTION_TIMEOUT_SECONDS if youtube else EXTRACTION_TIMEOUT_SECONDS
 DEADLINE_GRACE_SECONDS = 0.75  # how long the caller waits past the deadline for the work to notice it
 
 # After a few YouTube blocks or stalls in a row, answer instantly for a moment instead of trying again.
@@ -130,6 +155,8 @@ _BREAKER_FAILURES = {errors.STREAM_EXPIRED_OR_BLOCKED, errors.PLATFORM_TIMEOUT}
 _youtube_last_failure = [errors.STREAM_EXPIRED_OR_BLOCKED]  # what to answer while the breaker is open
 
 _deadline: "contextvars.ContextVar[float | None]" = contextvars.ContextVar("extraction_deadline", default=None)
+# Set by the caller when it stops waiting for a lookup, so the worker does not count the same failure twice.
+_gave_up: "contextvars.ContextVar[threading.Event | None]" = contextvars.ContextVar("lookup_gave_up", default=None)
 
 
 class _DeadlineYDL(yt_dlp.YoutubeDL):
@@ -140,8 +167,15 @@ class _DeadlineYDL(yt_dlp.YoutubeDL):
         self._deadline = deadline
 
     def urlopen(self, req):
-        if time.monotonic() >= self._deadline:
+        remaining = self._deadline - time.monotonic()
+        if remaining <= 0:
             raise TimeoutError("extraction deadline reached")
+        # Not just "no new request after the deadline": a request that starts now may not run past it either.
+        # Without this, 8 s of socket timeout plus a retry keeps a worker busy for 16 s after the visitor was answered.
+        if not isinstance(req, yt_dlp.networking.Request):
+            req = yt_dlp.networking.Request(req)
+        limit = req.extensions.get("timeout") or self.params.get("socket_timeout") or 20
+        req.extensions["timeout"] = min(float(limit), remaining + 0.5)
         return super().urlopen(req)
 
 
@@ -150,25 +184,74 @@ def _time_left(default: float) -> float:
     return default if deadline is None else max(0.5, min(default, deadline - time.monotonic()))
 
 # Optional, set on the host (not here): what actually cures YouTube blocking a datacenter IP.
-#   YTDLP_PROXY          e.g. http://user:pass@residential-proxy:port  (used for lookups AND downloads)
-#   YOUTUBE_COOKIES_FILE path to a Netscape cookies.txt of a throw-away YouTube account
+#   YTDLP_PROXY   e.g. http://user:pass@residential-proxy:port  (used for lookups AND downloads)
+#   cookies       a Netscape cookies.txt of a throw-away YouTube account, picked up automatically from
+#                 /etc/secrets/youtube_cookies.txt (Render "Secret Files"), or from YOUTUBE_COOKIES_FILE
 YTDLP_PROXY = os.environ.get("YTDLP_PROXY", "").strip() or None
-YOUTUBE_COOKIES_FILE = os.environ.get("YOUTUBE_COOKIES_FILE", "").strip() or None
+YOUTUBE_COOKIES_DEFAULT_PATH = "/etc/secrets/youtube_cookies.txt"
 
 
-def _ydl_options(youtube_route: int = 0) -> dict:
-    """yt-dlp options for one lookup or download, with the optional proxy and cookies applied."""
-    options = dict(YDL_OPTS)
-    route = YOUTUBE_ROUTES[min(youtube_route, len(YOUTUBE_ROUTES) - 1)]
-    if route is None:
-        options.pop("extractor_args", None)
+def _youtube_cookie_source() -> str | None:
+    """The cookies file to use, if there is one. Checked on every lookup, so adding the file needs no code change."""
+    for candidate in (os.environ.get("YOUTUBE_COOKIES_FILE", "").strip(), YOUTUBE_COOKIES_DEFAULT_PATH):
+        if candidate and os.path.isfile(candidate):
+            return candidate
+    return None
+
+
+@contextlib.contextmanager
+def _private_cookie_copy(source: str | None):
+    """
+    A private, writable copy of the cookies file for one lookup (yields None when there is none).
+
+    yt-dlp writes its cookie jar back to the file when it finishes, and Render mounts /etc/secrets read-only:
+    pointing yt-dlp at that path directly fails every lookup with PermissionError (checked). A copy per
+    lookup also keeps two simultaneous lookups from overwriting each other's file.
+    """
+    if not source:
+        yield None
+        return
+    handle, path = tempfile.mkstemp(prefix="srf-ytc-", suffix=".txt")
+    os.close(handle)
+    try:
+        shutil.copyfile(source, path)
+        os.chmod(path, 0o600)
+    except OSError as exc:
+        _log.warning("YouTube cookies could not be copied (%s): continuing without them.", type(exc).__name__)
+        delete_quietly(path)
+        yield None
+        return
+    try:
+        yield path
+    finally:
+        delete_quietly(path)
+
+
+def _youtube_route_plan() -> list[tuple[dict, bool]]:
+    """(extractor_args, send_cookies) for each YouTube attempt, in order."""
+    if _youtube_cookie_source():
+        # android cannot use cookies, so with a session the full client list goes first and the anonymous
+        # lean route is the fallback (for when the cookies have gone stale).
+        plan = [(YOUTUBE_FULL, True), (YOUTUBE_LEAN, False)]
     else:
-        options["extractor_args"] = {"youtube": route}
+        plan = [(YOUTUBE_LEAN, False), (YOUTUBE_FULL, False)]
+    if os.environ.get("YOUTUBE_SECOND_ROUTE", "1").strip().lower() in ("0", "false", "no"):
+        plan = plan[:1]
+    return plan
+
+
+def _ydl_options(youtube_route: int = 0, cookiefile: str | None = None) -> dict:
+    """yt-dlp options for one lookup or download, with the proxy, the route's YouTube clients and cookies applied."""
+    options = dict(YDL_OPTS)
+    plan = _youtube_route_plan()
+    args, _send_cookies = plan[min(youtube_route, len(plan) - 1)]
+    options["extractor_args"] = {"youtube": args}
     if YTDLP_PROXY:
         options["proxy"] = YTDLP_PROXY
-    if YOUTUBE_COOKIES_FILE and os.path.isfile(YOUTUBE_COOKIES_FILE):
-        options["cookiefile"] = YOUTUBE_COOKIES_FILE
+    if cookiefile:
+        options["cookiefile"] = cookiefile
     return options
+
 
 class _MessageCollector:
     """yt-dlp logger that keeps warnings/errors.
@@ -422,13 +505,19 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
     if is_threads_host(urlparse(url).hostname or ""):
         return extract_threads(url, timeout=_time_left(12.0))
     collector = _MessageCollector()
-    options = {**_ydl_options(youtube_route), "logger": collector}
-    if is_youtube_host(urlparse(url).hostname or ""):
-        options["socket_timeout"] = YOUTUBE_SOCKET_TIMEOUT
+    youtube = is_youtube_host(urlparse(url).hostname or "")
+    plan = _youtube_route_plan() if youtube else []
+    wants_cookies = youtube and plan[min(youtube_route, len(plan) - 1)][1]
     deadline = _deadline.get()
     ydl_class = (lambda params: _DeadlineYDL(params, deadline)) if deadline is not None else yt_dlp.YoutubeDL
-    with ydl_class(options) as ydl:
-        info = ydl.extract_info(url, download=False)
+    with _private_cookie_copy(_youtube_cookie_source() if wants_cookies else None) as cookiefile:
+        options = {**_ydl_options(youtube_route, cookiefile), "logger": collector}
+        if youtube:
+            options.update(
+                socket_timeout=YOUTUBE_SOCKET_TIMEOUT, retries=YOUTUBE_RETRIES, extractor_retries=YOUTUBE_RETRIES
+            )
+        with ydl_class(options) as ydl:
+            info = ydl.extract_info(url, download=False)
     if info is not None:
         info["_messages"] = collector.messages
     return info
@@ -477,7 +566,7 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
     YouTube is looked up on each route from `first_route` on until one yields something downloadable, so a
     block on one client fingerprint is not the end. Other platforms have a single route.
     """
-    _deadline.set(time.monotonic() + EXTRACTION_TIMEOUT_SECONDS)
+    _deadline.set(time.monotonic() + _extraction_budget(url))
     try:
         # Share links may need a few redirects followed; that time comes out of the same budget.
         url = resolve_url(url, expand=lambda u: expand_redirects(u, timeout=_time_left(3.0), max_hops=3))
@@ -487,8 +576,9 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
     youtube = is_youtube_host(urlparse(url).hostname or "")
     if youtube and YOUTUBE_BREAKER.is_open():
         raise ScraperError(_youtube_last_failure[0])  # failed a moment ago: don't ask again yet
-    first_route = min(first_route, len(YOUTUBE_ROUTES) - 1)
-    routes = range(first_route, len(YOUTUBE_ROUTES)) if youtube else [0]
+    route_count = len(_youtube_route_plan())
+    first_route = min(first_route, route_count - 1)
+    routes = range(first_route, route_count) if youtube else [0]
     info, failure = None, None
     for route in routes:
         try:
@@ -505,10 +595,13 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
             info = info or found  # keep it: its messages explain why there is nothing to download
             failure = None
             continue
-        if youtube and failure.code in _BREAKER_FAILURES:
-            _youtube_last_failure[0] = failure.code
-            YOUTUBE_BREAKER.record_failure()
         if failure.code not in _RETRY_ON_OTHER_ROUTE or route == routes[-1]:
+            gave_up = _gave_up.get()
+            if youtube and failure.code in _BREAKER_FAILURES and not (gave_up and gave_up.is_set()):
+                # one failed LOOKUP counts once, however many routes it tried (and not again if the caller
+                # already counted it when it stopped waiting)
+                _youtube_last_failure[0] = failure.code
+                YOUTUBE_BREAKER.record_failure()
             raise failure
 
     if info:
@@ -581,7 +674,10 @@ async def _extract_guarded(url: str, key: str, first_route: int = 0) -> tuple[st
         _waiting -= 1
 
     _active += 1
+    gave_up = threading.Event()
+    context_token = _gave_up.set(gave_up)
     work = asyncio.ensure_future(asyncio.to_thread(_resolve_and_extract, url, first_route))
+    _gave_up.reset(context_token)
 
     def _work_ended(done: "asyncio.Future") -> None:
         # The slot is freed when the thread has really finished, not when the caller stopped waiting:
@@ -595,9 +691,13 @@ async def _extract_guarded(url: str, key: str, first_route: int = 0) -> tuple[st
     work.add_done_callback(_work_ended)
     try:
         resolved, info = await asyncio.wait_for(
-            asyncio.shield(work), timeout=EXTRACTION_TIMEOUT_SECONDS + DEADLINE_GRACE_SECONDS
+            asyncio.shield(work), timeout=_extraction_budget(url) + DEADLINE_GRACE_SECONDS
         )
     except asyncio.TimeoutError:
+        gave_up.set()  # the worker is still stuck: count this failure here, once
+        if is_youtube_host(urlparse(url.strip()).hostname or ""):
+            _youtube_last_failure[0] = errors.PLATFORM_TIMEOUT
+            YOUTUBE_BREAKER.record_failure()
         raise ScraperError(errors.PLATFORM_TIMEOUT)
     except ScraperError as err:
         if err.code in NEGATIVE_CACHEABLE:

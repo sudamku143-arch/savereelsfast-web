@@ -60,7 +60,7 @@ describe("failures are shown fast; only a busy server is retried", () => {
 
   it("the site never waits much longer than the scraper's own 5 second limit", () => {
     const route = source("app/api/extract/route.ts");
-    const timeout = Number(route.match(/SCRAPER_TIMEOUT_MS = (\d+)/)?.[1]);
+    const timeout = Number(route.match(/(?<![A-Z_])SCRAPER_TIMEOUT_MS = (\d+)/)?.[1]);
     assert.ok(timeout >= 6000 && timeout <= 8000, `scraper timeout is ${timeout} ms`);
     const maxDuration = Number(route.match(/maxDuration = (\d+)/)?.[1]);
     const pause = Number(route.match(/RETRY_PAUSE_MS = (\d+)/)?.[1]);

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
+import { PLATFORM_IDS, parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import type { PlatformInfo } from "@/lib/platform-info";
 import { isErrorCode } from "@/lib/errors";
 import {
@@ -39,6 +39,8 @@ type PlatformsDict = { label: string } & Record<
 // The site gives up on the scraper after 7 s (which itself stops at 5 s), so a lookup that is still open
 // after this long is dead: show a clear message instead of a spinner.
 const EXTRACT_TIMEOUT_MS = 10_000;
+// YouTube lookups may legitimately take longer (see /api/extract), so the page waits longer for those only.
+const YOUTUBE_EXTRACT_TIMEOUT_MS = 16_000;
 
 export default function ExtractorClient({
   heroDict,
@@ -132,7 +134,7 @@ export default function ExtractorClient({
     const timer = setTimeout(() => {
       timedOut = true;
       controller.abort();
-    }, EXTRACT_TIMEOUT_MS);
+    }, parseSupportedUrl(url)?.platform === "youtube" ? YOUTUBE_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS);
 
     try {
       // GET, so identical lookups can be cached by the CDN (see /api/extract).

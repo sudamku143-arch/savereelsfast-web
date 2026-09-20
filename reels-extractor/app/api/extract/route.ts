@@ -94,7 +94,16 @@ export type ReelData = {
 // the scraper first, then, for Instagram, the built-in strategies. Steps use what is left, never more.
 const LOOKUP_BUDGET_MS = 9000;
 const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram page
-const lookupBudget = new AsyncLocalStorage<{ deadline: number }>();
+// YouTube gets more room at every step: its requests may take up to 8 s each on a small host, and a blocked
+// lookup can try a second route. Every other platform keeps the short limits.
+const YOUTUBE_LOOKUP_BUDGET_MS = 13000;
+const YOUTUBE_SCRAPER_TIMEOUT_MS = 12000;
+const lookupBudget = new AsyncLocalStorage<{ deadline: number; scraperMs: number }>();
+
+/** How long the scraper may be waited for in this lookup (longer for YouTube). */
+function scraperStepMs(): number {
+  return lookupBudget.getStore()?.scraperMs ?? SCRAPER_TIMEOUT_MS;
+}
 class BudgetExhausted extends Error {}
 
 /** Time a step may use right now: its own limit, capped by what is left of this lookup's budget. */
@@ -274,7 +283,10 @@ async function extractReelData(
   pageUrl: string,
   platform: PlatformId
 ): Promise<ReelData | null> {
-  return lookupBudget.run({ deadline: Date.now() + LOOKUP_BUDGET_MS }, () =>
+  const youtube = platform === "youtube";
+  const budget = youtube ? YOUTUBE_LOOKUP_BUDGET_MS : LOOKUP_BUDGET_MS;
+  const scraperMs = youtube ? YOUTUBE_SCRAPER_TIMEOUT_MS : SCRAPER_TIMEOUT_MS;
+  return lookupBudget.run({ deadline: Date.now() + budget, scraperMs }, () =>
     extractReelDataWithinBudget(pageUrl, platform)
   );
 }
@@ -498,7 +510,7 @@ async function extractFromScraper(
   } catch (err) {
     if (!(err instanceof ScraperFailure) || !TRANSIENT_CODES.includes(err.code)) throw err;
     // Only if a whole second attempt still fits; otherwise the answer is "busy" right now.
-    if (stepTimeout(SCRAPER_TIMEOUT_MS) < RETRY_PAUSE_MS + 2500) throw err;
+    if (stepTimeout(scraperStepMs()) < RETRY_PAUSE_MS + 2500) throw err;
     console.warn(`[/api/extract] ${err.code}: retrying once`);
     await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
     return await extractFromScraperOnce(knownId, reelUrl);
@@ -514,7 +526,7 @@ async function extractFromScraperOnce(
 
   if (!timeLeft()) throw new BudgetExhausted("lookup time budget used up");
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), stepTimeout(SCRAPER_TIMEOUT_MS));
+  const timer = setTimeout(() => controller.abort(), stepTimeout(scraperStepMs()));
   let json: ScraperResponse;
   try {
     const res = await fetch(`${base}/extract?url=${encodeURIComponent(reelUrl)}`, {

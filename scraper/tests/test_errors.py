@@ -81,6 +81,7 @@ class EndpointBase(unittest.TestCase):
         # Extraction results are cached per URL; tests mock a different answer for the same URL.
         self.main.INFO_CACHE.clear()
         self.main.NEGATIVE_CACHE.clear()
+        self.main.YOUTUBE_BREAKER.reset()
 
     def fmt(self, fid, height, acodec, ext="mp4"):
         return {"format_id": fid, "url": f"https://x.googlevideo.com/{fid}", "ext": ext, "height": height,

@@ -58,23 +58,42 @@ describe("the extract route uses the budget", () => {
     assert.ok(budget < page, `the site (${budget} ms) must answer before the page gives up (${page} ms)`);
   });
 
+  it("YouTube gets longer limits at every hop, each one outlasting the hop behind it", () => {
+    const scraper = 10_000 + 750; // the scraper's YouTube budget plus its grace (scraper/main.py)
+    const scraperWait = num(route, "YOUTUBE_SCRAPER_TIMEOUT_MS");
+    const budget = num(route, "YOUTUBE_LOOKUP_BUDGET_MS");
+    const page = num(client, "YOUTUBE_EXTRACT_TIMEOUT_MS");
+    assert.ok(scraperWait > scraper, `site waits ${scraperWait} ms for a scraper that may take ${scraper} ms`);
+    assert.ok(budget > scraperWait, "the lookup budget must outlast the scraper wait");
+    assert.ok(page > budget, `the page (${page} ms) must outlast the site (${budget} ms)`);
+    assert.ok(2 * 0 + budget < 40_000, "and stay inside the function's time limit");
+    assert.ok(page <= 20_000, "but never the 20-30 second hang");
+  });
+
+  it("only YouTube lookups use the longer limits", () => {
+    assert.match(route, /const youtube = platform === "youtube";/);
+    assert.match(route, /youtube \? YOUTUBE_LOOKUP_BUDGET_MS : LOOKUP_BUDGET_MS/);
+    assert.match(route, /youtube \? YOUTUBE_SCRAPER_TIMEOUT_MS : SCRAPER_TIMEOUT_MS/);
+    assert.match(client, /parseSupportedUrl\(url\)\?\.platform === "youtube" \? YOUTUBE_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS/);
+  });
+
   it("a built-in strategy waits 5 s at most, not 8", () => {
     assert.ok(num(route, "FETCH_TIMEOUT_MS") <= 5000);
   });
 
   it("every request in a lookup draws from the shared budget", () => {
     assert.match(route, /setTimeout\(\(\) => controller\.abort\(\), stepTimeout\(FETCH_TIMEOUT_MS\)\)/);
-    assert.match(route, /setTimeout\(\(\) => controller\.abort\(\), stepTimeout\(SCRAPER_TIMEOUT_MS\)\)/);
-    assert.doesNotMatch(route, /setTimeout\(\(\) => controller\.abort\(\), (FETCH|SCRAPER)_TIMEOUT_MS\)/, "an unbudgeted timer is left");
+    assert.match(route, /setTimeout\(\(\) => controller\.abort\(\), stepTimeout\(scraperStepMs\(\)\)\)/);
+    assert.doesNotMatch(route, /setTimeout\(\(\) => controller\.abort\(\), (FETCH|SCRAPER|YOUTUBE_SCRAPER)_TIMEOUT_MS\)/, "an unbudgeted timer is left");
   });
 
   it("the lookup runs inside the budget, and strategies are skipped when time is up", () => {
-    assert.match(route, /lookupBudget\.run\(\{ deadline: Date\.now\(\) \+ LOOKUP_BUDGET_MS \}/);
+    assert.match(route, /lookupBudget\.run\(\{ deadline: Date\.now\(\) \+ budget, scraperMs \}/);
     assert.match(route, /if \(!timeLeft\(\)\) \{\s*networkFailures \+= 1;[^}]*break;/);
     assert.match(route, /if \(!timeLeft\(\)\) throw new BudgetExhausted/);
   });
 
   it("the quiet retry for a busy scraper only happens if a whole second attempt still fits", () => {
-    assert.match(route, /stepTimeout\(SCRAPER_TIMEOUT_MS\) < RETRY_PAUSE_MS \+ 2500\) throw err/);
+    assert.match(route, /stepTimeout\(scraperStepMs\(\)\) < RETRY_PAUSE_MS \+ 2500\) throw err/);
   });
 });

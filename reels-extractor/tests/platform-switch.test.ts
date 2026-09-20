@@ -131,8 +131,8 @@ describe("a lookup never leaves the visitor waiting", () => {
   const route = source("app/api/extract/route.ts");
 
   it("the page gives up shortly after the site does, and the site after the scraper", () => {
-    const page = Number(client.match(/EXTRACT_TIMEOUT_MS = ([\d_]+)/)?.[1].replaceAll("_", ""));
-    const site = Number(route.match(/SCRAPER_TIMEOUT_MS = (\d+)/)?.[1]);
+    const page = Number(client.match(/(?<![A-Z_])EXTRACT_TIMEOUT_MS = ([\d_]+)/)?.[1].replaceAll("_", ""));
+    const site = Number(route.match(/(?<![A-Z_])SCRAPER_TIMEOUT_MS = (\d+)/)?.[1]);
     assert.ok(site >= 6000 && site <= 8000, `site waits ${site} ms`);
     assert.ok(page > site && page <= 12_000, `page waits ${page} ms`);
   });

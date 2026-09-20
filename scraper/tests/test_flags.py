@@ -55,38 +55,7 @@ class LightweightFlagTests(Base):
 
 
 class TimingTests(Base):
-    def capture_options(self, url):
-        seen = {}
-
-        class Fake:
-            def __init__(self, params, deadline=None):
-                seen.update(params)
-
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *exc):
-                return False
-
-            def extract_info(self, url, download=False):
-                return {"id": "x", "formats": []}
-
-        with mock.patch.object(self.main, "_DeadlineYDL", Fake), mock.patch.object(self.main.yt_dlp, "YoutubeDL", Fake):
-            token = self.main._deadline.set(time.monotonic() + 5)
-            try:
-                self.main._extract_info(url)
-            finally:
-                self.main._deadline.reset(token)
-        return seen
-
-    def test_youtube_gives_up_on_a_silent_connection_in_under_four_seconds(self):
-        self.assertLess(self.main.YOUTUBE_SOCKET_TIMEOUT, 4)
-        self.assertEqual(self.capture_options(YT)["socket_timeout"], self.main.YOUTUBE_SOCKET_TIMEOUT)
-
-    def test_other_platforms_keep_the_slightly_longer_socket_timeout(self):
-        self.assertEqual(self.capture_options(TIKTOK)["socket_timeout"], self.main.YDL_OPTS["socket_timeout"])
-
-    def test_a_youtube_stall_is_answered_within_the_limit(self):
+    def test_youtube_stalls_are_answered_within_the_youtube_budget(self):
         # end to end through the guarded runner: the work ignores everything, the caller still gets an answer
         import asyncio
         import threading
@@ -97,19 +66,22 @@ class TimingTests(Base):
             def stuck(url, route=0):
                 release.wait(10)
 
-            with mock.patch.object(self.main, "_extract_info", stuck):
+            with mock.patch.object(self.main, "_extract_info", stuck),                     mock.patch.object(self.main, "YOUTUBE_EXTRACTION_TIMEOUT_SECONDS", 0.4),                     mock.patch.object(self.main, "DEADLINE_GRACE_SECONDS", 0.1):
                 started = time.monotonic()
                 with self.assertRaises(self.main.ScraperError) as ctx:
                     await self.main._acquire_info(YT)
                 elapsed = time.monotonic() - started
             release.set()
             self.assertEqual(ctx.exception.code, "PLATFORM_TIMEOUT")
-            self.assertLessEqual(elapsed, self.main.EXTRACTION_TIMEOUT_SECONDS + self.main.DEADLINE_GRACE_SECONDS + 0.5)
+            self.assertLessEqual(elapsed, 0.4 + 0.1 + 0.5)
 
         self.main.YOUTUBE_BREAKER.reset()
         self.main.INFO_CACHE.clear()
         asyncio.run(scenario())
         self.main.YOUTUBE_BREAKER.reset()
+
+    def test_other_platforms_stall_within_the_short_budget(self):
+        self.assertLessEqual(self.main._extraction_budget(TIKTOK) + self.main.DEADLINE_GRACE_SECONDS, 6.75)
 
 
 if __name__ == "__main__":
