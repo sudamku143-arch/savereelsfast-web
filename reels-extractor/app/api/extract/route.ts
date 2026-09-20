@@ -11,6 +11,8 @@ import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import { isErrorCode, type ErrorCode, type ResultWarning } from "@/lib/errors";
 import { isAudioExtension } from "@/lib/download";
 import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
+import { hasTimeFor, remainingMs } from "@/lib/time-budget";
+import { AsyncLocalStorage } from "node:async_hooks";
 
 export const runtime = "nodejs";
 export const maxDuration = 40;
@@ -88,7 +90,22 @@ export type ReelData = {
   items?: ReelItem[];
 };
 
-const FETCH_TIMEOUT_MS = 8000;
+// Every step of one lookup shares this budget (the page gives up at 10 s, so the site must answer before that):
+// the scraper first, then, for Instagram, the built-in strategies. Steps use what is left, never more.
+const LOOKUP_BUDGET_MS = 9000;
+const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram page
+const lookupBudget = new AsyncLocalStorage<{ deadline: number }>();
+class BudgetExhausted extends Error {}
+
+/** Time a step may use right now: its own limit, capped by what is left of this lookup's budget. */
+function stepTimeout(cap: number): number {
+  const budget = lookupBudget.getStore();
+  return budget ? remainingMs(budget.deadline, cap) : cap;
+}
+function timeLeft(): boolean {
+  const budget = lookupBudget.getStore();
+  return budget ? hasTimeFor(budget.deadline) : true;
+}
 // Render's free tier can cold-start slowly; past this we fall back to the built-in extractor.
 // The scraper gives every lookup a hard 5 s limit and answers a block or a stall on its own, so the site
 // waits only a little longer than that. A visitor never sits through a long hang.
@@ -257,6 +274,15 @@ async function extractReelData(
   pageUrl: string,
   platform: PlatformId
 ): Promise<ReelData | null> {
+  return lookupBudget.run({ deadline: Date.now() + LOOKUP_BUDGET_MS }, () =>
+    extractReelDataWithinBudget(pageUrl, platform)
+  );
+}
+
+async function extractReelDataWithinBudget(
+  pageUrl: string,
+  platform: PlatformId
+): Promise<ReelData | null> {
   const scraperConfigured = getScraperBaseUrl() !== null;
   const strategies: [string, Strategy][] = [];
   let fallbackId: string | null = null;
@@ -287,6 +313,10 @@ async function extractReelData(
   let scraperFailure: ScraperFailure | null = null;
 
   for (const [name, strategy] of strategies) {
+    if (!timeLeft()) {
+      networkFailures += 1; // out of time: stop here rather than start requests that cannot finish
+      break;
+    }
     try {
       const data = await strategy(fallbackId ?? "");
       if (data) return data;
@@ -357,8 +387,9 @@ async function fetchText(
   url: string,
   extraHeaders: Record<string, string> = {}
 ): Promise<string> {
+  if (!timeLeft()) throw new BudgetExhausted("lookup time budget used up");
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), stepTimeout(FETCH_TIMEOUT_MS));
   try {
     const res = await fetch(url, {
       headers: {
@@ -466,6 +497,8 @@ async function extractFromScraper(
     return await extractFromScraperOnce(knownId, reelUrl);
   } catch (err) {
     if (!(err instanceof ScraperFailure) || !TRANSIENT_CODES.includes(err.code)) throw err;
+    // Only if a whole second attempt still fits; otherwise the answer is "busy" right now.
+    if (stepTimeout(SCRAPER_TIMEOUT_MS) < RETRY_PAUSE_MS + 2500) throw err;
     console.warn(`[/api/extract] ${err.code}: retrying once`);
     await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
     return await extractFromScraperOnce(knownId, reelUrl);
@@ -479,8 +512,9 @@ async function extractFromScraperOnce(
   const base = getScraperBaseUrl();
   if (!base) return null;
 
+  if (!timeLeft()) throw new BudgetExhausted("lookup time budget used up");
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), SCRAPER_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), stepTimeout(SCRAPER_TIMEOUT_MS));
   let json: ScraperResponse;
   try {
     const res = await fetch(`${base}/extract?url=${encodeURIComponent(reelUrl)}`, {

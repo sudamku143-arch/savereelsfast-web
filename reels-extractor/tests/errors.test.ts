@@ -55,7 +55,7 @@ describe("failures are shown fast; only a busy server is retried", () => {
   it("the extract route retries only SERVER_BUSY, once", () => {
     const route = source("app/api/extract/route.ts");
     assert.match(route, /TRANSIENT_CODES: ErrorCode\[\] = \["SERVER_BUSY"\]/);
-    assert.match(route, /extractFromScraperOnce\(knownId, reelUrl\)[\s\S]{0,400}extractFromScraperOnce\(knownId, reelUrl\)/);
+    assert.match(route, /extractFromScraperOnce\(knownId, reelUrl\)[\s\S]{0,900}extractFromScraperOnce\(knownId, reelUrl\)/);
   });
 
   it("the site never waits much longer than the scraper's own 5 second limit", () => {

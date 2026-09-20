@@ -72,6 +72,7 @@ YDL_OPTS = {
     "no_warnings": True,
     "noplaylist": True,
     "skip_download": True,
+    "extract_flat": False,  # a single video is resolved fully; playlists are never expanded (noplaylist)
     "ignore_no_formats_error": True,
     # Fail fast: a wait longer than this on one connection means a blocked or struggling host.
     "socket_timeout": 4,
@@ -101,6 +102,10 @@ YOUTUBE_ROUTES: list[dict | None] = [
 if os.environ.get("YOUTUBE_SECOND_ROUTE", "").lower() in ("1", "true", "yes"):
     YOUTUBE_ROUTES.append(None)
 YDL_OPTS["extractor_args"] = {"youtube": YOUTUBE_ROUTES[0]}
+
+# YouTube's own API answers in well under a second, so a request that has been silent for 3 s is a block or a
+# stall: give up inside the 4 s the visitor should wait at most.
+YOUTUBE_SOCKET_TIMEOUT = 3
 
 # Hard ceiling for one whole lookup (link expansion + extraction). It is enforced inside the work, not just
 # around it, so a stalled lookup stops instead of quietly holding a worker.
@@ -414,6 +419,8 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
         return extract_threads(url, timeout=_time_left(12.0))
     collector = _MessageCollector()
     options = {**_ydl_options(youtube_route), "logger": collector}
+    if is_youtube_host(urlparse(url).hostname or ""):
+        options["socket_timeout"] = YOUTUBE_SOCKET_TIMEOUT
     deadline = _deadline.get()
     ydl_class = (lambda params: _DeadlineYDL(params, deadline)) if deadline is not None else yt_dlp.YoutubeDL
     with ydl_class(options) as ydl:

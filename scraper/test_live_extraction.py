@@ -45,7 +45,7 @@ DEFAULT_URLS: dict[str, str | None] = {
     "snapchat": "https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYYWtidGhudGZpAX1TKn0JAX1TKnXJAAAAAA",
 }
 
-EXTRACT_TIMEOUT = 90.0
+EXTRACT_TIMEOUT = 20.0  # the service itself gives up after 5 s; anything slower is a hang
 STREAM_TIMEOUT = 60.0
 SNIFF_BYTES = 64 * 1024
 
