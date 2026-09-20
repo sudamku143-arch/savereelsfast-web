@@ -29,6 +29,7 @@ import errors
 from cache import CircuitBreaker, SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
+from diagnose import cookie_summary, interpret, probe_network
 from memory import rss_mb
 from telegram_bot import MAX_UPLOAD_BYTES, TEMP_PREFIX, BotUserError, Media, TelegramBot, delete_quietly, valid_token
 from urls import (
@@ -157,14 +158,24 @@ _youtube_last_failure = [errors.STREAM_EXPIRED_OR_BLOCKED]  # what to answer whi
 _deadline: "contextvars.ContextVar[float | None]" = contextvars.ContextVar("extraction_deadline", default=None)
 # Set by the caller when it stops waiting for a lookup, so the worker does not count the same failure twice.
 _gave_up: "contextvars.ContextVar[threading.Event | None]" = contextvars.ContextVar("lookup_gave_up", default=None)
+# Only the diagnostic (/diagnose/youtube) turns these on: a list that collects one entry per request, and a
+# switch that lets its lookup ignore (and not feed) the circuit breaker.
+_trace: "contextvars.ContextVar[list | None]" = contextvars.ContextVar("lookup_trace", default=None)
+_bypass_breaker: "contextvars.ContextVar[bool]" = contextvars.ContextVar("bypass_breaker", default=False)
 
 
 class _DeadlineYDL(yt_dlp.YoutubeDL):
     """yt-dlp that refuses to start another request once the deadline has passed."""
 
-    def __init__(self, params: dict, deadline: float):
+    def __init__(self, params: dict, deadline: float, trace: list | None = None):
         super().__init__(params)
         self._deadline = deadline
+        self._trace = trace
+
+    def _note(self, req, started: float, result) -> None:
+        if self._trace is not None and len(self._trace) < 60:
+            parsed = urlparse(req.url)  # host and path only: no query string, so no ids, tokens or signatures
+            self._trace.append({"request": f"{parsed.netloc}{parsed.path}", "ms": round((time.monotonic() - started) * 1000), "result": result})
 
     def urlopen(self, req):
         remaining = self._deadline - time.monotonic()
@@ -176,7 +187,14 @@ class _DeadlineYDL(yt_dlp.YoutubeDL):
             req = yt_dlp.networking.Request(req)
         limit = req.extensions.get("timeout") or self.params.get("socket_timeout") or 20
         req.extensions["timeout"] = min(float(limit), remaining + 0.5)
-        return super().urlopen(req)
+        started = time.monotonic()
+        try:
+            response = super().urlopen(req)
+        except BaseException as exc:
+            self._note(req, started, type(exc).__name__)
+            raise
+        self._note(req, started, getattr(response, "status", "ok"))
+        return response
 
 
 def _time_left(default: float) -> float:
@@ -497,6 +515,11 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
         "streams": {"active": STREAM_SLOTS.active, "limit": STREAM_SLOTS.size},
         "memory": {"rssMb": None if rss_mb() is None else round(rss_mb(), 1), "softLimitMb": MEMORY_SOFT_LIMIT_MB},
         "telegram": {"enabled": True, **_telegram_bot.stats} if _telegram_bot else {"enabled": False},
+        "youtube": {
+            "cookies": cookie_summary(_youtube_cookie_source()),
+            "routes": [{"clients": args["player_client"], "sendsCookies": cookies} for args, cookies in _youtube_route_plan()],
+            "breakerOpen": YOUTUBE_BREAKER.is_open(),
+        },
     }
 
 
@@ -509,15 +532,23 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
     plan = _youtube_route_plan() if youtube else []
     wants_cookies = youtube and plan[min(youtube_route, len(plan) - 1)][1]
     deadline = _deadline.get()
-    ydl_class = (lambda params: _DeadlineYDL(params, deadline)) if deadline is not None else yt_dlp.YoutubeDL
+    trace = _trace.get()
+    ydl_class = (lambda params: _DeadlineYDL(params, deadline, trace)) if deadline is not None else yt_dlp.YoutubeDL
     with _private_cookie_copy(_youtube_cookie_source() if wants_cookies else None) as cookiefile:
         options = {**_ydl_options(youtube_route, cookiefile), "logger": collector}
         if youtube:
             options.update(
                 socket_timeout=YOUTUBE_SOCKET_TIMEOUT, retries=YOUTUBE_RETRIES, extractor_retries=YOUTUBE_RETRIES
             )
-        with ydl_class(options) as ydl:
-            info = ydl.extract_info(url, download=False)
+        if trace is not None:
+            trace.append({"route": youtube_route, "clients": (options.get("extractor_args") or {}).get("youtube", {}).get("player_client"), "cookies": bool(cookiefile)})
+        try:
+            with ydl_class(options) as ydl:
+                info = ydl.extract_info(url, download=False)
+        finally:
+            if trace is not None:
+                # yt-dlp's own warnings (cookies rotated, PO token needed, client skipped ...): text only, no values
+                trace.append({"messages": [m[:160] for m in collector.messages[:8]]})
     if info is not None:
         info["_messages"] = collector.messages
     return info
@@ -574,7 +605,7 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
         raise ScraperError(errors.INVALID_URL, str(exc))
 
     youtube = is_youtube_host(urlparse(url).hostname or "")
-    if youtube and YOUTUBE_BREAKER.is_open():
+    if youtube and YOUTUBE_BREAKER.is_open() and not _bypass_breaker.get():
         raise ScraperError(_youtube_last_failure[0])  # failed a moment ago: don't ask again yet
     route_count = len(_youtube_route_plan())
     first_route = min(first_route, route_count - 1)
@@ -597,7 +628,7 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
             continue
         if failure.code not in _RETRY_ON_OTHER_ROUTE or route == routes[-1]:
             gave_up = _gave_up.get()
-            if youtube and failure.code in _BREAKER_FAILURES and not (gave_up and gave_up.is_set()):
+            if youtube and failure.code in _BREAKER_FAILURES and not (gave_up and gave_up.is_set()) and not _bypass_breaker.get():
                 # one failed LOOKUP counts once, however many routes it tried (and not again if the caller
                 # already counted it when it stopped waiting)
                 _youtube_last_failure[0] = failure.code
@@ -1198,3 +1229,79 @@ async def _stop_telegram_bot() -> None:
         _telegram_task.cancel()
         await asyncio.gather(_telegram_task, return_exceptions=True)
     _telegram_bot, _telegram_task = None, None
+
+
+# ------------------------------------------------------------------------------------ YouTube diagnostics
+# GET /diagnose/youtube (needs the shared secret, like /stats): where does a YouTube lookup stall on THIS host?
+# Reports the cookies file (names and counts only, never a value), DNS/TCP/TLS/HTTP timings to YouTube from
+# this machine's network, and one real lookup with a request-by-request trace. One run at a time.
+
+_diagnose_lock = threading.Lock()
+_DIAGNOSE_DEFAULT = "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+
+
+@app.get("/diagnose/youtube", include_in_schema=False)
+async def diagnose_youtube(
+    url: str = Query(_DIAGNOSE_DEFAULT, max_length=200),
+    x_scraper_key: str | None = Header(default=None),
+) -> dict:
+    _check_key(x_scraper_key)
+    if not is_youtube_host(urlparse(url.strip()).hostname or ""):
+        raise _http_error(ScraperError(errors.INVALID_URL, "Give a YouTube link."))
+    if not _diagnose_lock.acquire(blocking=False):
+        raise _http_error(ScraperError(errors.SERVER_BUSY))
+    try:
+        try:
+            _shed_load_if_low_on_memory()
+        except ScraperError as err:
+            raise _http_error(err)
+        trace: list = []
+        tokens = (_trace.set(trace), _bypass_breaker.set(True))
+        try:
+            network = await asyncio.to_thread(probe_network)
+            started = time.monotonic()
+            ok, code = True, None
+            try:
+                await asyncio.wait_for(
+                    asyncio.to_thread(_resolve_and_extract, url), timeout=YOUTUBE_EXTRACTION_TIMEOUT_SECONDS + 3
+                )
+            except ScraperError as err:
+                ok, code = False, err.code
+            except asyncio.TimeoutError:
+                ok, code = False, errors.PLATFORM_TIMEOUT
+            except Exception as exc:  # noqa: BLE001 - a diagnostic reports, it never fails
+                ok, code = False, type(exc).__name__
+            seconds = round(time.monotonic() - started, 1)
+        finally:
+            _trace.reset(tokens[0])
+            _bypass_breaker.reset(tokens[1])
+        cookies = cookie_summary(_youtube_cookie_source())
+        return {
+            "ytDlp": yt_dlp.version.__version__,
+            "cookies": cookies,
+            "proxyConfigured": bool(YTDLP_PROXY),
+            "routes": [{"clients": args["player_client"], "sendsCookies": sends} for args, sends in _youtube_route_plan()],
+            "budgetSeconds": YOUTUBE_EXTRACTION_TIMEOUT_SECONDS,
+            "socketTimeoutSeconds": YOUTUBE_SOCKET_TIMEOUT,
+            "network": network,
+            "lookup": {"ok": ok, "code": code, "seconds": seconds},
+            "trace": trace,
+            "reading": interpret(network, ok, code, trace, cookies),
+        }
+    finally:
+        _diagnose_lock.release()
+
+
+@app.on_event("startup")
+def _report_youtube_cookies() -> None:
+    summary = cookie_summary(_youtube_cookie_source())
+    if not summary["detected"]:
+        _log.info("YouTube cookies: none found (looked for %s).", YOUTUBE_COOKIES_DEFAULT_PATH)
+    elif not summary.get("readable"):
+        _log.warning("YouTube cookies: a file exists but cannot be read (%s).", summary.get("error"))
+    else:
+        _log.info(
+            "YouTube cookies: found, %d entries, %s.",
+            summary["entries"],
+            "signed-in session present" if summary["loggedIn"] else "NO signed-in session cookies (export again while signed in)",
+        )

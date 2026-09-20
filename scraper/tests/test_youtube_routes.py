@@ -128,7 +128,7 @@ class TimeoutSettingTests(Base):
         seen = {}
 
         class Fake:
-            def __init__(self, params, deadline=None):
+            def __init__(self, params, deadline=None, trace=None):
                 seen.update(params)
 
             def __enter__(self):
@@ -271,7 +271,7 @@ class CookieTests(Base):
         seen = []
 
         class Fake:
-            def __init__(self, params, deadline=None):
+            def __init__(self, params, deadline=None, trace=None):
                 seen.append(params.get("cookiefile"))
 
             def __enter__(self):
