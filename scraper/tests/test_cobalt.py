@@ -343,6 +343,8 @@ class ScraperTests(unittest.TestCase):
 
         body = TestClient(self.main.app).get("/stats").json()
         self.assertEqual(body["cobalt"]["instances"], ["cobalt.example.org"])
+        self.assertIs(body["cobalt"]["apiKeySet"], True)
+        self.assertEqual(body["cobalt"]["timeoutSeconds"], 4.0)
         self.assertNotIn("secret-key", json.dumps(body))
 
 

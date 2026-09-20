@@ -85,6 +85,8 @@ class Cobalt:
         return {
             "enabled": self.enabled,
             "instances": sorted(self.hosts()),
+            "apiKeySet": bool(self.api_key),  # only whether one is configured, never the key
+            "timeoutSeconds": self.timeout,
             "attempts": self.attempts,
             "successes": self.successes,
             "lastError": self.last_error,
