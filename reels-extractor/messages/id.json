@@ -1,0 +1,463 @@
+{
+  "meta": {
+    "title": "Pengunduh Video Media Sosial — Instagram, YouTube, TikTok & Lainnya",
+    "description": "Unduh video Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat secara gratis. Tempel tautan lalu simpan MP4 — tanpa login, tanpa instal aplikasi.",
+    "ogAlt": "Pratinjau alat pengunduh video media sosial"
+  },
+  "nav": {
+    "language": "Pilih bahasa",
+    "homeLabel": "Beranda SaveReelsFast",
+    "install": "Pasang Aplikasi"
+  },
+  "hero": {
+    "badge": "100% Gratis · Tanpa Login",
+    "subtitle": "Tempel tautan video di bawah dan simpan MP4 HD ke perangkat Anda. Bisa untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat.",
+    "pasteButton": "Tempel",
+    "downloadCta": "Ambil Video",
+    "loading": "Mengambil video Anda…",
+    "errorGeneric": "Video tidak dapat diambil. Periksa tautan lalu coba lagi.",
+    "errorInvalid": "Tautan itu tidak terlihat seperti tautan video yang didukung."
+  },
+  "platforms": {
+    "label": "Pilih platform",
+    "instagram": {
+      "name": "Instagram",
+      "title": "Unduh Reels Instagram dalam Hitungan Detik",
+      "placeholder": "Tempel tautan Reel Instagram di sini…"
+    },
+    "youtube": {
+      "name": "YouTube",
+      "title": "Unduh Shorts & Video YouTube dalam Hitungan Detik",
+      "placeholder": "Tempel tautan video atau Shorts YouTube di sini…"
+    },
+    "facebook": {
+      "name": "Facebook",
+      "title": "Unduh Video Facebook dalam Hitungan Detik",
+      "placeholder": "Tempel tautan video atau Reel Facebook di sini…"
+    },
+    "threads": {
+      "name": "Threads",
+      "title": "Unduh Video Threads dalam Hitungan Detik",
+      "placeholder": "Tempel tautan postingan Threads di sini…"
+    },
+    "x": {
+      "name": "X (Twitter)",
+      "title": "Unduh Video X (Twitter) dalam Hitungan Detik",
+      "placeholder": "Tempel tautan postingan X atau Twitter di sini…"
+    },
+    "pinterest": {
+      "name": "Pinterest",
+      "title": "Unduh Video Pinterest dalam Hitungan Detik",
+      "placeholder": "Tempel tautan pin Pinterest di sini…"
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "title": "Unduh Video TikTok dalam Hitungan Detik",
+      "placeholder": "Tempel tautan video TikTok di sini…"
+    },
+    "reddit": {
+      "name": "Reddit",
+      "title": "Unduh Video Reddit dalam Hitungan Detik",
+      "placeholder": "Tempel tautan postingan Reddit atau v.redd.it di sini…"
+    },
+    "snapchat": {
+      "name": "Snapchat",
+      "title": "Unduh Video Snapchat Spotlight dalam Hitungan Detik",
+      "placeholder": "Tempel tautan Snapchat Spotlight di sini…"
+    }
+  },
+  "landing": {
+    "common": {
+      "breadcrumbHome": "Beranda",
+      "downloaders": "Pengunduh",
+      "howToHeading": "Cara mengunduh {noun}",
+      "steps": [
+        "Salin tautannya. {copyHint}",
+        "Tempel di kotak di atas. Tab {platform} dipilih otomatis dan unduhan mulai disiapkan begitu Anda menempel.",
+        "Ketuk “Download Video” untuk menyimpan MP4 ke perangkat Anda."
+      ],
+      "featuresHeading": "Mengapa memakai SaveReelsFast untuk {platform}",
+      "features": [
+        {
+          "title": "Gratis, tanpa akun",
+          "text": "Tanpa daftar, tanpa login, dan tidak ada yang perlu dipasang. Semuanya berjalan di browser Anda."
+        },
+        {
+          "title": "Bisa di semua perangkat",
+          "text": "iPhone, Android, Windows, Mac, atau Linux: selama ada browser, Anda siap."
+        },
+        {
+          "title": "Kualitas tetap utuh",
+          "text": "Anda mendapat file persis seperti yang disajikan {platform}, tanpa kompresi ulang dan tanpa merek tambahan dari kami."
+        },
+        {
+          "title": "Sembilan platform di satu tempat",
+          "text": "Alat yang sama menangani Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat."
+        }
+      ],
+      "faqHeading": "FAQ pengunduh {platform}",
+      "sharedFaq": [
+        {
+          "q": "Apakah pengunduh {platform} ini gratis?",
+          "a": "Ya. SaveReelsFast gratis dipakai, tanpa langganan, tanpa akun, dan tanpa batasan yang terkait login."
+        },
+        {
+          "q": "Apakah saya perlu login ke {platform}?",
+          "a": "Tidak. Anda hanya butuh tautan video publik. Kami tidak pernah meminta nama pengguna atau kata sandi {platform} Anda."
+        },
+        {
+          "q": "Apakah legal mengunduh video {platform}?",
+          "a": "Menyimpan video untuk ditonton sendiri secara offline umumnya tidak masalah, tetapi mengunggah ulang konten orang lain tanpa izin dapat melanggar hak cipta dan ketentuan {platform}. Unduh hanya konten yang berhak Anda simpan, dan cantumkan kreatornya."
+        }
+      ],
+      "otherHeading": "Pengunduh untuk setiap platform",
+      "otherLead": "Pilih platform Anda untuk panduan yang sesuai.",
+      "here": "Anda di sini",
+      "structuredDescription": "Pengunduh online gratis untuk {noun}. Tempel tautan dan simpan video sebagai MP4, tanpa login atau aplikasi."
+    },
+    "platforms": {
+      "instagram": {
+        "noun": "Reels dan video Instagram",
+        "metaTitle": "Download Reels Instagram - Unduh Video HD Gratis",
+        "metaDescription": "Pengunduh Reels Instagram gratis. Tempel tautan Reel, video, atau postingan lalu simpan sebagai MP4 ke ponsel atau komputer. Tanpa login, tanpa aplikasi, tanpa daftar.",
+        "h1": "Pengunduh Reels Instagram Gratis",
+        "lead": "Tempel tautan Reel, postingan video, atau video IGTV Instagram publik dan simpan sebagai MP4 dalam hitungan detik. Bisa di iPhone, Android, dan desktop, tanpa login dan tanpa instal apa pun.",
+        "copyHint": "Di aplikasi Instagram, buka Reel, ketuk Bagikan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Bisakah saya mengunduh Reels Instagram dari akun pribadi?",
+            "a": "Tidak. Hanya postingan publik yang dapat diunduh. Akun pribadi membatasi kontennya untuk pengikut yang disetujui, dan alat ini tidak pernah meminta login Instagram Anda."
+          },
+          {
+            "q": "Tautan Instagram apa saja yang didukung?",
+            "a": "Tautan Reel (instagram.com/reel/…), postingan video (/p/…), IGTV (/tv/…), dan tautan bagikan Instagram. Postingan yang hanya berisi foto tidak punya video untuk disimpan."
+          },
+          {
+            "q": "Mengapa video Instagram yang saya unduh tidak ada suaranya?",
+            "a": "Beberapa klip diunggah tanpa suara, dan kadang Instagram mengirim video dan audio sebagai file terpisah. Jika hanya file video yang tersedia, kami memberi tahu Anda, dan jika ada trek audio terpisah, Anda bisa menyimpannya dengan tombol audio."
+          }
+        ]
+      },
+      "youtube": {
+        "noun": "Shorts dan video YouTube",
+        "metaTitle": "Download Video YouTube - Shorts & MP4 Gratis",
+        "metaDescription": "Unduh Shorts dan video YouTube sebagai MP4 secara gratis. Tempel tautan youtube.com atau youtu.be dan simpan lengkap dengan suara. Tanpa login, tanpa software.",
+        "h1": "Unduh Shorts YouTube dalam Hitungan Detik",
+        "lead": "Tempel tautan Shorts atau video YouTube (youtube.com atau youtu.be) dan simpan sebagai MP4 dengan suara. Gratis, tanpa akun, dan berjalan di browser mana pun.",
+        "copyHint": "Di aplikasi YouTube, ketuk Bagikan, lalu Salin tautan. Di komputer, salin alamat dari browser Anda.",
+        "faq": [
+          {
+            "q": "Kualitas apa yang saya dapat saat mengunduh dari YouTube?",
+            "a": "Anda mendapat satu file MP4 dengan suara. YouTube biasanya menyediakan file siap pakai seperti itu hingga 360p; resolusi lebih tinggi dikirim sebagai aliran video dan audio terpisah yang tidak bisa digabung di sini, jadi 360p adalah batas praktisnya saat ini."
+          },
+          {
+            "q": "Bisakah saya mengunduh YouTube Shorts?",
+            "a": "Bisa. Tempel tautan Shorts (youtube.com/shorts/…) atau tautan bagikan, lalu unduh seperti video lainnya."
+          },
+          {
+            "q": "Bisakah saya mengunduh video YouTube berbatas usia atau pribadi?",
+            "a": "Tidak. Video seperti itu memerlukan akun YouTube yang sudah login, yang tidak pernah dipakai alat ini. Video publik bisa; video pribadi, khusus anggota, dan berbatas usia tidak bisa."
+          }
+        ]
+      },
+      "facebook": {
+        "noun": "video dan Reels Facebook",
+        "metaTitle": "Download Video Facebook - Unduh HD Gratis",
+        "metaDescription": "Pengunduh video Facebook gratis. Tempel tautan video, Reel, atau fb.watch lalu simpan sebagai MP4. Tanpa login, tanpa aplikasi yang harus dipasang.",
+        "h1": "Pengunduh Video Facebook Gratis",
+        "lead": "Tempel tautan video, Reel, atau fb.watch Facebook yang publik dan simpan sebagai MP4. Bisa di ponsel maupun komputer, dan Anda tidak perlu login ke apa pun.",
+        "copyHint": "Ketuk Bagikan di bawah video, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Tautan Facebook apa saja yang didukung?",
+            "a": "Tautan video (facebook.com/watch dan /videos/), Reels (/reel/), tautan bagikan Facebook, dan tautan pendek fb.watch. Foto dan postingan teks tidak punya video untuk diunduh."
+          },
+          {
+            "q": "Bisakah saya mengunduh video dari grup pribadi atau postingan khusus teman?",
+            "a": "Tidak. Hanya video publik yang bisa diambil. Konten yang dibatasi untuk teman atau anggota grup memerlukan login Facebook, yang tidak dipakai alat ini."
+          },
+          {
+            "q": "Mengapa tautan Facebook saya gagal?",
+            "a": "Kemungkinan video itu tidak publik, sudah dihapus, atau dibatasi di wilayah tertentu. Pastikan video terbuka di jendela pribadi tanpa login; jika terbuka, coba lagi dalam semenit."
+          }
+        ]
+      },
+      "threads": {
+        "noun": "video Threads",
+        "metaTitle": "Download Video Threads - Unduh HD Gratis",
+        "metaDescription": "Unduh video dari postingan Threads sebagai MP4 secara gratis. Tempel tautan threads.net atau threads.com. Tanpa login, tanpa aplikasi.",
+        "h1": "Unduh Video Threads dalam Hitungan Detik",
+        "lead": "Tempel tautan postingan Threads publik yang berisi video dan simpan sebagai MP4. Tautan threads.net maupun threads.com bisa dipakai, dan tidak ada yang perlu dipasang.",
+        "copyHint": "Ketuk ikon Bagikan pada postingan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Apakah tautan threads.com dan threads.net sama-sama bisa?",
+            "a": "Ya. Threads memakai kedua domain, dan tautan dari salah satunya diterima, termasuk tautan bagikan yang dibuat aplikasi."
+          },
+          {
+            "q": "Bisakah saya mengunduh foto dari Threads?",
+            "a": "Alat ini menyimpan video. Postingan yang hanya berisi foto atau teks tidak punya video, jadi tidak ada yang bisa diunduh."
+          },
+          {
+            "q": "Mengapa tautan Threads saya tidak berfungsi?",
+            "a": "Dukungan Threads lebih baru dan bergantung pada apa yang Threads tampilkan secara publik untuk sebuah postingan. Postingan dari profil pribadi, atau tanpa video, tidak bisa diunduh; jika video publik gagal, coba lagi nanti."
+          }
+        ]
+      },
+      "x": {
+        "noun": "video Twitter (X)",
+        "metaTitle": "Download Video Twitter (X) - Unduh HD Gratis",
+        "metaDescription": "Unduh video Twitter dan X sebagai MP4 secara gratis. Tempel tautan postingan dari x.com atau twitter.com. Tanpa login, tanpa aplikasi.",
+        "h1": "Unduh Video Twitter (X) dalam Hitungan Detik",
+        "lead": "Tempel tautan postingan publik di X (dulu Twitter) dan simpan videonya sebagai MP4. Tautan x.com dan twitter.com sama-sama bisa, tanpa perlu login.",
+        "copyHint": "Ketuk ikon Bagikan di bawah postingan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Apakah tautan x.com dan twitter.com sama-sama bisa?",
+            "a": "Ya. Twitter kini bernama X, dan tautan twitter.com lama tetap mengarah ke postingan yang sama, jadi keduanya diterima."
+          },
+          {
+            "q": "Bisakah saya mengunduh GIF dari Twitter?",
+            "a": "Twitter menyimpan GIF sebagai video MP4 pendek, jadi postingan GIF biasanya terunduh sebagai file MP4."
+          },
+          {
+            "q": "Bagaimana jika satu postingan berisi beberapa video?",
+            "a": "Setiap video ditampilkan terpisah dengan tombol Unduh masing-masing, dan ada juga opsi Unduh semua."
+          }
+        ]
+      },
+      "pinterest": {
+        "noun": "video Pinterest",
+        "metaTitle": "Download Video Pinterest - Unduh HD Gratis",
+        "metaDescription": "Pengunduh video Pinterest gratis. Tempel tautan pin atau pin.it lalu simpan videonya sebagai MP4. Tanpa login, tanpa aplikasi.",
+        "h1": "Unduh Video Pinterest dalam Hitungan Detik",
+        "lead": "Tempel tautan pin video Pinterest dan simpan sebagai MP4 dalam hitungan detik. Tautan pendek pin.it juga bisa, dan Anda tidak perlu login.",
+        "copyHint": "Buka pin, ketuk Bagikan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Apakah bisa dengan tautan pendek pin.it?",
+            "a": "Bisa. Kami mengikuti tautan pendek itu ke pin aslinya secara otomatis, jadi Anda bisa menempel apa pun yang diberikan aplikasi."
+          },
+          {
+            "q": "Bisakah saya mengunduh pin gambar?",
+            "a": "Tidak. Alat ini untuk pin video. Pin gambar tidak berisi video."
+          },
+          {
+            "q": "Apakah versi Pinterest tiap negara bisa dipakai?",
+            "a": "Ya. Tautan dari pinterest.com dan situs regional seperti pinterest.co.uk atau pinterest.fr diterima."
+          }
+        ]
+      },
+      "tiktok": {
+        "noun": "video TikTok",
+        "metaTitle": "Download Video TikTok - Unduh HD Gratis",
+        "metaDescription": "Pengunduh video TikTok gratis. Tempel tautan TikTok atau vm.tiktok.com lalu simpan videonya sebagai MP4. Tanpa login, tanpa aplikasi.",
+        "h1": "Pengunduh Video TikTok Gratis",
+        "lead": "Tempel tautan TikTok publik dan simpan videonya sebagai MP4 dalam hitungan detik. Tautan pendek dari aplikasi TikTok juga bisa, dan Anda tidak perlu akun.",
+        "copyHint": "Di TikTok, ketuk Bagikan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Tautan TikTok apa saja yang bisa dipakai?",
+            "a": "Tautan lengkap (tiktok.com/@user/video/…) dan tautan pendek buatan aplikasi (vm.tiktok.com dan vt.tiktok.com), yang kami ikuti secara otomatis."
+          },
+          {
+            "q": "Bisakah saya mengunduh TikTok pribadi atau khusus teman?",
+            "a": "Tidak. Hanya video publik yang bisa disimpan. Video pribadi memerlukan login TikTok yang tidak pernah diminta alat ini."
+          },
+          {
+            "q": "Mengapa tautan TikTok kadang gagal?",
+            "a": "TikTok membatasi permintaan otomatis, sehingga tautan kadang gagal meski videonya publik. Tunggu semenit lalu tempel lagi."
+          }
+        ]
+      },
+      "reddit": {
+        "noun": "video Reddit",
+        "metaTitle": "Download Video Reddit - Unduh HD Gratis",
+        "metaDescription": "Unduh video Reddit secara gratis. Tempel tautan postingan Reddit atau v.redd.it dan simpan MP4 serta, jika tersedia, trek audionya secara terpisah.",
+        "h1": "Pengunduh Video Reddit Gratis",
+        "lead": "Tempel tautan postingan video Reddit atau tautan v.redd.it dan simpan videonya sebagai MP4. Tidak perlu akun atau aplikasi, dan jika Reddit menyediakan trek audio terpisah, Anda juga bisa menyimpannya.",
+        "copyHint": "Ketuk Bagikan pada postingan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Mengapa video Reddit saya tidak ada suaranya?",
+            "a": "Reddit menyimpan video dan audionya sebagai dua file terpisah, dan alat ini tidak bisa menggabungkannya. MP4 yang Anda unduh hanya berisi gambar; jika Reddit menyediakan trek audio, akan muncul tombol Unduh Audio terpisah agar Anda bisa menyimpannya juga."
+          },
+          {
+            "q": "Apakah tautan v.redd.it dan tautan bagikan bisa dipakai?",
+            "a": "Ya. Tautan postingan (reddit.com/r/…/comments/…), tautan bagikan (…/s/…), dan tautan v.redd.it semuanya diterima."
+          },
+          {
+            "q": "Bisakah saya mengunduh video NSFW atau dari subreddit pribadi?",
+            "a": "Tidak. Video seperti itu memerlukan akun Reddit yang sudah login, yang tidak dipakai alat ini. Postingan publik bisa."
+          }
+        ]
+      },
+      "snapchat": {
+        "noun": "video Snapchat Spotlight",
+        "metaTitle": "Download Snapchat Spotlight - Unduh Video HD Gratis",
+        "metaDescription": "Pengunduh Snapchat Spotlight gratis. Tempel tautan Spotlight publik dan simpan videonya sebagai MP4. Tanpa login, tanpa aplikasi.",
+        "h1": "Unduh Video Snapchat Spotlight",
+        "lead": "Tempel tautan video Snapchat Spotlight publik dan simpan sebagai MP4. Tautan pendek dari aplikasi Snapchat juga bisa, dan Anda tidak perlu akun.",
+        "copyHint": "Buka video Spotlight, ketuk Bagikan, lalu Salin tautan.",
+        "faq": [
+          {
+            "q": "Tautan Snapchat apa saja yang didukung?",
+            "a": "Tautan Spotlight publik (snapchat.com/spotlight/…) dan tautan pendek buatan aplikasi (t.snapchat.com). Stories dan snap pribadi tidak didukung."
+          },
+          {
+            "q": "Bisakah saya mengunduh Story Snapchat seseorang?",
+            "a": "Tidak. Stories bukan video Spotlight publik, dan hanya terbatas untuk orang yang diberi akses. Alat ini hanya bekerja dengan postingan Spotlight publik."
+          },
+          {
+            "q": "Bisakah saya mengunduh snap pribadi?",
+            "a": "Tidak. Snap pribadi hanya terlihat oleh penerimanya dan tidak bisa dijangkau lewat tautan publik."
+          }
+        ]
+      }
+    }
+  },
+  "preview": {
+    "title": "Video Anda sudah siap",
+    "author": "Oleh",
+    "duration": "Durasi",
+    "downloadButton": "Unduh Video (MP4 HD)",
+    "newSearch": "Unduh yang lain",
+    "thumbnailAlt": "Thumbnail Reel",
+    "noAudio": "Diunduh tanpa suara (aliran audio dibatasi oleh platform)",
+    "downloadAudio": "Unduh Audio ({format})",
+    "postItems": "{n} video di postingan ini",
+    "itemTitle": "Video {n}",
+    "downloadItem": "Unduh",
+    "downloadItemAudio": "Audio saja",
+    "downloadAll": "Unduh semua ({n})",
+    "downloadAllBusy": "Memulai unduhan…",
+    "downloadAllHint": "Browser Anda mungkin meminta izin untuk beberapa unduhan sekaligus."
+  },
+  "download": {
+    "preparing": "Menyiapkan unduhan Anda…",
+    "downloading": "Mengunduh… {progress}",
+    "saving": "Menyimpan file…",
+    "saved": "Tersimpan",
+    "cancel": "Batal"
+  },
+  "errors": {
+    "LOGIN_REQUIRED": {
+      "title": "Pribadi atau perlu login",
+      "message": "Postingan ini pribadi atau memerlukan login di {platform}. Coba tautan publik."
+    },
+    "UNSUPPORTED_POST": {
+      "title": "Video tidak ditemukan",
+      "message": "Postingan ini hanya berisi gambar atau teks. Hanya tautan video/Reels yang didukung."
+    },
+    "STREAM_EXPIRED_OR_BLOCKED": {
+      "title": "Unduhan diblokir",
+      "message": "{platform} memblokir atau membuat tautan unduhan video ini kedaluwarsa. Silakan coba lagi sebentar lagi."
+    },
+    "PLATFORM_TIMEOUT": {
+      "title": "{platform} tidak merespons",
+      "message": "Kami tidak dapat menjangkau {platform} tepat waktu. Silakan coba lagi sebentar lagi."
+    },
+    "EXTRACTION_FAILED": {
+      "title": "Video tidak dapat diambil",
+      "message": "Kami tidak dapat mengambil video ini. Mungkin video itu pribadi, sudah dihapus, atau dibatasi di wilayah tertentu."
+    },
+    "INVALID_URL": {
+      "title": "Tautan tidak didukung",
+      "message": "Tautan itu tidak terlihat seperti tautan video yang didukung. Tempel tautan postingan video."
+    },
+    "NOT_CONFIGURED": {
+      "title": "Sementara tidak tersedia",
+      "message": "Unduhan dari {platform} sedang tidak tersedia. Silakan coba lagi nanti."
+    },
+    "NETWORK": {
+      "title": "Masalah koneksi",
+      "message": "Kami tidak dapat menjangkau server kami. Periksa koneksi Anda lalu coba lagi."
+    },
+    "actions": {
+      "retry": "Coba lagi",
+      "clear": "Hapus dan mulai lagi",
+      "report": "Laporkan tautan ini",
+      "reportSubject": "Laporan masalah tautan",
+      "reportBody": "Tautan ini tidak berfungsi di SaveReelsFast:"
+    },
+    "SERVER_BUSY": {
+      "title": "Kami sedang agak sibuk",
+      "message": "Banyak orang sedang mengunduh saat ini. Silakan coba lagi dalam beberapa detik."
+    },
+    "RATE_LIMITED": {
+      "title": "Pelan-pelan dulu",
+      "message": "Anda mengirim terlalu banyak permintaan dalam waktu singkat. Silakan tunggu semenit lalu coba lagi."
+    }
+  },
+  "pwa": {
+    "title": "Pasang Aplikasi SaveReelsFast",
+    "body": "Tambahkan ke layar utama untuk mengunduh sekali ketuk, bahkan dari aplikasi lain.",
+    "install": "Pasang Aplikasi",
+    "dismiss": "Tutup",
+    "iosTitle": "Tambahkan SaveReelsFast ke Layar Utama",
+    "iosStep1": "Ketuk ikon Bagikan di bagian bawah layar",
+    "iosStep2": "Gulir ke bawah dan ketuk “Tambah ke Layar Utama”",
+    "iosClose": "Mengerti"
+  },
+  "seo": {
+    "heading": "Cara tercepat menyimpan video media sosial",
+    "paragraphs": [
+      "Sebagian besar platform sosial tidak menyediakan cara bawaan untuk menyimpan video orang lain ke perangkat Anda. Alat kami menyelesaikannya dengan satu kali tempel: masukkan tautan dari Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, atau Snapchat, dan kami mengambil file videonya sehingga Anda mendapat MP4 bersih yang bisa ditonton offline.",
+      "Semuanya berjalan di browser Anda: tidak ada yang perlu dipasang, tidak perlu membuat akun, dan tidak perlu data pribadi. Cukup tautan publik video yang Anda inginkan. Jadi aman dipakai di perangkat apa pun, baik di ponsel saat istirahat kuliah maupun di komputer saat menyunting kompilasi.",
+      "Kreator memakainya untuk mengarsipkan konten sendiri sebelum hilang dari feed, pemasar memakainya untuk membuat kumpulan materi iklan, dan pengguna biasa memakainya untuk menyimpan salinan klip dari teman sebelum dihapus. Apa pun alasannya, alurnya sama: tempel, pratinjau, unduh."
+    ]
+  },
+  "faq": {
+    "heading": "Pertanyaan yang sering diajukan",
+    "items": [
+      {
+        "q": "Apakah pengunduh Reels ini benar-benar gratis?",
+        "a": "Ya. Tidak ada langganan, tidak ada watermark yang ditambahkan, dan tidak ada batasan terkait akun, karena akun sama sekali tidak diperlukan."
+      },
+      {
+        "q": "Apakah saya perlu login ke akun apa pun?",
+        "a": "Tidak. Anda hanya butuh tautan publik video. Kami tidak pernah meminta nama pengguna atau kata sandi di platform mana pun."
+      },
+      {
+        "q": "Bisakah saya mengunduh video pribadi?",
+        "a": "Tidak. Alat ini hanya bekerja pada video publik, karena konten pribadi sengaja dibatasi oleh tiap platform dan tidak dapat diakses lewat tautan yang dibagikan."
+      },
+      {
+        "q": "Kualitas video apa yang saya dapat?",
+        "a": "Anda mendapat kualitas terbaik yang tersedia dalam satu file MP4 dengan suara, biasanya HD untuk klip pendek dan Reels. Beberapa video panjang mungkin dibatasi pada resolusi yang lebih rendah."
+      },
+      {
+        "q": "Apakah legal mengunduh Reels?",
+        "a": "Mengunduh untuk ditonton sendiri secara offline umumnya tidak masalah, tetapi mengunggah ulang konten orang lain tanpa izin dapat melanggar hak cipta dan ketentuan Instagram. Selalu cantumkan kreator aslinya."
+      },
+      {
+        "q": "Apakah ini bisa di iPhone dan Android?",
+        "a": "Ya, berjalan di browser seluler atau desktop modern mana pun tanpa perlu memasang aplikasi."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "Alat ini tidak berafiliasi dengan, didukung oleh, atau disponsori oleh Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap, atau platform lain mana pun. Gunakan hanya untuk mengunduh konten yang berhak Anda simpan.",
+    "rights": "Hak cipta dilindungi.",
+    "links": {
+      "privacy": "Kebijakan Privasi",
+      "terms": "Ketentuan Layanan",
+      "dmca": "DMCA",
+      "disclaimer": "Sangkalan",
+      "contact": "Hubungi Kami",
+      "report": "Laporkan Tautan Rusak"
+    },
+    "columns": {
+      "tools": "Alat yang Didukung",
+      "legal": "Hukum & Kebijakan",
+      "company": "Perusahaan & Kontak"
+    },
+    "reportSubject": "Laporan tautan rusak"
+  },
+  "ad": {
+    "label": "Iklan",
+    "close": "Tutup iklan",
+    "collapse": "Ciutkan iklan",
+    "expand": "Tampilkan iklan"
+  }
+}

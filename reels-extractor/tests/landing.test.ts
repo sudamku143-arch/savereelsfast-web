@@ -16,7 +16,7 @@ import {
   platformFromSlug,
 } from "../lib/landing.ts";
 
-const LOCALES = ["en", "es", "pt", "hi"] as const;
+const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"] as const;
 const EXPECTED_IDS = ["instagram", "youtube", "facebook", "threads", "x", "pinterest", "tiktok", "reddit", "snapchat"];
 
 type Faq = { q: string; a: string };
@@ -96,7 +96,7 @@ for (const locale of LOCALES) {
         }
         assert.equal(c.faq.length, 3, `${id} should have 3 platform-specific FAQs`);
         for (const item of c.faq) {
-          assert.ok(item.q.trim().endsWith("?"), `${id}: question should end with "?": ${item.q}`);
+          assert.ok(/[?\u061F]$/.test(item.q.trim()), `${id}: question should end with a question mark: ${item.q}`);
           assert.ok(item.a.trim().length >= 40, `${id}: answer too thin: ${item.q}`);
         }
       }
@@ -185,7 +185,7 @@ describe("landing content across languages", () => {
   });
 
   it("is genuinely translated, not copied from English", () => {
-    for (const locale of ["es", "pt", "hi"] as const) {
+    for (const locale of LOCALES.filter((l) => l !== "en")) {
       for (const id of EXPECTED_IDS) {
         assert.notEqual(messages[locale].landing.platforms[id].lead, messages.en.landing.platforms[id].lead, `${locale}/${id} lead`);
         assert.notEqual(messages[locale].landing.platforms[id].metaTitle, messages.en.landing.platforms[id].metaTitle, `${locale}/${id} title`);

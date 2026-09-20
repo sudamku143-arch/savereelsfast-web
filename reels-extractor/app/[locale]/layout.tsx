@@ -5,6 +5,7 @@ import {
   locales,
   isLocale,
   defaultLocale,
+  localeDir,
   localePath,
   type Locale,
 } from "@/lib/i18n-config";
@@ -29,7 +30,7 @@ type Props = {
 };
 
 const OG_IMAGE = `${SITE_URL}/api/og`;
-const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN" };
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 
 export const viewport: Viewport = {
   themeColor: "#09090b",
@@ -101,7 +102,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   ) as Record<PlatformId, string>;
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={localeDir(locale)}>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} />

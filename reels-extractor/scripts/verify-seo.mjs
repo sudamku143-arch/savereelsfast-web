@@ -13,7 +13,10 @@ import { readFileSync } from "node:fs";
 
 const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
 const SITE = "https://savereelsfast.com"; // canonical URLs always point at production
-const LOCALES = ["en", "es", "pt", "hi"];
+const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"];
+// Legal pages are translated (and listed in the sitemap) only in these; the rest show English.
+const LEGAL_LOCALES = ["en", "es", "pt", "hi"];
+const RTL = ["ar"];
 const SLUGS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
 
 const messages = Object.fromEntries(
@@ -61,6 +64,7 @@ async function verifyLanding(locale, id, slug) {
   check(title && decode(title) === content.metaTitle, `${tag} <title> is "${title}"`);
   check(meta(html, "name", "description") === content.metaDescription, `${tag} meta description differs`);
   check(new RegExp(`<html[^>]+lang="${locale}"`).test(html), `${tag} <html lang> is not ${locale}`);
+  check(new RegExp(`<html[^>]+dir="${RTL.includes(locale) ? "rtl" : "ltr"}"`).test(html), `${tag} <html dir> is wrong`);
 
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
   check(canonical === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} canonical is ${canonical}`);
@@ -182,7 +186,8 @@ async function main() {
   const xml = await sitemapRes.text();
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
   const locs = entries.map((e) => e.match(/<loc>([^<]*)<\/loc>/)?.[1]);
-  check(entries.length === 15 * LOCALES.length, `sitemap has ${entries.length} URLs (expected ${15 * LOCALES.length})`);
+  const expectedUrls = 10 * LOCALES.length + 5 * LEGAL_LOCALES.length;
+  check(entries.length === expectedUrls, `sitemap has ${entries.length} URLs (expected ${expectedUrls})`);
   check(new Set(locs).size === locs.length, "sitemap has duplicate URLs");
   for (const locale of LOCALES) {
     for (const slug of Object.values(SLUGS)) {
@@ -192,7 +197,7 @@ async function main() {
       if (entry) {
         check(/<changefreq>daily<\/changefreq>/.test(entry), `${loc} changefreq is not daily`);
         check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(entry), `${loc} lastmod missing`);
-        check(["en", "es", "pt", "hi"].every((l) => new RegExp(`hreflang="${l}"`).test(entry)), `${loc} lacks hreflang alternates`);
+        check(LOCALES.every((l) => new RegExp(`hreflang="${l}"`).test(entry)), `${loc} lacks hreflang alternates`);
       }
     }
     check(locs.includes(`${SITE}${home(locale)}`), `sitemap is missing the ${locale} home page`);
@@ -203,6 +208,18 @@ async function main() {
   for (const loc of locs) {
     const res = await get(loc.replace(SITE, ""));
     check(res.status === 200, `sitemap URL ${loc} returned ${res.status}`);
+  }
+
+  // Legal pages without a reviewed translation: English text, so they canonicalise to the English page,
+  // stay out of the index and out of the sitemap.
+  for (const locale of LOCALES.filter((l) => !LEGAL_LOCALES.includes(l))) {
+    for (const legal of ["/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact"]) {
+      const html = await (await get(path(locale, legal))).text();
+      const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
+      check(canonical === `${SITE}${legal}`, `[${locale}] ${legal} canonical is ${canonical} (expected the English page)`);
+      check(/<meta name="robots" content="noindex/.test(html), `[${locale}] ${legal} should be noindex`);
+      check(!locs.includes(`${SITE}${path(locale, legal)}`), `[${locale}] ${legal} must not be in the sitemap`);
+    }
   }
 
   // robots.txt

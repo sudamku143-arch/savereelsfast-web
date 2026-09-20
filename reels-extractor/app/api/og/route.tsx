@@ -20,6 +20,14 @@ const WORDING: Record<string, { headline: (name: string) => string; tagline: str
   es: { headline: (n) => `Descargar ${n}`, tagline: "Gratis · Sin iniciar sesión · HD si existe" },
   pt: { headline: (n) => `Baixar ${n}`, tagline: "Grátis · Sem login · HD quando disponível" },
   // The image renderer's built-in font has no Devanagari glyphs, so the Hindi card uses Latin script.
+  // The renderer's font lacks these scripts too; the Latin card still names the platform.
+  bn: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
+  te: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
+  ta: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
+  mr: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
+  ar: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
+  id: { headline: (n) => `Unduh ${n}`, tagline: "Gratis · Tanpa login · HD jika tersedia" },
+  fr: { headline: (n) => `Télécharger ${n}`, tagline: "Gratuit · Sans connexion · HD si disponible" },
   hi: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
 };
 

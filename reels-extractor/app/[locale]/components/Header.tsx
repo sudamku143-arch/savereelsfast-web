@@ -16,6 +16,13 @@ const LOCALE_LABELS: Record<Locale, string> = {
   es: "Español",
   pt: "Português",
   hi: "हिन्दी",
+  bn: "বাংলা",
+  te: "తెలుగు",
+  ta: "தமிழ்",
+  mr: "मराठी",
+  id: "Bahasa Indonesia",
+  fr: "Français",
+  ar: "العربية",
 };
 
 function localeHref(locale: Locale): string {

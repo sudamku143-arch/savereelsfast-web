@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { locales, localePath, type Locale } from "@/lib/i18n-config";
+import { locales, localePath, hasLegalTranslation, LEGAL_TRANSLATED, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN" };
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 const OG_IMAGE = `${SITE_URL}/api/og`;
 
 /** Share image for a platform's landing page (see app/api/og/route.tsx for the accepted values). */
@@ -22,13 +22,16 @@ export function pageMetadata(
   path: string,
   title: string,
   description: string,
-  image: string = OG_IMAGE
+  image: string = OG_IMAGE,
+  translated: readonly Locale[] = locales
 ): Metadata {
   const languages: Record<string, string> = {};
-  locales.forEach((l) => {
+  translated.forEach((l) => {
     languages[l] = `${SITE_URL}${localePath(l, path)}`;
   });
-  const url = `${SITE_URL}${localePath(locale, path)}`;
+  // A page shown in a language it has not been translated into duplicates the English one.
+  const shown = translated.includes(locale) ? locale : defaultLocale;
+  const url = `${SITE_URL}${localePath(shown, path)}`;
 
   return {
     title,
@@ -47,5 +50,8 @@ export function pageMetadata(
   };
 }
 
-/** Same as pageMetadata; kept under its original name for the legal pages. */
-export const legalMetadata = pageMetadata;
+/** Legal pages: only translated languages are alternates; the rest canonicalise to English. */
+export function legalMetadata(locale: Locale, path: string, title: string, description: string): Metadata {
+  const metadata = pageMetadata(locale, path, title, description, OG_IMAGE, LEGAL_TRANSLATED);
+  return hasLegalTranslation(locale) ? metadata : { ...metadata, robots: { index: false, follow: true } };
+}
