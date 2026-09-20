@@ -694,7 +694,7 @@ def _resolve_and_extract(url: str, first_route: int = 0) -> tuple[str, dict]:
 
 
 def _cobalt_fallback(url: str, failure: ScraperError) -> tuple[str, dict] | None:
-    if not COBALT.enabled or failure.code not in _COBALT_ON or _bypass_breaker.get():
+    if not COBALT.usable() or failure.code not in _COBALT_ON or _bypass_breaker.get():
         return None  # (the diagnostic wants yt-dlp's own answer)
     video_id = youtube_video_id(url)
     if not video_id:
@@ -716,7 +716,7 @@ def _resolve_and_extract_ytdlp(url: str, first_route: int = 0) -> tuple[str, dic
     block on one client fingerprint is not the end. Other platforms have a single route.
     """
     budget = _extraction_budget(url)
-    if COBALT.enabled and is_youtube_host(urlparse(url.strip()).hostname or ""):
+    if COBALT.usable() and is_youtube_host(urlparse(url.strip()).hostname or ""):
         budget -= min(COBALT.timeout, max(0.0, budget - 5.0))  # leave the fallback its share of the same overall budget
     _deadline.set(time.monotonic() + budget)
     try:

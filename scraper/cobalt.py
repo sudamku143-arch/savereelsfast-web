@@ -26,6 +26,8 @@ from urls import is_allowed_media_url
 
 _log = logging.getLogger("uvicorn.error")
 
+FAILURES_BEFORE_PAUSE = 2
+RETRY_AFTER_SECONDS = 300.0
 MAX_RESPONSE_BYTES = 64 * 1024  # a real answer is a few hundred bytes
 _CLIENT_ERRORS_TO_SKIP = ("error.api.youtube.login", "error.api.content.video.age")  # video-specific: another instance won't help
 
@@ -62,6 +64,20 @@ class Cobalt:
         self.attempts = 0
         self.successes = 0
         self.last_error: str | None = None
+        self.consecutive_failures = 0
+        self.last_failure_at = 0.0
+
+    def usable(self, now: float | None = None) -> bool:
+        """
+        False while the instance keeps failing (two in a row): the fallback is then skipped, and no lookup time is
+        held back for it, instead of spending seconds on an answer that has not been coming. It is tried again
+        after RETRY_AFTER_SECONDS, and a single success makes it usable at once.
+        """
+        if not self.enabled:
+            return False
+        if self.consecutive_failures < FAILURES_BEFORE_PAUSE:
+            return True
+        return (now if now is not None else time.monotonic()) - self.last_failure_at >= RETRY_AFTER_SECONDS
 
     @property
     def enabled(self) -> bool:
@@ -87,6 +103,7 @@ class Cobalt:
             "instances": sorted(self.hosts()),
             "apiKeySet": bool(self.api_key),  # only whether one is configured, never the key
             "timeoutSeconds": self.timeout,
+            "paused": self.enabled and not self.usable(),  # skipped for a few minutes after repeated failures
             "attempts": self.attempts,
             "successes": self.successes,
             "lastError": self.last_error,
@@ -118,8 +135,11 @@ class Cobalt:
                 continue
             self.successes += 1
             self.last_error = None
+            self.consecutive_failures = 0
             return info
         self.last_error = reason
+        self.consecutive_failures += 1
+        self.last_failure_at = time.monotonic()
         raise CobaltUnavailable(reason)
 
     def _ask(self, instance: str, video_id: str, timeout: float, transport: httpx.BaseTransport | None) -> dict:

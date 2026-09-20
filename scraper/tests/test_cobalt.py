@@ -159,6 +159,29 @@ class FetchTests(unittest.TestCase):
 # ------------------------------------------------------------------------------------------ in the scraper
 
 
+class HealthGateTests(unittest.TestCase):
+    def failing(self, client, times):
+        for _ in range(times):
+            with self.assertRaises(cobalt.CobaltUnavailable):
+                client.fetch(VIDEO, transport=answer({"status": "error", "error": {"code": "error.api.fetch.fail"}}))
+
+    def test_two_failures_in_a_row_pause_it_and_a_success_or_the_wait_brings_it_back(self):
+        client = make()
+        self.failing(client, 1)
+        self.assertTrue(client.usable())
+        self.failing(client, 1)
+        self.assertFalse(client.usable())
+        self.assertTrue(client.stats()["paused"])
+        self.assertTrue(client.usable(now=client.last_failure_at + cobalt.RETRY_AFTER_SECONDS + 1))
+        client.fetch(VIDEO, transport=answer({"status": "tunnel", "url": TUNNEL}))
+        self.assertTrue(client.usable())
+        self.assertEqual(client.consecutive_failures, 0)
+
+    def test_off_is_never_usable(self):
+        self.assertFalse(make(instances=()).usable())
+        self.assertFalse(make(instances=()).stats()["paused"])
+
+
 class ScraperTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -225,6 +248,24 @@ class ScraperTests(unittest.TestCase):
             with self.assertRaises(ScraperError) as caught:
                 self.main._resolve_and_extract(YT)
         self.assertEqual(caught.exception.code, errors.PLATFORM_TIMEOUT)
+
+    def test_a_paused_cobalt_is_not_asked_and_yt_dlp_keeps_the_whole_budget(self):
+        import time
+
+        self.client.consecutive_failures = 2
+        self.client.last_failure_at = time.monotonic()
+        seen = {}
+
+        def fail(*args, **kwargs):
+            seen["deadline"] = self.main._deadline.get()
+            raise ScraperError(errors.PLATFORM_TIMEOUT)
+
+        started = time.monotonic()
+        with mock.patch.object(self.main, "_extract_info", side_effect=fail):
+            with self.assertRaises(ScraperError):
+                self.main._resolve_and_extract(YT)
+        self.assertEqual(self.client.attempts, 0)
+        self.assertGreaterEqual(seen["deadline"] - started, self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS - 0.5)
 
     def test_switched_off_by_default(self):
         with mock.patch.object(self.main, "COBALT", make(instances=())):
