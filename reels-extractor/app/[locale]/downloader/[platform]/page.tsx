@@ -12,6 +12,7 @@ import {
 } from "@/lib/landing";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { buildPlatformInfo } from "@/lib/platform-info";
 import ExtractorClient from "../../components/ExtractorClient";
 import FaqAccordion from "../../components/FaqAccordion";
 import AdBanner from "../../components/AdBanner";
@@ -144,8 +145,9 @@ export default async function PlatformLandingPage({ params }: Props) {
           errorsDict={dict.errors}
           downloadDict={dict.download}
           adDict={dict.ad}
+          platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
           initialPlatform={id}
-          fixedHeading={{ title: content.h1, subtitle: content.lead }}
+          landing
         />
       </div>
 

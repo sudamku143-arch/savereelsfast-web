@@ -19,6 +19,7 @@ export default function InputBox({
   defaultUrl = "",
   onSubmit,
   onDetectPlatform,
+  onDraftChange,
   disabled,
 }: {
   dict: Dict;
@@ -26,6 +27,8 @@ export default function InputBox({
   defaultUrl?: string;
   onSubmit: (url: string) => void;
   onDetectPlatform: (platform: PlatformId) => void;
+  /** Called with the current text (so it can be kept across a platform switch). */
+  onDraftChange?: (text: string) => void;
   disabled?: boolean;
 }) {
   const [url, setUrl] = useState(defaultUrl);
@@ -50,6 +53,7 @@ export default function InputBox({
 
     lastSubmittedRef.current = parsed.url;
     setUrl(parsed.url);
+    onDraftChange?.(parsed.url);
     setLocalError(null);
     onDetectPlatform(parsed.platform);
     onSubmit(parsed.url);
@@ -76,6 +80,7 @@ export default function InputBox({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setUrl(value);
+    onDraftChange?.(value);
     setLocalError(null);
     clearTimer();
 

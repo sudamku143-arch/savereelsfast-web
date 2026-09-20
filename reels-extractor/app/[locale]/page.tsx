@@ -2,6 +2,8 @@ import { isLocale, defaultLocale, localePath, type Locale } from "@/lib/i18n-con
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { getDictionary } from "@/lib/get-dictionary";
+import { landingPath } from "@/lib/landing";
+import { buildPlatformInfo } from "@/lib/platform-info";
 import ExtractorClient from "./components/ExtractorClient";
 import SeoContent from "./components/SeoContent";
 import FaqAccordion from "./components/FaqAccordion";
@@ -64,6 +66,7 @@ export default async function LocalePage({
           errorsDict={dict.errors}
           downloadDict={dict.download}
           adDict={dict.ad}
+          platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
         />
       </div>
 

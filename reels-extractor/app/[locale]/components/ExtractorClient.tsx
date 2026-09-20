@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
+import type { PlatformInfo } from "@/lib/platform-info";
 import { isErrorCode } from "@/lib/errors";
 import {
   getCachedResult,
+  getDraft,
   getLastViewed,
   putCachedResult,
+  setDraft,
   setLastViewed,
 } from "@/lib/result-cache";
 import InputBox from "./InputBox";
@@ -32,6 +36,10 @@ type PlatformsDict = { label: string } & Record<
   { name: string; title: string; placeholder: string }
 >;
 
+// The site gives up on the scraper after 7 s (which itself stops at 5 s), so a lookup that is still open
+// after this long is dead: show a clear message instead of a spinner.
+const EXTRACT_TIMEOUT_MS = 10_000;
+
 export default function ExtractorClient({
   heroDict,
   platformsDict,
@@ -39,8 +47,9 @@ export default function ExtractorClient({
   errorsDict,
   downloadDict,
   adDict,
+  platformInfo,
   initialPlatform = "instagram",
-  fixedHeading,
+  landing = false,
 }: {
   heroDict: HeroDict;
   platformsDict: PlatformsDict;
@@ -48,14 +57,18 @@ export default function ExtractorClient({
   errorsDict: ErrorsDict;
   downloadDict: DownloadDict;
   adDict: AdDict;
+  /** Heading, intro, helper text, title and address of every platform: what a tab switch shows at once. */
+  platformInfo: Record<PlatformId, PlatformInfo>;
   /** Platform tab selected on first render (platform landing pages preselect theirs). */
   initialPlatform?: PlatformId;
-  /**
-   * Landing pages keep one fixed h1 and intro, whichever tab is active, because the
-   * heading is what the page is meant to rank for. The home page changes it per tab.
-   */
-  fixedHeading?: { title: string; subtitle: string };
+  /** True on a platform's own page, whose heading follows the active tab from the start. */
+  landing?: boolean;
 }) {
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+  // Until a tab is chosen the home page keeps its own heading; a landing page always follows the tab.
+  const [switched, setSwitched] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
   const [platform, setPlatform] = useState<PlatformId>(initialPlatform);
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
     "idle"
@@ -75,13 +88,24 @@ export default function ExtractorClient({
   // straight from sessionStorage: no spinner, no request.
   useEffect(() => {
     const last = getLastViewed<ReelResult>();
-    if (!last) return;
+    if (!last) {
+      // No result on screen: bring back a link that was being typed when a tab switch loaded this page.
+      const draft = getDraft();
+      if (draft) {
+        setRestoredUrl(draft);
+        setInputKey((k) => k + 1);
+      }
+      return;
+    }
     lastUrlRef.current = last.url;
     setResult(last.result);
     setStatus("done");
-    if (last.result.platform) setPlatform(last.result.platform);
+    // A platform page shows its own platform; only the home page follows the result.
+    if (last.result.platform && !landing) setPlatform(last.result.platform);
     setRestoredUrl(last.url);
     setInputKey((k) => k + 1);
+    // Runs once on arrival: `landing` never changes for a mounted page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleSubmit(url: string) {
@@ -101,9 +125,18 @@ export default function ExtractorClient({
     setStatus("loading");
     setResult(null);
 
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, EXTRACT_TIMEOUT_MS);
+
     try {
       // GET, so identical lookups can be cached by the CDN (see /api/extract).
-      const res = await fetch(`/api/extract?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`/api/extract?url=${encodeURIComponent(url)}`, { signal: controller.signal });
       const data = await res.json();
 
       if (!res.ok || !data.success) {
@@ -118,8 +151,12 @@ export default function ExtractorClient({
       setResult(fresh);
       setStatus("done");
     } catch {
-      setErrorCode("NETWORK");
+      if (controller.signal.aborted && !timedOut) return; // cancelled on purpose (a tab switch)
+      setErrorCode(timedOut ? "PLATFORM_TIMEOUT" : "NETWORK");
       setStatus("error");
+    } finally {
+      clearTimeout(timer);
+      if (abortRef.current === controller) abortRef.current = null;
     }
   }
 
@@ -130,6 +167,7 @@ export default function ExtractorClient({
     setErrorCode(null);
     lastUrlRef.current = null;
     setLastViewed(null); // the cached results stay: pasting the same link again is still instant
+    setDraft(null);
     setRestoredUrl("");
     setInputKey((k) => k + 1);
   }
@@ -138,15 +176,37 @@ export default function ExtractorClient({
     if (lastUrlRef.current) void handleSubmit(lastUrlRef.current);
   }
 
+  /**
+   * A tab was clicked. Everything the visitor can see changes at once from data already in the page
+   * (placeholder, helper line, heading, intro, tab title); the router then moves to that platform's page in
+   * the background, keeping the language, so the address bar, the guide below and the back button follow.
+   */
   function handleSelectPlatform(id: PlatformId) {
+    const info = platformInfo[id];
     setPlatform(id);
-    if (status === "error") {
+    setSwitched(true);
+    document.title = info.metaTitle;
+
+    if (status === "loading") {
+      // The pending lookup belongs to the old page; the link stays in the input box for another go.
+      abortRef.current?.abort();
+      setStatus("idle");
+    } else if (status === "error") {
       setStatus("idle");
       setErrorCode(null);
+    }
+
+    if (window.location.pathname !== info.href) {
+      startTransition(() => router.push(info.href, { scroll: false }));
     }
   }
 
   const active = platformsDict[platform];
+  const follows = landing || switched;
+  const hrefs = Object.fromEntries(PLATFORM_IDS.map((id) => [id, platformInfo[id].href])) as Record<
+    PlatformId,
+    string
+  >;
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -154,16 +214,17 @@ export default function ExtractorClient({
         {heroDict.badge}
       </span>
       <h1 className="max-w-2xl text-center text-3xl font-extrabold tracking-tight text-zinc-50 sm:text-5xl">
-        {fixedHeading?.title ?? active.title}
+        {follows ? platformInfo[platform].h1 : active.title}
       </h1>
       <p className="mt-4 max-w-xl text-center text-sm text-zinc-400 sm:text-base">
-        {fixedHeading?.subtitle ?? heroDict.subtitle}
+        {follows ? platformInfo[platform].lead : heroDict.subtitle}
       </p>
 
       <div className="mt-8 w-full max-w-xl space-y-3">
         <PlatformTabs
           label={platformsDict.label}
           names={names}
+          hrefs={hrefs}
           active={platform}
           onSelect={handleSelectPlatform}
         />
@@ -174,8 +235,12 @@ export default function ExtractorClient({
           defaultUrl={restoredUrl}
           onSubmit={handleSubmit}
           onDetectPlatform={setPlatform}
+          onDraftChange={setDraft}
           disabled={status === "loading"}
         />
+        <p className="px-1 text-center text-xs leading-relaxed text-zinc-500">
+          {platformInfo[platform].copyHint}
+        </p>
       </div>
 
       {/* Slot 1: directly under the hero and the search box. */}

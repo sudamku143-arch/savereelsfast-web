@@ -9,6 +9,7 @@
 
 const RESULTS_KEY = "srf:results:v1";
 const LAST_KEY = "srf:last:v1";
+const DRAFT_KEY = "srf:draft:v1";
 export const MAX_CACHED_RESULTS = 5;
 export const RESULT_TTL_MS = 45 * 60 * 1000;
 
@@ -68,5 +69,23 @@ export function getLastViewed<T>(now = Date.now()): { url: string; result: T } |
     return result ? { url, result } : null;
   } catch {
     return null;
+  }
+}
+
+/** The text in the input box, so it is still there after switching platform (which loads that platform's page). */
+export function setDraft(text: string | null): void {
+  try {
+    if (text) sessionStorage.setItem(DRAFT_KEY, text.slice(0, 2048));
+    else sessionStorage.removeItem(DRAFT_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+export function getDraft(): string {
+  try {
+    return sessionStorage.getItem(DRAFT_KEY) ?? "";
+  } catch {
+    return "";
   }
 }

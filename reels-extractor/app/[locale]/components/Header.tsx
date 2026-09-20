@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { locales, defaultLocale, type Locale } from "@/lib/i18n-config";
+import { locales, defaultLocale, switchLocalePath, type Locale } from "@/lib/i18n-config";
 import InstallButton from "./InstallButton";
 
 type Dict = {
@@ -90,7 +90,8 @@ export default function Header({
     // Remember the explicit choice so the middleware stops auto-redirecting
     // based on the Accept-Language header.
     document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=31536000; SameSite=Lax`;
-    router.push(localeHref(next));
+    // Stay on the page you are on (same platform, same tool), only the language changes.
+    router.push(switchLocalePath(window.location.pathname, next));
   }
 
   return (
