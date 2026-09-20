@@ -326,6 +326,18 @@ class ScraperTests(unittest.TestCase):
         with self.assertRaises(ScraperError):
             self.main._open_stream_from_info(YT, hostile, "video", 0)
 
+    def test_the_startup_log_says_whether_the_fallback_is_on_without_the_key(self):
+        with self.assertLogs("uvicorn.error", level="INFO") as logs:
+            self.main._report_cobalt_fallback()
+        text = chr(10).join(logs.output)
+        self.assertIn("ON via cobalt.example.org", text)
+        self.assertIn("API key set", text)
+        self.assertNotIn("secret-key", text)
+        with mock.patch.object(self.main, "COBALT", make(instances=())):
+            with self.assertLogs("uvicorn.error", level="INFO") as logs:
+                self.main._report_cobalt_fallback()
+        self.assertIn("OFF (COBALT_API_URL is not set)", chr(10).join(logs.output))
+
     def test_stats_show_the_fallback_without_the_key(self):
         from fastapi.testclient import TestClient
 

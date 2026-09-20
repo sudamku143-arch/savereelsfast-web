@@ -1496,6 +1496,7 @@ async def diagnose_youtube(
             "proxyConfigured": bool(YTDLP_PROXY),
             "proxySetting": _proxy_setting(),
             "proxy": proxy,
+            "cobalt": COBALT.stats(),
             "routes": [{"clients": args["player_client"], "sendsCookies": sends} for args, sends in _youtube_route_plan()],
             "budgetSeconds": YOUTUBE_EXTRACTION_TIMEOUT_SECONDS,
             "socketTimeoutSeconds": YOUTUBE_SOCKET_TIMEOUT,
@@ -1506,6 +1507,18 @@ async def diagnose_youtube(
         }
     finally:
         _diagnose_lock.release()
+
+
+@app.on_event("startup")
+def _report_cobalt_fallback() -> None:
+    if COBALT.enabled:
+        _log.info(
+            "YouTube fallback (Cobalt): ON via %s%s. Used when yt-dlp is blocked or stalls.",
+            ", ".join(sorted(COBALT.hosts())),
+            " (API key set)" if COBALT.api_key else " (no API key)",
+        )
+    else:
+        _log.info("YouTube fallback (Cobalt): OFF (COBALT_API_URL is not set), so a blocked YouTube lookup fails.")
 
 
 @app.on_event("startup")
