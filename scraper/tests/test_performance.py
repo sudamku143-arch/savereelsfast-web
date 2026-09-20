@@ -197,9 +197,9 @@ class ExtractCacheTests(AsyncApiCase):
         with mock.patch.object(self.main, "INFO_CACHE", TTLCache(ttl=3600, clock=clock)):
             with mock.patch.object(self.main, "_extract_info", lambda url: calls.append(url) or make_info("v1")):
                 await self.extract(url_for("v1"))
-                clock.now += 3000
+                clock.now += 10000  # url_for() is a YouTube link: those are kept for 3 hours (10800 s)
                 self.assertTrue((await self.extract(url_for("v1"))).json()["cached"])
-                clock.now += 700  # past the 1 h TTL
+                clock.now += 900  # past the 3 h TTL
                 self.assertFalse((await self.extract(url_for("v1"))).json()["cached"])
         self.assertEqual(len(calls), 2)
 

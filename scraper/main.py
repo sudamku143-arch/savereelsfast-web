@@ -29,7 +29,7 @@ import errors
 from cache import CircuitBreaker, SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
-from diagnose import cookie_summary, interpret, probe_network
+from diagnose import cookie_summary, interpret, probe_network, probe_proxy, proxy_host, redact_secrets
 from memory import rss_mb
 from telegram_bot import MAX_UPLOAD_BYTES, TEMP_PREFIX, BotUserError, Media, TelegramBot, delete_quietly, valid_token
 from urls import (
@@ -40,6 +40,7 @@ from urls import (
     is_allowed_media_url,
     is_threads_host,
     is_youtube_host,
+    is_youtube_media_host,
     resolve_url,
     safe_referer,
 )
@@ -205,7 +206,27 @@ def _time_left(default: float) -> float:
 #   YTDLP_PROXY   e.g. http://user:pass@residential-proxy:port  (used for lookups AND downloads)
 #   cookies       a Netscape cookies.txt of a throw-away YouTube account, picked up automatically from
 #                 /etc/secrets/youtube_cookies.txt (Render "Secret Files"), or from YOUTUBE_COOKIES_FILE
-YTDLP_PROXY = os.environ.get("YTDLP_PROXY", "").strip() or None
+def _clean_proxy(raw: str | None) -> str | None:
+    """The configured proxy URL, or None when unset or malformed (a bad value must not break every lookup)."""
+    value = (raw or "").strip()
+    if not value:
+        return None
+    try:
+        parsed = urlparse(value)
+        valid = parsed.scheme in ("http", "https", "socks4", "socks5", "socks5h") and bool(parsed.hostname)
+        parsed.port  # noqa: B018 - raises ValueError for a non-numeric port
+    except ValueError:
+        valid = False
+    if not valid:
+        _log.warning("YTDLP_PROXY is set but is not a valid proxy URL (expected e.g. http://user:pass@host:port): ignoring it.")
+        return None
+    return value
+
+
+# The proxy is used for YouTube ONLY (its lookups, and the download of YouTube's own video files, which are tied
+# to the IP that asked for them). Every other platform goes direct, so the proxy's metered bandwidth is not spent
+# on them.
+YTDLP_PROXY = _clean_proxy(os.environ.get("YTDLP_PROXY"))
 YOUTUBE_COOKIES_DEFAULT_PATH = "/etc/secrets/youtube_cookies.txt"
 
 
@@ -258,13 +279,13 @@ def _youtube_route_plan() -> list[tuple[dict, bool]]:
     return plan
 
 
-def _ydl_options(youtube_route: int = 0, cookiefile: str | None = None) -> dict:
-    """yt-dlp options for one lookup or download, with the proxy, the route's YouTube clients and cookies applied."""
+def _ydl_options(youtube_route: int = 0, cookiefile: str | None = None, use_proxy: bool = False) -> dict:
+    """yt-dlp options for one lookup or download. The proxy is only added when `use_proxy` (YouTube) says so."""
     options = dict(YDL_OPTS)
     plan = _youtube_route_plan()
     args, _send_cookies = plan[min(youtube_route, len(plan) - 1)]
     options["extractor_args"] = {"youtube": args}
-    if YTDLP_PROXY:
+    if use_proxy and YTDLP_PROXY:
         options["proxy"] = YTDLP_PROXY
     if cookiefile:
         options["cookiefile"] = cookiefile
@@ -323,6 +344,9 @@ QUEUE_WAIT_SECONDS = _env_number("QUEUE_WAIT_SECONDS", 20)  # longest a queued r
 MAX_CONCURRENT_STREAMS = int(_env_number("MAX_CONCURRENT_STREAMS", 12))  # simultaneous downloads
 CACHE_TTL_SECONDS = _env_number("CACHE_TTL_SECONDS", 3600)  # 1 h: signed CDN links stay valid that long; the privacy policy promises at most 90 min
 CACHE_MAX_ENTRIES = int(_env_number("CACHE_MAX_ENTRIES", 500))
+# A YouTube lookup goes through the paid proxy, so its result is kept longer: a repeat costs no proxy bandwidth.
+# Never longer than the link itself stays valid (see _youtube_cache_ttl). The privacy policy states this limit.
+YOUTUBE_CACHE_TTL_SECONDS = _env_number("YOUTUBE_CACHE_TTL_SECONDS", 10800)  # 3 hours
 # Render's free instance has 512 MB. Above this resident size new work is refused (after dropping the
 # caches), so the service answers "busy" instead of being killed by the out-of-memory reaper.
 MEMORY_SOFT_LIMIT_MB = _env_number("MEMORY_SOFT_LIMIT_MB", 400)
@@ -519,7 +543,9 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
             "cookies": cookie_summary(_youtube_cookie_source()),
             "routes": [{"clients": args["player_client"], "sendsCookies": cookies} for args, cookies in _youtube_route_plan()],
             "breakerOpen": YOUTUBE_BREAKER.is_open(),
+            "cacheHours": round(YOUTUBE_CACHE_TTL_SECONDS / 3600, 1),
         },
+        "proxy": _proxy_stats(),
     }
 
 
@@ -535,8 +561,10 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
     trace = _trace.get()
     ydl_class = (lambda params: _DeadlineYDL(params, deadline, trace)) if deadline is not None else yt_dlp.YoutubeDL
     with _private_cookie_copy(_youtube_cookie_source() if wants_cookies else None) as cookiefile:
-        options = {**_ydl_options(youtube_route, cookiefile), "logger": collector}
+        options = {**_ydl_options(youtube_route, cookiefile, use_proxy=youtube), "logger": collector}
         if youtube:
+            if YTDLP_PROXY:
+                _proxy_note_lookup()
             options.update(
                 socket_timeout=YOUTUBE_SOCKET_TIMEOUT, retries=YOUTUBE_RETRIES, extractor_retries=YOUTUBE_RETRIES
             )
@@ -548,7 +576,7 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
         finally:
             if trace is not None:
                 # yt-dlp's own warnings (cookies rotated, PO token needed, client skipped ...): text only, no values
-                trace.append({"messages": [m[:160] for m in collector.messages[:8]]})
+                trace.append({"messages": [redact_secrets(m, YTDLP_PROXY)[:160] for m in collector.messages[:8]]})
     if info is not None:
         info["_messages"] = collector.messages
     return info
@@ -559,7 +587,7 @@ def _no_video_error(info: dict) -> ScraperError:
     # yt-dlp always appends generic lines like "No video formats found!"; only
     # the message that explains *why* is useful for classification.
     boilerplate = re.compile(r"no video formats found|requested format is not available", re.I)
-    text = " ".join(m for m in (info.get("_messages") or []) if not boilerplate.search(m)).strip()
+    text = redact_secrets(" ".join(m for m in (info.get("_messages") or []) if not boilerplate.search(m)).strip(), YTDLP_PROXY)
     if not text:
         return ScraperError(errors.UNSUPPORTED_POST)  # nothing was wrong: it just has no video
     code = classify_failure(text)
@@ -574,7 +602,7 @@ def _failure_from_exception(exc: Exception) -> ScraperError:
         return exc
     if isinstance(exc, (TimeoutError, socket.timeout)):
         return ScraperError(errors.PLATFORM_TIMEOUT)
-    text = str(exc).replace("ERROR: ", "").strip()
+    text = redact_secrets(str(exc).replace("ERROR: ", "").strip(), YTDLP_PROXY)
     code = classify_failure(text)
     if code == errors.EXTRACTION_FAILED and isinstance(exc, (DownloadError, ExtractorError)):
         return ScraperError(code, f"{errors.MESSAGES[code]} ({text[:160]})")
@@ -736,9 +764,10 @@ async def _extract_guarded(url: str, key: str, first_route: int = 0) -> tuple[st
         raise
 
     entry = {"resolved": resolved, "info": slim_info(info)}
-    INFO_CACHE.set(key, entry)
+    ttl = _youtube_cache_ttl(entry["info"]) if is_youtube_host(urlparse(resolved).hostname or "") else None
+    INFO_CACHE.set(key, entry, ttl=ttl)
     try:  # a short link and the full link it points to share one entry
-        INFO_CACHE.set(cache_key(resolved), entry)
+        INFO_CACHE.set(cache_key(resolved), entry, ttl=ttl)
     except UnsupportedUrl:
         pass
     return resolved, entry["info"]
@@ -829,7 +858,9 @@ class OpenStream:
         status: int = 200,
         content_range: str | None = None,
         accept_ranges: bool = False,
+        via_proxy: bool = False,
     ):
+        self.via_proxy = via_proxy
         self.response = response
         self.length = length
         self._closers = closers
@@ -850,6 +881,8 @@ class OpenStream:
                 if not chunk:
                     break
                 sent += len(chunk)
+                if self.via_proxy:
+                    _proxy_note_bytes(len(chunk))
                 if sent > MAX_STREAM_BYTES:
                     # Ending the response normally would hand the visitor a silently cut-off video.
                     # Raising aborts the connection, so the browser reports the download as failed.
@@ -899,11 +932,16 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
             length = response.headers.get("Content-Length")
             return OpenStream(response, int(length) if length else None, [response.close], ext)
 
-        ydl = yt_dlp.YoutubeDL(_ydl_options())
+        via_proxy = bool(YTDLP_PROXY) and (
+            is_youtube_host(urlparse(resolved).hostname or "") or is_youtube_media_host(urlparse(media_url).hostname or "")
+        )
+        if via_proxy:
+            _proxy_check_budget()
+        ydl = yt_dlp.YoutubeDL(_ydl_options(use_proxy=via_proxy))
         headers = dict(fmt.get("http_headers") or {})
         response = ydl.urlopen(yt_dlp.networking.Request(media_url, headers=headers))
         length = response.headers.get("Content-Length")
-        return OpenStream(response, int(length) if length else None, [response.close, ydl.close], ext)
+        return OpenStream(response, int(length) if length else None, [response.close, ydl.close], ext, via_proxy=via_proxy)
     except ScraperError:
         raise
     except urllib.error.HTTPError as exc:
@@ -1033,7 +1071,12 @@ def _open_cdn_stream(
     # Forward a single byte range so interrupted downloads can resume and players can seek.
     if range_header and re.fullmatch(r"bytes=\d*-\d*", range_header.strip()):
         headers["Range"] = range_header.strip()
-    client = httpx.Client(timeout=httpx.Timeout(5.0, read=20.0), follow_redirects=False, proxy=YTDLP_PROXY)
+    via_proxy = bool(YTDLP_PROXY) and is_youtube_media_host(urlparse(media_url).hostname or "")
+    if via_proxy:
+        _proxy_check_budget()
+    client = httpx.Client(
+        timeout=httpx.Timeout(5.0, read=20.0), follow_redirects=False, proxy=YTDLP_PROXY if via_proxy else None
+    )
     try:
         current = media_url
         response = None
@@ -1080,6 +1123,7 @@ def _open_cdn_stream(
             status=206 if response.status_code == 206 else 200,
             content_range=response.headers.get("content-range") if response.status_code == 206 else None,
             accept_ranges=response.headers.get("accept-ranges", "").lower() == "bytes",
+            via_proxy=via_proxy,
         )
     except ScraperError:
         client.close()
@@ -1120,6 +1164,79 @@ async def stream(
     opened.add_closer(lease.release)
 
     return _attachment_response(opened, id, kind, ext)
+
+
+# ---------------------------------------------------------------------------------- YouTube cache and proxy budget
+
+
+def _youtube_cache_ttl(info: dict) -> float:
+    """
+    How long to keep a YouTube lookup: YOUTUBE_CACHE_TTL_SECONDS, but never longer than its own video links
+    stay valid (they carry an `expire=` timestamp; a cached link that died would only cost a second lookup).
+    """
+    expiries = []
+    for fmt in (info.get("formats") or []) + (info.get("requested_formats") or []):
+        match = re.search(r"[?&]expire=(\d+)", str(fmt.get("url") or ""))
+        if match:
+            expiries.append(int(match.group(1)))
+    if not expiries:
+        return YOUTUBE_CACHE_TTL_SECONDS
+    return max(60.0, min(YOUTUBE_CACHE_TTL_SECONDS, min(expiries) - time.time() - 300))
+
+
+# The proxy is billed by traffic. These counters show where it goes (see /stats); the optional daily limit
+# stops YouTube downloads (never lookups from the cache) once a day's allowance is used.
+PROXY_DAILY_LIMIT_MB = _env_number("YOUTUBE_PROXY_DAILY_LIMIT_MB", 0)  # 0 = no limit
+_proxy_lock = threading.Lock()
+_proxy_usage = {"lookups": 0, "streams": 0, "streamBytes": 0, "day": "", "todayBytes": 0}
+
+
+def _utc_day() -> str:
+    return time.strftime("%Y-%m-%d", time.gmtime())
+
+
+def _proxy_roll_day() -> None:
+    today = _utc_day()
+    if _proxy_usage["day"] != today:
+        _proxy_usage["day"] = today
+        _proxy_usage["todayBytes"] = 0
+
+
+def _proxy_note_lookup() -> None:
+    with _proxy_lock:
+        _proxy_usage["lookups"] += 1
+
+
+def _proxy_note_bytes(count: int) -> None:
+    with _proxy_lock:
+        _proxy_roll_day()
+        _proxy_usage["streamBytes"] += count
+        _proxy_usage["todayBytes"] += count
+
+
+def _proxy_check_budget() -> None:
+    """Refuse a new YouTube download once today's proxy allowance is used up (only when a limit is set)."""
+    with _proxy_lock:
+        _proxy_roll_day()
+        _proxy_usage["streams"] += 1
+        used_mb = _proxy_usage["todayBytes"] / 1024 / 1024
+    if PROXY_DAILY_LIMIT_MB and used_mb >= PROXY_DAILY_LIMIT_MB:
+        raise ScraperError(errors.SERVER_BUSY)
+
+
+def _proxy_stats() -> dict:
+    """Proxy use for /stats: the host (never the credentials) and how much traffic went through it."""
+    with _proxy_lock:
+        _proxy_roll_day()
+        return {
+            "configured": bool(YTDLP_PROXY),
+            "host": proxy_host(YTDLP_PROXY),
+            "lookups": _proxy_usage["lookups"],
+            "downloads": _proxy_usage["streams"],
+            "downloadedMb": round(_proxy_usage["streamBytes"] / 1024 / 1024, 1),
+            "todayMb": round(_proxy_usage["todayBytes"] / 1024 / 1024, 1),
+            "dailyLimitMb": PROXY_DAILY_LIMIT_MB or None,
+        }
 
 
 # ------------------------------------------------------------------------------------- Telegram bot
@@ -1259,6 +1376,7 @@ async def diagnose_youtube(
         tokens = (_trace.set(trace), _bypass_breaker.set(True))
         try:
             network = await asyncio.to_thread(probe_network)
+            proxy = await asyncio.to_thread(probe_proxy, YTDLP_PROXY) if YTDLP_PROXY else None
             started = time.monotonic()
             ok, code = True, None
             try:
@@ -1280,16 +1398,30 @@ async def diagnose_youtube(
             "ytDlp": yt_dlp.version.__version__,
             "cookies": cookies,
             "proxyConfigured": bool(YTDLP_PROXY),
+            "proxy": proxy,
             "routes": [{"clients": args["player_client"], "sendsCookies": sends} for args, sends in _youtube_route_plan()],
             "budgetSeconds": YOUTUBE_EXTRACTION_TIMEOUT_SECONDS,
             "socketTimeoutSeconds": YOUTUBE_SOCKET_TIMEOUT,
             "network": network,
             "lookup": {"ok": ok, "code": code, "seconds": seconds},
             "trace": trace,
-            "reading": interpret(network, ok, code, trace, cookies),
+            "reading": interpret(network, ok, code, trace, cookies, proxy),
         }
     finally:
         _diagnose_lock.release()
+
+
+@app.on_event("startup")
+def _report_youtube_proxy() -> None:
+    if YTDLP_PROXY:
+        _log.info(
+            "YouTube proxy: configured (%s); used for YouTube only. Cache %.0f h. Daily limit: %s.",
+            proxy_host(YTDLP_PROXY),
+            YOUTUBE_CACHE_TTL_SECONDS / 3600,
+            f"{PROXY_DAILY_LIMIT_MB:.0f} MB" if PROXY_DAILY_LIMIT_MB else "none",
+        )
+    else:
+        _log.info("YouTube proxy: not configured (YouTube is fetched directly from this host).")
 
 
 @app.on_event("startup")

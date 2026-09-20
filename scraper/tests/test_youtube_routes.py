@@ -296,10 +296,11 @@ class CookieTests(Base):
         self.assertIsNone(seen[2], "other platforms never get YouTube cookies")
         self.assertEqual(self.leftover_copies(), set(), "every copy was cleaned up")
 
-    def test_a_proxy_applies_to_lookups_and_to_cdn_downloads(self):
-        self.assertNotIn("proxy", self.main._ydl_options(0))
+    def test_a_proxy_applies_to_youtube_lookups_and_to_youtube_cdn_downloads(self):
+        self.assertNotIn("proxy", self.main._ydl_options(0, use_proxy=True))
         with mock.patch.object(self.main, "YTDLP_PROXY", "http://user:pw@proxy.example:8080"):
-            self.assertEqual(self.main._ydl_options(0)["proxy"], "http://user:pw@proxy.example:8080")
+            self.assertEqual(self.main._ydl_options(0, use_proxy=True)["proxy"], "http://user:pw@proxy.example:8080")
+            self.assertNotIn("proxy", self.main._ydl_options(0), "not unless the caller says the link is YouTube's")
         seen = {}
 
         class Boom(Exception):

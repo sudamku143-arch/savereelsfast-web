@@ -28,23 +28,36 @@ const messages = Object.fromEntries(
 
 const text = (doc: Doc) => doc.sections.flatMap((s) => [s.heading, ...s.body]).join(" \n ");
 
-/** The values the policy makes claims about; keep in sync with scraper/main.py (CACHE_TTL_SECONDS). */
+/**
+ * The values the policy makes claims about; keep in sync with scraper/main.py. The longest a lookup is kept is
+ * the larger of the general setting and the YouTube one (YouTube results are kept longer: they cost proxy traffic).
+ */
 function scraperCacheMinutes(): number {
   const source = readFileSync(new URL("../../scraper/main.py", import.meta.url), "utf8");
-  const seconds = Number(source.match(/"CACHE_TTL_SECONDS",\s*(\d+)/)?.[1]);
-  return seconds / 60;
+  const setting = (name: string) => Number(source.match(new RegExp(`(?<![A-Z_])${name} = _env_number\\("${name}", (\\d+)\\)`))?.[1]);
+  return Math.max(setting("CACHE_TTL_SECONDS"), setting("YOUTUBE_CACHE_TTL_SECONDS")) / 60;
 }
 
+/** How each language states the maximum (180 minutes). */
+const PROMISED: Record<string, RegExp> = {
+  en: /up to 3 hours/,
+  es: /hasta 3 horas/,
+  pt: /até 3 horas/,
+  hi: /अधिकतम 3 घंटे/,
+};
+
 describe("policy matches the code", () => {
-  it("promises no more than 90 minutes of caching, and the scraper really caches for less", () => {
+  it("promises no more than 3 hours of caching, and the scraper really caches for no longer", () => {
     const minutes = scraperCacheMinutes();
-    assert.ok(minutes > 0 && minutes <= 90, `scraper caches for ${minutes} min but the policy promises up to 90`);
+    assert.ok(minutes > 0 && minutes <= 180, `scraper caches for ${minutes} min but the policy promises up to 180`);
+    assert.ok(minutes >= 180 || Number.isFinite(minutes), "could not read the cache settings");
   });
 
   for (const locale of LOCALES) {
-    it(`states the 90-minute limit and that no media is stored (${locale})`, () => {
+    it(`states the 3-hour limit and that no media is stored (${locale})`, () => {
       const privacy = text(messages[locale].legal.privacy);
-      assert.match(privacy, /90/, "cache lifetime missing");
+      assert.match(privacy, PROMISED[locale], "cache lifetime missing or out of date");
+      assert.doesNotMatch(privacy, /\b90\b/, "an old 90-minute claim is left");
       // "no media stored" appears as its own paragraph in every language
       const retention = messages[locale].legal.privacy.sections[2];
       assert.ok(retention.body.length >= 3, "retention section lost a paragraph");

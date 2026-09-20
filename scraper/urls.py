@@ -7,7 +7,7 @@ import re
 import urllib.error
 import urllib.request
 from typing import Callable
-from urllib.parse import parse_qsl, urlencode, urljoin, urlparse, urlunparse
+from urllib.parse import parse_qs, parse_qsl, urlencode, urljoin, urlparse, urlunparse
 
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -106,6 +106,31 @@ def is_youtube_host(host: str) -> bool:
     return _host_matches(host, "youtube.com") or _host_matches(host, "youtu.be")
 
 
+def is_youtube_media_host(host: str) -> bool:
+    """YouTube's video servers. Their links are tied to the IP that asked for them."""
+    return _host_matches((host or "").lower(), "googlevideo.com")
+
+
+def youtube_video_id(url: str) -> str | None:
+    """The 11-character video id of any YouTube link form (watch, youtu.be, shorts, embed, live), else None."""
+    try:
+        parsed = urlparse(url.strip())
+    except ValueError:
+        return None
+    host = (parsed.hostname or "").lower()
+    if not is_youtube_host(host):
+        return None
+    parts = [p for p in parsed.path.split("/") if p]
+    candidate = None
+    if _host_matches(host, "youtu.be"):
+        candidate = parts[0] if parts else None
+    elif parts[:1] == ["watch"]:
+        candidate = parse_qs(parsed.query).get("v", [None])[0]
+    elif parts[:1] in (["shorts"], ["embed"], ["live"], ["v"]) and len(parts) > 1:
+        candidate = parts[1]
+    return candidate if candidate and re.fullmatch(r"[A-Za-z0-9_-]{11}", candidate) else None
+
+
 def is_threads_host(host: str) -> bool:
     host = (host or "").lower()
     return _host_matches(host, "threads.net") or _host_matches(host, "threads.com")
@@ -197,6 +222,10 @@ def cache_key(url: str) -> str:
     parsed = urlparse(url.strip())
     if parsed.scheme not in ("http", "https") or not host_allowed(parsed.hostname or ""):
         raise UnsupportedUrl(UNSUPPORTED_MESSAGE)
+    video_id = youtube_video_id(url)
+    if video_id:
+        # watch?v=ID, youtu.be/ID, /shorts/ID, /embed/ID, /live/ID and playlist-context links are one video
+        return f"https://www.youtube.com/watch?v={video_id}"
     if needs_expansion(url):
         return _strip_tracking(parsed)
     return normalize_url(url)

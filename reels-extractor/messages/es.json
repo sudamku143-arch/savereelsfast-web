@@ -463,7 +463,7 @@
   "legal": {
     "privacy": {
       "title": "Política de privacidad",
-      "description": "Qué datos procesa SaveReelsFast, cuánto tiempo se guardan (hasta 90 minutos), que no se almacena ningún archivo y tus opciones de privacidad.",
+      "description": "Qué datos procesa SaveReelsFast, cuánto tiempo se guardan (hasta 3 horas), que no se almacena ningún archivo y tus opciones de privacidad.",
       "updated": "Última actualización: 20 de septiembre de 2026",
       "sections": [
         {
@@ -483,7 +483,7 @@
         {
           "heading": "Caché temporal y conservación",
           "body": [
-            "Para que las solicitudes repetidas sean rápidas y para proteger el servicio de la sobrecarga, el resultado de una búsqueda (el enlace, el título, la dirección de la miniatura y las direcciones de descarga temporales) se conserva en la memoria del servidor hasta 90 minutos y después se descarta automáticamente. Nunca se escribe en una base de datos.",
+            "Para que las solicitudes repetidas sean rápidas y para proteger el servicio de la sobrecarga, el resultado de una búsqueda (el enlace, el título, la dirección de la miniatura y las direcciones de descarga temporales) se conserva en la memoria del servidor hasta 3 horas y después se descarta automáticamente. Nunca se escribe en una base de datos.",
             "No se almacena ningún contenido multimedia. Los videos y el audio se transmiten desde la plataforma de origen, a través de nuestros servidores, hasta tu dispositivo en tiempo real y no se guardan en nuestros sistemas, ni siquiera de forma temporal en disco.",
             "Los registros de servidor que guardan nuestros proveedores de alojamiento se conservan según sus propios plazos. Los datos almacenados en tu navegador (véase más abajo) permanecen en tu dispositivo."
           ]

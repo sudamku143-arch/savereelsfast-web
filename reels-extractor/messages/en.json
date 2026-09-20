@@ -463,7 +463,7 @@
   "legal": {
     "privacy": {
       "title": "Privacy Policy",
-      "description": "What SaveReelsFast processes when you use it, how long temporary data is kept (up to 90 minutes), that no media is stored, and your privacy choices.",
+      "description": "What SaveReelsFast processes when you use it, how long temporary data is kept (up to 3 hours), that no media is stored, and your privacy choices.",
       "updated": "Last updated: September 20, 2026",
       "sections": [
         {
@@ -483,7 +483,7 @@
         {
           "heading": "Temporary caching and retention",
           "body": [
-            "To make repeat requests fast and to protect the service from overload, the result of a link lookup (the link, the title, the thumbnail address and temporary download addresses) is kept in server memory for up to 90 minutes and is then discarded automatically. It is never written to a database.",
+            "To make repeat requests fast and to protect the service from overload, the result of a link lookup (the link, the title, the thumbnail address and temporary download addresses) is kept in server memory for up to 3 hours and is then discarded automatically. It is never written to a database.",
             "No media is stored. Videos and audio are streamed from the original platform through our servers to your device in real time and are not saved on our systems, not even temporarily on disk.",
             "Server logs kept by our hosting providers are retained according to their own retention periods. Data stored in your browser (see below) stays on your device."
           ]

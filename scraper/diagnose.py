@@ -5,15 +5,59 @@ and how far a connection to YouTube gets from THIS machine's network (DNS, TCP, 
 No imports from the app, so it can be tested on its own.
 """
 
+import re
 import socket
 import ssl
 import time
+from urllib.parse import urlparse
+
+import httpx
 
 # Names of the cookies that mean "this is a logged-in Google session". Names are not secret; values never leave this file.
 AUTH_COOKIE_NAMES = frozenset(
     {"SID", "HSID", "SSID", "APISID", "SAPISID", "__Secure-1PSID", "__Secure-3PSID",
      "__Secure-1PAPISID", "__Secure-3PAPISID", "LOGIN_INFO"}
 )
+
+
+_CREDENTIALS = re.compile(r"([A-Za-z][A-Za-z0-9+.-]*)://[^/@\s:]+:[^/@\s]+@")
+
+
+def redact_secrets(text, *secrets: str | None) -> str:
+    """Remove proxy credentials (and any exact secret strings) from text that may be logged or returned."""
+    text = _CREDENTIALS.sub(r"\1://<redacted>@", str(text))
+    for secret in secrets:
+        if secret:
+            text = text.replace(secret, "<redacted>")
+    return text
+
+
+def proxy_host(proxy_url: str | None) -> str | None:
+    """host:port of a proxy URL, without its credentials."""
+    if not proxy_url:
+        return None
+    try:
+        parsed = urlparse(proxy_url)
+        return f"{parsed.hostname}:{parsed.port}" if parsed.port else parsed.hostname
+    except ValueError:
+        return None
+
+
+def probe_proxy(proxy_url: str, timeout: float = 8.0) -> dict:
+    """One tiny request to YouTube THROUGH the proxy (a few hundred bytes of its bandwidth). Blocking."""
+    result: dict = {"host": proxy_host(proxy_url)}
+    started = time.monotonic()
+    try:
+        with httpx.Client(proxy=proxy_url, timeout=timeout) as client:
+            response = client.get("https://www.youtube.com/generate_204")
+        result["status"] = response.status_code
+        result["ok"] = response.status_code in (200, 204)
+    except httpx.HTTPError as exc:
+        result["ok"] = False
+        result["error"] = type(exc).__name__
+        result["detail"] = redact_secrets(str(exc), proxy_url)[:120]
+    result["ms"] = round((time.monotonic() - started) * 1000)
+    return result
 
 
 def cookie_summary(path: str | None, now: float | None = None) -> dict:
@@ -108,10 +152,20 @@ def probe_network(host: str = "www.youtube.com", timeout: float = 5.0) -> dict:
     return result
 
 
-def interpret(network: dict, lookup_ok: bool, code: str | None, trace: list[dict], cookies: dict) -> str:
+def interpret(network: dict, lookup_ok: bool, code: str | None, trace: list[dict], cookies: dict, proxy: dict | None = None) -> str:
     """One plain-language reading of the evidence."""
     if lookup_ok:
-        return "YouTube works from this host."
+        return "YouTube works from this host." if not proxy else "YouTube works through the proxy."
+    if proxy and not proxy.get("ok"):
+        status = proxy.get("status")
+        if status == 407:
+            return "The proxy rejected the login (HTTP 407): check the username and password in YTDLP_PROXY."
+        if status in (402, 403):
+            return f"The proxy refused the request (HTTP {status}): the plan may be out of bandwidth or the account suspended."
+        if proxy.get("error"):
+            return (f"The proxy could not be reached or did not answer ({proxy['error']}): check the host and port in "
+                    "YTDLP_PROXY and that the plan is active.")
+        return f"The proxy answered HTTP {status}, which is not what YouTube's connectivity check returns."
     if "dnsError" in network:
         return "The host cannot resolve www.youtube.com (DNS). Nothing in the app can fix that."
     if "tcpError" in network:

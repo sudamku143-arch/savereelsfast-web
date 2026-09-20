@@ -317,5 +317,63 @@ class EndpointTests(unittest.TestCase):
         self.assertIsNone(ydl._trace)
 
 
+class ProxyProbeTests(unittest.TestCase):
+    PROXY = "http://webshare-user:hunter2-secret@p.webshare.io:80"
+
+    def probe(self, status=None, error=None):
+        import httpx
+
+        class Client:
+            def __init__(self, **kwargs):
+                self.kwargs = kwargs
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+            def get(self, url):
+                if error:
+                    raise error
+                return mock.Mock(status_code=status)
+
+        with mock.patch.object(diagnose.httpx, "Client", Client):
+            return diagnose.probe_proxy(self.PROXY)
+
+    def test_a_working_proxy_is_reported_with_its_host_and_no_login(self):
+        result = self.probe(status=204)
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["host"], "p.webshare.io:80")
+        self.assertNotIn("hunter2", json.dumps(result))
+
+    def test_a_rejected_login_is_407(self):
+        result = self.probe(status=407)
+        self.assertFalse(result["ok"])
+        self.assertIn("login", diagnose.interpret({}, False, None, [], {}, result))
+
+    def test_an_exhausted_or_suspended_plan_is_402_or_403(self):
+        for status in (402, 403):
+            reading = diagnose.interpret({}, False, None, [], {}, self.probe(status=status))
+            self.assertIn("bandwidth", reading)
+
+    def test_an_unreachable_proxy_is_reported_without_leaking_its_login(self):
+        import httpx
+
+        result = self.probe(error=httpx.ConnectError(f"all connection attempts failed for {self.PROXY}"))
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["error"], "ConnectError")
+        self.assertNotIn("hunter2", json.dumps(result))
+        self.assertIn("could not be reached", diagnose.interpret({}, False, None, [], {}, result))
+
+    def test_success_through_the_proxy_says_so(self):
+        reading = diagnose.interpret({}, True, None, [], {}, {"ok": True})
+        self.assertIn("through the proxy", reading)
+
+    def test_a_healthy_proxy_but_a_failing_lookup_falls_through_to_the_normal_reading(self):
+        reading = diagnose.interpret({"httpStatus": "204"}, False, "STREAM_EXPIRED_OR_BLOCKED", [], {"detected": False}, {"ok": True})
+        self.assertIn("refused", reading)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
