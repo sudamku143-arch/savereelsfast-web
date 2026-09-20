@@ -130,6 +130,10 @@ YOUTUBE_SOCKET_TIMEOUT = 8
 YOUTUBE_RETRIES = 1
 # Through a rotating proxy every new connection leaves from a different address, and some are slow or dead. A
 # shorter wait per attempt plus more attempts abandons a bad one quickly and tries another within the same budget.
+# Some YouTube sessions are served a page with no downloadable formats (their "SABR-only" experiment) while the very
+# next session is fine. When a pass over the routes finds nothing to download, ask again (a fresh session, and through
+# a rotating proxy a fresh address) while the budget lasts, instead of giving up on the first unlucky answer.
+YOUTUBE_LOOKUP_PASSES = 2
 YOUTUBE_PROXY_SOCKET_TIMEOUT = 5
 YOUTUBE_PROXY_RETRIES = 2
 
@@ -726,9 +730,10 @@ def _resolve_and_extract_ytdlp(url: str, first_route: int = 0) -> tuple[str, dic
         raise ScraperError(_youtube_last_failure[0])  # failed a moment ago: don't ask again yet
     route_count = len(_youtube_route_plan())
     first_route = min(first_route, route_count - 1)
-    routes = range(first_route, route_count) if youtube else [0]
+    routes = list(range(first_route, route_count)) * YOUTUBE_LOOKUP_PASSES if youtube else [0]
     info, failure = None, None
-    for route in routes:
+    for position, route in enumerate(routes):
+        last = position == len(routes) - 1
         try:
             found = _extract_info(url) if route == 0 else _extract_info(url, route)
         except ScraperError as err:
@@ -736,14 +741,15 @@ def _resolve_and_extract_ytdlp(url: str, first_route: int = 0) -> tuple[str, dic
         except Exception as exc:  # noqa: BLE001 - always answer with a coded error
             failure = _failure_from_exception(exc)
         else:
-            if found and (_has_download(found) or route == routes[-1]):
+            if found and (_has_download(found) or last):
                 if youtube and _has_download(found):
                     YOUTUBE_BREAKER.record_success()
                 return url, found
             info = info or found  # keep it: its messages explain why there is nothing to download
             failure = None
             continue
-        if failure.code not in _RETRY_ON_OTHER_ROUTE or route == routes[-1]:
+        # An error (a block, a stall) tries each route once; only an empty answer earns the extra pass.
+        if failure.code not in _RETRY_ON_OTHER_ROUTE or last or position >= route_count - first_route - 1:
             gave_up = _gave_up.get()
             if youtube and failure.code in _BREAKER_FAILURES and not (gave_up and gave_up.is_set()) and not _bypass_breaker.get():
                 # one failed LOOKUP counts once, however many routes it tried (and not again if the caller
@@ -853,7 +859,11 @@ async def _extract_guarded(url: str, key: str, first_route: int = 0) -> tuple[st
         raise
 
     entry = {"resolved": resolved, "info": slim_info(info)}
-    ttl = _youtube_cache_ttl(entry["info"]) if is_youtube_host(urlparse(resolved).hostname or "") else None
+    youtube_result = is_youtube_host(urlparse(resolved).hostname or "")
+    if youtube_result and not _has_download(entry["info"]):
+        # a session-specific dead end, not a fact about the video: remembering it would fail every retry for hours
+        return resolved, entry["info"]
+    ttl = _youtube_cache_ttl(entry["info"]) if youtube_result else None
     INFO_CACHE.set(key, entry, ttl=ttl)
     try:  # a short link and the full link it points to share one entry
         INFO_CACHE.set(cache_key(resolved), entry, ttl=ttl)
