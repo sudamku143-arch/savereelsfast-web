@@ -17,6 +17,7 @@ const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar
 // Legal pages are translated (and listed in the sitemap) only in these; the rest show English.
 const LEGAL_LOCALES = ["en", "es", "pt", "hi"];
 const RTL = ["ar"];
+const OG_LOCALE = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 const SLUGS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
 
 const messages = Object.fromEntries(
@@ -83,6 +84,32 @@ async function verifyHome(locale) {
   check(!!app && app.url === `${SITE}${home(locale)}` && app.inLanguage === locale && app.offers?.price === "0", `${tag} SoftwareApplication missing or wrong`);
   check(!!faq && faq.inLanguage === locale && faq.mainEntity?.length === messages[locale].faq.items.length, `${tag} FAQPage missing or wrong`);
   check(faq?.mainEntity?.[0]?.name === messages[locale].faq.items[0].q, `${tag} the FAQ schema is not in ${locale}`);
+  check(app?.alternateName === dict.title, `${tag} schema alternateName "${app?.alternateName}" differs from the title`);
+  check(meta(html, "property", "og:locale") === OG_LOCALE[locale], `${tag} og:locale is ${meta(html, "property", "og:locale")}`);
+}
+
+/** Every share image: a real 1200x630 PNG, and hostile parameters cannot change what it says. */
+async function verifyShareImages() {
+  const png = async (url) => {
+    const res = await get(url);
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    const signature = [0x89, 0x50, 0x4e, 0x47].every((b, i) => bytes[i] === b);
+    const view = new DataView(bytes.buffer);
+    return { status: res.status, type: res.headers.get("content-type"), size: bytes.length, signature, width: view.getUint32(16), height: view.getUint32(20) };
+  };
+  for (const locale of LOCALES) {
+    for (const slug of Object.values(SLUGS)) {
+      const url = `/api/og?p=${slug}&l=${locale}`;
+      const img = await png(url);
+      check(img.status === 200 && /image\/png/.test(img.type ?? "") && img.signature, `share image ${url} is not a PNG (${img.status} ${img.type})`);
+      check(img.width === 1200 && img.height === 630, `share image ${url} is ${img.width}x${img.height}`);
+      check(img.size > 5_000 && img.size < 1_000_000, `share image ${url} is ${img.size} bytes`);
+    }
+  }
+  for (const hostile of ["p=%3Cscript%3Ealert(1)%3C%2Fscript%3E&l=en", "p=instagram&l=xx", "p=../../etc/passwd&l=%00", `p=${"a".repeat(3000)}&l=${"b".repeat(3000)}`, "p=&l="]) {
+    const img = await png(`/api/og?${hostile}`);
+    check(img.status === 200 && img.signature && img.width === 1200, `share image with odd parameters "${hostile.slice(0, 40)}" gave ${img.status}`);
+  }
 }
 
 async function verifyLanding(locale, id, slug) {
@@ -135,6 +162,8 @@ async function verifyLanding(locale, id, slug) {
   check(app?.url === `${SITE}${path(locale, `/downloader/${slug}`)}`, `${tag} schema url mismatch`);
   check(app?.inLanguage === locale && faq?.inLanguage === locale, `${tag} schema inLanguage is ${app?.inLanguage}/${faq?.inLanguage}, expected ${locale}`);
   check(faq?.mainEntity?.[0]?.name === content.faq[0].q, `${tag} the FAQ schema is not in ${locale}`);
+  check(app?.alternateName === content.metaTitle, `${tag} schema alternateName "${app?.alternateName}" differs from the title`);
+  check(meta(html, "property", "og:locale") === OG_LOCALE[locale], `${tag} og:locale is ${meta(html, "property", "og:locale")}`);
   // Every FAQ in the markup must also be visible on the page (Google requires it).
   const visible = decode(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
   check((faq?.mainEntity ?? []).every((q) => visible.includes(q.name)), `${tag} an FAQ question is in the schema but not on the page`);
@@ -153,9 +182,18 @@ async function main() {
     for (const [id, slug] of Object.entries(SLUGS)) await verifyLanding(locale, id, slug);
   }
 
+  // Share images for every language and platform, plus hostile parameters.
+  await verifyShareImages();
+
   // Translated legal pages: same length limits as every other page.
   for (const locale of LEGAL_LOCALES) {
     for (const [key, legalPath] of [["privacy", "/privacy-policy"], ["terms", "/terms-of-service"], ["dmca", "/dmca"], ["disclaimer", "/disclaimer"]]) {
+      const html = await (await get(path(locale, legalPath))).text();
+      for (const l of LOCALES) {
+        const expected = LEGAL_LOCALES.includes(l);
+        check(hasAlternate(html, l, `${SITE}${path(l, legalPath)}`) === expected, `[${locale}] ${legalPath}: hreflang ${l} should ${expected ? "" : "not "}be listed`);
+      }
+      check(hasAlternate(html, "x-default", `${SITE}${legalPath}`), `[${locale}] ${legalPath}: x-default missing`);
       const doc = messages[locale].legal[key];
       check([...doc.title].length < 60, `[${locale}] ${legalPath} title is ${[...doc.title].length} characters`);
       check([...doc.description].length < 160, `[${locale}] ${legalPath} description is ${[...doc.description].length} characters`);

@@ -83,6 +83,7 @@ export default async function PlatformLandingPage({ params }: Props) {
         "@type": "SoftwareApplication",
         "@id": `${pageUrl}#app`,
         name: `${platformName} — ${SITE_NAME}`,
+        alternateName: content.metaTitle, // the localized page title, as shown in search results
         url: pageUrl,
         description: fillTemplate(common.structuredDescription, vars),
         applicationCategory: "MultimediaApplication",

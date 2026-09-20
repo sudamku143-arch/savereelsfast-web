@@ -29,6 +29,7 @@ export default async function LocalePage({
         "@type": "SoftwareApplication",
         "@id": `${homeUrl}#app`,
         name: SITE_NAME,
+        alternateName: dict.meta.title, // the localized page title, as shown in search results
         url: homeUrl,
         description: dict.meta.description,
         applicationCategory: "MultimediaApplication",
