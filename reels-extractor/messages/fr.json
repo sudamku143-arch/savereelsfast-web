@@ -2,7 +2,17 @@
   "meta": {
     "title": "Télécharger Vidéos Instagram, YouTube, TikTok",
     "description": "Téléchargez gratuitement des vidéos Instagram, YouTube, Facebook, TikTok, X et Reddit. Collez un lien, enregistrez un MP4, sans connexion ni appli.",
-    "ogAlt": "Aperçu de l'outil de téléchargement de vidéos de réseaux sociaux"
+    "ogAlt": "Aperçu de l'outil de téléchargement de vidéos de réseaux sociaux",
+    "keywords": [
+      "télécharger vidéo",
+      "télécharger reels Instagram",
+      "télécharger vidéo YouTube",
+      "télécharger TikTok",
+      "télécharger vidéo Facebook",
+      "télécharger vidéo gratuit en ligne",
+      "enregistrer vidéo en MP4",
+      "télécharger vidéo sans connexion"
+    ]
   },
   "nav": {
     "language": "Choisir la langue",
@@ -405,6 +415,25 @@
       "La plupart des réseaux sociaux ne proposent pas de moyen intégré d'enregistrer la vidéo de quelqu'un d'autre sur votre appareil. Notre outil règle cela en un collage : déposez le lien d'Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit ou Snapchat, et nous récupérons le fichier vidéo pour vous donner un MP4 propre à regarder hors ligne.",
       "Tout se passe dans votre navigateur : rien à installer, aucun compte à créer et aucune donnée personnelle à fournir. Seulement le lien public de la vidéo voulue. Vous pouvez donc l'utiliser en toute sécurité sur n'importe quel appareil, sur un téléphone entre deux cours comme sur un ordinateur pour monter une compilation.",
       "Les créateurs s'en servent pour archiver leurs contenus avant qu'ils ne disparaissent des fils, les marketeurs pour constituer des collections de publicités, et chacun pour garder une copie d'un clip envoyé par un ami avant qu'il ne soit supprimé. Quelle que soit la raison, le principe reste le même : coller, prévisualiser, télécharger."
+    ],
+    "featuresHeading": "Pourquoi utiliser SaveReelsFast",
+    "features": [
+      {
+        "title": "Gratuit, sans compte",
+        "text": "Ni inscription, ni connexion, ni rien à installer. Tout se passe dans votre navigateur."
+      },
+      {
+        "title": "Fonctionne sur tous les appareils",
+        "text": "iPhone, Android, Windows, Mac ou Linux : si vous avez un navigateur, c'est prêt."
+      },
+      {
+        "title": "Qualité d'origine",
+        "text": "Vous recevez le fichier tel que la plateforme le fournit, sans recompression ni marque ajoutée par nous."
+      },
+      {
+        "title": "Neuf plateformes au même endroit",
+        "text": "Le même outil gère Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit et Snapchat."
+      }
     ]
   },
   "faq": {

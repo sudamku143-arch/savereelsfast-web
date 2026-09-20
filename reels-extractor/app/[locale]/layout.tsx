@@ -66,6 +66,7 @@ export async function generateMetadata({
     },
     title: dict.meta.title,
     description: dict.meta.description,
+    keywords: dict.meta.keywords,
     alternates: {
       canonical: canonicalUrl,
       languages,

@@ -2,7 +2,17 @@
   "meta": {
     "title": "Download Video Instagram, YouTube, TikTok Gratis",
     "description": "Unduh video Instagram, YouTube, Facebook, TikTok, X, dan Reddit gratis. Tempel tautan lalu simpan MP4, tanpa login dan tanpa instal aplikasi.",
-    "ogAlt": "Pratinjau alat pengunduh video media sosial"
+    "ogAlt": "Pratinjau alat pengunduh video media sosial",
+    "keywords": [
+      "download video",
+      "download reels Instagram",
+      "download video YouTube",
+      "download TikTok tanpa watermark",
+      "download video Facebook",
+      "download video gratis online",
+      "simpan video ke MP4",
+      "download video tanpa login"
+    ]
   },
   "nav": {
     "language": "Pilih bahasa",
@@ -405,6 +415,25 @@
       "Sebagian besar platform sosial tidak menyediakan cara bawaan untuk menyimpan video orang lain ke perangkat Anda. Alat kami menyelesaikannya dengan satu kali tempel: masukkan tautan dari Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, atau Snapchat, dan kami mengambil file videonya sehingga Anda mendapat MP4 bersih yang bisa ditonton offline.",
       "Semuanya berjalan di browser Anda: tidak ada yang perlu dipasang, tidak perlu membuat akun, dan tidak perlu data pribadi. Cukup tautan publik video yang Anda inginkan. Jadi aman dipakai di perangkat apa pun, baik di ponsel saat istirahat kuliah maupun di komputer saat menyunting kompilasi.",
       "Kreator memakainya untuk mengarsipkan konten sendiri sebelum hilang dari feed, pemasar memakainya untuk membuat kumpulan materi iklan, dan pengguna biasa memakainya untuk menyimpan salinan klip dari teman sebelum dihapus. Apa pun alasannya, alurnya sama: tempel, pratinjau, unduh."
+    ],
+    "featuresHeading": "Kenapa memakai SaveReelsFast",
+    "features": [
+      {
+        "title": "Gratis, tanpa akun",
+        "text": "Tanpa daftar, tanpa login, dan tidak ada yang perlu dipasang. Berjalan di browser Anda."
+      },
+      {
+        "title": "Bisa di perangkat apa pun",
+        "text": "iPhone, Android, Windows, Mac, atau Linux: selama ada browser, langsung bisa dipakai."
+      },
+      {
+        "title": "Kualitas asli",
+        "text": "Anda mendapat file persis seperti yang disajikan platform, tanpa kompresi ulang dan tanpa branding tambahan dari kami."
+      },
+      {
+        "title": "Sembilan platform dalam satu tempat",
+        "text": "Alat yang sama berfungsi untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat."
+      }
     ]
   },
   "faq": {

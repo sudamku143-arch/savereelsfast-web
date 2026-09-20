@@ -6,6 +6,7 @@ import { landingPath } from "@/lib/landing";
 import { buildPlatformInfo } from "@/lib/platform-info";
 import ExtractorClient from "./components/ExtractorClient";
 import SeoContent from "./components/SeoContent";
+import FeatureGrid from "./components/FeatureGrid";
 import FaqAccordion from "./components/FaqAccordion";
 import AdBanner from "./components/AdBanner";
 import InstallBanner from "./components/InstallBanner";
@@ -71,6 +72,8 @@ export default async function LocalePage({
       </div>
 
       <InstallBanner dict={dict.pwa} />
+
+      <FeatureGrid heading={dict.seo.featuresHeading} features={dict.seo.features} />
 
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
 

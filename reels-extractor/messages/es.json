@@ -2,7 +2,17 @@
   "meta": {
     "title": "Descargar Videos de Instagram, YouTube y TikTok",
     "description": "Descarga gratis videos de Instagram, YouTube, Facebook, TikTok, X, Reddit y más. Pega el enlace y guarda un MP4, sin iniciar sesión ni instalar apps.",
-    "ogAlt": "Vista previa del descargador de videos de redes sociales"
+    "ogAlt": "Vista previa del descargador de videos de redes sociales",
+    "keywords": [
+      "descargar videos",
+      "descargador de reels de Instagram",
+      "descargar videos de YouTube",
+      "descargar TikTok",
+      "descargar videos de Facebook",
+      "descargar video gratis online",
+      "guardar video en MP4",
+      "descargar videos sin iniciar sesión"
+    ]
   },
   "nav": {
     "language": "Seleccionar idioma",
@@ -405,6 +415,25 @@
       "La mayoría de las redes sociales no ofrecen una forma integrada de guardar en tu dispositivo el video de otra persona. Nuestra herramienta lo resuelve con un solo pegado: coloca el enlace de Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit o Snapchat y obtenemos el archivo de video para que tengas un MP4 limpio que puedes ver sin conexión.",
       "Funciona por completo en tu navegador: no hay nada que instalar, ninguna cuenta que crear y no se requieren datos personales. Solo el enlace público del video que quieres. Por eso es seguro usarlo en cualquier dispositivo, ya sea desde el móvil entre clases o desde un ordenador editando una recopilación.",
       "Los creadores lo usan para archivar su propio contenido antes de que desaparezca de los feeds, los profesionales del marketing para armar archivos de referencia de anuncios, y los usuarios comunes para conservar una copia de un clip que les envió un amigo antes de que lo borren. Sea cual sea el motivo, el proceso es el mismo: pegar, previsualizar, descargar."
+    ],
+    "featuresHeading": "Por qué usar SaveReelsFast",
+    "features": [
+      {
+        "title": "Gratis y sin cuenta",
+        "text": "Sin registro, sin inicio de sesión y nada que instalar. Funciona en tu navegador."
+      },
+      {
+        "title": "Funciona en cualquier dispositivo",
+        "text": "iPhone, Android, Windows, Mac o Linux: si tienes un navegador, ya puedes usarlo."
+      },
+      {
+        "title": "Calidad original",
+        "text": "Recibes el archivo tal como lo entrega la plataforma, sin recompresión ni marcas añadidas por nosotros."
+      },
+      {
+        "title": "Nueve plataformas en un solo lugar",
+        "text": "La misma herramienta funciona con Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit y Snapchat."
+      }
     ]
   },
   "faq": {

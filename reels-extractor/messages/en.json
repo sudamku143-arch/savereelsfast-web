@@ -2,7 +2,17 @@
   "meta": {
     "title": "Free Video Downloader - Instagram, YouTube, TikTok",
     "description": "Download videos from Instagram, YouTube, Facebook, TikTok, X, Reddit and more for free. Paste a link, save an MP4. No login, no app.",
-    "ogAlt": "Social media video downloader tool preview"
+    "ogAlt": "Social media video downloader tool preview",
+    "keywords": [
+      "video downloader",
+      "Instagram reels downloader",
+      "YouTube video downloader",
+      "TikTok downloader",
+      "Facebook video downloader",
+      "download video online free",
+      "save video as MP4",
+      "no login video downloader"
+    ]
   },
   "nav": {
     "language": "Select language",
@@ -405,6 +415,25 @@
       "Most social platforms don't give you a built-in way to save someone else's video to your device. Our tool solves that in one paste: drop in the link from Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat, and we fetch the video file so you get a clean MP4 you can watch offline.",
       "It works entirely in your browser — there's nothing to install, no account to create, and no personal data required. Just the public link to the video you want. That makes it safe to use on any device, whether you're on a phone between classes or at a desktop editing a compilation.",
       "Creators use it to archive their own content before it disappears from feeds, marketers use it to build swipe files of ad creative, and everyday users use it to keep a copy of a clip a friend sent them before it gets deleted. Whatever the reason, the flow stays the same: paste, preview, download."
+    ],
+    "featuresHeading": "Why use SaveReelsFast",
+    "features": [
+      {
+        "title": "Free, no account",
+        "text": "No signup, no login and nothing to install. It runs in your browser."
+      },
+      {
+        "title": "Works on any device",
+        "text": "iPhone, Android, Windows, Mac or Linux: if you have a browser, you're set."
+      },
+      {
+        "title": "Original quality",
+        "text": "You get the file exactly as the platform serves it, with no re-compression and no extra branding added by us."
+      },
+      {
+        "title": "Nine platforms in one place",
+        "text": "The same tool handles Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit and Snapchat."
+      }
     ]
   },
   "faq": {

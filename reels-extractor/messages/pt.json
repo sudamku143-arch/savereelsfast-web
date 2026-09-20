@@ -2,7 +2,17 @@
   "meta": {
     "title": "Baixar Vídeos do Instagram, YouTube e TikTok",
     "description": "Baixe grátis vídeos do Instagram, YouTube, Facebook, TikTok, X, Reddit e mais. Cole o link e salve um MP4, sem login e sem instalar apps.",
-    "ogAlt": "Prévia da ferramenta de download de vídeos de redes sociais"
+    "ogAlt": "Prévia da ferramenta de download de vídeos de redes sociais",
+    "keywords": [
+      "baixar vídeos",
+      "baixar reels do Instagram",
+      "baixar vídeos do YouTube",
+      "baixar TikTok",
+      "baixar vídeos do Facebook",
+      "baixar vídeo grátis online",
+      "salvar vídeo em MP4",
+      "baixar vídeos sem login"
+    ]
   },
   "nav": {
     "language": "Selecionar idioma",
@@ -405,6 +415,25 @@
       "A maioria das redes sociais não oferece uma forma nativa de salvar no seu dispositivo o vídeo de outra pessoa. Nossa ferramenta resolve isso com uma colada: coloque o link do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit ou Snapchat e buscamos o arquivo de vídeo para que você tenha um MP4 limpo para assistir offline.",
       "Funciona inteiramente no seu navegador: não há nada para instalar, nenhuma conta para criar e nenhum dado pessoal é necessário. Apenas o link público do vídeo que você quer. Por isso é seguro usar em qualquer dispositivo, seja no celular entre as aulas ou no computador editando uma compilação.",
       "Criadores usam para arquivar o próprio conteúdo antes que ele suma dos feeds, profissionais de marketing para montar arquivos de referência de anúncios, e usuários comuns para guardar uma cópia de um vídeo que um amigo enviou antes que seja apagado. Seja qual for o motivo, o fluxo é o mesmo: colar, visualizar, baixar."
+    ],
+    "featuresHeading": "Por que usar o SaveReelsFast",
+    "features": [
+      {
+        "title": "Grátis e sem conta",
+        "text": "Sem cadastro, sem login e nada para instalar. Funciona no seu navegador."
+      },
+      {
+        "title": "Funciona em qualquer dispositivo",
+        "text": "iPhone, Android, Windows, Mac ou Linux: se você tem um navegador, já pode usar."
+      },
+      {
+        "title": "Qualidade original",
+        "text": "Você recebe o arquivo exatamente como a plataforma o entrega, sem recompressão e sem marcas adicionadas por nós."
+      },
+      {
+        "title": "Nove plataformas em um só lugar",
+        "text": "A mesma ferramenta funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat."
+      }
     ]
   },
   "faq": {

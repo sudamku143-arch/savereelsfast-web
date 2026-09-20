@@ -28,6 +28,15 @@ for (const locale of locales) {
       assert.ok(length(m.meta.description) >= 90 && length(m.meta.description) < 160, `description is ${length(m.meta.description)}`);
     });
 
+    it("home page has keywords and a four-card feature grid with a heading", () => {
+      const home = m as unknown as { meta: { keywords: string[] }; seo: { featuresHeading: string; features: Doc[] } };
+      assert.ok(home.meta.keywords.length >= 6, "too few keywords");
+      assert.equal(new Set(home.meta.keywords).size, home.meta.keywords.length, "duplicate keyword");
+      assert.ok(home.seo.featuresHeading.trim());
+      assert.equal(home.seo.features.length, 4);
+      for (const f of home.seo.features) assert.ok(f.title.trim() && f.text.trim(), "empty feature");
+    });
+
     it("home title names the big platforms people search for", () => {
       for (const name of ["Instagram", "YouTube", "TikTok"]) assert.match(m.meta.title, new RegExp(name), name);
     });
