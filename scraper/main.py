@@ -128,6 +128,10 @@ YDL_OPTS["extractor_args"] = {"youtube": YOUTUBE_LEAN}
 # host (Render's free tier has a fraction of a CPU) can be slow to complete a TLS handshake without being blocked.
 YOUTUBE_SOCKET_TIMEOUT = 8
 YOUTUBE_RETRIES = 1
+# Through a rotating proxy every new connection leaves from a different address, and some are slow or dead. A
+# shorter wait per attempt plus more attempts abandons a bad one quickly and tries another within the same budget.
+YOUTUBE_PROXY_SOCKET_TIMEOUT = 5
+YOUTUBE_PROXY_RETRIES = 2
 
 # Hard ceiling for one whole lookup (link expansion + extraction). It is enforced inside the work, not just
 # around it, so a stalled lookup stops instead of quietly holding a worker.
@@ -141,9 +145,10 @@ def _extraction_timeout(raw: str | None, default: float = 5.0, low: float = 2.0,
 
 
 EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(os.environ.get("EXTRACTION_TIMEOUT_SECONDS"))
-# YouTube needs room for its 8 s socket timeout and a second route, so its ceiling is higher (band 6-15 s).
+# YouTube needs room for a slow first connection (a residential proxy takes several seconds to reach it) and a
+# second route, so its ceiling is higher (band 6-25 s).
 YOUTUBE_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
-    os.environ.get("YOUTUBE_EXTRACTION_TIMEOUT_SECONDS"), default=10.0, low=6.0, high=15.0
+    os.environ.get("YOUTUBE_EXTRACTION_TIMEOUT_SECONDS"), default=20.0, low=6.0, high=25.0
 )
 
 
@@ -619,9 +624,10 @@ def _extract_info(url: str, youtube_route: int = 0) -> dict | None:
         if youtube:
             if YTDLP_PROXY:
                 _proxy_note_lookup()
-            options.update(
-                socket_timeout=YOUTUBE_SOCKET_TIMEOUT, retries=YOUTUBE_RETRIES, extractor_retries=YOUTUBE_RETRIES
+            socket_timeout, retries = (
+                (YOUTUBE_PROXY_SOCKET_TIMEOUT, YOUTUBE_PROXY_RETRIES) if YTDLP_PROXY else (YOUTUBE_SOCKET_TIMEOUT, YOUTUBE_RETRIES)
             )
+            options.update(socket_timeout=socket_timeout, retries=retries, extractor_retries=retries)
         if trace is not None:
             trace.append({"route": youtube_route, "clients": (options.get("extractor_args") or {}).get("youtube", {}).get("player_client"), "cookies": bool(cookiefile)})
         try:

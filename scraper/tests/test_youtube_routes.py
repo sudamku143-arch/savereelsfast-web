@@ -170,7 +170,7 @@ class TimeoutSettingTests(Base):
     def test_a_youtube_lookup_may_take_longer_than_the_8_second_socket_timeout(self):
         # otherwise the socket timeout could never take effect before the whole lookup is cut off
         self.assertGreater(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, self.main.YOUTUBE_SOCKET_TIMEOUT)
-        self.assertLessEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, 15)
+        self.assertLessEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, 25)
 
     def test_other_platforms_stay_inside_the_four_to_six_second_limit(self):
         self.assertGreaterEqual(self.main.EXTRACTION_TIMEOUT_SECONDS, 4)
@@ -184,9 +184,9 @@ class TimeoutSettingTests(Base):
         self.assertEqual(clamp("60"), 6.0)
         self.assertEqual(clamp("0.1"), 2.0)
         self.assertEqual(clamp("nonsense"), 5.0)
-        self.assertEqual(clamp("60", 10.0, 6.0, 15.0), 15.0)
-        self.assertEqual(clamp("1", 10.0, 6.0, 15.0), 6.0)
-        self.assertEqual(clamp(None, 10.0, 6.0, 15.0), 10.0)
+        self.assertEqual(clamp("60", 20.0, 6.0, 25.0), 25.0)
+        self.assertEqual(clamp("1", 20.0, 6.0, 25.0), 6.0)
+        self.assertEqual(clamp(None, 20.0, 6.0, 25.0), 20.0)
 
 
 class CookieTests(Base):

@@ -96,8 +96,8 @@ const LOOKUP_BUDGET_MS = 9000;
 const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram page
 // YouTube gets more room at every step: its requests may take up to 8 s each on a small host, and a blocked
 // lookup can try a second route. Every other platform keeps the short limits.
-const YOUTUBE_LOOKUP_BUDGET_MS = 13000;
-const YOUTUBE_SCRAPER_TIMEOUT_MS = 12000;
+const YOUTUBE_LOOKUP_BUDGET_MS = 23000;
+const YOUTUBE_SCRAPER_TIMEOUT_MS = 22000;
 const lookupBudget = new AsyncLocalStorage<{ deadline: number; scraperMs: number }>();
 
 /** How long the scraper may be waited for in this lookup (longer for YouTube). */

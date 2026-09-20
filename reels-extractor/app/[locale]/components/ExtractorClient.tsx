@@ -40,7 +40,7 @@ type PlatformsDict = { label: string } & Record<
 // after this long is dead: show a clear message instead of a spinner.
 const EXTRACT_TIMEOUT_MS = 10_000;
 // YouTube lookups may legitimately take longer (see /api/extract), so the page waits longer for those only.
-const YOUTUBE_EXTRACT_TIMEOUT_MS = 16_000;
+const YOUTUBE_EXTRACT_TIMEOUT_MS = 25_000;
 
 export default function ExtractorClient({
   heroDict,

@@ -59,7 +59,7 @@ describe("the extract route uses the budget", () => {
   });
 
   it("YouTube gets longer limits at every hop, each one outlasting the hop behind it", () => {
-    const scraper = 10_000 + 750; // the scraper's YouTube budget plus its grace (scraper/main.py)
+    const scraper = 20_000 + 750; // the scraper's YouTube budget plus its grace (scraper/main.py)
     const scraperWait = num(route, "YOUTUBE_SCRAPER_TIMEOUT_MS");
     const budget = num(route, "YOUTUBE_LOOKUP_BUDGET_MS");
     const page = num(client, "YOUTUBE_EXTRACT_TIMEOUT_MS");
@@ -67,7 +67,7 @@ describe("the extract route uses the budget", () => {
     assert.ok(budget > scraperWait, "the lookup budget must outlast the scraper wait");
     assert.ok(page > budget, `the page (${page} ms) must outlast the site (${budget} ms)`);
     assert.ok(2 * 0 + budget < 40_000, "and stay inside the function's time limit");
-    assert.ok(page <= 20_000, "but never the 20-30 second hang");
+    assert.ok(page <= 25_000, "but never a 30-second hang");
   });
 
   it("only YouTube lookups use the longer limits", () => {

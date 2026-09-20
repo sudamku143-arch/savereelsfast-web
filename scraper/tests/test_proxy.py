@@ -168,6 +168,21 @@ class ScopeTests(Base):
     def test_youtube_lookups_go_through_the_proxy(self):
         self.assertEqual(self.capture_lookup_options(YT)["proxy"], PROXY)
 
+    def test_through_the_proxy_each_attempt_is_short_and_there_are_more_of_them(self):
+        options = self.capture_lookup_options(YT)
+        self.assertEqual((options["socket_timeout"], options["retries"], options["extractor_retries"]), (5, 2, 2))
+
+    def test_without_the_proxy_the_original_patience_is_kept(self):
+        with mock.patch.object(self.main, "YTDLP_PROXY", None):
+            options = self.capture_lookup_options(YT)
+        self.assertEqual((options["socket_timeout"], options["retries"]), (8, 1))
+        self.assertNotIn("proxy", options)
+
+    def test_the_whole_lookup_budget_covers_all_the_attempts(self):
+        worst_case = self.main.YOUTUBE_PROXY_SOCKET_TIMEOUT * (1 + self.main.YOUTUBE_PROXY_RETRIES)
+        self.assertGreaterEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, worst_case)
+        self.assertEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, 20.0)
+
     def test_other_platforms_never_touch_the_proxy(self):
         for url in (TIKTOK, "https://www.instagram.com/reel/AbC_123/", "https://www.reddit.com/r/videos/comments/6rrwyj/x/",
                     "https://x.com/user/status/1234567890", "https://www.facebook.com/watch/?v=1234567890123456"):
