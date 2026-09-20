@@ -13,7 +13,7 @@ import { readFileSync } from "node:fs";
 
 const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
 const SITE = "https://savereelsfast.com"; // canonical URLs always point at production
-const LOCALES = ["en", "es", "pt"];
+const LOCALES = ["en", "es", "pt", "hi"];
 const SLUGS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
 
 const messages = Object.fromEntries(
@@ -192,7 +192,7 @@ async function main() {
       if (entry) {
         check(/<changefreq>daily<\/changefreq>/.test(entry), `${loc} changefreq is not daily`);
         check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(entry), `${loc} lastmod missing`);
-        check(/hreflang="es"/.test(entry) && /hreflang="pt"/.test(entry) && /hreflang="en"/.test(entry), `${loc} lacks hreflang alternates`);
+        check(["en", "es", "pt", "hi"].every((l) => new RegExp(`hreflang="${l}"`).test(entry)), `${loc} lacks hreflang alternates`);
       }
     }
     check(locs.includes(`${SITE}${home(locale)}`), `sitemap is missing the ${locale} home page`);

@@ -16,7 +16,7 @@ import {
   platformFromSlug,
 } from "../lib/landing.ts";
 
-const LOCALES = ["en", "es", "pt"] as const;
+const LOCALES = ["en", "es", "pt", "hi"] as const;
 const EXPECTED_IDS = ["instagram", "youtube", "facebook", "threads", "x", "pinterest", "tiktok", "reddit", "snapchat"];
 
 type Faq = { q: string; a: string };
@@ -185,7 +185,7 @@ describe("landing content across languages", () => {
   });
 
   it("is genuinely translated, not copied from English", () => {
-    for (const locale of ["es", "pt"] as const) {
+    for (const locale of ["es", "pt", "hi"] as const) {
       for (const id of EXPECTED_IDS) {
         assert.notEqual(messages[locale].landing.platforms[id].lead, messages.en.landing.platforms[id].lead, `${locale}/${id} lead`);
         assert.notEqual(messages[locale].landing.platforms[id].metaTitle, messages.en.landing.platforms[id].metaTitle, `${locale}/${id} title`);
@@ -218,5 +218,33 @@ describe("honesty of platform-specific claims", () => {
       const all = `${en[id].metaTitle} ${en[id].metaDescription} ${en[id].lead}`;
       assert.doesNotMatch(all, /watermark|4k|unlimited|100%/i, `${id} makes a claim we can't guarantee`);
     }
+  });
+});
+
+describe("Hindi search targeting", () => {
+  const hi = messages.hi.landing.platforms;
+
+  it("uses the exact phrases people type: '<Platform> Video Download करें'", () => {
+    assert.equal(hi.instagram.metaTitle, "Instagram Reels Download करें - Free HD Video Downloader");
+    assert.equal(hi.facebook.metaTitle, "Facebook Video Download करने का आसान तरीका");
+    for (const id of EXPECTED_IDS) {
+      assert.match(hi[id].metaTitle, /Download/, `${id} title lacks "Download"`);
+      assert.match(hi[id].metaTitle, /[ऀ-ॿ]/, `${id} title has no Hindi`);
+    }
+  });
+
+  it("is written in Devanagari throughout, not left in English", () => {
+    for (const id of EXPECTED_IDS) {
+      for (const text of [hi[id].metaDescription, hi[id].h1, hi[id].lead, hi[id].copyHint, ...hi[id].faq.flatMap((f) => [f.q, f.a])]) {
+        assert.match(text, /[ऀ-ॿ]/, `${id}: no Hindi in "${text.slice(0, 50)}"`);
+      }
+    }
+    for (const text of [...messages.hi.landing.common.steps, ...messages.hi.landing.common.sharedFaq.flatMap((f) => [f.q, f.a])]) {
+      assert.match(text, /[ऀ-ॿ]/);
+    }
+  });
+
+  it("does not promise HD for YouTube, which is capped at 360p", () => {
+    assert.doesNotMatch(hi.youtube.metaTitle + hi.youtube.metaDescription + hi.youtube.h1, /HD|4k|1080/i);
   });
 });

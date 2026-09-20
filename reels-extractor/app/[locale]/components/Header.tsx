@@ -15,6 +15,7 @@ const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   es: "Español",
   pt: "Português",
+  hi: "हिन्दी",
 };
 
 function localeHref(locale: Locale): string {

@@ -8,7 +8,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
-const LOCALES = ["en", "es", "pt"] as const;
+const LOCALES = ["en", "es", "pt", "hi"] as const;
 
 type Section = { heading: string; body: string[] };
 type Doc = { title: string; description: string; updated: string; intro?: string; sections: Section[] };
@@ -119,7 +119,7 @@ for (const locale of LOCALES) {
 
 describe("translations are real", () => {
   it("es and pt differ from English in every document", () => {
-    for (const locale of ["es", "pt"] as const) {
+    for (const locale of ["es", "pt", "hi"] as const) {
       for (const key of ["privacy", "terms", "dmca", "disclaimer"] as const) {
         assert.notEqual(messages[locale].legal[key].title, messages.en.legal[key].title, `${locale}/${key} title`);
         assert.notEqual(text(messages[locale].legal[key]), text(messages.en.legal[key]), `${locale}/${key}`);
@@ -129,7 +129,7 @@ describe("translations are real", () => {
 
   it("every language has the same document structure", () => {
     for (const key of ["privacy", "terms", "dmca", "disclaimer"] as const) {
-      for (const locale of ["es", "pt"] as const) {
+      for (const locale of ["es", "pt", "hi"] as const) {
         assert.equal(messages[locale].legal[key].sections.length, messages.en.legal[key].sections.length, `${locale}/${key} section count`);
         messages.en.legal[key].sections.forEach((section, index) => {
           assert.equal(

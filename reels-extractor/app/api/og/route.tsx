@@ -19,6 +19,8 @@ const WORDING: Record<string, { headline: (name: string) => string; tagline: str
   en: { headline: (n) => `${n} Downloader`, tagline: "Free · No login · HD when available" },
   es: { headline: (n) => `Descargar ${n}`, tagline: "Gratis · Sin iniciar sesión · HD si existe" },
   pt: { headline: (n) => `Baixar ${n}`, tagline: "Grátis · Sem login · HD quando disponível" },
+  // The image renderer's built-in font has no Devanagari glyphs, so the Hindi card uses Latin script.
+  hi: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
 };
 
 /** 1200×630 social preview image used for og:image / twitter:image. */

@@ -29,6 +29,7 @@ type Props = {
 };
 
 const OG_IMAGE = `${SITE_URL}/api/og`;
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN" };
 
 export const viewport: Viewport = {
   themeColor: "#09090b",
@@ -72,7 +73,7 @@ export async function generateMetadata({
       description: dict.meta.description,
       url: canonicalUrl,
       siteName: SITE_NAME,
-      locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : "pt_BR",
+      locale: OG_LOCALE[locale],
       type: "website",
       images: [
         {

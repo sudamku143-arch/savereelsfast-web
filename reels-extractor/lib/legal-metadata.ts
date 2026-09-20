@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { locales, localePath, type Locale } from "@/lib/i18n-config";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR" };
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN" };
 const OG_IMAGE = `${SITE_URL}/api/og`;
 
 /** Share image for a platform's landing page (see app/api/og/route.tsx for the accepted values). */
