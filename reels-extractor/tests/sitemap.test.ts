@@ -66,9 +66,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 11 home + 99 platform pages + 5 legal pages x 4 languages", () => {
+  it("adds up: 11 home + 99 platform pages + 5 legal pages x every translated language", () => {
     assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length);
-    assert.equal(entries.length, 130);
+    assert.equal(entries.length, 145);
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -102,7 +102,7 @@ describe("frequency and priority", () => {
 
   it("legal pages: monthly", () => {
     const pages = entries.filter((x) => rule(x.url) === "legal");
-    assert.equal(pages.length, 20);
+    assert.equal(pages.length, 5 * LEGAL_TRANSLATED.length);
     for (const e of pages) assert.equal(e.changeFrequency, "monthly", e.url);
   });
 });

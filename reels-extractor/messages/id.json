@@ -492,5 +492,285 @@
     "close": "Tutup iklan",
     "collapse": "Ciutkan iklan",
     "expand": "Tampilkan iklan"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Kebijakan Privasi",
+      "description": "Apa yang diproses SaveReelsFast, berapa lama data sementara disimpan (hingga 3 jam), bahwa tidak ada media yang disimpan, dan pilihan privasi Anda.",
+      "updated": "Terakhir diperbarui: 20 September 2026",
+      "sections": [
+        {
+          "heading": "Gambaran umum",
+          "body": [
+            "SaveReelsFast (savereelsfast.com) adalah alat gratis untuk menyimpan video yang tersedia untuk umum dari platform sosial populer. Anda tidak memerlukan akun, dan kami tidak pernah meminta nama pengguna atau kata sandi media sosial Anda. Kebijakan ini menjelaskan informasi apa yang diproses saat Anda menggunakan situs, berapa lama informasi itu disimpan, dan pilihan yang Anda miliki."
+          ]
+        },
+        {
+          "heading": "Apa yang kami proses",
+          "body": [
+            "Tautan yang Anda kirim: saat Anda menempelkan tautan video, tautan itu dikirim ke server kami, dan ke layanan backend yang berjalan atas nama kami, agar kami dapat mencari video publik tersebut.",
+            "Data teknis: seperti kebanyakan situs web, penyedia hosting kami dapat mencatat secara otomatis alamat IP, jenis peramban, jenis perangkat, dan waktu setiap permintaan untuk keperluan keamanan, pencegahan penyalahgunaan, dan keandalan.",
+            "Yang tidak kami kumpulkan: kami tidak memiliki akun pengguna, tidak meminta nama atau email Anda untuk memakai alat ini, dan tidak membuat profil iklan sendiri."
+          ]
+        },
+        {
+          "heading": "Penyimpanan sementara (cache) dan retensi",
+          "body": [
+            "Agar permintaan berulang cepat dan untuk melindungi layanan dari kelebihan beban, hasil pencarian tautan (tautan, judul, alamat gambar mini, dan alamat unduhan sementara) disimpan di memori server hingga 3 jam, lalu dihapus secara otomatis. Data itu tidak pernah ditulis ke basis data.",
+            "Tidak ada media yang disimpan. Video dan audio dialirkan dari platform asalnya melalui server kami ke perangkat Anda secara real time dan tidak disimpan di sistem kami, bahkan tidak sementara di disk.",
+            "Log server yang disimpan oleh penyedia hosting kami dipertahankan sesuai masa retensi mereka sendiri. Data yang tersimpan di peramban Anda (lihat di bawah) tetap berada di perangkat Anda."
+          ]
+        },
+        {
+          "heading": "Cookie dan penyimpanan lokal",
+          "body": [
+            "Kami menetapkan satu cookie fungsional, NEXT_LOCALE, untuk mengingat bahasa yang Anda pilih. Cookie ini tidak berisi informasi pribadi dan kedaluwarsa setelah satu tahun.",
+            "Penyimpanan lokal dan penyimpanan sesi di peramban Anda menyimpan beberapa pengaturan kemudahan: hasil terbaru Anda (dihapus saat Anda menutup tab) dan apakah Anda menutup spanduk instalasi atau iklan yang menempel. Data ini tidak pernah meninggalkan perangkat Anda, dan Anda dapat menghapusnya kapan saja di pengaturan peramban.",
+            "Kami tidak menggunakan cookie analitik atau pelacakan milik kami sendiri."
+          ]
+        },
+        {
+          "heading": "Periklanan",
+          "body": [
+            "SaveReelsFast gratis digunakan karena dapat menampilkan iklan. Iklan disajikan oleh jaringan iklan pihak ketiga (misalnya Google AdSense atau jaringan serupa). Jaringan ini dapat menetapkan atau membaca cookie dan menggunakan pengenal seperti alamat IP Anda untuk menampilkan iklan, membatasi seberapa sering Anda melihatnya, dan mengukur hasilnya.",
+            "Tautan yang Anda tempelkan tidak pernah dibagikan kepada pengiklan. Jaringan iklan hanya menerima apa yang dikirim peramban Anda saat memuat iklan. Jika hukum mewajibkan persetujuan Anda untuk cookie iklan non-esensial (misalnya di UE, EEA, dan Inggris), persetujuan itu akan diminta sebelum cookie tersebut digunakan.",
+            "Anda dapat mengelola personalisasi iklan di adssettings.google.com atau di pengaturan peramban dan perangkat Anda, dan menolak iklan berbasis minat di optout.aboutads.info (AS) atau youronlinechoices.eu (UE)."
+          ]
+        },
+        {
+          "heading": "Pihak ketiga",
+          "body": [
+            "Video diambil dari server publik platform asalnya (misalnya Instagram, YouTube, atau TikTok). Kami tidak berafiliasi dengan platform tersebut, dan kebijakan privasi masing-masing berlaku untuk layanan mereka.",
+            "Untuk beberapa video YouTube, ketika kami tidak dapat mengambil video secara langsung, kami dapat mengirim ID YouTube publik video tersebut ke layanan unduhan pihak ketiga (sebuah instans dari alat sumber terbuka Cobalt) untuk memperoleh filenya. Kami hanya mengirim ID itu: tanpa cookie, data akun, atau informasi lain tentang Anda. Layanan itu dijalankan oleh pihak ketiga berdasarkan ketentuannya sendiri.",
+            "Situs dan layanan backend kami di-hosting oleh penyedia pihak ketiga yang memproses data teknis atas nama kami berdasarkan ketentuan privasi mereka sendiri. Kami tidak menjual informasi pribadi Anda."
+          ]
+        },
+        {
+          "heading": "Hak Anda",
+          "body": [
+            "Bergantung pada tempat tinggal Anda (misalnya berdasarkan GDPR, UK GDPR, CCPA/CPRA, atau LGPD Brasil), Anda mungkin berhak mengakses, memperbaiki, atau menghapus data pribadi, menolak atau membatasi pemrosesannya, memperoleh portabilitas data, dan menarik persetujuan. Kami tidak menjual informasi pribadi.",
+            "Karena kami tidak menyimpan akun atau profil, biasanya hanya sedikit data yang dapat kami kaitkan dengan Anda. Untuk mengajukan permintaan, hubungi kami melalui informasi di halaman Kontak dan, jika bisa, sertakan perkiraan waktu kunjungan Anda. Anda juga dapat mengajukan pengaduan ke otoritas perlindungan data setempat."
+          ]
+        },
+        {
+          "heading": "Anak-anak",
+          "body": [
+            "Layanan ini tidak ditujukan untuk anak di bawah 13 tahun, dan kami tidak dengan sengaja mengumpulkan informasi pribadi dari mereka."
+          ]
+        },
+        {
+          "heading": "Pemrosesan internasional dan keamanan",
+          "body": [
+            "Penyedia kami dapat memproses data di Amerika Serikat dan negara lain. Jika diwajibkan oleh hukum, kami mengandalkan perlindungan yang sesuai yang ditawarkan penyedia tersebut.",
+            "Seluruh lalu lintas menggunakan HTTPS dan kami menjaga pengumpulan data seminimal mungkin. Tidak ada sistem yang aman sepenuhnya, tetapi tidak menyimpan media maupun akun membatasi apa yang mungkin terpapar."
+          ]
+        },
+        {
+          "heading": "Perubahan kebijakan ini",
+          "body": [
+            "Kami dapat memperbarui kebijakan ini dari waktu ke waktu. Tanggal di bagian atas menunjukkan kapan kebijakan ini terakhir diubah."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Ketentuan Layanan",
+      "description": "Aturan memakai SaveReelsFast: penggunaan wajar, tanggung jawab Anda atas konten yang diunduh, dan independensi kami dari Meta, Google, TikTok, dan X.",
+      "updated": "Terakhir diperbarui: 20 September 2026",
+      "sections": [
+        {
+          "heading": "Penerimaan ketentuan",
+          "body": [
+            "Dengan menggunakan SaveReelsFast, Anda menyetujui ketentuan ini. Jika Anda tidak setuju, mohon jangan gunakan layanan ini."
+          ]
+        },
+        {
+          "heading": "Layanan",
+          "body": [
+            "SaveReelsFast membantu Anda mengunduh video yang tersedia untuk umum dari platform sosial yang didukung ke perangkat Anda sendiri. Layanan ini hanya bekerja dengan konten publik dan tidak melewati pengaturan privasi, paywall, atau login."
+          ]
+        },
+        {
+          "heading": "Penggunaan wajar dan penggunaan yang diizinkan",
+          "body": [
+            "Layanan ini ditujukan untuk penggunaan pribadi dan nonkomersial, seperti menonton secara offline atau mengarsipkan karya Anda sendiri. Menyimpan konten yang bukan milik Anda mungkin diperbolehkan sebagai penggunaan wajar (fair use) atau pengecualian serupa di beberapa negara, tetapi hal itu bergantung pada hukum setempat dan cara Anda menggunakan file tersebut. Tidak ada ketentuan di sini yang memberi Anda hak atas konten milik pihak lain."
+          ]
+        },
+        {
+          "heading": "Tanggung jawab Anda",
+          "body": [
+            "Anda bertanggung jawab sepenuhnya atas tautan yang Anda kirim dan atas apa yang Anda lakukan dengan konten yang diunduh. Sebelum mengunduh, pastikan Anda berhak menyimpan dan menggunakannya. Anda setuju untuk menghormati hak cipta, merek dagang, privasi, dan hak lainnya, ketentuan platform asal konten, serta hukum yang berlaku."
+          ]
+        },
+        {
+          "heading": "Penggunaan yang dilarang",
+          "body": [
+            "Anda tidak boleh menggunakan layanan ini untuk melanggar hukum, melanggar hak cipta atau hak lain, mengunggah ulang konten orang lain tanpa izin, melecehkan orang lain, mengunduh konten anak di bawah umur dengan cara yang merugikan, atau membebani maupun mencoba mengganggu layanan melalui permintaan otomatis atau yang menyalahgunakan."
+          ]
+        },
+        {
+          "heading": "Kekayaan intelektual dan hak cipta",
+          "body": [
+            "Semua video, teks, dan gambar adalah milik pembuat atau pemegang haknya masing-masing. SaveReelsFast tidak menyimpan, memiliki, atau mengklaim hak atas konten apa pun yang Anda unduh. Jika Anda pemegang hak dan yakin ada konten yang ditangani dengan cara yang melanggar hak Anda, lihat halaman DMCA kami."
+          ]
+        },
+        {
+          "heading": "Tidak ada afiliasi",
+          "body": [
+            "SaveReelsFast adalah alat independen. Layanan ini tidak berafiliasi dengan, tidak didukung oleh, dan tidak disponsori oleh Meta Platforms, Inc. (Instagram, Facebook, Threads), Google LLC (YouTube), TikTok Ltd. atau ByteDance Ltd., X Corp. (X, dahulu Twitter), Pinterest, Inc., Reddit, Inc., Snap Inc., atau platform lain mana pun. Semua nama produk, logo, dan merek adalah milik pemiliknya dan hanya digunakan untuk menyebutkan layanan yang didukung alat kami."
+          ]
+        },
+        {
+          "heading": "Iklan dan layanan pihak ketiga",
+          "body": [
+            "Situs ini dapat menampilkan iklan dan berisi tautan ke situs pihak ketiga. Kami tidak mengendalikan dan tidak bertanggung jawab atas konten, produk, atau praktik pihak ketiga."
+          ]
+        },
+        {
+          "heading": "Ketersediaan dan penafian jaminan",
+          "body": [
+            "Layanan disediakan “apa adanya” dan “sebagaimana tersedia” tanpa jaminan apa pun. Kami tidak menjamin layanan ini akan tanpa gangguan, bebas kesalahan, atau mampu mengunduh setiap video, karena ketersediaan bergantung pada platform asal."
+          ]
+        },
+        {
+          "heading": "Batasan tanggung jawab",
+          "body": [
+            "Sejauh diizinkan oleh hukum, SaveReelsFast tidak bertanggung jawab atas kerugian tidak langsung, insidental, atau konsekuensial yang timbul dari penggunaan layanan atau konten apa pun yang diunduh dengannya."
+          ]
+        },
+        {
+          "heading": "Pemblokiran dan pengakhiran",
+          "body": [
+            "Kami dapat membatasi atau memblokir akses, atau berhenti memproses tautan tertentu, kapan saja, misalnya untuk mencegah penyalahgunaan atau menanggapi pemberitahuan hak cipta."
+          ]
+        },
+        {
+          "heading": "Perubahan ketentuan",
+          "body": [
+            "Kami dapat memperbarui ketentuan ini dari waktu ke waktu. Melanjutkan penggunaan layanan setelah perubahan berarti Anda menerima ketentuan yang diperbarui."
+          ]
+        }
+      ]
+    },
+    "dmca": {
+      "title": "DMCA & Kebijakan Hak Cipta",
+      "description": "Cara melaporkan pelanggaran hak cipta ke SaveReelsFast. Kami tidak menyimpan video; temukan prosedur penghapusan dan kontak agen resmi kami di sini.",
+      "updated": "Terakhir diperbarui: 20 September 2026",
+      "intro": "Halaman ini menjelaskan bagaimana pemegang hak cipta dapat melaporkan konten dan bagaimana SaveReelsFast menanggapinya. Kami menghormati kekayaan intelektual dan mengikuti proses pemberitahuan dan penghapusan (notice-and-takedown) dalam Digital Millennium Copyright Act (17 U.S.C. § 512).",
+      "sections": [
+        {
+          "heading": "Kami tidak menyimpan konten apa pun",
+          "body": [
+            "SaveReelsFast adalah alat, bukan pustaka video. Kami tidak menampung (hosting), menyimpan, mengunggah, mengindeks, atau menyediakan file video, audio, atau gambar apa pun di server kami. Saat Anda mengunduh sesuatu, file tersebut diteruskan secara real time dari server platform asal ke perangkat Anda dan tidak disimpan oleh kami."
+          ]
+        },
+        {
+          "heading": "Laporkan di sumbernya",
+          "body": [
+            "Karena video tetap berada di platform asalnya (misalnya Instagram, YouTube, TikTok, atau X), cara paling efektif untuk menghapus konten yang melanggar adalah melaporkannya ke platform tersebut melalui alat hak cipta mereka sendiri. Setelah video dihapus di sana, video itu juga tidak dapat lagi diunduh melalui SaveReelsFast."
+          ]
+        },
+        {
+          "heading": "Isi pemberitahuan penghapusan",
+          "body": [
+            "Untuk meminta kami berhenti memproses tautan tertentu, kirimkan pemberitahuan tertulis yang memuat semua hal berikut:",
+            "1. Tanda tangan fisik atau elektronik pemegang hak cipta atau orang yang berwenang bertindak atas namanya.",
+            "2. Identifikasi karya berhak cipta yang Anda klaim telah dilanggar.",
+            "3. Identifikasi materi yang Anda klaim melanggar, dengan informasi yang cukup agar kami dapat menemukannya, seperti tautan (URL) persis yang dikirim ke SaveReelsFast.",
+            "4. Nama, alamat pos, nomor telepon, dan alamat email Anda.",
+            "5. Pernyataan bahwa Anda dengan itikad baik meyakini penggunaan tersebut tidak diizinkan oleh pemegang hak cipta, agennya, atau hukum.",
+            "6. Pernyataan, yang dibuat dengan ancaman sanksi sumpah palsu, bahwa informasi dalam pemberitahuan Anda akurat dan bahwa Anda adalah pemegang hak cipta atau berwenang bertindak atas namanya."
+          ]
+        },
+        {
+          "heading": "Apa yang kami lakukan dengan pemberitahuan",
+          "body": [
+            "Kami segera meninjau pemberitahuan yang lengkap. Bila sesuai, kami berhenti memproses tautan tertentu yang disebutkan sehingga tidak dapat lagi diambil melalui SaveReelsFast, dan kami dapat menyimpan catatan pemberitahuan tersebut. Pemberitahuan yang tidak lengkap mungkin tidak dapat ditindaklanjuti, dan kami dapat meminta informasi tambahan dari Anda."
+          ]
+        },
+        {
+          "heading": "Pemberitahuan tandingan",
+          "body": [
+            "Jika Anda yakin suatu tautan diblokir karena kesalahan atau salah identifikasi, Anda dapat mengirim pemberitahuan tandingan yang memuat: tanda tangan Anda; identifikasi tautan yang diblokir; pernyataan dengan ancaman sanksi sumpah palsu bahwa Anda dengan itikad baik meyakini tautan itu diblokir karena kesalahan atau salah identifikasi; nama, alamat, nomor telepon, dan alamat email Anda; serta persetujuan Anda terhadap yurisdiksi pengadilan federal di alamat Anda (atau, di luar Amerika Serikat, pengadilan di tempat kami berada) dan untuk menerima pemberian surat panggilan hukum dari pihak yang mengirim pemberitahuan awal."
+          ]
+        },
+        {
+          "heading": "Pelanggaran berulang",
+          "body": [
+            "Kami dapat memblokir tautan, sumber, atau jaringan yang menjadi sasaran pemberitahuan sah yang berulang, atau yang menyalahgunakan layanan."
+          ]
+        },
+        {
+          "heading": "Klaim palsu",
+          "body": [
+            "Berdasarkan 17 U.S.C. § 512(f), siapa pun yang dengan sengaja menyatakan secara keliru bahwa suatu materi melanggar, atau bahwa materi itu dihapus karena kesalahan, dapat dimintai ganti rugi. Pertimbangkan untuk meminta nasihat hukum sebelum mengirim pemberitahuan."
+          ]
+        }
+      ],
+      "agent": {
+        "heading": "Agen yang ditunjuk",
+        "label": "Kirim pemberitahuan ke",
+        "subject": "Pemberitahuan penghapusan DMCA",
+        "note": "Mohon tulis dalam bahasa Inggris jika memungkinkan dan sertakan keenam butir di atas. Pemberitahuan yang dikirim ke alamat lain mungkin tertunda. Halaman ini adalah informasi umum, bukan nasihat hukum."
+      }
+    },
+    "disclaimer": {
+      "title": "Penafian",
+      "description": "SaveReelsFast adalah alat independen tanpa afiliasi dengan platform sosial. Baca tentang kepemilikan konten, ketersediaan, dan tanggung jawab Anda.",
+      "updated": "Terakhir diperbarui: 20 September 2026",
+      "intro": "Mohon baca penafian ini bersama Ketentuan Layanan dan Kebijakan Privasi kami.",
+      "sections": [
+        {
+          "heading": "Informasi umum",
+          "body": [
+            "SaveReelsFast menyediakan alat teknis yang membantu Anda menyimpan video yang tersedia untuk umum untuk penggunaan pribadi. Informasi di situs ini disediakan dengan itikad baik untuk tujuan umum dan bukan merupakan nasihat hukum, profesional, atau keuangan."
+          ]
+        },
+        {
+          "heading": "Tidak berafiliasi dengan platform mana pun",
+          "body": [
+            "SaveReelsFast tidak berafiliasi dengan, tidak didukung oleh, dan tidak disponsori oleh Meta (Instagram, Facebook, Threads), Google (YouTube), TikTok, X, Pinterest, Reddit, Snap, atau platform lain mana pun. Nama dan logo mereka adalah merek dagang milik pemiliknya dan hanya digunakan untuk menyebutkan layanan yang didukung alat kami."
+          ]
+        },
+        {
+          "heading": "Konten dan hak cipta",
+          "body": [
+            "Kami tidak menyimpan, memiliki, atau mengendalikan video yang Anda unduh. Semuanya milik pembuat atau pemegang haknya. Anda bertanggung jawab memastikan Anda diizinkan menyimpan dan menggunakannya, serta mencantumkan kredit kepada pembuatnya bila sesuai."
+          ]
+        },
+        {
+          "heading": "Tanpa jaminan ketersediaan",
+          "body": [
+            "Platform sosial sering berubah, sehingga alat ini mungkin tidak berfungsi untuk setiap tautan, kadang lebih lambat, atau menghasilkan kualitas lebih rendah atau video tanpa suara. Kami tidak menjamin ketersediaan, keakuratan, atau kesesuaian untuk tujuan tertentu."
+          ]
+        },
+        {
+          "heading": "Tautan eksternal dan iklan",
+          "body": [
+            "Situs ini dapat berisi iklan dan tautan ke situs web lain. Kami tidak bertanggung jawab atas konten, keakuratan, atau praktik mereka, dan iklan bukan merupakan dukungan."
+          ]
+        },
+        {
+          "heading": "Gunakan dengan risiko sendiri",
+          "body": [
+            "Anda menggunakan SaveReelsFast dengan risiko Anda sendiri. Sejauh diizinkan oleh hukum, kami tidak bertanggung jawab atas kerugian apa pun yang timbul dari penggunaan alat ini atau konten yang diunduh."
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Hubungi Kami",
+      "description": "Hubungi tim SaveReelsFast.",
+      "intro": "Punya pertanyaan, masukan, atau permintaan terkait hak cipta atau penghapusan konten? Kirim email kepada kami dan kami akan membalas.",
+      "emailLabel": "Email",
+      "responseTime": "Kami berusaha membalas dalam beberapa hari kerja.",
+      "topicsHeading": "Hal yang dapat Anda tanyakan kepada kami",
+      "topics": [
+        "Pertanyaan tentang cara kerja alat ini",
+        "Laporan bug dan saran fitur",
+        "Permintaan terkait hak cipta atau penghapusan konten",
+        "Permintaan privasi terkait data Anda"
+      ]
+    }
   }
 }

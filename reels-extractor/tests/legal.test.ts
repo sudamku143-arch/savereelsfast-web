@@ -8,7 +8,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
-const LOCALES = ["en", "es", "pt", "hi"] as const;
+const LOCALES = ["en", "es", "pt", "hi", "fr", "id", "ar"] as const;
 
 type Section = { heading: string; body: string[] };
 type Doc = { title: string; description: string; updated: string; intro?: string; sections: Section[] };
@@ -44,6 +44,9 @@ const PROMISED: Record<string, RegExp> = {
   es: /hasta 3 horas/,
   pt: /até 3 horas/,
   hi: /अधिकतम 3 घंटे/,
+  fr: /jusqu'à 3 heures/,
+  id: /hingga 3 jam/,
+  ar: /حتى 3 ساعات/,
 };
 
 describe("policy matches the code", () => {
@@ -131,8 +134,8 @@ for (const locale of LOCALES) {
 }
 
 describe("translations are real", () => {
-  it("es and pt differ from English in every document", () => {
-    for (const locale of ["es", "pt", "hi"] as const) {
+  it("every translated language differs from English in every document", () => {
+    for (const locale of ["es", "pt", "hi", "fr", "id", "ar"] as const) {
       for (const key of ["privacy", "terms", "dmca", "disclaimer"] as const) {
         assert.notEqual(messages[locale].legal[key].title, messages.en.legal[key].title, `${locale}/${key} title`);
         assert.notEqual(text(messages[locale].legal[key]), text(messages.en.legal[key]), `${locale}/${key}`);
@@ -142,7 +145,7 @@ describe("translations are real", () => {
 
   it("every language has the same document structure", () => {
     for (const key of ["privacy", "terms", "dmca", "disclaimer"] as const) {
-      for (const locale of ["es", "pt", "hi"] as const) {
+      for (const locale of ["es", "pt", "hi", "fr", "id", "ar"] as const) {
         assert.equal(messages[locale].legal[key].sections.length, messages.en.legal[key].sections.length, `${locale}/${key} section count`);
         messages.en.legal[key].sections.forEach((section, index) => {
           assert.equal(

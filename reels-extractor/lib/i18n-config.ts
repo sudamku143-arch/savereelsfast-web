@@ -9,9 +9,10 @@ export function isLocale(value: string): value is Locale {
 /**
  * Languages whose legal pages (privacy, terms, DMCA, disclaimer, contact) are fully translated.
  * The others show the English text there: a legal document is only useful if it is accurate, and
- * those translations have not been reviewed yet. They point their canonical URL at the English page.
+ * those translations have not been written or reviewed yet (bn, te, ta, mr). They point their canonical
+ * URL at the English page and are left out of the sitemap.
  */
-export const LEGAL_TRANSLATED: readonly Locale[] = ["en", "es", "pt", "hi"];
+export const LEGAL_TRANSLATED: readonly Locale[] = ["en", "es", "pt", "hi", "fr", "id", "ar"];
 
 export function hasLegalTranslation(locale: Locale): boolean {
   return LEGAL_TRANSLATED.includes(locale);
