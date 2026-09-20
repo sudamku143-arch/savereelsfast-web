@@ -2,8 +2,30 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
+// Fixed wording per platform and language. The query string only selects from this table,
+// so nobody can put their own text on an image served from our domain.
+const NAMES: Record<string, string> = {
+  instagram: "Instagram Reels",
+  youtube: "YouTube",
+  facebook: "Facebook",
+  threads: "Threads",
+  twitter: "Twitter (X)",
+  pinterest: "Pinterest",
+  tiktok: "TikTok",
+  reddit: "Reddit",
+  snapchat: "Snapchat Spotlight",
+};
+const WORDING: Record<string, { headline: (name: string) => string; tagline: string }> = {
+  en: { headline: (n) => `${n} Downloader`, tagline: "Free · No login · HD when available" },
+  es: { headline: (n) => `Descargar ${n}`, tagline: "Gratis · Sin iniciar sesión · HD si existe" },
+  pt: { headline: (n) => `Baixar ${n}`, tagline: "Grátis · Sem login · HD quando disponível" },
+};
+
 /** 1200×630 social preview image used for og:image / twitter:image. */
-export async function GET() {
+export async function GET(request: Request) {
+  const query = new URL(request.url).searchParams;
+  const name = NAMES[query.get("p") ?? ""] ?? NAMES.instagram;
+  const wording = WORDING[query.get("l") ?? ""] ?? WORDING.en;
   return new ImageResponse(
     (
       <div
@@ -40,10 +62,10 @@ export async function GET() {
           <span style={{ color: "#f2609a" }}>Fast</span>
         </div>
         <div style={{ marginTop: 20, fontSize: 38, color: "#a1a1aa" }}>
-          Free Instagram Reels Downloader
+          {wording.headline(name)}
         </div>
         <div style={{ marginTop: 12, fontSize: 28, color: "#71717a" }}>
-          No login · No watermark · HD
+          {wording.tagline}
         </div>
       </div>
     ),

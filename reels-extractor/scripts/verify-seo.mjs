@@ -69,7 +69,8 @@ async function verifyLanding(locale, id, slug) {
     check(html.includes(`hrefLang="${l}" href="${expected}"`) || html.includes(`hreflang="${l}" href="${expected}"`), `${tag} missing hreflang ${l}`);
   }
   check(meta(html, "property", "og:title") === content.metaTitle, `${tag} og:title differs`);
-  check(meta(html, "property", "og:image") === `${SITE}/api/og`, `${tag} og:image missing`);
+  check(meta(html, "property", "og:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} og:image is ${meta(html, "property", "og:image")}`);
+  check(meta(html, "name", "twitter:image") === `${SITE}/api/og?p=${slug}&l=${locale}`, `${tag} twitter:image missing`);
   check(meta(html, "name", "twitter:card") === "summary_large_image", `${tag} twitter:card missing`);
 
   const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)].map((m) => decode(m[1].replace(/<[^>]+>/g, "")));

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, isLocale, defaultLocale, localePath, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
-import { pageMetadata } from "@/lib/legal-metadata";
+import { pageMetadata, platformOgImage } from "@/lib/legal-metadata";
 import {
   LANDING_PLATFORMS,
   PLATFORM_SLUGS,
@@ -38,7 +38,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, id } = resolve(params);
   const { landing } = await getDictionary(locale);
   const content = landing.platforms[id];
-  return pageMetadata(locale, landingPath(id), content.metaTitle, content.metaDescription);
+  return pageMetadata(
+    locale,
+    landingPath(id),
+    content.metaTitle,
+    content.metaDescription,
+    platformOgImage(PLATFORM_SLUGS[id], locale)
+  );
 }
 
 /** JSON in a <script> must not be able to close the tag. */

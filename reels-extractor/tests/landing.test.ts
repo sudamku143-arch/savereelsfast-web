@@ -131,6 +131,16 @@ for (const locale of LOCALES) {
       }
     });
 
+    it("English titles lead with the exact search phrase and fit in a search result", (t) => {
+      if (locale !== "en") return t.skip("English search phrases only");
+      for (const id of ids) {
+        const t = landing.platforms[id].metaTitle;
+        assert.match(t, /^[A-Za-z ]+ (Video |Reels |Spotlight )?Downloader - /, `${id}: "${t}" should start "<Platform> ... Downloader - "`);
+        assert.ok(t.split(" ").includes("HD"), `${id}: title should mention HD`);
+        assert.ok(t.length <= 60, `${id}: title is ${t.length} chars, Google cuts around 60`);
+      }
+    });
+
     it("resolves every template placeholder", () => {
       const { common } = landing;
       for (const id of ids) {
