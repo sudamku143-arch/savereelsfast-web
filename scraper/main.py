@@ -1,4 +1,5 @@
 import asyncio
+import gc
 import hmac
 import logging
 import os
@@ -22,6 +23,7 @@ import errors
 from cache import SlotPool, TTLCache, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
+from memory import rss_mb
 from urls import (
     BROWSER_UA,
     UnsupportedUrl,
@@ -126,8 +128,11 @@ MAX_CONCURRENT_EXTRACTIONS = int(_env_number("MAX_CONCURRENT_EXTRACTIONS", 6))  
 MAX_QUEUED_EXTRACTIONS = int(_env_number("MAX_QUEUED_EXTRACTIONS", 30))  # requests allowed to wait for a slot
 QUEUE_WAIT_SECONDS = _env_number("QUEUE_WAIT_SECONDS", 20)  # longest a queued request waits
 MAX_CONCURRENT_STREAMS = int(_env_number("MAX_CONCURRENT_STREAMS", 12))  # simultaneous downloads
-CACHE_TTL_SECONDS = _env_number("CACHE_TTL_SECONDS", 5400)  # 1.5 h: CDN links stay valid for hours
+CACHE_TTL_SECONDS = _env_number("CACHE_TTL_SECONDS", 3600)  # 1 h: signed CDN links stay valid that long; the privacy policy promises at most 90 min
 CACHE_MAX_ENTRIES = int(_env_number("CACHE_MAX_ENTRIES", 500))
+# Render's free instance has 512 MB. Above this resident size new work is refused (after dropping the
+# caches), so the service answers "busy" instead of being killed by the out-of-memory reaper.
+MEMORY_SOFT_LIMIT_MB = _env_number("MEMORY_SOFT_LIMIT_MB", 400)
 NEGATIVE_TTL_SECONDS = 60  # remember "private / no video" answers briefly so retries don't hammer the platform
 
 INFO_CACHE = TTLCache(max_entries=CACHE_MAX_ENTRIES, ttl=CACHE_TTL_SECONDS)
@@ -315,6 +320,7 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
         "cache": INFO_CACHE.stats(),
         "extractions": {"active": _active, "waiting": _waiting, "limit": MAX_CONCURRENT_EXTRACTIONS},
         "streams": {"active": STREAM_SLOTS.active, "limit": STREAM_SLOTS.size},
+        "memory": {"rssMb": None if rss_mb() is None else round(rss_mb(), 1), "softLimitMb": MEMORY_SOFT_LIMIT_MB},
     }
 
 
@@ -381,6 +387,24 @@ def _http_error(err: ScraperError) -> HTTPException:
     return HTTPException(status_code=err.status, detail=err.detail(), headers=headers)
 
 
+def _shed_load_if_low_on_memory() -> None:
+    """
+    Refuse new work while the process is close to the host's memory limit.
+
+    First give back what can be rebuilt (the caches, garbage); only if the process is still over
+    the ceiling is the request turned away with SERVER_BUSY, which the site shows as "try again".
+    """
+    used = rss_mb()
+    if used is None or used < MEMORY_SOFT_LIMIT_MB:
+        return
+    INFO_CACHE.clear()
+    NEGATIVE_CACHE.clear()
+    gc.collect()
+    used = rss_mb()
+    if used is not None and used >= MEMORY_SOFT_LIMIT_MB:
+        raise ScraperError(errors.SERVER_BUSY)
+
+
 def _extraction_slots() -> asyncio.Semaphore:
     loop = asyncio.get_running_loop()
     slots = _extraction_slots_by_loop.get(loop)
@@ -406,6 +430,7 @@ async def _extract_guarded(url: str, key: str) -> tuple[str, dict]:
     runs out of memory.
     """
     global _waiting, _active
+    _shed_load_if_low_on_memory()
     slots = _extraction_slots()
 
     if slots.locked() and _waiting >= MAX_QUEUED_EXTRACTIONS:
@@ -508,6 +533,10 @@ async def extract(
     }
 
 
+class StreamTooLarge(RuntimeError):
+    """Raised mid-stream when a download with no declared length grows past MAX_STREAM_BYTES."""
+
+
 class OpenStream:
     """An opened upstream response plus everything needed to close it."""
 
@@ -542,7 +571,9 @@ class OpenStream:
                     break
                 sent += len(chunk)
                 if sent > MAX_STREAM_BYTES:
-                    break
+                    # Ending the response normally would hand the visitor a silently cut-off video.
+                    # Raising aborts the connection, so the browser reports the download as failed.
+                    raise StreamTooLarge(f"stream exceeded {MAX_STREAM_BYTES} bytes")
                 yield chunk
         finally:
             self.close()
@@ -666,6 +697,10 @@ async def download(
 ) -> StreamingResponse:
     """Re-resolve the post from this server's IP and stream the best video (or its audio-only track)."""
     _check_key(x_scraper_key)
+    try:
+        _shed_load_if_low_on_memory()
+    except ScraperError as err:
+        raise _http_error(err)
 
     lease = STREAM_SLOTS.acquire()
     if lease is None:
@@ -785,6 +820,10 @@ async def stream(
 ) -> StreamingResponse:
     """Stream a CDN URL through this server so the CDN sees the scraper's IP."""
     _check_key(x_scraper_key)
+    try:
+        _shed_load_if_low_on_memory()
+    except ScraperError as err:
+        raise _http_error(err)
 
     lease = STREAM_SLOTS.acquire()
     if lease is None:

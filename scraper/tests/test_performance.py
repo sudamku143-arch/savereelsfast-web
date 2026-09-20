@@ -193,12 +193,12 @@ class ExtractCacheTests(AsyncApiCase):
     async def test_entries_expire_and_are_refetched(self):
         clock = FakeClock()
         calls = []
-        with mock.patch.object(self.main, "INFO_CACHE", TTLCache(ttl=5400, clock=clock)):
+        with mock.patch.object(self.main, "INFO_CACHE", TTLCache(ttl=3600, clock=clock)):
             with mock.patch.object(self.main, "_extract_info", lambda url: calls.append(url) or make_info("v1")):
                 await self.extract(url_for("v1"))
-                clock.now += 5000
+                clock.now += 3000
                 self.assertTrue((await self.extract(url_for("v1"))).json()["cached"])
-                clock.now += 500  # past the 1.5 h TTL
+                clock.now += 700  # past the 1 h TTL
                 self.assertFalse((await self.extract(url_for("v1"))).json()["cached"])
         self.assertEqual(len(calls), 2)
 
