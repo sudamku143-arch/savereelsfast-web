@@ -498,7 +498,7 @@
     "privacy": {
       "title": "Kebijakan Privasi",
       "description": "Apa yang diproses SaveReelsFast, berapa lama data sementara disimpan (hingga 3 jam), bahwa tidak ada media yang disimpan, dan pilihan privasi Anda.",
-      "updated": "Terakhir diperbarui: 20 September 2026",
+      "updated": "Terakhir diperbarui: 21 September 2026",
       "sections": [
         {
           "heading": "Gambaran umum",
@@ -511,7 +511,8 @@
           "body": [
             "Tautan yang Anda kirim: saat Anda menempelkan tautan video, tautan itu dikirim ke server kami, dan ke layanan backend yang berjalan atas nama kami, agar kami dapat mencari video publik tersebut.",
             "Data teknis: seperti kebanyakan situs web, penyedia hosting kami dapat mencatat secara otomatis alamat IP, jenis peramban, jenis perangkat, dan waktu setiap permintaan untuk keperluan keamanan, pencegahan penyalahgunaan, dan keandalan.",
-            "Yang tidak kami kumpulkan: kami tidak memiliki akun pengguna, tidak meminta nama atau email Anda untuk memakai alat ini, dan tidak membuat profil iklan sendiri."
+            "Yang tidak kami kumpulkan: kami tidak memiliki akun pengguna, tidak meminta nama atau email Anda untuk memakai alat ini, dan tidak membuat profil iklan sendiri.",
+            "Analitik (hanya jika Anda menerima): jika Anda menerima analitik di banner kami, kami memakai Google Analytics 4 untuk mengukur cara situs digunakan, seperti halaman yang dilihat, perkiraan lokasi (negara atau kota), jenis perangkat, peramban, dan dari mana Anda datang. Tautan yang Anda tempelkan tidak dikirim ke Google Analytics. Jika Anda menolak, tidak ada skrip analitik yang dimuat."
           ]
         },
         {
@@ -526,8 +527,8 @@
           "heading": "Cookie dan penyimpanan lokal",
           "body": [
             "Kami menetapkan satu cookie fungsional, NEXT_LOCALE, untuk mengingat bahasa yang Anda pilih. Cookie ini tidak berisi informasi pribadi dan kedaluwarsa setelah satu tahun.",
-            "Penyimpanan lokal dan penyimpanan sesi di peramban Anda menyimpan beberapa pengaturan kemudahan: hasil terbaru Anda (dihapus saat Anda menutup tab) dan apakah Anda menutup spanduk instalasi atau iklan yang menempel. Data ini tidak pernah meninggalkan perangkat Anda, dan Anda dapat menghapusnya kapan saja di pengaturan peramban.",
-            "Kami tidak menggunakan cookie analitik atau pelacakan milik kami sendiri."
+            "Penyimpanan lokal dan penyimpanan sesi di peramban Anda menyimpan beberapa pengaturan kemudahan: hasil terbaru Anda (dihapus saat Anda menutup tab), apakah Anda menutup spanduk instalasi atau iklan yang menempel, dan pilihan analitik Anda (diterima atau ditolak). Data ini tidak pernah meninggalkan perangkat Anda, dan Anda dapat menghapusnya kapan saja di pengaturan peramban.",
+            "Kami tidak memasang cookie analitik atau pelacakan kecuali Anda menerimanya. Jika Anda menerima, Google Analytics memasang cookie bernama _ga dan _ga_* yang mengenali peramban Anda dan dapat bertahan hingga dua tahun. Anda dapat mengubah atau menarik pilihan kapan saja lewat “Pengaturan cookie” di bagian bawah halaman; menariknya menghentikan analitik dan menghapus cookie tersebut."
           ]
         },
         {
@@ -543,7 +544,8 @@
           "body": [
             "Video diambil dari server publik platform asalnya (misalnya Instagram, YouTube, atau TikTok). Kami tidak berafiliasi dengan platform tersebut, dan kebijakan privasi masing-masing berlaku untuk layanan mereka.",
             "Untuk beberapa video YouTube, ketika kami tidak dapat mengambil video secara langsung, kami dapat mengirim ID YouTube publik video tersebut ke layanan unduhan pihak ketiga (sebuah instans dari alat sumber terbuka Cobalt) untuk memperoleh filenya. Kami hanya mengirim ID itu: tanpa cookie, data akun, atau informasi lain tentang Anda. Layanan itu dijalankan oleh pihak ketiga berdasarkan ketentuannya sendiri.",
-            "Situs dan layanan backend kami di-hosting oleh penyedia pihak ketiga yang memproses data teknis atas nama kami berdasarkan ketentuan privasi mereka sendiri. Kami tidak menjual informasi pribadi Anda."
+            "Situs dan layanan backend kami di-hosting oleh penyedia pihak ketiga yang memproses data teknis atas nama kami berdasarkan ketentuan privasi mereka sendiri. Kami tidak menjual informasi pribadi Anda.",
+            "Jika Anda menerima analitik, layanan ini disediakan oleh Google (Google LLC dan, untuk pengguna di EEA dan Inggris, Google Ireland Limited), yang memproses data berdasarkan ketentuan privasinya sendiri. Kami telah menonaktifkan sinyal Google dan fitur iklan, dan data analitik disimpan untuk jangka waktu terbatas, tidak lebih dari 14 bulan."
           ]
         },
         {
@@ -788,5 +790,13 @@
     "ctaText": "Tempel tautan publik dan dapatkan MP4 dalam hitungan detik. Tanpa akun, tanpa aplikasi.",
     "ctaButton": "Buka pengunduh",
     "latestHeading": "Artikel terbaru"
+  },
+  "consent": {
+    "title": "Cookie dan analitik",
+    "text": "Kami memakai Google Analytics untuk melihat halaman mana yang berguna dan meningkatkan situs. Cookie hanya dipasang jika Anda menerima, dan pengunduh tetap berfungsi dalam kedua kasus.",
+    "accept": "Terima",
+    "decline": "Tolak",
+    "privacy": "Kebijakan Privasi",
+    "settings": "Pengaturan cookie"
   }
 }

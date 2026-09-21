@@ -2,6 +2,7 @@ import { localePath, type Locale } from "@/lib/i18n-config";
 import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
 import type { PlatformId } from "@/lib/platforms";
 import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 type Dict = {
   disclaimer: string;
@@ -22,9 +23,12 @@ type Dict = {
 function Column({
   heading,
   links,
+  cookieLabel,
 }: {
   heading: string;
   links: { href: string; label: string }[];
+  /** When set, a "Cookie settings" button closes the list (analytics is only configured on some deployments). */
+  cookieLabel?: string;
 }) {
   return (
     <div>
@@ -40,6 +44,11 @@ function Column({
             </a>
           </li>
         ))}
+        {cookieLabel ? (
+          <li>
+            <CookieSettingsButton label={cookieLabel} />
+          </li>
+        ) : null}
       </ul>
     </div>
   );
@@ -50,12 +59,15 @@ export default function Footer({
   dict,
   platformNames,
   hasBlog = false,
+  cookieLabel,
 }: {
   locale: Locale;
   dict: Dict;
   platformNames: Record<PlatformId, string>;
   /** Only languages that have posts link to a blog (the others would 404). */
   hasBlog?: boolean;
+  /** Label of the footer's "Cookie settings" button; leave out when analytics is not configured. */
+  cookieLabel?: string;
 }) {
   const tools = LANDING_PLATFORMS.map((id) => ({
     href: localePath(locale, landingPath(id)),
@@ -102,7 +114,7 @@ export default function Footer({
             </ul>
           </div>
           <Column heading={dict.columns.legal} links={legal} />
-          <Column heading={dict.columns.company} links={company} />
+          <Column heading={dict.columns.company} links={company} cookieLabel={cookieLabel} />
         </nav>
 
         <div className="mt-10 border-t border-white/5 pt-6 text-center">

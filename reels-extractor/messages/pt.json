@@ -498,7 +498,7 @@
     "privacy": {
       "title": "Política de Privacidade",
       "description": "O que o SaveReelsFast processa, por quanto tempo os dados temporários ficam guardados (até 3 horas), que nada é armazenado e suas opções.",
-      "updated": "Última atualização: 20 de setembro de 2026",
+      "updated": "Última atualização: 21 de setembro de 2026",
       "sections": [
         {
           "heading": "Visão geral",
@@ -511,7 +511,8 @@
           "body": [
             "Links que você envia: ao colar o link de um vídeo, ele é enviado ao nosso servidor e a um serviço de backend que funciona em nosso nome, para localizar o vídeo público.",
             "Dados técnicos: como a maioria dos sites, nossos provedores de hospedagem podem registrar automaticamente seu endereço IP, o tipo de navegador e de dispositivo e o horário de cada solicitação, por motivos de segurança, prevenção de abusos e confiabilidade.",
-            "O que não coletamos: não temos contas de usuário, não pedimos seu nome ou e-mail para usar a ferramenta e não criamos perfis publicitários por conta própria."
+            "O que não coletamos: não temos contas de usuário, não pedimos seu nome ou e-mail para usar a ferramenta e não criamos perfis publicitários por conta própria.",
+            "Análises (somente se você aceitar): se você aceitar as análises em nosso banner, usamos o Google Analytics 4 para medir como o site é usado, como páginas visualizadas, localização aproximada (país ou cidade), tipo de dispositivo, navegador e como você chegou até aqui. Os links que você cola não são enviados ao Google Analytics. Se você recusar, nenhum script de análise é carregado."
           ]
         },
         {
@@ -526,8 +527,8 @@
           "heading": "Cookies e armazenamento local",
           "body": [
             "Usamos um cookie funcional, NEXT_LOCALE, para lembrar o idioma que você escolhe. Ele não contém informações pessoais e expira após um ano.",
-            "O armazenamento local e de sessão do seu navegador guarda algumas configurações de conveniência: seus resultados mais recentes (apagados ao fechar a aba) e se você dispensou o aviso de instalação ou o anúncio fixo. Esses dados nunca saem do seu dispositivo e você pode apagá-los a qualquer momento nas configurações do navegador.",
-            "Não usamos análises nem cookies de rastreamento próprios."
+            "O armazenamento local e de sessão do seu navegador guarda algumas configurações de conveniência: seus resultados mais recentes (apagados ao fechar a aba), se você dispensou o banner de instalação ou o anúncio fixo e a sua escolha sobre as análises (aceita ou recusada). Esses dados nunca saem do seu dispositivo e você pode apagá-los a qualquer momento nas configurações do navegador.",
+            "Não definimos cookies de análise ou de rastreamento, a menos que você aceite. Se aceitar, o Google Analytics define cookies chamados _ga e _ga_* que identificam o seu navegador e podem durar até dois anos. Você pode alterar ou retirar sua escolha a qualquer momento em “Configurações de cookies” no rodapé; ao retirá-la, as análises são interrompidas e esses cookies são apagados."
           ]
         },
         {
@@ -543,7 +544,8 @@
           "body": [
             "Os vídeos são obtidos dos servidores públicos da plataforma de origem (por exemplo, Instagram, YouTube ou TikTok). Não somos afiliados a essas plataformas, e as políticas de privacidade delas se aplicam aos serviços delas.",
             "Em alguns vídeos do YouTube, quando não conseguimos obter o vídeo diretamente, podemos enviar o ID público desse vídeo a um serviço de download de terceiros (uma instância da ferramenta de código aberto Cobalt) para obter o arquivo. Enviamos apenas esse ID: nada de cookies, dados de conta ou outras informações sobre você. Esse serviço é operado por um terceiro, conforme os próprios termos dele.",
-            "Nosso site e nosso serviço de backend são hospedados por provedores terceirizados que processam dados técnicos em nosso nome, conforme os próprios termos de privacidade deles. Não vendemos suas informações pessoais."
+            "Nosso site e nosso serviço de backend são hospedados por provedores terceirizados que processam dados técnicos em nosso nome, conforme os próprios termos de privacidade deles. Não vendemos suas informações pessoais.",
+            "Se você aceitar as análises, o serviço é prestado pelo Google (Google LLC e, para usuários do EEE e do Reino Unido, Google Ireland Limited), que trata os dados conforme os próprios termos de privacidade. Desativamos os sinais do Google e os recursos de publicidade, e os dados de análise são mantidos por um período limitado, de no máximo 14 meses."
           ]
         },
         {
@@ -788,5 +790,13 @@
     "ctaText": "Cole um link público e receba um MP4 em segundos. Sem conta e sem app para instalar.",
     "ctaButton": "Abrir o downloader",
     "latestHeading": "Últimos artigos"
+  },
+  "consent": {
+    "title": "Cookies e análises",
+    "text": "Usamos o Google Analytics para ver quais páginas são úteis e melhorar o site. Ele só define cookies se você aceitar, e o downloader funciona de qualquer forma.",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "privacy": "Política de Privacidade",
+    "settings": "Configurações de cookies"
   }
 }

@@ -498,7 +498,7 @@
     "privacy": {
       "title": "Politique de confidentialité",
       "description": "Ce que SaveReelsFast traite, la durée de conservation des données temporaires (jusqu'à 3 heures), l'absence de stockage de médias et vos choix.",
-      "updated": "Dernière mise à jour : 20 septembre 2026",
+      "updated": "Dernière mise à jour : 21 septembre 2026",
       "sections": [
         {
           "heading": "Présentation",
@@ -511,7 +511,8 @@
           "body": [
             "Liens que vous envoyez : lorsque vous collez un lien vidéo, il est transmis à notre serveur, ainsi qu'à un service backend exécuté pour notre compte, afin de retrouver la vidéo publique.",
             "Données techniques : comme la plupart des sites web, nos hébergeurs peuvent enregistrer automatiquement votre adresse IP, le type de navigateur, le type d'appareil et l'heure de chaque requête, à des fins de sécurité, de prévention des abus et de fiabilité.",
-            "Ce que nous ne collectons pas : nous n'avons pas de comptes utilisateurs, nous ne vous demandons ni nom ni e-mail pour utiliser l'outil, et nous ne constituons pas nous-mêmes de profils publicitaires."
+            "Ce que nous ne collectons pas : nous n'avons pas de comptes utilisateurs, nous ne vous demandons ni nom ni e-mail pour utiliser l'outil, et nous ne constituons pas nous-mêmes de profils publicitaires.",
+            "Statistiques (uniquement si vous acceptez) : si vous acceptez les statistiques dans notre bannière, nous utilisons Google Analytics 4 pour mesurer l'utilisation du site : pages consultées, localisation approximative (pays ou ville), type d'appareil, navigateur et provenance. Les liens que vous collez ne sont pas envoyés à Google Analytics. Si vous refusez, aucun script de statistiques n'est chargé."
           ]
         },
         {
@@ -526,8 +527,8 @@
           "heading": "Cookies et stockage local",
           "body": [
             "Nous déposons un seul cookie fonctionnel, NEXT_LOCALE, pour mémoriser la langue que vous choisissez. Il ne contient aucune information personnelle et expire au bout d'un an.",
-            "Le stockage local et le stockage de session de votre navigateur contiennent quelques réglages de confort : vos résultats les plus récents (effacés à la fermeture de l'onglet) et le fait que vous avez fermé la bannière d'installation ou la publicité fixe. Ces données ne quittent jamais votre appareil et vous pouvez les effacer à tout moment dans les paramètres de votre navigateur.",
-            "Nous n'utilisons pas de cookies d'analyse ou de suivi qui nous soient propres."
+            "Le stockage local et le stockage de session de votre navigateur contiennent quelques réglages de confort : vos résultats les plus récents (effacés à la fermeture de l'onglet), le fait que vous avez fermé la bannière d'installation ou la publicité fixe, et votre choix concernant les statistiques (accepté ou refusé). Ces données ne quittent jamais votre appareil et vous pouvez les effacer à tout moment dans les paramètres de votre navigateur.",
+            "Nous ne déposons aucun cookie d'analyse ou de suivi sans votre accord. Si vous acceptez, Google Analytics dépose des cookies nommés _ga et _ga_* qui identifient votre navigateur et peuvent durer jusqu'à deux ans. Vous pouvez modifier ou retirer votre choix à tout moment via « Paramètres des cookies » en bas de page ; le retirer arrête les statistiques et supprime ces cookies."
           ]
         },
         {
@@ -543,7 +544,8 @@
           "body": [
             "Les vidéos sont récupérées sur les serveurs publics de la plateforme d'origine (par exemple Instagram, YouTube ou TikTok). Nous ne sommes affiliés à aucune de ces plateformes et leurs propres politiques de confidentialité s'appliquent à leurs services.",
             "Pour certaines vidéos YouTube, lorsque nous ne parvenons pas à récupérer la vidéo directement, nous pouvons transmettre l'identifiant public YouTube de cette vidéo à un service de téléchargement tiers (une instance de l'outil open source Cobalt) afin d'obtenir le fichier. Nous n'envoyons que cet identifiant : ni cookies, ni données de compte, ni aucune autre information vous concernant. Ce service est exploité par un tiers selon ses propres conditions.",
-            "Notre site et notre service backend sont hébergés par des prestataires tiers qui traitent des données techniques pour notre compte selon leurs propres conditions de confidentialité. Nous ne vendons pas vos informations personnelles."
+            "Notre site et notre service backend sont hébergés par des prestataires tiers qui traitent des données techniques pour notre compte selon leurs propres conditions de confidentialité. Nous ne vendons pas vos informations personnelles.",
+            "Si vous acceptez les statistiques, le service est fourni par Google (Google LLC et, pour les utilisateurs de l'EEE et du Royaume-Uni, Google Ireland Limited), qui traite les données selon ses propres conditions de confidentialité. Nous avons désactivé les signaux Google et les fonctions publicitaires, et les données statistiques sont conservées pour une durée limitée, ne dépassant pas 14 mois."
           ]
         },
         {
@@ -788,5 +790,13 @@
     "ctaText": "Collez un lien public et obtenez un MP4 en quelques secondes. Sans compte, sans application à installer.",
     "ctaButton": "Ouvrir le téléchargeur",
     "latestHeading": "Derniers articles"
+  },
+  "consent": {
+    "title": "Cookies et statistiques",
+    "text": "Nous utilisons Google Analytics pour voir quelles pages sont utiles et améliorer le site. Il ne dépose de cookies que si vous acceptez, et le téléchargeur fonctionne dans les deux cas.",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "privacy": "Politique de confidentialité",
+    "settings": "Paramètres des cookies"
   }
 }

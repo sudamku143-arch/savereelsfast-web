@@ -14,6 +14,8 @@ import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { blogAvailability, localesWithPosts } from "@/lib/blog";
+import { analyticsId } from "@/lib/analytics";
+import AnalyticsConsent from "./components/AnalyticsConsent";
 import InstallProvider from "./components/InstallProvider";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import IosInstallModal from "./components/IosInstallModal";
@@ -110,7 +112,8 @@ export default async function LocaleLayout({ children, params }: Props) {
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} />
           {children}
-          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} />
+          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() ? dict.consent.settings : undefined} />
+          <AnalyticsConsent locale={locale} dict={dict.consent} />
           <IosInstallModal dict={dict.pwa} />
         </InstallProvider>
       </body>

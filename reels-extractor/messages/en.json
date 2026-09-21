@@ -498,7 +498,7 @@
     "privacy": {
       "title": "Privacy Policy",
       "description": "What SaveReelsFast processes when you use it, how long temporary data is kept (up to 3 hours), that no media is stored, and your privacy choices.",
-      "updated": "Last updated: September 20, 2026",
+      "updated": "Last updated: September 21, 2026",
       "sections": [
         {
           "heading": "Overview",
@@ -511,7 +511,8 @@
           "body": [
             "Links you submit: when you paste a video link, it is sent to our server, and to a backend service that runs on our behalf, so we can look up the public video.",
             "Technical data: like most websites, our hosting providers may automatically record your IP address, browser type, device type and the time of each request for security, abuse prevention and reliability.",
-            "What we don't collect: we have no user accounts, we don't ask for your name or email to use the tool, and we don't build advertising profiles ourselves."
+            "What we don't collect: we have no user accounts, we don't ask for your name or email to use the tool, and we don't build advertising profiles ourselves.",
+            "Analytics (only if you accept): if you accept analytics in our banner, we use Google Analytics 4 to measure how the site is used, such as pages viewed, approximate location (country or city), device type, browser and how you arrived. The links you paste are not sent to Google Analytics. If you decline, no analytics script is loaded."
           ]
         },
         {
@@ -526,8 +527,8 @@
           "heading": "Cookies and local storage",
           "body": [
             "We set one functional cookie, NEXT_LOCALE, to remember the language you choose. It contains no personal information and expires after one year.",
-            "Your browser's local and session storage holds a few convenience settings: your most recent results (cleared when you close the tab) and whether you dismissed the install banner or the sticky ad. This data never leaves your device, and you can clear it in your browser settings at any time.",
-            "We do not use analytics or tracking cookies of our own."
+            "Your browser's local and session storage holds a few convenience settings: your most recent results (cleared when you close the tab), whether you dismissed the install banner or the sticky ad, and your analytics choice (accepted or declined). This data never leaves your device, and you can clear it in your browser settings at any time.",
+            "We set no analytics or tracking cookies unless you accept. If you accept, Google Analytics sets cookies named _ga and _ga_* that identify your browser and can last up to two years. You can change or withdraw your choice at any time with Cookie settings in the footer; withdrawing stops analytics and deletes these cookies."
           ]
         },
         {
@@ -543,7 +544,8 @@
           "body": [
             "Videos are retrieved from the public servers of the platform they come from (for example Instagram, YouTube or TikTok). We are not affiliated with these platforms, and their own privacy policies apply to their services.",
             "For some YouTube videos, when we cannot retrieve the video directly, we may send that video's public YouTube ID to a third-party download service (an instance of the open-source Cobalt tool) to obtain the file. We send only that ID: no cookies, account details or other information about you. That service is run by a third party under its own terms.",
-            "Our site and backend service are hosted by third-party providers that process technical data on our behalf under their own privacy terms. We do not sell your personal information."
+            "Our site and backend service are hosted by third-party providers that process technical data on our behalf under their own privacy terms. We do not sell your personal information.",
+            "If you accept analytics, the service is provided by Google (Google LLC, and Google Ireland Limited for users in the EEA and UK), which processes the data under its own privacy terms. We have switched off Google signals and advertising features, and analytics data is kept for a limited period, no longer than 14 months."
           ]
         },
         {
@@ -788,5 +790,13 @@
     "ctaText": "Paste a public link and get an MP4 in seconds. No account, no app to install.",
     "ctaButton": "Open the downloader",
     "latestHeading": "Latest articles"
+  },
+  "consent": {
+    "title": "Cookies and analytics",
+    "text": "We use Google Analytics to see which pages are useful and to improve the site. It sets cookies only if you accept, and the downloader works either way.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "privacy": "Privacy policy",
+    "settings": "Cookie settings"
   }
 }
