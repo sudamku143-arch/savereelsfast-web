@@ -11,6 +11,7 @@ import FaqAccordion from "./components/FaqAccordion";
 import AdBanner from "./components/AdBanner";
 import InstallBanner from "./components/InstallBanner";
 import PlatformLinks from "./components/PlatformLinks";
+import LatestPosts from "./components/LatestPosts";
 
 export default async function LocalePage({
   params,
@@ -85,6 +86,9 @@ export default async function LocalePage({
       />
 
       <FaqAccordion heading={dict.faq.heading} items={dict.faq.items} />
+
+      {/* Newest blog posts (nothing in a language that has no blog). */}
+      <LatestPosts locale={locale} dict={dict.blog} />
 
       {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}
       <AdBanner variant="sticky" dict={dict.ad} />

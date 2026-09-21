@@ -98,6 +98,27 @@ describe("posts on disk", () => {
   });
 });
 
+describe("latest articles on the home page", () => {
+  const component = readFileSync(new URL("../app/[locale]/components/LatestPosts.tsx", import.meta.url), "utf8");
+  const home = readFileSync(new URL("../app/[locale]/page.tsx", import.meta.url), "utf8");
+
+  it("is on the home page and reads the posts from the blog folder, so a new post appears without a code change", () => {
+    assert.match(home, /<LatestPosts locale=\{locale\} dict=\{dict\.blog\} \/>/);
+    assert.match(component, /getPosts\(locale\)\.slice\(0, HOW_MANY\)/);
+  });
+
+  it("shows nothing in a language without a blog, so it can never link to a 404", () => {
+    assert.match(component, /if \(posts\.length === 0\) return null;/);
+    for (const locale of ["es", "hi", "fr", "ar"] as const) assert.equal(getPosts(locale).length, 0, `${locale} has no posts`);
+  });
+
+  it("shows at most three posts, newest first, and links each one and the blog index", () => {
+    assert.match(component, /HOW_MANY = 3/);
+    assert.match(component, /localePath\(locale, blogPath\(post\.slug\)\)/);
+    assert.match(component, /localePath\(locale, blogPath\(\)\)/);
+  });
+});
+
 describe("post headers are checked", () => {
   const ok = "---\ntitle: A title\ndescription: A description long enough to be a real one for the search results page.\ndate: 2026-09-21\nlanguage: en\n---\n\nThe body of the post is here and it is long enough to count as a body.";
 

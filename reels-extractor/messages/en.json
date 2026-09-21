@@ -786,6 +786,7 @@
     "updated": "Updated",
     "ctaHeading": "Save videos with SaveReelsFast",
     "ctaText": "Paste a public link and get an MP4 in seconds. No account, no app to install.",
-    "ctaButton": "Open the downloader"
+    "ctaButton": "Open the downloader",
+    "latestHeading": "Latest articles"
   }
 }
