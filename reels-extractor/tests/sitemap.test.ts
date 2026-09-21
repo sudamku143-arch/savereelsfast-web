@@ -17,7 +17,7 @@ import { LEGACY_SLUGS, PLATFORM_SLUGS } from "../lib/landing.ts";
 process.env.BLOG_TODAY = "2099-12-31";
 
 const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
-const SITE = "https://savereelsfast.com";
+const SITE = "https://www.savereelsfast.com";
 const ids = Object.keys(PLATFORM_SLUGS) as (keyof typeof PLATFORM_SLUGS)[];
 
 // app/sitemap.ts imports through the "@/" alias, which plain Node cannot resolve: run it from a copy.

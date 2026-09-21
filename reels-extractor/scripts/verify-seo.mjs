@@ -12,7 +12,7 @@
 import { readFileSync } from "node:fs";
 
 const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
-const SITE = "https://savereelsfast.com"; // canonical URLs always point at production
+const SITE = "https://www.savereelsfast.com"; // canonical URLs always point at production
 const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"];
 // Legal pages are translated (and listed in the sitemap) only in these; the rest show English.
 const LEGAL_LOCALES = ["en", "es", "pt", "hi"];

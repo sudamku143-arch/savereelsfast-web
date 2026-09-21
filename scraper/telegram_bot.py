@@ -36,8 +36,8 @@ WELCOME = (
     "Welcome to SaveReelsFast! Paste any video link (Instagram, YouTube, TikTok, Facebook, Reddit, etc.) "
     "to download."
 )
-FOOTER = "⚡ Downloaded via https://savereelsfast.com"
-WEBSITE_URL = "https://savereelsfast.com"
+FOOTER = "⚡ Downloaded via https://www.savereelsfast.com"
+WEBSITE_URL = "https://www.savereelsfast.com"
 # The button under every video the bot sends, and the one under the welcome message.
 VIDEO_BUTTON_LABEL = "🌐 Download in HD / 4K Quality"
 WELCOME_BUTTON_LABEL = "🌐 Visit SaveReelsFast"

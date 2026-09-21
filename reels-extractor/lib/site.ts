@@ -1,4 +1,7 @@
-export const SITE_URL = "https://savereelsfast.com";
+// The address the site is actually served from. Vercel redirects savereelsfast.com to www.savereelsfast.com, so the
+// canonical tags, sitemap, robots and structured data must name the www address: a canonical that points at a
+// redirecting URL is a conflicting signal. tests/domain.test.ts guards this.
+export const SITE_URL = "https://www.savereelsfast.com";
 export const SITE_NAME = "SaveReelsFast";
 
 // Monetag site verification: rendered as <meta name="monetag" content="..."> in the <head> of every page.

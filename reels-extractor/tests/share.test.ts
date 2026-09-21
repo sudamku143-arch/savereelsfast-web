@@ -23,35 +23,35 @@ const { shareUrl, whatsappHref, xHref } = (await import(pathToFileURL(join(dir, 
 
 describe("share links", () => {
   it("point at the home page in the visitor's language, tagged with where the visit came from", () => {
-    assert.equal(shareUrl("en", "whatsapp"), "https://savereelsfast.com/?utm_source=share&utm_medium=whatsapp&utm_campaign=after-download");
-    assert.equal(shareUrl("hi", "x"), "https://savereelsfast.com/hi?utm_source=share&utm_medium=x&utm_campaign=after-download");
-    assert.equal(shareUrl("ar", "copy"), "https://savereelsfast.com/ar?utm_source=share&utm_medium=copy&utm_campaign=after-download");
+    assert.equal(shareUrl("en", "whatsapp"), "https://www.savereelsfast.com/?utm_source=share&utm_medium=whatsapp&utm_campaign=after-download");
+    assert.equal(shareUrl("hi", "x"), "https://www.savereelsfast.com/hi?utm_source=share&utm_medium=x&utm_campaign=after-download");
+    assert.equal(shareUrl("ar", "copy"), "https://www.savereelsfast.com/ar?utm_source=share&utm_medium=copy&utm_campaign=after-download");
   });
 
   it("every language shares its own home page", () => {
     for (const locale of locales) {
       const url = new URL(shareUrl(locale, "copy"));
-      assert.equal(url.origin, "https://savereelsfast.com");
+      assert.equal(url.origin, "https://www.savereelsfast.com");
       assert.equal(url.pathname, locale === "en" ? "/" : `/${locale}`);
     }
   });
 
   it("WhatsApp's link carries the message and the address, safely encoded", () => {
-    const url = new URL(whatsappHref("I saved a video & it's free!", "https://savereelsfast.com/?a=1&b=2"));
+    const url = new URL(whatsappHref("I saved a video & it's free!", "https://www.savereelsfast.com/?a=1&b=2"));
     assert.equal(url.origin + url.pathname, "https://wa.me/");
-    assert.equal(url.searchParams.get("text"), "I saved a video & it's free! https://savereelsfast.com/?a=1&b=2");
+    assert.equal(url.searchParams.get("text"), "I saved a video & it's free! https://www.savereelsfast.com/?a=1&b=2");
   });
 
   it("X's link carries the message and the address as separate, safely encoded values", () => {
-    const url = new URL(xHref("Free video saver & more", "https://savereelsfast.com/?a=1&b=2"));
+    const url = new URL(xHref("Free video saver & more", "https://www.savereelsfast.com/?a=1&b=2"));
     assert.equal(url.origin + url.pathname, "https://x.com/intent/post");
     assert.equal(url.searchParams.get("text"), "Free video saver & more");
-    assert.equal(url.searchParams.get("url"), "https://savereelsfast.com/?a=1&b=2");
+    assert.equal(url.searchParams.get("url"), "https://www.savereelsfast.com/?a=1&b=2");
   });
 
   it("a message cannot break out of the address into another one", () => {
     const evil = "\" onmouseover=\"alert(1)\" https://evil.example/ ";
-    for (const href of [whatsappHref(evil, "https://savereelsfast.com/"), xHref(evil, "https://savereelsfast.com/")]) {
+    for (const href of [whatsappHref(evil, "https://www.savereelsfast.com/"), xHref(evil, "https://www.savereelsfast.com/")]) {
       const url = new URL(href);
       assert.ok(["wa.me", "x.com"].includes(url.host), url.host);
       assert.doesNotMatch(href, /[" ]/, "no raw quote or space in the address");

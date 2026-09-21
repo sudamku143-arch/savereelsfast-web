@@ -29,7 +29,7 @@ from telegram_bot import BotUserError, ChatLimiter, Media, TelegramBot  # noqa: 
 
 TOKEN = "123456789:AAE_fake_test_token_0123"
 WELCOME_EXACT = "Welcome to SaveReelsFast! Paste any video link (Instagram, YouTube, TikTok, Facebook, Reddit, etc.) to download."
-FOOTER_EXACT = "⚡ Downloaded via https://savereelsfast.com"
+FOOTER_EXACT = "⚡ Downloaded via https://www.savereelsfast.com"
 
 
 # ------------------------------------------------------------------------------------ fake Telegram
@@ -440,12 +440,12 @@ class WebsiteButtonTests(unittest.IsolatedAsyncioTestCase):
 
         await make_bot(fake, fetch).handle_update(message("https://youtu.be/jNQXAC9IVRw"))
         sent = fake.of("sendVideo")[0]
-        self.assertEqual(buttons_of(sent), [[{"text": VIDEO_BUTTON, "url": "https://savereelsfast.com"}]])
+        self.assertEqual(buttons_of(sent), [[{"text": VIDEO_BUTTON, "url": "https://www.savereelsfast.com"}]])
         self.assertTrue(sent["fields"]["caption"].endswith(FOOTER_EXACT), "the caption is unchanged")
 
     async def test_the_button_text_and_address_are_exactly_as_requested(self):
         self.assertEqual(tb.VIDEO_BUTTON_LABEL, VIDEO_BUTTON)
-        self.assertEqual(tb.WEBSITE_URL, "https://savereelsfast.com")
+        self.assertEqual(tb.WEBSITE_URL, "https://www.savereelsfast.com")
 
     async def test_the_document_fallback_keeps_the_button(self):
         fake = FakeTelegram()
@@ -456,7 +456,7 @@ class WebsiteButtonTests(unittest.IsolatedAsyncioTestCase):
             return Media(title="x", path=path, size=10)
 
         await make_bot(fake, fetch).handle_update(message("https://youtu.be/jNQXAC9IVRw"))
-        self.assertEqual(buttons_of(fake.of("sendDocument")[0]), [[{"text": VIDEO_BUTTON, "url": "https://savereelsfast.com"}]])
+        self.assertEqual(buttons_of(fake.of("sendDocument")[0]), [[{"text": VIDEO_BUTTON, "url": "https://www.savereelsfast.com"}]])
 
     async def test_start_and_help_show_a_button_that_opens_the_website(self):
         fake = FakeTelegram()
@@ -468,7 +468,7 @@ class WebsiteButtonTests(unittest.IsolatedAsyncioTestCase):
             rows = buttons_of(call)
             self.assertEqual(len(rows), 1)
             self.assertEqual(len(rows[0]), 1)
-            self.assertEqual(rows[0][0]["url"], "https://savereelsfast.com")
+            self.assertEqual(rows[0][0]["url"], "https://www.savereelsfast.com")
             self.assertEqual(rows[0][0]["text"], tb.WELCOME_BUTTON_LABEL)
 
     async def test_other_replies_have_no_button(self):
