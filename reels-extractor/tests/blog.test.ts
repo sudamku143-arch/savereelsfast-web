@@ -17,13 +17,13 @@ import { LANDING_PLATFORMS, landingPath } from "../lib/landing.ts";
 // lib/blog.ts imports its neighbour without a file extension (as the site build wants), which plain Node cannot
 // resolve: run it from a copy that spells the extension out. It still reads content/blog from the project folder.
 const dir = mkdtempSync(join(tmpdir(), "srf-blog-"));
-for (const file of ["i18n-config", "blog"]) {
+for (const file of ["i18n-config", "landing", "blog"]) {
   writeFileSync(
     join(dir, `${file}.ts`),
     readFileSync(new URL(`../lib/${file}.ts`, import.meta.url), "utf8").replace(/from "\.\/([\w-]+)"/g, 'from "./$1.ts"')
   );
 }
-const { allPosts, getPost, getPosts, localesWithPosts, parseFrontmatter, readPost, translationsOf } = (await import(
+const { allPosts, getPost, getPosts, localesWithPosts, parseFrontmatter, readPost, relatedPosts, translationsOf } = (await import(
   pathToFileURL(join(dir, "blog.ts")).href
 )) as typeof import("../lib/blog.ts");
 
@@ -100,6 +100,7 @@ describe("posts on disk", () => {
 
 describe("latest articles on the home page", () => {
   const component = readFileSync(new URL("../app/[locale]/components/LatestPosts.tsx", import.meta.url), "utf8");
+  const cards = readFileSync(new URL("../app/[locale]/components/PostCards.tsx", import.meta.url), "utf8");
   const home = readFileSync(new URL("../app/[locale]/page.tsx", import.meta.url), "utf8");
 
   it("is on the home page and reads the posts from the blog folder, so a new post appears without a code change", () => {
@@ -114,8 +115,84 @@ describe("latest articles on the home page", () => {
 
   it("shows at most three posts, newest first, and links each one and the blog index", () => {
     assert.match(component, /HOW_MANY = 3/);
-    assert.match(component, /localePath\(locale, blogPath\(post\.slug\)\)/);
+    assert.match(cards, /localePath\(locale, blogPath\(post\.slug\)\)/);
     assert.match(component, /localePath\(locale, blogPath\(\)\)/);
+  });
+});
+
+describe("posts and tool pages link to each other", () => {
+  const ALL_TOOLS = LANDING_PLATFORMS;
+  const starters = STARTERS.map((slug) => getPost("en", slug)!);
+
+  it("every starter post declares the downloaders it is about, and its text links to each of them", () => {
+    for (const post of starters) {
+      assert.ok(post.tools.length >= 1, `${post.slug} declares no tools`);
+      for (const tool of post.tools) {
+        assert.ok(post.body.includes(`](${landingPath(tool)})`), `${post.slug} is about ${tool} but never links to ${landingPath(tool)}`);
+      }
+    }
+  });
+
+  it("the Instagram Reels post is about, and links to, the Instagram downloader", () => {
+    const post = getPost("en", "top-10-instagram-reels-ideas-2026")!;
+    assert.deepEqual(post.tools, ["instagram"]);
+    assert.ok(post.body.includes("](/instagram-video-downloader)"));
+  });
+
+  it("every downloader page in English has at least one related article, and never more than three", () => {
+    for (const tool of ALL_TOOLS) {
+      const related = relatedPosts("en", tool);
+      assert.ok(related.length >= 1 && related.length <= 3, `${tool} has ${related.length} related posts`);
+      assert.equal(new Set(related.map((p) => p.slug)).size, related.length, `${tool} lists a post twice`);
+    }
+  });
+
+  it("posts written for the platform come before general ones, and the main downloader comes before a mention", () => {
+    const youtube = relatedPosts("en", "youtube").map((p) => p.slug);
+    assert.equal(youtube[0], "youtube-shorts-vs-instagram-reels-for-creators", "written for YouTube, so before the general formats post");
+    assert.ok(youtube.includes("best-video-formats-mp4-vs-webm-vs-mov"));
+    const instagram = relatedPosts("en", "instagram");
+    assert.equal(instagram[0].slug, "top-10-instagram-reels-ideas-2026", "the Reels post is the Instagram page's first article");
+    assert.ok(instagram.slice(1).every((p) => p.tools.includes("instagram")), "then other posts about Instagram, not general ones");
+  });
+
+  it("a platform with no post of its own is offered the general ones", () => {
+    for (const tool of ["reddit", "snapchat", "threads", "pinterest", "x"] as const) {
+      const related = relatedPosts("en", tool);
+      assert.ok(related.length >= 2 && related.every((p) => p.general), `${tool}: ${related.map((p) => p.slug)}`);
+    }
+  });
+
+  it("a language without a blog gets no related articles, so a tool page never links to English text", () => {
+    for (const locale of ["es", "hi", "fr", "ar", "bn", "id"] as const) {
+      for (const tool of ALL_TOOLS) assert.deepEqual(relatedPosts(locale, tool), [], `${locale}/${tool}`);
+    }
+  });
+
+  it("the tool page and the post page render the links", () => {
+    const toolPage = readFileSync(new URL("../app/[locale]/[platform]/page.tsx", import.meta.url), "utf8");
+    assert.match(toolPage, /<RelatedPosts locale=\{locale\} platform=\{id\} dict=\{dict\.blog\} \/>/);
+    const postPage = readFileSync(new URL("../app/[locale]/blog/[slug]/page.tsx", import.meta.url), "utf8");
+    assert.match(postPage, /post\.tools\.map\(\(tool\) =>/);
+    assert.match(postPage, /localePath\(locale, landingPath\(tool\)\)/);
+  });
+
+  it("an unknown or repeated downloader in a post's header stops the build", () => {
+    const post = (extra: string) =>
+      `---
+title: A title
+description: A description long enough to be a real one for the search results page.
+date: 2026-09-21
+language: en
+${extra}
+---
+
+The body of the post is here and it is long enough to count as a body.`;
+    assert.deepEqual(readPost(post("tools: instagram, x"), "en", "x")?.tools, ["instagram", "x"]);
+    assert.equal(readPost(post("general: true"), "en", "x")?.general, true);
+    assert.throws(() => readPost(post("tools: instagram, myspace"), "en", "x"), /"myspace", which is not a downloader/);
+    assert.throws(() => readPost(post("tools: instagram, instagram"), "en", "x"), /same downloader twice/);
+    assert.throws(() => readPost(post("general: maybe"), "en", "x"), /general must be true or false/);
   });
 });
 

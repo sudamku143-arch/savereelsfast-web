@@ -19,7 +19,7 @@ const ids = Object.keys(PLATFORM_SLUGS) as (keyof typeof PLATFORM_SLUGS)[];
 
 // app/sitemap.ts imports through the "@/" alias, which plain Node cannot resolve: run it from a copy.
 const dir = mkdtempSync(join(tmpdir(), "srf-sitemap-"));
-for (const file of ["i18n-config", "landing", "site", "blog"]) {
+for (const file of ["i18n-config", "landing", "site", "blog"]) { // (blog.ts imports landing.ts)
   // (lib files import their neighbours without an extension, which plain Node cannot resolve)
   writeFileSync(join(dir, `${file}.ts`), source(`lib/${file}.ts`).replace(/from "\.\/([\w-]+)"/g, 'from "./$1.ts"'));
 }

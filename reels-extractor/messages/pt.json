@@ -789,7 +789,9 @@
     "ctaHeading": "Salve vídeos com o SaveReelsFast",
     "ctaText": "Cole um link público e receba um MP4 em segundos. Sem conta e sem app para instalar.",
     "ctaButton": "Abrir o downloader",
-    "latestHeading": "Últimos artigos"
+    "latestHeading": "Últimos artigos",
+    "relatedHeading": "Artigos relacionados",
+    "toolsHeading": "Downloaders relacionados"
   },
   "consent": {
     "title": "Cookies e análises",

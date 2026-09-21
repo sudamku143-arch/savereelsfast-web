@@ -18,6 +18,7 @@ import ExtractorClient from "../components/ExtractorClient";
 import FaqAccordion from "../components/FaqAccordion";
 import AdBanner from "../components/AdBanner";
 import PlatformLinks from "../components/PlatformLinks";
+import RelatedPosts from "../components/RelatedPosts";
 
 type Props = { params: { locale: string; platform: string } };
 
@@ -188,6 +189,9 @@ export default async function PlatformLandingPage({ params }: Props) {
       </section>
 
       <FaqAccordion heading={fillTemplate(common.faqHeading, vars)} items={faqItems} />
+
+      {/* Blog posts written for this platform (or for every platform); nothing in a language without a blog. */}
+      <RelatedPosts locale={locale} platform={id} dict={dict.blog} />
 
       <PlatformLinks
         locale={locale}

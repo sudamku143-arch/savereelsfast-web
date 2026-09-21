@@ -4,6 +4,7 @@ import { isLocale, localePath, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
 import { pageMetadata } from "@/lib/legal-metadata";
 import { allPosts, blogPath, getPost, translationsOf } from "@/lib/blog";
+import { landingPath } from "@/lib/landing";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import BlogMarkdown from "../../components/BlogMarkdown";
 
@@ -119,7 +120,27 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </article>
 
-      <aside className="glass mt-12 rounded-2xl p-6">
+      {post.tools.length > 0 && (
+        <section className="mt-12" aria-labelledby="related-tools">
+          <h2 id="related-tools" className="text-lg font-bold text-zinc-50">
+            {blog.toolsHeading}
+          </h2>
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {post.tools.map((tool) => (
+              <li key={tool}>
+                <a
+                  href={localePath(locale, landingPath(tool))}
+                  className="glass block rounded-xl px-4 py-3 text-sm font-medium text-zinc-100 outline-none transition hover:border-brand-500/40 hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
+                >
+                  {dict.landing.platforms[tool].h1}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <aside className="glass mt-8 rounded-2xl p-6">
         <h2 className="text-lg font-bold text-zinc-50">{blog.ctaHeading}</h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-400">{blog.ctaText}</p>
         <a

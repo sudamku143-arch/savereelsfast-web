@@ -10,7 +10,12 @@
 //   updated: 2026-10-02        (optional)
 //   language: en
 //   draft: true                (optional: hidden everywhere until removed)
+//   tools: instagram, youtube  (optional: the downloaders this post is about; see below)
+//   general: true              (optional: useful for every platform, so tool pages may list it)
 //   ---
+//
+// `tools` links the two ways: the post page lists those downloaders, and each of those tool pages lists this post
+// under "Related articles". A `general` post is offered on every other tool page too, after the ones written for it.
 //
 // Files are read at build time. A mistake in a post's header stops the build with the file's name, so it can never
 // reach the live site half-broken.
@@ -18,6 +23,8 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { isLocale, locales, type Locale } from "./i18n-config";
+import { LANDING_PLATFORMS } from "./landing";
+import type { PlatformId } from "./platforms";
 import type { BlogAvailability } from "./switcher";
 
 export type BlogPost = {
@@ -31,6 +38,10 @@ export type BlogPost = {
   body: string;
   wordCount: number;
   readingMinutes: number;
+  /** Downloaders this post is about (platform ids, in the order written). */
+  tools: PlatformId[];
+  /** Useful for every platform: shown on tool pages that have no post of their own. */
+  general: boolean;
 };
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -81,6 +92,18 @@ export function readPost(raw: string, locale: Locale, slug: string, file = `${lo
   if (body.length < 50) throw new Error(`${file}: the post has no body`);
   if (data.draft === "true") return null;
 
+  const tools = (data.tools ?? "")
+    .split(",")
+    .map((name) => name.trim())
+    .filter(Boolean);
+  for (const name of tools) {
+    if (!(LANDING_PLATFORMS as readonly string[]).includes(name)) {
+      throw new Error(`${file}: tools lists "${name}", which is not a downloader (${LANDING_PLATFORMS.join(", ")})`);
+    }
+  }
+  if (new Set(tools).size !== tools.length) throw new Error(`${file}: tools lists the same downloader twice`);
+  if (data.general && data.general !== "true" && data.general !== "false") throw new Error(`${file}: general must be true or false`);
+
   const words = body.split(/\s+/).filter((token) => /[\p{L}\p{N}]/u.test(token)).length; // real words, not | ## - marks
   return {
     slug,
@@ -93,6 +116,8 @@ export function readPost(raw: string, locale: Locale, slug: string, file = `${lo
     body,
     wordCount: words,
     readingMinutes: Math.max(1, Math.round(words / 200)),
+    tools: tools as PlatformId[],
+    general: data.general === "true",
   };
 }
 
@@ -140,6 +165,23 @@ export function localesWithPosts(): Locale[] {
 export function translationsOf(slug: string): Locale[] {
   const present = new Set(allPosts().filter((post) => post.slug === slug).map((post) => post.locale));
   return locales.filter((locale) => present.has(locale));
+}
+
+/**
+ * The posts to offer on a tool page, up to `limit`: first those whose main downloader is this platform (the first one
+ * in their `tools`), then those that only mention it, then general ones. Within a group, a post that is not `general`
+ * (it is about specific platforms) comes before one that is, and newer before older.
+ * Empty in a language with no posts, so a tool page never links to an article that does not exist in its language.
+ */
+export function relatedPosts(locale: Locale, platform: PlatformId, limit = 3): BlogPost[] {
+  const own = getPosts(locale);
+  const rank = (post: BlogPost) => (post.tools[0] === platform ? 0 : post.tools.includes(platform) ? 1 : post.general ? 2 : 3);
+  return own
+    .filter((post) => rank(post) < 3)
+    .map((post, order) => ({ post, order }))
+    .sort((a, b) => rank(a.post) - rank(b.post) || Number(a.post.general) - Number(b.post.general) || a.order - b.order) // (own is already newest first)
+    .map(({ post }) => post)
+    .slice(0, limit);
 }
 
 /** Where the blog exists, for the language switcher: the languages with a blog, and for each post the languages it is in. */

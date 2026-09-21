@@ -3,6 +3,8 @@ title: How to Download Videos from Social Media Safely and Legally
 description: How to save social media videos without malware or scams, and what copyright, fair use and platform rules mean for the files you keep.
 date: 2026-09-21
 language: en
+tools: tiktok, instagram
+general: true
 ---
 
 Saving a video to watch offline is one of the most common things people do online, and one of the easiest to get wrong. Some downloader sites are unsafe, and the rules about what you may do with a file are not always obvious. This guide covers both sides: how to stay safe, and how to stay on the right side of copyright.

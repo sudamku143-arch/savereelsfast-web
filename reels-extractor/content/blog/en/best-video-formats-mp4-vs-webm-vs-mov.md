@@ -3,6 +3,8 @@ title: "Best Video Formats Explained: MP4 vs WebM vs MOV"
 description: MP4, WebM and MOV compared in plain language: what each format is for, where it plays, how big the files get, and which one to choose for sharing or editing.
 date: 2026-09-21
 language: en
+tools: youtube, facebook
+general: true
 ---
 
 If you have ever tried to send a video that would not play, or wondered why a clip from your phone looks different in an editing app, you have run into video formats. The three names you will see most often are MP4, WebM and MOV. This guide explains what they are, how they differ and which one to pick for each job.

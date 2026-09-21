@@ -789,7 +789,9 @@
     "ctaHeading": "SaveReelsFast से वीडियो सेव करें",
     "ctaText": "कोई पब्लिक लिंक पेस्ट करें और कुछ सेकंड में MP4 पाएँ। न अकाउंट, न कोई ऐप इंस्टॉल करना।",
     "ctaButton": "डाउनलोडर खोलें",
-    "latestHeading": "नए लेख"
+    "latestHeading": "नए लेख",
+    "relatedHeading": "संबंधित लेख",
+    "toolsHeading": "संबंधित डाउनलोडर"
   },
   "consent": {
     "title": "कुकीज़ और एनालिटिक्स",

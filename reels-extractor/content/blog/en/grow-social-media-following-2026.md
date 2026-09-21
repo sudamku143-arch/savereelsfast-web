@@ -3,6 +3,7 @@ title: 5 Tips to Grow Your Social Media Following in 2026
 description: Five practical tips to grow your social media following in 2026: find your niche, hook viewers fast, post steadily, engage and reuse your best videos.
 date: 2026-09-21
 language: en
+tools: tiktok, instagram
 ---
 
 Growing a following can feel like guesswork, especially when platforms change what they show and a post that worked last month goes nowhere this month. The good news is that the basics have stayed steady. These five tips work on Instagram, TikTok, YouTube and most other platforms, and none of them rely on tricks or shortcuts.

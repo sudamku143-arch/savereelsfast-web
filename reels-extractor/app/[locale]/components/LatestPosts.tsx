@@ -1,13 +1,10 @@
 import { localePath, type Locale } from "@/lib/i18n-config";
 import { blogPath, getPosts } from "@/lib/blog";
+import PostCards from "./PostCards";
 
 type Dict = { latestHeading: string; allArticles: string; minRead: string };
 
 const HOW_MANY = 3;
-
-function formatDate(date: string, locale: Locale): string {
-  return new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`));
-}
 
 /**
  * The newest posts, linked from the home page. Renders nothing in a language that has no blog (its /blog would be a
@@ -30,29 +27,7 @@ export default function LatestPosts({ locale, dict }: { locale: Locale; dict: Di
           {dict.allArticles} →
         </a>
       </div>
-
-      <ul className="space-y-3">
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <article className="glass rounded-2xl p-4 transition hover:border-brand-500/40">
-              <p className="text-xs text-zinc-500">
-                <time dateTime={post.date}>{formatDate(post.date, locale)}</time>
-                <span aria-hidden="true"> · </span>
-                {dict.minRead.replace("{n}", String(post.readingMinutes))}
-              </p>
-              <h3 className="mt-1.5 text-base font-semibold leading-snug text-zinc-100">
-                <a
-                  href={localePath(locale, blogPath(post.slug))}
-                  className="rounded outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
-                >
-                  {post.title}
-                </a>
-              </h3>
-              <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-zinc-400">{post.description}</p>
-            </article>
-          </li>
-        ))}
-      </ul>
+      <PostCards posts={posts} locale={locale} minRead={dict.minRead} />
     </section>
   );
 }
