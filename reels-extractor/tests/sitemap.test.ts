@@ -19,7 +19,10 @@ const ids = Object.keys(PLATFORM_SLUGS) as (keyof typeof PLATFORM_SLUGS)[];
 
 // app/sitemap.ts imports through the "@/" alias, which plain Node cannot resolve: run it from a copy.
 const dir = mkdtempSync(join(tmpdir(), "srf-sitemap-"));
-for (const file of ["i18n-config", "landing", "site"]) writeFileSync(join(dir, `${file}.ts`), source(`lib/${file}.ts`));
+for (const file of ["i18n-config", "landing", "site", "blog"]) {
+  // (lib files import their neighbours without an extension, which plain Node cannot resolve)
+  writeFileSync(join(dir, `${file}.ts`), source(`lib/${file}.ts`).replace(/from "\.\/([\w-]+)"/g, 'from "./$1.ts"'));
+}
 writeFileSync(
   join(dir, "sitemap.ts"),
   source("app/sitemap.ts").replace(/"@\/lib\/([\w-]+)"/g, '"./$1.ts"')
@@ -28,6 +31,8 @@ const { default: sitemap } = (await import(pathToFileURL(join(dir, "sitemap.ts")
   default: () => { url: string; changeFrequency: string; priority: number; alternates: { languages: Record<string, string> } }[];
 };
 const entries = sitemap();
+const blogEntries = entries.filter((e) => /\/blog(\/|$)/.test(e.url));
+const blogEntryCount = blogEntries.length;
 const byUrl = new Map(entries.map((e) => [e.url, e]));
 const urlFor = (locale: string, path: string) => `${SITE}${locale === "en" ? path || "/" : `/${locale}${path}`}`;
 
@@ -67,8 +72,8 @@ describe("sitemap contents", () => {
   });
 
   it("adds up: 11 home + 99 platform pages + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length);
-    assert.equal(entries.length, 145);
+    assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 151, "145 site pages + the blog index + 5 starter posts");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -81,6 +86,7 @@ describe("frequency and priority", () => {
     const path = url.replace(SITE, "").replace(new RegExp(`^/(${locales.join("|")})(?=/|$)`), "");
     if (path === "" || path === "/") return "home";
     if (Object.values(PLATFORM_SLUGS).includes(path.slice(1))) return "platform";
+    if (/^\/blog(\/|$)/.test(path)) return "blog";
     return "legal";
   };
 
@@ -100,6 +106,21 @@ describe("frequency and priority", () => {
     }
   });
 
+  it("blog: the index weekly at 0.7, each post monthly at 0.6, only in languages that have posts", () => {
+    const pages = entries.filter((x) => rule(x.url) === "blog");
+    assert.equal(pages.length, 6, "the blog index and the five starter posts, English only");
+    for (const e of pages) {
+      assert.ok(e.url.startsWith(`${SITE}/blog`), `${e.url} should be an English (unprefixed) address`);
+      const index = e.url === `${SITE}/blog`;
+      assert.equal(e.changeFrequency, index ? "weekly" : "monthly", e.url);
+      assert.equal(e.priority, index ? 0.7 : 0.6, e.url);
+      assert.equal(e.alternates.languages["x-default"], e.url, "English is the default for a post that only exists in English");
+    }
+    for (const locale of locales.filter((l) => l !== "en")) {
+      assert.equal(byUrl.has(`${SITE}/${locale}/blog`), false, `${locale} has no posts, so no blog page`);
+    }
+  });
+
   it("legal pages: monthly", () => {
     const pages = entries.filter((x) => rule(x.url) === "legal");
     assert.equal(pages.length, 5 * LEGAL_TRANSLATED.length);
@@ -109,7 +130,7 @@ describe("frequency and priority", () => {
 
 describe("alternate languages", () => {
   it("every platform and home page lists all 11 languages plus x-default", () => {
-    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact)/.test(x.url))) {
+    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog)/.test(x.url))) {
       assert.deepEqual(Object.keys(e.alternates.languages).sort(), [...locales, "x-default"].sort(), e.url);
     }
   });

@@ -478,7 +478,8 @@
       "dmca": "DMCA",
       "disclaimer": "Disclaimer",
       "contact": "Contact Us",
-      "report": "Report a Broken Link"
+      "report": "Report a Broken Link",
+      "blog": "Blog"
     },
     "columns": {
       "tools": "Supported Tools",
@@ -772,5 +773,19 @@
         }
       ]
     }
+  },
+  "blog": {
+    "metaTitle": "Blog: Guides and Tips for Social Video",
+    "metaDescription": "Practical guides for creators and viewers: video ideas, formats, safe downloading and growing your audience.",
+    "heading": "Blog",
+    "lead": "Practical guides on short-form video, formats, safe downloading and growing your audience.",
+    "readMore": "Read article",
+    "allArticles": "All articles",
+    "minRead": "{n} min read",
+    "published": "Published",
+    "updated": "Updated",
+    "ctaHeading": "Save videos with SaveReelsFast",
+    "ctaText": "Paste a public link and get an MP4 in seconds. No account, no app to install.",
+    "ctaButton": "Open the downloader"
   }
 }

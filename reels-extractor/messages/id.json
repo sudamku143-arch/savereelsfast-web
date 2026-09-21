@@ -478,7 +478,8 @@
       "dmca": "DMCA",
       "disclaimer": "Sangkalan",
       "contact": "Hubungi Kami",
-      "report": "Laporkan Tautan Rusak"
+      "report": "Laporkan Tautan Rusak",
+      "blog": "Blog"
     },
     "columns": {
       "tools": "Alat yang Didukung",
@@ -772,5 +773,19 @@
         "Permintaan privasi terkait data Anda"
       ]
     }
+  },
+  "blog": {
+    "metaTitle": "Blog: panduan dan tips video sosial",
+    "metaDescription": "Panduan praktis untuk kreator dan penonton: ide video, format, unduhan yang aman, dan cara menambah audiens.",
+    "heading": "Blog",
+    "lead": "Panduan praktis seputar video pendek, format, unduhan yang aman, dan cara menambah audiens.",
+    "readMore": "Baca artikel",
+    "allArticles": "Semua artikel",
+    "minRead": "{n} menit baca",
+    "published": "Diterbitkan",
+    "updated": "Diperbarui",
+    "ctaHeading": "Simpan video dengan SaveReelsFast",
+    "ctaText": "Tempel tautan publik dan dapatkan MP4 dalam hitungan detik. Tanpa akun, tanpa aplikasi.",
+    "ctaButton": "Buka pengunduh"
   }
 }

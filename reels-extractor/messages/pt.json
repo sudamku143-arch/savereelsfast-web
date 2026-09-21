@@ -478,7 +478,8 @@
       "dmca": "DMCA",
       "disclaimer": "Aviso Legal",
       "contact": "Fale conosco",
-      "report": "Denunciar um link quebrado"
+      "report": "Denunciar um link quebrado",
+      "blog": "Blog"
     },
     "columns": {
       "tools": "Ferramentas compatíveis",
@@ -772,5 +773,19 @@
         }
       ]
     }
+  },
+  "blog": {
+    "metaTitle": "Blog: guias e dicas sobre vídeo social",
+    "metaDescription": "Guias práticos para criadores e espectadores: ideias de vídeo, formatos, downloads seguros e como aumentar seu público.",
+    "heading": "Blog",
+    "lead": "Guias práticos sobre vídeo curto, formatos, downloads seguros e como aumentar seu público.",
+    "readMore": "Ler artigo",
+    "allArticles": "Todos os artigos",
+    "minRead": "{n} min de leitura",
+    "published": "Publicado",
+    "updated": "Atualizado",
+    "ctaHeading": "Salve vídeos com o SaveReelsFast",
+    "ctaText": "Cole um link público e receba um MP4 em segundos. Sem conta e sem app para instalar.",
+    "ctaButton": "Abrir o downloader"
   }
 }

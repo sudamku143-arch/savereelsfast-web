@@ -14,6 +14,7 @@ type Dict = {
     disclaimer: string;
     contact: string;
     report: string;
+    blog: string;
   };
   reportSubject: string;
 };
@@ -48,10 +49,13 @@ export default function Footer({
   locale,
   dict,
   platformNames,
+  hasBlog = false,
 }: {
   locale: Locale;
   dict: Dict;
   platformNames: Record<PlatformId, string>;
+  /** Only languages that have posts link to a blog (the others would 404). */
+  hasBlog?: boolean;
 }) {
   const tools = LANDING_PLATFORMS.map((id) => ({
     href: localePath(locale, landingPath(id)),
@@ -66,6 +70,7 @@ export default function Footer({
   ];
 
   const company = [
+    ...(hasBlog ? [{ href: localePath(locale, "/blog"), label: dict.links.blog }] : []),
     { href: localePath(locale, "/contact"), label: dict.links.contact },
     {
       href: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(dict.reportSubject)}`,
