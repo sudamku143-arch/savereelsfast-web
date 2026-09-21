@@ -21,7 +21,7 @@
   },
   "hero": {
     "badge": "100% Gratis · Tanpa Login",
-    "subtitle": "Tempel tautan video di bawah dan simpan MP4 HD ke perangkat Anda. Bisa untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat.",
+    "subtitle": "Tempel tautan video di bawah dan simpan MP4 HD ke perangkat Anda. Bisa untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn.",
     "pasteButton": "Tempel",
     "downloadCta": "Ambil Video",
     "loading": "Mengambil video Anda…",
@@ -82,6 +82,11 @@
       "name": "Snapchat",
       "title": "Unduh Video Snapchat Spotlight dalam Hitungan Detik",
       "placeholder": "Tempel tautan Snapchat Spotlight di sini…"
+    },
+    "linkedin": {
+      "name": "LinkedIn",
+      "title": "Unduh video LinkedIn dalam hitungan detik",
+      "placeholder": "Tempel tautan postingan LinkedIn di sini…"
     }
   },
   "landing": {
@@ -109,8 +114,8 @@
           "text": "Anda mendapat file persis seperti yang disajikan {platform}, tanpa kompresi ulang dan tanpa merek tambahan dari kami."
         },
         {
-          "title": "Sembilan platform di satu tempat",
-          "text": "Alat yang sama menangani Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat."
+          "title": "Sepuluh platform di satu tempat",
+          "text": "Alat yang sama menangani Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn."
         }
       ],
       "faqHeading": "FAQ pengunduh {platform}",
@@ -331,6 +336,28 @@
             "a": "Tidak. Snap pribadi hanya terlihat oleh penerimanya dan tidak bisa dijangkau lewat tautan publik."
           }
         ]
+      },
+      "linkedin": {
+        "noun": "video LinkedIn",
+        "metaTitle": "Unduh Video LinkedIn - Gratis",
+        "metaDescription": "Pengunduh video LinkedIn gratis. Tempel tautan postingan LinkedIn publik dan simpan videonya sebagai MP4. Tanpa login, tanpa aplikasi.",
+        "h1": "Pengunduh Video LinkedIn Gratis",
+        "lead": "Tempel tautan postingan LinkedIn publik yang berisi video dan simpan sebagai MP4. Tidak perlu akun atau aplikasi.",
+        "copyHint": "Ketuk tiga titik pada postingan, lalu pilih Salin link ke postingan.",
+        "faq": [
+          {
+            "q": "Tautan LinkedIn apa yang didukung?",
+            "a": "Tautan ke postingan publik yang berisi video, seperti linkedin.com/posts/… dan linkedin.com/feed/update/…. Profil, halaman perusahaan, dan beranda bukan tautan video."
+          },
+          {
+            "q": "Bisakah mengunduh video dari postingan privat atau LinkedIn Learning?",
+            "a": "Tidak. Postingan yang hanya terlihat oleh koneksi, grup privat, dan kursus LinkedIn Learning memerlukan login, dan alat ini tidak login ke apa pun. Hanya postingan publik yang berfungsi."
+          },
+          {
+            "q": "Kualitas apa yang akan saya dapat?",
+            "a": "Video disimpan dalam kualitas yang disediakan LinkedIn untuk postingan itu, yang berbeda-beda tergantung unggahan. Alat ini tidak memperbesar atau mengodekan ulang videonya."
+          }
+        ]
       }
     }
   },
@@ -432,7 +459,7 @@
   "seo": {
     "heading": "Cara tercepat menyimpan video media sosial",
     "paragraphs": [
-      "Sebagian besar platform sosial tidak menyediakan cara bawaan untuk menyimpan video orang lain ke perangkat Anda. Alat kami menyelesaikannya dengan satu kali tempel: masukkan tautan dari Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, atau Snapchat, dan kami mengambil file videonya sehingga Anda mendapat MP4 bersih yang bisa ditonton offline.",
+      "Sebagian besar platform sosial tidak menyediakan cara bawaan untuk menyimpan video orang lain ke perangkat Anda. Alat kami menyelesaikannya dengan satu kali tempel: masukkan tautan dari Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, atau LinkedIn, dan kami mengambil file videonya sehingga Anda mendapat MP4 bersih yang bisa ditonton offline.",
       "Semuanya berjalan di browser Anda: tidak ada yang perlu dipasang, tidak perlu membuat akun, dan tidak perlu data pribadi. Cukup tautan publik video yang Anda inginkan. Jadi aman dipakai di perangkat apa pun, baik di ponsel saat istirahat kuliah maupun di komputer saat menyunting kompilasi.",
       "Kreator memakainya untuk mengarsipkan konten sendiri sebelum hilang dari feed, pemasar memakainya untuk membuat kumpulan materi iklan, dan pengguna biasa memakainya untuk menyimpan salinan klip dari teman sebelum dihapus. Apa pun alasannya, alurnya sama: tempel, pratinjau, unduh."
     ],
@@ -451,8 +478,8 @@
         "text": "Anda mendapat file persis seperti yang disajikan platform, tanpa kompresi ulang dan tanpa branding tambahan dari kami."
       },
       {
-        "title": "Sembilan platform dalam satu tempat",
-        "text": "Alat yang sama berfungsi untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, dan Snapchat."
+        "title": "Sepuluh platform dalam satu tempat",
+        "text": "Alat yang sama berfungsi untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn."
       }
     ]
   },

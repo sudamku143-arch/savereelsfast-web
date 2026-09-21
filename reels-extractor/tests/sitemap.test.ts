@@ -53,7 +53,7 @@ describe("sitemap contents", () => {
     const wanted = [
       "instagram-video-downloader", "youtube-video-downloader", "facebook-video-downloader", "tiktok-video-downloader",
       "twitter-x-video-downloader", "pinterest-video-downloader", "reddit-video-downloader", "threads-video-downloader",
-      "snapchat-video-downloader",
+      "snapchat-video-downloader", "linkedin-video-downloader",
     ];
     assert.deepEqual(Object.values(PLATFORM_SLUGS).sort(), [...wanted].sort());
     for (const locale of locales) {
@@ -75,9 +75,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 11 home + 99 platform pages + 5 legal pages x every translated language", () => {
+  it("adds up: 11 home + 110 platform pages + 5 legal pages x every translated language", () => {
     assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 145 + 1 + allBlogPosts, "145 site pages + the blog index + one entry per post");
+    assert.equal(entries.length, 156 + 1 + allBlogPosts, "156 site pages + the blog index + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -99,7 +99,7 @@ describe("scheduled posts stay out of the sitemap until their day", () => {
     assert.ok(!urls("2026-09-21").includes(`${SITE}/blog/save-instagram-reels-offline`));
     assert.equal(urls("2026-09-22").length, 8);
     assert.ok(urls("2026-09-22").includes(`${SITE}/blog/save-instagram-reels-offline`));
-    assert.equal(urls("2026-09-26").length, allBlogPosts);
+    assert.equal(urls("2026-09-27").length, allBlogPosts);
   });
 });
 
@@ -121,7 +121,7 @@ describe("frequency and priority", () => {
 
   it("platform pages: daily, 0.9 - in every language", () => {
     const pages = entries.filter((x) => rule(x.url) === "platform");
-    assert.equal(pages.length, 99);
+    assert.equal(pages.length, 110);
     for (const e of pages) {
       assert.equal(e.changeFrequency, "daily", e.url);
       assert.equal(e.priority, 0.9, e.url);

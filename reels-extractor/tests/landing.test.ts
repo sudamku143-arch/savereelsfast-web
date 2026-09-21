@@ -17,7 +17,7 @@ import {
 } from "../lib/landing.ts";
 
 const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"] as const;
-const EXPECTED_IDS = ["instagram", "youtube", "facebook", "threads", "x", "pinterest", "tiktok", "reddit", "snapchat"];
+const EXPECTED_IDS = ["instagram", "youtube", "facebook", "threads", "x", "pinterest", "tiktok", "reddit", "snapchat", "linkedin"];
 
 type Faq = { q: string; a: string };
 type PlatformContent = {
@@ -54,7 +54,7 @@ const messages = Object.fromEntries(
 ) as Record<(typeof LOCALES)[number], Messages>;
 
 describe("landing routes", () => {
-  it("covers all nine platforms with unique, URL-safe slugs", () => {
+  it("covers all ten platforms with unique, URL-safe slugs", () => {
     assert.deepEqual([...LANDING_PLATFORMS].sort(), [...EXPECTED_IDS].sort());
     const slugs = Object.values(PLATFORM_SLUGS);
     assert.equal(new Set(slugs).size, slugs.length, "slugs must be unique");
@@ -137,7 +137,8 @@ for (const locale of LOCALES) {
       for (const id of ids) {
         const t = landing.platforms[id].metaTitle;
         assert.match(t, /^[A-Za-z ]+ (Video |Reels |Spotlight )?Downloader - /, `${id}: "${t}" should start "<Platform> ... Downloader - "`);
-        assert.ok(t.split(" ").includes("HD"), `${id}: title should mention HD`);
+        // LinkedIn does not report a resolution we could promise, so its title makes no HD claim.
+        if (id !== "linkedin") assert.ok(t.split(" ").includes("HD"), `${id}: title should mention HD`);
         assert.ok(t.length <= 60, `${id}: title is ${t.length} chars, Google cuts around 60`);
       }
     });

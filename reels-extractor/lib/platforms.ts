@@ -10,6 +10,7 @@ export const PLATFORM_IDS = [
   "tiktok",
   "reddit",
   "snapchat",
+  "linkedin",
 ] as const;
 
 export type PlatformId = (typeof PLATFORM_IDS)[number];
@@ -28,6 +29,7 @@ const HOSTS: Record<PlatformId, string[]> = {
   tiktok: ["tiktok.com"],
   reddit: ["reddit.com", "redd.it"],
   snapchat: ["snapchat.com"],
+  linkedin: ["linkedin.com"],
 };
 
 // Pinterest also serves from country domains (pinterest.co.uk, pinterest.fr, …).
@@ -82,6 +84,9 @@ function looksLikeVideoLink(platform: PlatformId, url: URL): boolean {
     case "snapchat":
       if (host === "t.snapchat.com") return /^\/[A-Za-z0-9_-]+/.test(path);
       return /^\/(spotlight|story|t)\/[A-Za-z0-9_-]+/.test(path);
+    case "linkedin":
+      // A public post: /posts/<slug>-<id>-<code>, or /feed/update/urn:li:<activity|ugcPost|share>:<id>.
+      return /^\/posts\/[^/]+-\d+-\w{4}\/?$/.test(path) || /^\/feed\/update\/urn:li:(activity|ugcPost|share):\d+/.test(path);
     case "tiktok":
       return (
         /\/video\/\d+/.test(path) ||
@@ -111,6 +116,9 @@ const TRACKING_PARAMS = new Set([
   "_t",
   "u_code",
   "xmt",
+  "rcm",
+  "trk",
+  "trackingid",
 ]);
 
 function stripTracking(url: URL): URL {

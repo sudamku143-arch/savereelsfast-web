@@ -50,6 +50,7 @@ const nextConfig = {
       tiktok: "tiktok-video-downloader",
       reddit: "reddit-video-downloader",
       snapchat: "snapchat-video-downloader",
+      linkedin: "linkedin-video-downloader",
     };
     return Object.entries(LEGACY).flatMap(([old, current]) => [
       { source: `/downloader/${old}`, destination: `/${current}`, permanent: true },

@@ -21,7 +21,7 @@ export const maxDuration = 40;
  * Request contract:
  *   GET  /api/extract?url=<link>   (CDN-cacheable: s-maxage=3600, stale-while-revalidate=86400)
  *   POST /api/extract   body: { url: string }   (never cached)
- *   link:   // Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat video link
+ *   link:   // Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat or LinkedIn video link
  *
  * Success response (200):
  *   {
@@ -183,7 +183,7 @@ async function handleExtract(rawUrl: string, cacheable: boolean) {
       {
         success: false,
         error:
-          "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit or Snapchat).",
+          "That doesn't look like a supported video link (Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat or LinkedIn).",
         code: "INVALID_URL",
       },
       400

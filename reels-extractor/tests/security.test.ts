@@ -179,6 +179,23 @@ describe("link validation", async () => {
     }
   });
 
+  it("accepts LinkedIn post links, drops their tracking, and rejects profile, company and look-alike links", () => {
+    const post = "https://www.linkedin.com/posts/the-mathworks_what-is-mathworks-cloud-center-activity-7151241570371948544-4Gu7";
+    const parsed = parseSupportedUrl(`${post}?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB`);
+    assert.deepEqual(parsed, { platform: "linkedin", url: post });
+    assert.equal(parseSupportedUrl("https://www.linkedin.com/feed/update/urn:li:activity:7151241570371948544/")?.platform, "linkedin");
+    assert.equal(parseSupportedUrl("linkedin.com/posts/jane-doe_hello-activity-7151241570371948544-AbCd")?.platform, "linkedin");
+    for (const link of [
+      "https://www.linkedin.com/in/jane-doe/",
+      "https://www.linkedin.com/company/mathworks/",
+      "https://www.linkedin.com/feed/",
+      "https://linkedin.com.evil.example/posts/x-activity-7151241570371948544-4Gu7",
+      "https://notlinkedin.com/posts/x-activity-7151241570371948544-4Gu7",
+    ]) {
+      assert.equal(parseSupportedUrl(link), null, `accepted: ${link}`);
+    }
+  });
+
   it("never hands credentials or ports on to the scraper", () => {
     const parsed = parseSupportedUrl("https://www.youtube.com:443/watch?v=jNQXAC9IVRw");
     assert.ok(parsed && !/@|:\d/.test(new URL(parsed.url).host));

@@ -51,11 +51,11 @@ TEMP_PREFIX = "srf-tg-"
 
 HINT = (
     "Send me a link to a video and I'll download it for you. Supported: Instagram, YouTube, TikTok, Facebook, "
-    "X (Twitter), Reddit, Pinterest, Threads and Snapchat."
+    "X (Twitter), Reddit, Pinterest, Threads, Snapchat and LinkedIn."
 )
 UNSUPPORTED = (
     "That doesn't look like a supported video link. I can download from Instagram, YouTube, TikTok, Facebook, "
-    "X (Twitter), Reddit, Pinterest, Threads and Snapchat."
+    "X (Twitter), Reddit, Pinterest, Threads, Snapchat and LinkedIn."
 )
 BUSY = "I'm a bit busy right now. Please try again in a few seconds."
 STILL_WORKING = "I'm still working on your previous link. One moment!"

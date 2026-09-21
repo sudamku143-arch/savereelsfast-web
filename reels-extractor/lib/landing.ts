@@ -16,6 +16,7 @@ export const PLATFORM_SLUGS: Record<PlatformId, string> = {
   tiktok: "tiktok-video-downloader",
   reddit: "reddit-video-downloader",
   snapchat: "snapchat-video-downloader",
+  linkedin: "linkedin-video-downloader",
 };
 
 /**
@@ -32,6 +33,7 @@ export const PLATFORM_KEYS: Record<PlatformId, string> = {
   tiktok: "tiktok",
   reddit: "reddit",
   snapchat: "snapchat",
+  linkedin: "linkedin",
 };
 
 /**
@@ -50,6 +52,7 @@ export const LEGACY_SLUGS: Record<string, PlatformId> = {
   tiktok: "tiktok",
   reddit: "reddit",
   snapchat: "snapchat",
+  linkedin: "linkedin",
 };
 
 export const LANDING_PLATFORMS = Object.keys(PLATFORM_SLUGS) as PlatformId[];

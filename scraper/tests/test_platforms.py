@@ -35,7 +35,7 @@ from urls import UnsupportedUrl, expand_redirects, needs_expansion, resolve_url 
 
 PLATFORMS = [
     "instagram", "youtube", "facebook", "threads", "x",
-    "tiktok", "pinterest", "reddit", "snapchat",
+    "tiktok", "pinterest", "reddit", "snapchat", "linkedin",
 ]
 
 # (platform, pasted link, expected final link, link the short/share URL expands to or None)
@@ -77,6 +77,8 @@ CASES = [
     # Snapchat
     ("snapchat", "https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYb2dybW1sZWhmAZWU5H8MAZWU5H2yAAAAAA?sender_device=web", "https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYb2dybW1sZWhmAZWU5H8MAZWU5H2yAAAAAA", None),
     ("snapchat", "https://t.snapchat.com/AbCdEfGh", "https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYb2dybW1sZWhmAZWU5H8MAZWU5H2yAAAAAA", "https://www.snapchat.com/spotlight/W7_EDlXWTBiXAEEniNoMPwAAYb2dybW1sZWhmAZWU5H8MAZWU5H2yAAAAAA?sender_device=web"),
+    # LinkedIn (share links carry utm_ and rcm tracking)
+    ("linkedin", "https://www.linkedin.com/posts/the-mathworks_what-is-mathworks-cloud-center-activity-7151241570371948544-4Gu7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB" , "https://www.linkedin.com/posts/the-mathworks_what-is-mathworks-cloud-center-activity-7151241570371948544-4Gu7", None),
 ]
 
 REJECTED = [
@@ -89,6 +91,7 @@ REJECTED = [
     "https://evil.com/?u=https://www.youtube.com/watch?v=abc",
     "http://127.0.0.1/reel/abc/",
     "https://www.instagram.com/jane.doe/",
+    "https://linkedin.com.evil.com/posts/x-activity-1-abcd",
 ]
 
 
@@ -290,6 +293,16 @@ class ScraperConfigTests(unittest.TestCase):
         url, audio = self.main._pick_video({"formats": [fmt("dash1080", 1080, "none")]})
         self.assertTrue(url.endswith("dash1080"))
         self.assertEqual(audio, "no")
+
+    def test_equal_sized_formats_go_to_the_higher_bitrate(self):
+        # LinkedIn reports no height or codecs, only a bitrate: without the tie-break the lowest quality could win.
+        def fmt(fid, tbr):
+            return {"format_id": fid, "url": f"https://dms.licdn.com/{fid}.mp4", "ext": "mp4", "protocol": "https", "tbr": tbr}
+
+        info = {"formats": [fmt("low", 300), fmt("high", 2100), fmt("mid", 900)]}
+        url, audio = self.main._pick_video(info)
+        self.assertTrue(url.endswith("high.mp4"))
+        self.assertEqual(audio, "unknown")
 
     def test_endpoint_rejects_unsupported_links_with_400(self):
         try:

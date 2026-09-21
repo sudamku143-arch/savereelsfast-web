@@ -99,7 +99,7 @@ export default function Footer({
         >
           <div className="col-span-2 sm:col-span-1">
             <h2 className="text-sm font-semibold text-zinc-200">{dict.columns.tools}</h2>
-            {/* Nine links would be a long single column, so they flow into two on small screens. */}
+            {/* Ten links would be a long single column, so they flow into two on small screens. */}
             <ul className="mt-3 columns-2 gap-x-6 space-y-2 text-sm sm:columns-1">
               {tools.map((link) => (
                 <li key={link.href} className="break-inside-avoid">

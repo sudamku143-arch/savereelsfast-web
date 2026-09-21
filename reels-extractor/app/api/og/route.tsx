@@ -14,6 +14,7 @@ const NAMES: Record<string, string> = {
   tiktok: "TikTok",
   reddit: "Reddit",
   snapchat: "Snapchat Spotlight",
+  linkedin: "LinkedIn",
 };
 const WORDING: Record<string, { headline: (name: string) => string; tagline: string }> = {
   en: { headline: (n) => `${n} Downloader`, tagline: "Free · No login · HD when available" },

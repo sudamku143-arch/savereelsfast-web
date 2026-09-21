@@ -22,7 +22,7 @@ import RelatedPosts from "../components/RelatedPosts";
 
 type Props = { params: { locale: string; platform: string } };
 
-// Only the nine known platforms exist; anything else is a 404.
+// Only the ten known platforms exist; anything else is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {

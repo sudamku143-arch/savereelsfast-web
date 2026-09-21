@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: SITE_NAME,
     short_name: SITE_NAME,
     description:
-      "Download videos from Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit and Snapchat.",
+      "Download videos from Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat and LinkedIn.",
     start_url: "/",
     scope: "/",
     display: "standalone",

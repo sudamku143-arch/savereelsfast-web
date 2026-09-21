@@ -474,6 +474,7 @@ def _pick_format(info: dict) -> tuple[dict | None, str]:
     (video-only; the audio is a separate stream we can't merge here).
 
     Tiers, first non-empty wins (tallest format within a tier):
+      (ties on size go to the higher bitrate: LinkedIn reports no height, only tbr)
       1. MP4 pre-muxed with audio     (vcodec != none and acodec != none)
       2. MP4 whose audio is unreported (acodec unknown)
       3. MP4 video-only               (plays silent)
@@ -490,7 +491,7 @@ def _pick_format(info: dict) -> tuple[dict | None, str]:
     ]
     for group in tiers:
         if group:
-            best = max(group, key=lambda f: (f.get("height") or 0, f.get("width") or 0))
+            best = max(group, key=lambda f: (f.get("height") or 0, f.get("width") or 0, f.get("tbr") or 0))
             return best, _audio_state(best)
 
     # No usable entry in `formats`: use what yt-dlp itself selected.
@@ -911,7 +912,7 @@ async def extract(
     url: str = Query(
         ...,
         description="Public video URL (Instagram, YouTube, Facebook, Threads, X, "
-        "Pinterest, TikTok, Reddit or Snapchat)",
+        "Pinterest, TikTok, Reddit, Snapchat or LinkedIn)",
     ),
     x_scraper_key: str | None = Header(default=None),
 ) -> dict:
@@ -1411,7 +1412,7 @@ _BOT_MESSAGES = {
     errors.STREAM_EXPIRED_OR_BLOCKED: "⏳ The platform is limiting downloads right now. Please try again in a minute.",
     errors.PLATFORM_TIMEOUT: "⏳ The platform didn't answer in time. Please try again shortly.",
     errors.EXTRACTION_FAILED: "😕 I couldn't get that video. It may be private, deleted or region-restricted.",
-    errors.INVALID_URL: "That doesn't look like a supported video link. Try Instagram, YouTube, TikTok, Facebook, X, Reddit, Pinterest, Threads or Snapchat.",
+    errors.INVALID_URL: "That doesn't look like a supported video link. Try Instagram, YouTube, TikTok, Facebook, X, Reddit, Pinterest, Threads, Snapchat or LinkedIn.",
     errors.SERVER_BUSY: "I'm a bit busy right now. Please try again in a few seconds.",
 }
 

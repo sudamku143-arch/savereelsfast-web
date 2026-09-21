@@ -52,6 +52,8 @@ const STARTERS = [
   "reddit-videos-no-sound-explained",
   "snapchat-spotlight-vs-stories",
   "save-snapchat-spotlight-videos",
+  "save-linkedin-videos",
+  "linkedin-video-tips-for-creators",
   "tiktok-trends-and-saving-favorite-videos",
 ];
 
@@ -200,6 +202,7 @@ describe("posts and tool pages link to each other", () => {
       tiktok: ["tiktok-trends-and-saving-favorite-videos", "grow-social-media-following-2026"],
       reddit: ["best-subreddits-for-video-content", "reddit-videos-no-sound-explained"],
       snapchat: ["snapchat-spotlight-vs-stories", "save-snapchat-spotlight-videos"],
+      linkedin: ["save-linkedin-videos", "linkedin-video-tips-for-creators"],
     };
     for (const [tool, slugs] of Object.entries(expected)) {
       const shown = relatedPosts("en", tool as (typeof ALL_TOOLS)[number]).map((p) => p.slug);
@@ -256,8 +259,8 @@ describe("scheduled publishing", () => {
     assert.equal(onDay("2026-09-21", () => allPosts().length), 5, "the five posts dated 2026-09-21");
     assert.equal(onDay("2026-09-21", () => scheduledPosts().length), TOTAL - 5);
     assert.equal(onDay("2026-09-22", () => allPosts().length), 8, "three more on the 22nd");
-    assert.equal(onDay("2026-09-26", () => allPosts().length), TOTAL);
-    assert.equal(onDay("2026-09-26", () => scheduledPosts().length), 0);
+    assert.equal(onDay("2026-09-27", () => allPosts().length), TOTAL);
+    assert.equal(onDay("2026-09-27", () => scheduledPosts().length), 0);
   });
 
   it("a waiting post is nowhere: not by slug, not in the languages list, not among the related articles", () => {
@@ -275,7 +278,7 @@ describe("scheduled publishing", () => {
   });
 
   it("every tool page has articles to show on every day of the schedule", () => {
-    for (const day of ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26"]) {
+    for (const day of ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27"]) {
       onDay(day, () => {
         for (const tool of LANDING_PLATFORMS) assert.ok(relatedPosts("en", tool).length >= 1, `${day}: ${tool} has no related article`);
       });

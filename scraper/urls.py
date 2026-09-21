@@ -31,6 +31,7 @@ ALLOWED_DOMAINS = (
     "reddit.com",
     "redd.it",
     "snapchat.com",
+    "linkedin.com",
 )
 PINTEREST_COUNTRY_HOST = re.compile(r"(^|\.)pinterest\.[a-z]{2,3}(\.[a-z]{2})?$")
 
@@ -51,12 +52,12 @@ POST_PATH_REGEX = re.compile(r"(?:^|/)(reel|reels|p|tv)/([A-Za-z0-9_-]+)", re.I)
 TRACKING_PARAMS = {
     "igsh", "igshid", "si", "feature", "fbclid", "gclid", "s", "t", "ref",
     "ref_src", "ref_url", "mibextid", "share_id", "is_from_webapp",
-    "sender_device", "_r", "_t", "u_code", "xmt",
+    "sender_device", "_r", "_t", "u_code", "xmt", "rcm", "trk", "trackingid",
 }
 
 UNSUPPORTED_MESSAGE = (
     "Please provide a supported video URL (Instagram, YouTube, Facebook, "
-    "Threads, X, Pinterest, TikTok, Reddit or Snapchat)."
+    "Threads, X, Pinterest, TikTok, Reddit, Snapchat or LinkedIn)."
 )
 
 
@@ -285,6 +286,7 @@ MEDIA_HOST_SUFFIXES = (
     "redd.it",
     "redditmedia.com",
     "sc-cdn.net",
+    "licdn.com",
 )
 
 
@@ -316,6 +318,8 @@ def referer_for(media_url: str) -> str:
         return "https://www.reddit.com/"
     if host.endswith("sc-cdn.net"):
         return "https://www.snapchat.com/"
+    if host.endswith("licdn.com"):
+        return "https://www.linkedin.com/"
     return "https://www.instagram.com/"
 
 

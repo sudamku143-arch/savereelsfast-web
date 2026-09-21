@@ -21,7 +21,7 @@
   },
   "hero": {
     "badge": "100% Grátis · Sem Login",
-    "subtitle": "Cole o link de um vídeo e salve um MP4 em HD no seu dispositivo. Funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat.",
+    "subtitle": "Cole o link de um vídeo e salve um MP4 em HD no seu dispositivo. Funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn.",
     "pasteButton": "Colar",
     "downloadCta": "Obter Vídeo",
     "loading": "Buscando seu vídeo…",
@@ -82,6 +82,11 @@
       "name": "Snapchat",
       "title": "Baixe vídeos do Snapchat Spotlight em segundos",
       "placeholder": "Cole aqui o link do Snapchat Spotlight…"
+    },
+    "linkedin": {
+      "name": "LinkedIn",
+      "title": "Baixe vídeos do LinkedIn em segundos",
+      "placeholder": "Cole aqui o link da publicação do LinkedIn…"
     }
   },
   "landing": {
@@ -109,8 +114,8 @@
           "text": "Você recebe o arquivo exatamente como o {platform} o entrega, sem recompressão e sem marcas adicionadas por nós."
         },
         {
-          "title": "Nove plataformas em um só lugar",
-          "text": "A mesma ferramenta funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat."
+          "title": "Dez plataformas em um só lugar",
+          "text": "A mesma ferramenta funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn."
         }
       ],
       "faqHeading": "Perguntas frequentes sobre o baixador de {platform}",
@@ -331,6 +336,28 @@
             "a": "Não. Snaps privados só são vistos pelos destinatários e não podem ser acessados por um link público."
           }
         ]
+      },
+      "linkedin": {
+        "noun": "vídeos do LinkedIn",
+        "metaTitle": "Baixar Vídeo do LinkedIn - Grátis",
+        "metaDescription": "Baixador de vídeos do LinkedIn grátis. Cole o link de uma publicação pública e salve o vídeo em MP4. Sem login e sem app.",
+        "h1": "Baixador de Vídeos do LinkedIn Grátis",
+        "lead": "Cole o link de uma publicação pública do LinkedIn que tenha vídeo e salve como MP4. Não precisa de conta nem de app.",
+        "copyHint": "Toque nos três pontos da publicação e depois em Copiar link da publicação.",
+        "faq": [
+          {
+            "q": "Quais links do LinkedIn são aceitos?",
+            "a": "Links de publicações públicas com vídeo, como linkedin.com/posts/… e linkedin.com/feed/update/…. Perfis, páginas de empresa e o feed não são links de vídeo."
+          },
+          {
+            "q": "Posso baixar vídeos de publicações privadas ou do LinkedIn Learning?",
+            "a": "Não. Publicações visíveis só para conexões, grupos privados e cursos do LinkedIn Learning exigem login, e esta ferramenta não entra em nenhuma conta. Só funcionam publicações públicas."
+          },
+          {
+            "q": "Que qualidade vou receber?",
+            "a": "O vídeo é salvo na qualidade que o LinkedIn oferece para aquela publicação, que varia conforme o envio. A ferramenta não amplia nem recodifica o vídeo."
+          }
+        ]
       }
     }
   },
@@ -432,7 +459,7 @@
   "seo": {
     "heading": "A forma mais rápida de salvar vídeos de redes sociais",
     "paragraphs": [
-      "A maioria das redes sociais não oferece uma forma nativa de salvar no seu dispositivo o vídeo de outra pessoa. Nossa ferramenta resolve isso com uma colada: coloque o link do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit ou Snapchat e buscamos o arquivo de vídeo para que você tenha um MP4 limpo para assistir offline.",
+      "A maioria das redes sociais não oferece uma forma nativa de salvar no seu dispositivo o vídeo de outra pessoa. Nossa ferramenta resolve isso com uma colada: coloque o link do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat ou LinkedIn e buscamos o arquivo de vídeo para que você tenha um MP4 limpo para assistir offline.",
       "Funciona inteiramente no seu navegador: não há nada para instalar, nenhuma conta para criar e nenhum dado pessoal é necessário. Apenas o link público do vídeo que você quer. Por isso é seguro usar em qualquer dispositivo, seja no celular entre as aulas ou no computador editando uma compilação.",
       "Criadores usam para arquivar o próprio conteúdo antes que ele suma dos feeds, profissionais de marketing para montar arquivos de referência de anúncios, e usuários comuns para guardar uma cópia de um vídeo que um amigo enviou antes que seja apagado. Seja qual for o motivo, o fluxo é o mesmo: colar, visualizar, baixar."
     ],
@@ -451,8 +478,8 @@
         "text": "Você recebe o arquivo exatamente como a plataforma o entrega, sem recompressão e sem marcas adicionadas por nós."
       },
       {
-        "title": "Nove plataformas em um só lugar",
-        "text": "A mesma ferramenta funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit e Snapchat."
+        "title": "Dez plataformas em um só lugar",
+        "text": "A mesma ferramenta funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn."
       }
     ]
   },

@@ -55,6 +55,8 @@ const MEDIA_HOST_SUFFIXES = [
   "redditmedia.com",
   // Snapchat
   "sc-cdn.net",
+  // LinkedIn (dms.licdn.com videos, media.licdn.com / static.licdn.com thumbnails)
+  "licdn.com",
 ];
 
 /**
@@ -107,6 +109,7 @@ export function refererFor(mediaUrl: string): string {
     if (host.endsWith("twimg.com")) return "https://x.com/";
     if (host.endsWith("redd.it") || host.endsWith("redditmedia.com")) return "https://www.reddit.com/";
     if (host.endsWith("sc-cdn.net")) return "https://www.snapchat.com/";
+    if (host.endsWith("licdn.com")) return "https://www.linkedin.com/";
     if (host.endsWith("pinimg.com")) return "https://www.pinterest.com/";
   } catch {
     // fall through

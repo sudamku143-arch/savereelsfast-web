@@ -175,6 +175,7 @@ class RealAllowListTests(unittest.TestCase):
             "https://v16-webapp-prime.tiktok.com/video/tos/x",
             "https://cf-st.sc-cdn.net/d/x.mp4",
             "https://v1.pinimg.com/videos/x.mp4",
+            "https://dms.licdn.com/playlist/vid/v2/x/mp4-360p-30fp-crf28/x.mp4",
         ]
         for url in good:
             with self.subTest(url=url):
@@ -186,6 +187,7 @@ class RealAllowListTests(unittest.TestCase):
             "https://v16.tiktokcdn.com/x": "https://www.tiktok.com/",
             "https://video.twimg.com/x": "https://x.com/",
             "https://v.redd.it/x": "https://www.reddit.com/",
+            "https://dms.licdn.com/x": "https://www.linkedin.com/",
             "https://scontent.cdninstagram.com/x": "https://www.instagram.com/",
         }
         for media, expected in cases.items():
