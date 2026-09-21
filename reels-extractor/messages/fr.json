@@ -136,7 +136,29 @@
       "otherHeading": "Des téléchargeurs pour chaque plateforme",
       "otherLead": "Choisissez votre plateforme pour un guide adapté.",
       "here": "Vous êtes ici",
-      "structuredDescription": "Téléchargeur en ligne gratuit pour {noun}. Collez un lien et enregistrez la vidéo en MP4, sans connexion ni application."
+      "structuredDescription": "Téléchargeur en ligne gratuit pour {noun}. Collez un lien et enregistrez la vidéo en MP4, sans connexion ni application.",
+      "longtail": {
+        "reelsQuality": {
+          "q": "Comment télécharger des Reels Instagram en 1080p sans filigrane ?",
+          "a": "Collez le lien du Reel et touchez Télécharger. Vous obtenez le fichier vidéo qu'Instagram diffuse lui-même pour la lecture, dans la meilleure qualité qu'il propose pour ce Reel (jusqu'à 1080p si le Reel a été publié dans cette qualité). Nous n'ajoutons aucun filigrane de notre part et nous ne réencodons ni ne suréchantillonnons rien : un original en basse résolution reste en basse résolution. Étapes : 1) Touchez Partager sur le Reel, puis Copier le lien. 2) Collez le lien dans la zone ci-dessus. 3) Touchez Télécharger la vidéo et enregistrez le MP4."
+        },
+        "audio": {
+          "q": "Puis-je télécharger l'audio ou le MP3 des Reels Instagram et des Shorts ?",
+          "a": "En partie. Quand {platform} fournit une piste audio séparée pour une vidéo, un bouton Télécharger l'audio apparaît sous le résultat et l'enregistre en fichier audio (M4A ou WebM), tel que {platform} le fournit. Nous ne convertissons pas en MP3, et certaines vidéos n'ont pas de piste audio séparée ; dans ce cas, seule la vidéo est proposée. Le M4A se lit dans tout lecteur audio ou vidéo récent."
+        },
+        "snapchatNoApp": {
+          "q": "Comment enregistrer des vidéos Snapchat Spotlight sans installer l'appli ?",
+          "a": "Tout se passe dans votre navigateur, il n'y a donc rien à installer. Étapes : 1) Ouvrez la vidéo Spotlight publique et touchez Partager, puis Copier le lien. 2) Collez le lien dans la zone ci-dessus. 3) Touchez Télécharger la vidéo et enregistrez le MP4. Seules les vidéos Spotlight publiques fonctionnent ; les Stories et les snaps privés ne sont pas pris en charge."
+        },
+        "freeFbThreads": {
+          "q": "Est-il gratuit de télécharger des vidéos Facebook et Threads en ligne ?",
+          "a": "Oui. Les deux sont gratuits, sans compte, sans appli et sans filigrane de notre part. Le site est financé par la publicité. Seules les vidéos publiques peuvent être téléchargées : les publications Facebook privées, les groupes qui exigent une connexion et les profils Threads privés sont inaccessibles."
+        },
+        "free": {
+          "q": "Est-il gratuit de télécharger {noun} en ligne ?",
+          "a": "Oui. Télécharger {noun} ici ne coûte rien et ne demande ni compte ni appli. Le site est financé par la publicité. Seules les vidéos publiques fonctionnent."
+        }
+      }
     },
     "platforms": {
       "instagram": {
@@ -843,5 +865,11 @@
     "decline": "Refuser",
     "privacy": "Politique de confidentialité",
     "settings": "Paramètres des cookies"
+  },
+  "telegram": {
+    "label": "Telegram Bot",
+    "fab": "Utiliser le bot Telegram",
+    "open": "Ouvrir le bot Telegram de SaveReelsFast",
+    "hide": "Masquer ce bouton"
   }
 }

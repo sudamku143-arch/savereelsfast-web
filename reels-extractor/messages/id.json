@@ -136,7 +136,29 @@
       "otherHeading": "Pengunduh untuk setiap platform",
       "otherLead": "Pilih platform Anda untuk panduan yang sesuai.",
       "here": "Anda di sini",
-      "structuredDescription": "Pengunduh online gratis untuk {noun}. Tempel tautan dan simpan video sebagai MP4, tanpa login atau aplikasi."
+      "structuredDescription": "Pengunduh online gratis untuk {noun}. Tempel tautan dan simpan video sebagai MP4, tanpa login atau aplikasi.",
+      "longtail": {
+        "reelsQuality": {
+          "q": "Cara mengunduh Reels Instagram 1080p tanpa watermark?",
+          "a": "Tempel tautan Reel lalu ketuk Unduh. Anda mendapat file video yang disajikan Instagram sendiri untuk pemutaran, dalam kualitas tertinggi yang ditawarkan untuk Reel itu (hingga 1080p jika Reel diunggah dalam kualitas tersebut). Kami tidak menambahkan watermark sendiri dan tidak mengodekan ulang atau memperbesar video, jadi aslinya yang beresolusi rendah tetap rendah. Langkah: 1) Ketuk Bagikan pada Reel, lalu Salin link. 2) Tempel tautan di kotak di atas. 3) Ketuk Unduh Video dan simpan MP4."
+        },
+        "audio": {
+          "q": "Bisakah saya mengunduh audio/MP3 dari Reels Instagram dan Shorts?",
+          "a": "Sebagian. Jika {platform} menyediakan trek audio terpisah untuk sebuah video, tombol Unduh Audio muncul di bawah hasil dan menyimpannya sebagai file audio (M4A atau WebM), persis seperti yang disajikan {platform}. Kami tidak mengonversi ke MP3, dan sebagian video tidak punya trek audio terpisah, sehingga hanya videonya yang ditawarkan. M4A bisa diputar di pemutar musik atau video modern mana pun."
+        },
+        "snapchatNoApp": {
+          "q": "Cara menyimpan video Snapchat Spotlight tanpa memasang aplikasi?",
+          "a": "Semuanya berjalan di browser Anda, jadi tidak ada yang perlu dipasang. Langkah: 1) Buka video Spotlight publik lalu ketuk Bagikan, kemudian Salin link. 2) Tempel tautan di kotak di atas. 3) Ketuk Unduh Video dan simpan MP4. Hanya video Spotlight publik yang berfungsi; Stories dan snap privat tidak didukung."
+        },
+        "freeFbThreads": {
+          "q": "Apakah gratis mengunduh video Facebook & Threads secara online?",
+          "a": "Ya. Keduanya gratis, tanpa akun, tanpa aplikasi, dan tanpa watermark dari kami. Situs ini didukung iklan. Hanya video publik yang bisa diunduh: postingan Facebook privat, grup yang memerlukan login, dan profil Threads privat tidak dapat diakses."
+        },
+        "free": {
+          "q": "Apakah gratis mengunduh {noun} secara online?",
+          "a": "Ya. Mengunduh {noun} di sini tidak dipungut biaya dan tidak memerlukan akun atau aplikasi. Situs ini didukung iklan. Hanya video publik yang berfungsi."
+        }
+      }
     },
     "platforms": {
       "instagram": {
@@ -843,5 +865,11 @@
     "decline": "Tolak",
     "privacy": "Kebijakan Privasi",
     "settings": "Pengaturan cookie"
+  },
+  "telegram": {
+    "label": "Telegram Bot",
+    "fab": "Gunakan Bot Telegram",
+    "open": "Buka bot Telegram SaveReelsFast",
+    "hide": "Sembunyikan tombol ini"
   }
 }

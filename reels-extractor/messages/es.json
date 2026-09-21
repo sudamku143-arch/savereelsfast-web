@@ -136,7 +136,29 @@
       "otherHeading": "Descargadores para cada plataforma",
       "otherLead": "Elige tu plataforma para ver una guía a medida.",
       "here": "Estás aquí",
-      "structuredDescription": "Descargador online gratuito de {noun}. Pega un enlace y guarda el video como MP4, sin iniciar sesión ni instalar apps."
+      "structuredDescription": "Descargador online gratuito de {noun}. Pega un enlace y guarda el video como MP4, sin iniciar sesión ni instalar apps.",
+      "longtail": {
+        "reelsQuality": {
+          "q": "¿Cómo descargar Reels de Instagram en 1080p sin marca de agua?",
+          "a": "Pega el enlace del Reel y toca Descargar. Recibes el archivo de video que Instagram mismo sirve para reproducirlo, en la mayor calidad que ofrece para ese Reel (hasta 1080p si se subió con esa calidad). No añadimos marca de agua propia y no recodificamos ni escalamos, así que un original de baja resolución sigue siendo de baja resolución. Pasos: 1) Toca Compartir en el Reel y luego Copiar enlace. 2) Pega el enlace en el cuadro de arriba. 3) Toca Descargar video y guarda el MP4."
+        },
+        "audio": {
+          "q": "¿Puedo descargar el audio o MP3 de Reels de Instagram y Shorts?",
+          "a": "En parte. Cuando {platform} ofrece una pista de audio aparte para un video, aparece un botón de descargar audio bajo el resultado y la guarda como archivo de audio (M4A o WebM), tal como la sirve {platform}. No convertimos a MP3, y algunos videos no tienen pista de audio aparte; en ese caso solo se ofrece el video. M4A se reproduce en cualquier reproductor moderno."
+        },
+        "snapchatNoApp": {
+          "q": "¿Cómo guardar videos de Snapchat Spotlight sin instalar la app?",
+          "a": "Todo funciona en tu navegador, así que no hay nada que instalar. Pasos: 1) Abre el video público de Spotlight y toca Compartir, luego Copiar enlace. 2) Pega el enlace en el cuadro de arriba. 3) Toca Descargar video y guarda el MP4. Solo funcionan los videos públicos de Spotlight; las Stories y los snaps privados no se admiten."
+        },
+        "freeFbThreads": {
+          "q": "¿Es gratis descargar videos de Facebook y Threads en línea?",
+          "a": "Sí. Ambos son gratis, sin cuenta, sin app y sin marca de agua propia. El sitio se financia con anuncios. Solo se pueden descargar videos públicos: no se accede a publicaciones privadas de Facebook, grupos que exigen inicio de sesión ni perfiles privados de Threads."
+        },
+        "free": {
+          "q": "¿Es gratis descargar {noun} en línea?",
+          "a": "Sí. Descargar {noun} aquí no cuesta nada y no necesita cuenta ni app. El sitio se financia con anuncios. Solo funcionan los videos públicos."
+        }
+      }
     },
     "platforms": {
       "instagram": {
@@ -843,5 +865,11 @@
     "decline": "Rechazar",
     "privacy": "Política de privacidad",
     "settings": "Configuración de cookies"
+  },
+  "telegram": {
+    "label": "Telegram Bot",
+    "fab": "Usar el bot de Telegram",
+    "open": "Abrir el bot de Telegram de SaveReelsFast",
+    "hide": "Ocultar este botón"
   }
 }

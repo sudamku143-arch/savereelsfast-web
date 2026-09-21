@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { locales, defaultLocale, switchLocalePath, type Locale } from "@/lib/i18n-config";
 import { showSwitcher, switcherLocales, type BlogAvailability } from "@/lib/switcher";
+import { TELEGRAM_BOT_URL } from "@/lib/site";
 import InstallButton from "./InstallButton";
+import TelegramIcon from "./TelegramIcon";
+import type { TelegramDict } from "./TelegramFab";
 
 type Dict = {
   language: string;
@@ -60,9 +63,11 @@ export default function Header({
   locale,
   dict,
   blogAvailability,
+  telegram,
 }: {
   locale: Locale;
   dict: Dict;
+  telegram: TelegramDict;
   /** Where the blog exists (it is not in every language), so the switcher never offers a 404. */
   blogAvailability: BlogAvailability;
 }) {
@@ -116,6 +121,18 @@ export default function Header({
         </a>
 
         <div className="flex items-center gap-2">
+        <a
+          href={TELEGRAM_BOT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={telegram.open}
+          title={telegram.open}
+          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500"
+        >
+          <TelegramIcon className="h-4 w-4 text-sky-400" />
+          {/* The label is hidden on narrow phones, where the header has no room for it (the icon keeps its name). */}
+          <span className="hidden sm:inline">{telegram.label}</span>
+        </a>
         <InstallButton label={dict.install} />
         {canSwitch && (
         <div ref={rootRef} className="relative">

@@ -1,8 +1,10 @@
 import { localePath, type Locale } from "@/lib/i18n-config";
 import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
 import type { PlatformId } from "@/lib/platforms";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, SITE_NAME, TELEGRAM_BOT_URL } from "@/lib/site";
 import CookieSettingsButton from "./CookieSettingsButton";
+import TelegramIcon from "./TelegramIcon";
+import type { TelegramDict } from "./TelegramFab";
 
 type Dict = {
   disclaimer: string;
@@ -60,6 +62,7 @@ export default function Footer({
   platformNames,
   hasBlog = false,
   cookieLabel,
+  telegram,
 }: {
   locale: Locale;
   dict: Dict;
@@ -68,6 +71,7 @@ export default function Footer({
   hasBlog?: boolean;
   /** Label of the footer's "Cookie settings" button; leave out when analytics is not configured. */
   cookieLabel?: string;
+  telegram: TelegramDict;
 }) {
   const tools = LANDING_PLATFORMS.map((id) => ({
     href: localePath(locale, landingPath(id)),
@@ -114,7 +118,19 @@ export default function Footer({
             </ul>
           </div>
           <Column heading={dict.columns.legal} links={legal} />
-          <Column heading={dict.columns.company} links={company} cookieLabel={cookieLabel} />
+          <div>
+            <Column heading={dict.columns.company} links={company} cookieLabel={cookieLabel} />
+            <a
+              href={TELEGRAM_BOT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={telegram.open}
+              className="mt-2 inline-flex items-center gap-1.5 rounded text-sm text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
+            >
+              <TelegramIcon className="h-4 w-4 text-sky-400" />
+              {telegram.label}
+            </a>
+          </div>
         </nav>
 
         <div className="mt-10 border-t border-white/5 pt-6 text-center">

@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { pageMetadata, platformOgImage } from "@/lib/legal-metadata";
 import {
   LANDING_PLATFORMS,
+  LONGTAIL_FAQ,
   PLATFORM_KEYS,
   PLATFORM_SLUGS,
   fillTemplate,
@@ -73,6 +74,11 @@ export default async function PlatformLandingPage({ params }: Props) {
   // Platform-specific questions first (they carry the search intent), then the shared basics.
   const faqItems = [
     ...content.faq,
+    // Long-tail questions people search for (audio, watermark, free, no app), only the ones true for this platform.
+    ...LONGTAIL_FAQ[id].map((key) => ({
+      q: fillTemplate(common.longtail[key].q, vars),
+      a: fillTemplate(common.longtail[key].a, vars),
+    })),
     ...common.sharedFaq.map((item) => ({
       q: fillTemplate(item.q, vars),
       a: fillTemplate(item.a, vars),

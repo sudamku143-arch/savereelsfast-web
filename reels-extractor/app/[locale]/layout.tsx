@@ -20,6 +20,8 @@ import AnalyticsConsent from "./components/AnalyticsConsent";
 import InstallProvider from "./components/InstallProvider";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import IosInstallModal from "./components/IosInstallModal";
+import TelegramFab from "./components/TelegramFab";
+import SiteSchema from "./components/SiteSchema";
 
 // Unknown locales 404 instead of rendering the default language.
 export const dynamicParams = false;
@@ -112,11 +114,13 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} dir={localeDir(locale)}>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
         <InstallProvider>
-          <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} />
+          <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} telegram={dict.telegram} />
           {children}
-          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} />
+          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} telegram={dict.telegram} />
           <AnalyticsConsent locale={locale} dict={dict.consent} />
           <IosInstallModal dict={dict.pwa} />
+          <TelegramFab dict={dict.telegram} />
+          <SiteSchema />
         </InstallProvider>
       </body>
     </html>

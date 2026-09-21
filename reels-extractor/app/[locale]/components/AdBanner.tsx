@@ -216,6 +216,16 @@ function StickyAd({ dict }: { dict: AdDict }) {
     }
   }
 
+  const shown = state === "open" && !(plan.kind === "placeholder" && !CONFIG.showPlaceholders);
+  // Tell the page a banner is up, so the floating Telegram button moves above it instead of covering it.
+  useEffect(() => {
+    if (!shown) return;
+    document.body.dataset.stickyAd = "open";
+    return () => {
+      delete document.body.dataset.stickyAd;
+    };
+  }, [shown]);
+
   if (plan.kind === "placeholder" && !CONFIG.showPlaceholders) return null;
   if (state === "closed") return null;
 

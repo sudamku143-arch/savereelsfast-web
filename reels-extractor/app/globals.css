@@ -44,3 +44,16 @@ body {
     width: 100%;
   }
 }
+
+/* The floating Telegram button sits in the bottom corner. While the sticky ad banner is showing (AdBanner sets
+   data-sticky-ad on <body>), lift it above the banner on screens where the two would overlap. */
+@media (max-width: 1279px) {
+  body[data-sticky-ad] .telegram-fab {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 100px);
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  body[data-sticky-ad] .telegram-fab {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 140px);
+  }
+}

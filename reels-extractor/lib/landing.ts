@@ -74,3 +74,24 @@ export function landingPath(id: PlatformId): string {
 export function fillTemplate(text: string, values: Record<string, string>): string {
   return text.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match);
 }
+
+/**
+ * Long-tail questions (dictionary: landing.common.longtail.<key>) that a platform's page answers on top of its own
+ * FAQs. They are shown on the page and in the FAQPage data from the same list, so the two always match.
+ * Only claims that hold for the platform are listed for it (for example, "Shorts" audio belongs on YouTube and
+ * Instagram, and the Snapchat question only on Snapchat).
+ */
+export type LongtailKey = "reelsQuality" | "audio" | "snapchatNoApp" | "freeFbThreads" | "free";
+
+export const LONGTAIL_FAQ: Record<PlatformId, LongtailKey[]> = {
+  instagram: ["reelsQuality", "audio", "free"],
+  youtube: ["audio", "free"],
+  facebook: ["freeFbThreads"],
+  threads: ["freeFbThreads"],
+  x: ["free"],
+  pinterest: ["free"],
+  tiktok: ["free"],
+  reddit: ["free"],
+  snapchat: ["snapchatNoApp", "free"],
+  linkedin: ["free"],
+};
