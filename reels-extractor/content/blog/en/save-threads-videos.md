@@ -1,7 +1,7 @@
 ---
 title: How to Save Threads Videos and Reuse Them Fairly
 description: How to save a public Threads video as an MP4 for your own use, what works and what does not, and how to reuse videos responsibly.
-date: 2026-09-21
+date: 2026-09-23
 language: en
 tools: threads
 ---

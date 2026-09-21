@@ -13,6 +13,9 @@ import { describe, it } from "node:test";
 import { LEGAL_TRANSLATED, locales } from "../lib/i18n-config.ts";
 import { LEGACY_SLUGS, PLATFORM_SLUGS } from "../lib/landing.ts";
 
+// The counts below cover every post on disk, so the sitemap is read on a day when all of them are published.
+process.env.BLOG_TODAY = "2099-12-31";
+
 const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const SITE = "https://savereelsfast.com";
 const ids = Object.keys(PLATFORM_SLUGS) as (keyof typeof PLATFORM_SLUGS)[];
@@ -79,6 +82,24 @@ describe("sitemap contents", () => {
 
   it("no address uses the old /downloader/ shape", () => {
     for (const e of entries) assert.doesNotMatch(e.url, /\/downloader\//);
+  });
+});
+
+describe("scheduled posts stay out of the sitemap until their day", () => {
+  it("lists only published posts, and the rest appear on their release day", () => {
+    const urls = (day: string) => {
+      process.env.BLOG_TODAY = day;
+      try {
+        return sitemap().map((e) => e.url).filter((u) => /\/blog\//.test(u));
+      } finally {
+        process.env.BLOG_TODAY = "2099-12-31";
+      }
+    };
+    assert.equal(urls("2026-09-21").length, 5);
+    assert.ok(!urls("2026-09-21").includes(`${SITE}/blog/save-instagram-reels-offline`));
+    assert.equal(urls("2026-09-22").length, 8);
+    assert.ok(urls("2026-09-22").includes(`${SITE}/blog/save-instagram-reels-offline`));
+    assert.equal(urls("2026-09-26").length, allBlogPosts);
   });
 });
 

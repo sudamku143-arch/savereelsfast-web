@@ -14,6 +14,11 @@ import { describe, it } from "node:test";
 import { parseInline, parseMarkdown, safeHref } from "../lib/blog-markdown.ts";
 import { LANDING_PLATFORMS, landingPath } from "../lib/landing.ts";
 
+// Most tests below look at the whole library, so they run on a day when every post is published. The scheduling tests
+// set their own day (BLOG_TODAY) and put this one back.
+const EVERYTHING_PUBLISHED = "2099-12-31";
+process.env.BLOG_TODAY = EVERYTHING_PUBLISHED;
+
 // lib/blog.ts imports its neighbour without a file extension (as the site build wants), which plain Node cannot
 // resolve: run it from a copy that spells the extension out. It still reads content/blog from the project folder.
 const dir = mkdtempSync(join(tmpdir(), "srf-blog-"));
@@ -23,7 +28,7 @@ for (const file of ["i18n-config", "landing", "blog"]) {
     readFileSync(new URL(`../lib/${file}.ts`, import.meta.url), "utf8").replace(/from "\.\/([\w-]+)"/g, 'from "./$1.ts"')
   );
 }
-const { allPosts, getPost, getPosts, localesWithPosts, parseFrontmatter, readPost, relatedPosts, translationsOf } = (await import(
+const { allPosts, getPost, getPosts, linkIsLive, localesWithPosts, parseFrontmatter, readPost, relatedPosts, scheduledPosts, todayUtc, translationsOf } = (await import(
   pathToFileURL(join(dir, "blog.ts")).href
 )) as typeof import("../lib/blog.ts");
 
@@ -232,6 +237,100 @@ The body of the post is here and it is long enough to count as a body.`;
     assert.throws(() => readPost(post("tools: instagram, myspace"), "en", "x"), /"myspace", which is not a downloader/);
     assert.throws(() => readPost(post("tools: instagram, instagram"), "en", "x"), /same downloader twice/);
     assert.throws(() => readPost(post("general: maybe"), "en", "x"), /general must be true or false/);
+  });
+});
+
+describe("scheduled publishing", () => {
+  const onDay = <T,>(day: string, run: () => T): T => {
+    process.env.BLOG_TODAY = day;
+    try {
+      return run();
+    } finally {
+      process.env.BLOG_TODAY = EVERYTHING_PUBLISHED;
+    }
+  };
+  const TOTAL = STARTERS.length;
+  const day1 = ["save-instagram-reels-offline", "save-youtube-shorts-offline", "save-facebook-videos-offline"];
+
+  it("a post dated in the future is not published, and one dated today or earlier is", () => {
+    assert.equal(onDay("2026-09-21", () => allPosts().length), 5, "the five posts dated 2026-09-21");
+    assert.equal(onDay("2026-09-21", () => scheduledPosts().length), TOTAL - 5);
+    assert.equal(onDay("2026-09-22", () => allPosts().length), 8, "three more on the 22nd");
+    assert.equal(onDay("2026-09-26", () => allPosts().length), TOTAL);
+    assert.equal(onDay("2026-09-26", () => scheduledPosts().length), 0);
+  });
+
+  it("a waiting post is nowhere: not by slug, not in the languages list, not among the related articles", () => {
+    onDay("2026-09-21", () => {
+      for (const slug of day1) assert.equal(getPost("en", slug), null, slug);
+      assert.ok(!getPosts("en").some((p) => day1.includes(p.slug)));
+      assert.ok(!relatedPosts("en", "instagram").some((p) => day1.includes(p.slug)));
+      assert.deepEqual(localesWithPosts(), ["en"]);
+      assert.ok(relatedPosts("en", "instagram").length >= 1, "the tool page still has articles to show");
+    });
+    onDay("2026-09-22", () => {
+      for (const slug of day1) assert.ok(getPost("en", slug), `${slug} appears on its day`);
+      assert.equal(relatedPosts("en", "instagram")[0].slug, "save-instagram-reels-offline");
+    });
+  });
+
+  it("every tool page has articles to show on every day of the schedule", () => {
+    for (const day of ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26"]) {
+      onDay(day, () => {
+        for (const tool of LANDING_PLATFORMS) assert.ok(relatedPosts("en", tool).length >= 1, `${day}: ${tool} has no related article`);
+      });
+    }
+  });
+
+  it("a link to a post that is not published yet is not a link", () => {
+    onDay("2026-09-21", () => {
+      assert.equal(linkIsLive("en", "/blog/facebook-video-privacy-what-you-can-save"), false);
+      assert.equal(linkIsLive("en", "/blog/grow-social-media-following-2026"), true);
+      assert.equal(linkIsLive("en", "/blog/no-such-post"), false);
+      assert.equal(linkIsLive("hi", "/blog/grow-social-media-following-2026"), false, "no Hindi version");
+      assert.equal(linkIsLive("en", "/instagram-video-downloader"), true, "other links are untouched");
+      assert.equal(linkIsLive("en", "/blog"), true);
+    });
+    onDay("2026-09-26", () => assert.equal(linkIsLive("en", "/blog/facebook-video-privacy-what-you-can-save"), true));
+    const markdown = readFileSync(new URL("../app/[locale]/components/BlogMarkdown.tsx", import.meta.url), "utf8");
+    assert.match(markdown, /if \(!linkIsLive\(locale, node\.href\)\) return <span/);
+  });
+
+  it("the schedule releases two or three posts a day, on real days, with no gaps", () => {
+    const later = getPosts("en").filter((p) => p.date > "2026-09-21");
+    const perDay = new Map<string, number>();
+    for (const p of later) perDay.set(p.date, (perDay.get(p.date) ?? 0) + 1);
+    const days = [...perDay.keys()].sort();
+    for (const day of days) assert.ok(perDay.get(day)! >= 2 && perDay.get(day)! <= 3, `${day} has ${perDay.get(day)} posts`);
+    for (let i = 1; i < days.length; i += 1) {
+      const gap = (Date.parse(days[i]) - Date.parse(days[i - 1])) / 86_400_000;
+      assert.equal(gap, 1, `${days[i - 1]} to ${days[i]} skips a day`);
+    }
+  });
+
+  it("the date each reader and search engine sees is the release date, not an invented one", () => {
+    const page = readFileSync(new URL("../app/[locale]/blog/[slug]/page.tsx", import.meta.url), "utf8");
+    assert.match(page, /datePublished: post\.date/);
+    assert.match(page, /publishedTime: post\.date/);
+    assert.ok(getPosts("en").every((p) => p.date >= "2026-09-21"), "nothing is dated before the day the blog was written");
+  });
+
+  it("BLOG_TODAY must be a real date, and without it the day is today (UTC)", () => {
+    process.env.BLOG_TODAY = "next tuesday";
+    assert.throws(() => todayUtc(), /BLOG_TODAY must be a real date/);
+    delete process.env.BLOG_TODAY;
+    assert.equal(todayUtc(), new Date().toISOString().slice(0, 10));
+    process.env.BLOG_TODAY = EVERYTHING_PUBLISHED;
+  });
+
+  it("a daily workflow rebuilds the site on days with a release, and says so when its secret is missing", () => {
+    const flow = readFileSync(new URL("../../.github/workflows/publish-scheduled-posts.yml", import.meta.url), "utf8");
+    assert.match(flow, /cron: "30 0 \* \* \*"/);
+    assert.match(flow, /workflow_dispatch/);
+    assert.match(flow, /grep -rqE "\^date: \$\{today\}/, "it only rebuilds when a post is dated today");
+    assert.match(flow, /secrets\.VERCEL_DEPLOY_HOOK_URL/);
+    assert.match(flow, /::error::The VERCEL_DEPLOY_HOOK_URL secret is not set/);
+    assert.doesNotMatch(flow, /api\.vercel\.com\/v1\/integrations\/deploy/, "the hook URL is a secret, never written into the file");
   });
 });
 

@@ -6,7 +6,7 @@
 //   title: The headline shown on the page
 //   metaTitle: Optional shorter title for search results (under 60 characters)
 //   description: One or two sentences for search results (under 160 characters)
-//   date: 2026-09-21
+//   date: 2026-09-21           (the day it is published: see "Scheduling" below)
 //   updated: 2026-10-02        (optional)
 //   language: en
 //   draft: true                (optional: hidden everywhere until removed)
@@ -19,6 +19,12 @@
 //
 // Files are read at build time. A mistake in a post's header stops the build with the file's name, so it can never
 // reach the live site half-broken.
+//
+// Scheduling: a post whose `date` is in the future (UTC) is not published yet. It is left out of the blog, the home
+// page, the tool pages, the sitemap and every link, and it appears in the first build on or after its date. The site
+// is rebuilt every morning by .github/workflows/publish-scheduled-posts.yml, so a post scheduled for a day goes live
+// that day. The date shown to readers and search engines is therefore the real publication date.
+// To preview what the site will look like on a later day: BLOG_TODAY=2026-09-30 npm run dev.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -123,8 +129,18 @@ export function readPost(raw: string, locale: Locale, slug: string, file = `${lo
 
 let cache: BlogPost[] | null = null;
 
-/** Every published post in every language, newest first. */
-export function allPosts(): BlogPost[] {
+/** Today's date (UTC), or the BLOG_TODAY override used to preview or test a later day. */
+export function todayUtc(): string {
+  const override = process.env.BLOG_TODAY?.trim();
+  if (override) {
+    if (!isRealDate(override)) throw new Error(`BLOG_TODAY must be a real date like 2026-09-30 (got "${override}")`);
+    return override;
+  }
+  return new Date().toISOString().slice(0, 10);
+}
+
+/** Every post that has been written, published or not, newest first. */
+export function allPostsIncludingScheduled(): BlogPost[] {
   if (cache && process.env.NODE_ENV === "production") return cache;
   const posts: BlogPost[] = [];
   const root = contentRoot();
@@ -145,6 +161,31 @@ export function allPosts(): BlogPost[] {
   posts.sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1));
   cache = posts;
   return posts;
+}
+
+/** Every published post in every language, newest first: those dated today or earlier. */
+export function allPosts(): BlogPost[] {
+  const today = todayUtc();
+  return allPostsIncludingScheduled().filter((post) => post.date <= today);
+}
+
+/** Posts waiting for their day, soonest first. */
+export function scheduledPosts(): BlogPost[] {
+  const today = todayUtc();
+  return allPostsIncludingScheduled()
+    .filter((post) => post.date > today)
+    .sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? -1 : 1));
+}
+
+/**
+ * Whether a link inside a post may be shown as a link. A link to another blog post is only live once that post is
+ * published, so a post released today never points at one that is still waiting.
+ */
+export function linkIsLive(defaultLocale: Locale, href: string): boolean {
+  const match = href.match(/^\/(?:([a-z]{2})\/)?blog\/([^/?#]+)/);
+  if (!match) return true;
+  const locale = match[1] && isLocale(match[1]) ? match[1] : defaultLocale;
+  return getPost(locale, match[2]) !== null;
 }
 
 export function getPosts(locale: Locale): BlogPost[] {

@@ -2,7 +2,7 @@
 title: "Facebook Video Privacy: Public vs Friends-Only Videos and What You Can Save"
 metaTitle: Facebook Videos: Public vs Friends-Only and What to Save
 description: Why some Facebook videos can be saved and others cannot: public, friends-only and group videos explained, with tips for checking a link before you try.
-date: 2026-09-21
+date: 2026-09-26
 language: en
 tools: facebook
 ---

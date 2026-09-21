@@ -1,0 +1,48 @@
+# Publishes blog posts on their scheduled day.
+#
+# A post whose `date:` is in the future is left out of the site until a build happens on or after that date (see
+# reels-extractor/lib/blog.ts). This workflow starts that build: every morning it checks whether any post is dated
+# today, and if so asks Vercel to rebuild the production site. It does nothing on days with no release.
+#
+# One-time setup: in Vercel, Project -> Settings -> Git -> Deploy Hooks, create a hook for the main branch, then add
+# its URL to this repository as a secret named VERCEL_DEPLOY_HOOK_URL (Settings -> Secrets and variables -> Actions).
+# You can also run it by hand from the Actions tab (it then always rebuilds).
+name: Publish scheduled posts
+
+on:
+  schedule:
+    - cron: "30 0 * * *" # 00:30 UTC, about 06:00 in India
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Is a post due today?
+        id: due
+        run: |
+          today=$(date -u +%F)
+          if grep -rqE "^date: ${today}[[:space:]]*$" reels-extractor/content/blog; then
+            echo "due=true" >> "$GITHUB_OUTPUT"
+            echo "A post is scheduled for ${today}."
+          else
+            echo "due=false" >> "$GITHUB_OUTPUT"
+            echo "No post is scheduled for ${today}: nothing to do."
+          fi
+
+      - name: Rebuild the site
+        if: steps.due.outputs.due == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "::error::The VERCEL_DEPLOY_HOOK_URL secret is not set, so the site was not rebuilt. See the note at the top of this file."
+            exit 1
+          fi
+          curl --fail --silent --show-error --request POST "$DEPLOY_HOOK" > /dev/null
+          echo "Rebuild requested."

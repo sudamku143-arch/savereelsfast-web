@@ -1,7 +1,7 @@
 ---
 title: How to Save Instagram Reels for Offline Viewing
 description: How to keep Instagram Reels for offline viewing: your own Reels or ones you have permission to save, with and without Instagram's built-in tools.
-date: 2026-09-21
+date: 2026-09-22
 language: en
 tools: instagram
 ---

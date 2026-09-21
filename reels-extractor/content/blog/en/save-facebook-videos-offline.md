@@ -1,7 +1,7 @@
 ---
 title: How to Save Facebook Videos for Offline Viewing
 description: How to save Facebook videos to watch offline: Facebook's own Save feature, your own uploads, and how to download a public video as an MP4.
-date: 2026-09-21
+date: 2026-09-22
 language: en
 tools: facebook
 ---

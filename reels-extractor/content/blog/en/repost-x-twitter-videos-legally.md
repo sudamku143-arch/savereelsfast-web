@@ -1,7 +1,7 @@
 ---
 title: How to Repost X (Twitter) Videos Legally
 description: How to share videos from X the right way: use the repost button, embed, or ask permission, and what to do before you download and re-upload a clip.
-date: 2026-09-21
+date: 2026-09-23
 language: en
 tools: x
 ---

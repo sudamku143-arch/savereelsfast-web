@@ -1,7 +1,7 @@
 ---
 title: How to Save YouTube Shorts for Offline Viewing
 description: Ways to watch YouTube Shorts offline: YouTube's own options, and how to save your own or permitted Shorts as an MP4 with a browser-based tool.
-date: 2026-09-21
+date: 2026-09-22
 language: en
 tools: youtube
 ---

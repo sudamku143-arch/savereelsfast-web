@@ -1,7 +1,7 @@
 ---
 title: TikTok Trends and How to Save Your Favorite Videos
 description: How TikTok trends start and spread, how to join them in your own way, and how to keep your favorite videos: TikTok's own options and a browser tool.
-date: 2026-09-21
+date: 2026-09-24
 language: en
 tools: tiktok
 ---

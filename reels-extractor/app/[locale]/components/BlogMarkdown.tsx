@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { localePath, locales, type Locale } from "@/lib/i18n-config";
 import { parseMarkdown, type Block, type Inline } from "@/lib/blog-markdown";
+import { linkIsLive } from "@/lib/blog";
 
 /** A site-relative link in a post points at the same language's page: "/youtube-video-downloader" -> "/hi/youtube-...". */
 function href(target: string, locale: Locale): string {
@@ -29,6 +30,8 @@ function inline(nodes: Inline[], locale: Locale): ReactNode[] {
           </code>
         );
       case "link": {
+        // A link to a post that is scheduled but not yet published stays plain text until that post goes live.
+        if (!linkIsLive(locale, node.href)) return <span key={index}>{inline(node.children, locale)}</span>;
         const external = node.href.startsWith("https://");
         return (
           <a

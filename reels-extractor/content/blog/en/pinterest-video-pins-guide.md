@@ -2,7 +2,7 @@
 title: "Pinterest Video Pins: A Complete Guide for Creators"
 metaTitle: Pinterest Video Pins: A Complete Guide for Creators
 description: How Pinterest video pins work and how to make them well: format, hooks, titles, keywords and boards, plus how to keep your originals safe.
-date: 2026-09-21
+date: 2026-09-23
 language: en
 tools: pinterest
 ---

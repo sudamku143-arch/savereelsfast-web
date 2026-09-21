@@ -2,7 +2,7 @@
 title: "Saving Snapchat Spotlight Videos: What Works and What Doesn't"
 metaTitle: Snapchat Spotlight Videos: What You Can and Can't Save
 description: How to save a public Snapchat Spotlight video as an MP4, which Snapchat content can and cannot be saved, and how to respect privacy while you do it.
-date: 2026-09-21
+date: 2026-09-26
 language: en
 tools: snapchat
 ---

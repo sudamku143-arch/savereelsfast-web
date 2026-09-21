@@ -2,7 +2,7 @@
 title: How to Save Pinterest Videos for Mood Boards and Offline Reference
 metaTitle: Save Pinterest Videos for Mood Boards and Offline Use
 description: How to save public Pinterest videos as MP4 files for mood boards, projects and offline viewing, plus how Pinterest's own Save button differs.
-date: 2026-09-21
+date: 2026-09-25
 language: en
 tools: pinterest
 ---
