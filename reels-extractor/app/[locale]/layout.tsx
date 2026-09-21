@@ -13,7 +13,7 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { localesWithPosts } from "@/lib/blog";
+import { blogAvailability, localesWithPosts } from "@/lib/blog";
 import InstallProvider from "./components/InstallProvider";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import IosInstallModal from "./components/IosInstallModal";
@@ -108,7 +108,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} dir={localeDir(locale)}>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
         <InstallProvider>
-          <Header locale={locale} dict={dict.nav} />
+          <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} />
           {children}
           <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} />
           <IosInstallModal dict={dict.pwa} />

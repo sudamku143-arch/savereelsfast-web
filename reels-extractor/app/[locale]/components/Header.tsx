@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { locales, defaultLocale, switchLocalePath, type Locale } from "@/lib/i18n-config";
+import { showSwitcher, switcherLocales, type BlogAvailability } from "@/lib/switcher";
 import InstallButton from "./InstallButton";
 
 type Dict = {
@@ -58,11 +59,17 @@ function Logo() {
 export default function Header({
   locale,
   dict,
+  blogAvailability,
 }: {
   locale: Locale;
   dict: Dict;
+  /** Where the blog exists (it is not in every language), so the switcher never offers a 404. */
+  blogAvailability: BlogAvailability;
 }) {
   const router = useRouter();
+  const pathname = usePathname() ?? "/";
+  const languageOptions = switcherLocales(pathname, locales, blogAvailability);
+  const canSwitch = showSwitcher(languageOptions);
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -110,6 +117,7 @@ export default function Header({
 
         <div className="flex items-center gap-2">
         <InstallButton label={dict.install} />
+        {canSwitch && (
         <div ref={rootRef} className="relative">
           <button
             type="button"
@@ -157,7 +165,7 @@ export default function Header({
               aria-label={dict.language}
               className="absolute right-0 mt-2 w-44 animate-fade-in-up overflow-hidden rounded-xl border border-white/10 bg-zinc-900/95 py-1 shadow-xl backdrop-blur-xl"
             >
-              {locales.map((l) => (
+              {languageOptions.map((l) => (
                 <li key={l} role="option" aria-selected={l === locale}>
                   <button
                     type="button"
@@ -174,6 +182,7 @@ export default function Header({
             </ul>
           )}
         </div>
+        )}
         </div>
       </nav>
     </header>

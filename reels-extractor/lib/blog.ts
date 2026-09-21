@@ -18,6 +18,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { isLocale, locales, type Locale } from "./i18n-config";
+import type { BlogAvailability } from "./switcher";
 
 export type BlogPost = {
   slug: string;
@@ -139,6 +140,13 @@ export function localesWithPosts(): Locale[] {
 export function translationsOf(slug: string): Locale[] {
   const present = new Set(allPosts().filter((post) => post.slug === slug).map((post) => post.locale));
   return locales.filter((locale) => present.has(locale));
+}
+
+/** Where the blog exists, for the language switcher: the languages with a blog, and for each post the languages it is in. */
+export function blogAvailability(): BlogAvailability {
+  const posts: Record<string, Locale[]> = {};
+  for (const post of allPosts()) posts[post.slug] = translationsOf(post.slug);
+  return { index: localesWithPosts(), posts };
 }
 
 export const blogPath = (slug?: string) => (slug ? `/blog/${slug}` : "/blog");
