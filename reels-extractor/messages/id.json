@@ -348,7 +348,15 @@
     "downloading": "Mengunduh… {progress}",
     "saving": "Menyimpan file…",
     "saved": "Tersimpan",
-    "cancel": "Batal"
+    "cancel": "Batal",
+    "share": {
+      "heading": "Bagikan alat ini",
+      "whatsapp": "WhatsApp",
+      "x": "X",
+      "copy": "Salin tautan",
+      "copied": "Tautan disalin",
+      "text": "Saya baru saja menyimpan video dengan SaveReelsFast: gratis, tanpa login, tanpa install apa pun."
+    }
   },
   "errors": {
     "LOGIN_REQUIRED": {

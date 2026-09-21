@@ -348,7 +348,15 @@
     "downloading": "ডাউনলোড হচ্ছে… {progress}",
     "saving": "ফাইল সেভ হচ্ছে…",
     "saved": "সেভ হয়েছে",
-    "cancel": "বাতিল"
+    "cancel": "বাতিল",
+    "share": {
+      "heading": "এই টুলটি শেয়ার করুন",
+      "whatsapp": "WhatsApp",
+      "x": "X",
+      "copy": "লিংক কপি করুন",
+      "copied": "লিংক কপি হয়েছে",
+      "text": "আমি এইমাত্র SaveReelsFast দিয়ে একটি ভিডিও সেভ করলাম: বিনামূল্যে, লগইন ছাড়া, কিছু ইনস্টল করতে হয় না।"
+    }
   },
   "errors": {
     "LOGIN_REQUIRED": {

@@ -348,7 +348,15 @@
     "downloading": "جارٍ التنزيل… {progress}",
     "saving": "جارٍ حفظ الملف…",
     "saved": "تم الحفظ",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "share": {
+      "heading": "شارك هذه الأداة",
+      "whatsapp": "WhatsApp",
+      "x": "X",
+      "copy": "نسخ الرابط",
+      "copied": "تم نسخ الرابط",
+      "text": "حفظت للتو فيديو باستخدام SaveReelsFast: مجاني، بلا تسجيل دخول، ولا شيء لتثبيته."
+    }
   },
   "errors": {
     "LOGIN_REQUIRED": {

@@ -39,12 +39,15 @@ export default function ItemsSlider({
   downloadDict,
   errorsDict,
   platformName,
+  onDownloaded,
 }: {
   items: ReelItem[];
   dict: ItemsDict;
   downloadDict: DownloadDict;
   errorsDict: ErrorsDict;
   platformName: string;
+  /** Called when any download from this post has been saved or started. */
+  onDownloaded?: () => void;
 }) {
   const [busy, setBusy] = useState(false);
 
@@ -68,6 +71,7 @@ export default function ItemsSlider({
         link.remove();
         await new Promise((resolve) => setTimeout(resolve, DOWNLOAD_GAP_MS));
       }
+      onDownloaded?.();
     } finally {
       setBusy(false);
     }
@@ -122,6 +126,7 @@ export default function ItemsSlider({
                   dict={downloadDict}
                   errorsDict={errorsDict}
                   platformName={platformName}
+                  onSaved={onDownloaded}
                 />
                 {audio && (
                   <DownloadButton
@@ -132,6 +137,7 @@ export default function ItemsSlider({
                     dict={downloadDict}
                     errorsDict={errorsDict}
                     platformName={platformName}
+                    onSaved={onDownloaded}
                   />
                 )}
               </div>

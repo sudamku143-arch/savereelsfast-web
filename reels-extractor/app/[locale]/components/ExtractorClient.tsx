@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { PLATFORM_IDS, parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import type { PlatformInfo } from "@/lib/platform-info";
+import type { Locale } from "@/lib/i18n-config";
 import { isErrorCode } from "@/lib/errors";
 import {
   getCachedResult,
@@ -43,6 +44,7 @@ const EXTRACT_TIMEOUT_MS = 10_000;
 const YOUTUBE_EXTRACT_TIMEOUT_MS = 25_000;
 
 export default function ExtractorClient({
+  locale,
   heroDict,
   platformsDict,
   previewDict,
@@ -53,6 +55,7 @@ export default function ExtractorClient({
   initialPlatform = "instagram",
   landing = false,
 }: {
+  locale: Locale;
   heroDict: HeroDict;
   platformsDict: PlatformsDict;
   previewDict: PreviewDict;
@@ -265,6 +268,7 @@ export default function ExtractorClient({
         {status === "done" && result && (
           <>
             <PreviewCard
+              locale={locale}
               result={result}
               dict={previewDict}
               downloadDict={downloadDict}

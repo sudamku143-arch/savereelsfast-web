@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { isErrorCode } from "@/lib/errors";
 import type { ErrorsDict, UiErrorCode } from "./ErrorCard";
+import type { ShareDict } from "./ShareTool";
 
 export type DownloadDict = {
   preparing: string;
@@ -10,6 +11,7 @@ export type DownloadDict = {
   saving: string;
   saved: string;
   cancel: string;
+  share: ShareDict;
 };
 
 type Variant = "primary" | "secondary" | "compact" | "compact-secondary";
@@ -78,6 +80,7 @@ export default function DownloadButton({
   dict,
   errorsDict,
   platformName,
+  onSaved,
 }: {
   href: string;
   filename: string;
@@ -86,6 +89,8 @@ export default function DownloadButton({
   dict: DownloadDict;
   errorsDict: ErrorsDict;
   platformName: string;
+  /** Called once a download has been saved, or handed to the browser's download manager. */
+  onSaved?: () => void;
 }) {
   const [state, setState] = useState<State>({ phase: "idle" });
   const controllerRef = useRef<AbortController | null>(null);
@@ -130,6 +135,7 @@ export default function DownloadButton({
         controller.abort();
         nativeDownload(href, filename);
         setState({ phase: "idle" });
+        onSaved?.();
         return;
       }
 
@@ -148,6 +154,7 @@ export default function DownloadButton({
           controller.abort();
           nativeDownload(href, filename);
           setState({ phase: "idle" });
+          onSaved?.();
           return;
         }
 
@@ -163,6 +170,7 @@ export default function DownloadButton({
       saveBlob(new Blob(parts as BlobPart[], { type }), filename);
 
       setState({ phase: "saved" });
+      onSaved?.();
       savedTimerRef.current = setTimeout(() => setState({ phase: "idle" }), SAVED_FLASH_MS);
     } catch (err) {
       if (controller.signal.aborted) return; // cancelled, or handed over to the browser

@@ -1,10 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import type { PlatformId } from "@/lib/platforms";
+import type { Locale } from "@/lib/i18n-config";
 import { buildDownloadHref, downloadFilename } from "@/lib/download";
 import PlatformIcon from "./PlatformIcon";
 import ItemsSlider, { type ItemsDict } from "./ItemsSlider";
 import DownloadButton, { type DownloadDict } from "./DownloadButton";
 import type { ErrorsDict } from "./ErrorCard";
+import ShareTool from "./ShareTool";
 
 export type ReelItem = {
   id: string;
@@ -61,6 +66,7 @@ export function snippet(text: string, max = 140): string {
 }
 
 export default function PreviewCard({
+  locale,
   result,
   dict,
   downloadDict,
@@ -69,6 +75,7 @@ export default function PreviewCard({
   platformName,
   onReset,
 }: {
+  locale: Locale;
   result: ReelResult;
   dict: PreviewDict;
   downloadDict: DownloadDict;
@@ -77,6 +84,8 @@ export default function PreviewCard({
   platformName: string;
   onReset: () => void;
 }) {
+  // The share row appears only after the visitor has actually saved something.
+  const [downloaded, setDownloaded] = useState(false);
   const items = result.items ?? [];
   const isCarousel = items.length > 1;
   const filename = downloadFilename(result.id);
@@ -162,6 +171,7 @@ export default function PreviewCard({
           downloadDict={downloadDict}
           errorsDict={errorsDict}
           platformName={platformName}
+          onDownloaded={() => setDownloaded(true)}
         />
       ) : (
         <>
@@ -195,6 +205,7 @@ export default function PreviewCard({
               dict={downloadDict}
               errorsDict={errorsDict}
               platformName={platformName}
+              onSaved={() => setDownloaded(true)}
             />
             {audioHref && (
               <DownloadButton
@@ -205,11 +216,14 @@ export default function PreviewCard({
                 dict={downloadDict}
                 errorsDict={errorsDict}
                 platformName={platformName}
+                onSaved={() => setDownloaded(true)}
               />
             )}
           </div>
         </>
       )}
+
+      {downloaded && <ShareTool locale={locale} dict={downloadDict.share} />}
 
       <button
         type="button"

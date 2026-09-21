@@ -62,6 +62,7 @@ export default async function LocalePage({
     <main className="flex flex-col items-center px-4 pb-16 pt-12 sm:pt-20">
       <div className="w-full max-w-2xl">
         <ExtractorClient
+          locale={locale}
           heroDict={dict.hero}
           platformsDict={dict.platforms}
           previewDict={dict.preview}

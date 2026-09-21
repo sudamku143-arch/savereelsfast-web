@@ -141,6 +141,7 @@ export default async function PlatformLandingPage({ params }: Props) {
 
       <div className="w-full max-w-2xl">
         <ExtractorClient
+          locale={locale}
           heroDict={dict.hero}
           platformsDict={dict.platforms}
           previewDict={dict.preview}

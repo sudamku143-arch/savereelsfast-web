@@ -348,7 +348,15 @@
     "downloading": "Downloading… {progress}",
     "saving": "Saving file…",
     "saved": "Saved",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "share": {
+      "heading": "Share this tool",
+      "whatsapp": "WhatsApp",
+      "x": "X",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "text": "I just saved a video with SaveReelsFast: free, no login, nothing to install."
+    }
   },
   "errors": {
     "LOGIN_REQUIRED": {
