@@ -5,7 +5,7 @@
  *   npm test        (needs Node >= 22.6 for --experimental-strip-types)
  */
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -33,6 +33,7 @@ const { default: sitemap } = (await import(pathToFileURL(join(dir, "sitemap.ts")
 const entries = sitemap();
 const blogEntries = entries.filter((e) => /\/blog(\/|$)/.test(e.url));
 const blogEntryCount = blogEntries.length;
+const allBlogPosts = readdirSync(new URL("../content/blog/en", import.meta.url)).filter((f) => f.endsWith(".md")).length;
 const byUrl = new Map(entries.map((e) => [e.url, e]));
 const urlFor = (locale: string, path: string) => `${SITE}${locale === "en" ? path || "/" : `/${locale}${path}`}`;
 
@@ -73,7 +74,7 @@ describe("sitemap contents", () => {
 
   it("adds up: 11 home + 99 platform pages + 5 legal pages x every translated language", () => {
     assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 151, "145 site pages + the blog index + 5 starter posts");
+    assert.equal(entries.length, 145 + 1 + allBlogPosts, "145 site pages + the blog index + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -108,7 +109,7 @@ describe("frequency and priority", () => {
 
   it("blog: the index weekly at 0.7, each post monthly at 0.6, only in languages that have posts", () => {
     const pages = entries.filter((x) => rule(x.url) === "blog");
-    assert.equal(pages.length, 6, "the blog index and the five starter posts, English only");
+    assert.equal(pages.length, 1 + allBlogPosts, "the blog index and every post, English only");
     for (const e of pages) {
       assert.ok(e.url.startsWith(`${SITE}/blog`), `${e.url} should be an English (unprefixed) address`);
       const index = e.url === `${SITE}/blog`;

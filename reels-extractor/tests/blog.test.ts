@@ -33,12 +33,27 @@ const STARTERS = [
   "download-social-media-videos-safely-and-legally",
   "best-video-formats-mp4-vs-webm-vs-mov",
   "grow-social-media-following-2026",
+  // one or two per platform (see "each platform's own posts" below)
+  "save-instagram-reels-offline",
+  "save-youtube-shorts-offline",
+  "save-facebook-videos-offline",
+  "facebook-video-privacy-what-you-can-save",
+  "threads-vs-x-content-strategy",
+  "save-threads-videos",
+  "repost-x-twitter-videos-legally",
+  "pinterest-video-pins-guide",
+  "save-pinterest-videos",
+  "best-subreddits-for-video-content",
+  "reddit-videos-no-sound-explained",
+  "snapchat-spotlight-vs-stories",
+  "save-snapchat-spotlight-videos",
+  "tiktok-trends-and-saving-favorite-videos",
 ];
 
 describe("posts on disk", () => {
   const posts = allPosts();
 
-  it("loads the five starter posts in English", () => {
+  it("loads the starter posts in English", () => {
     for (const slug of STARTERS) assert.ok(getPost("en", slug), `missing ${slug}`);
     assert.ok(localesWithPosts().includes("en"));
   });
@@ -60,7 +75,7 @@ describe("posts on disk", () => {
     }
   });
 
-  it("the starter posts are 600-800 words with plenty of headings and no second h1", () => {
+  it("every post written so far is 600-800 words with plenty of headings and no second h1", () => {
     for (const slug of STARTERS) {
       const post = getPost("en", slug)!;
       assert.ok(post.wordCount >= 600 && post.wordCount <= 800, `${slug} is ${post.wordCount} words`);
@@ -147,19 +162,43 @@ describe("posts and tool pages link to each other", () => {
     }
   });
 
-  it("posts written for the platform come before general ones, and the main downloader comes before a mention", () => {
-    const youtube = relatedPosts("en", "youtube").map((p) => p.slug);
-    assert.equal(youtube[0], "youtube-shorts-vs-instagram-reels-for-creators", "written for YouTube, so before the general formats post");
-    assert.ok(youtube.includes("best-video-formats-mp4-vs-webm-vs-mov"));
-    const instagram = relatedPosts("en", "instagram");
-    assert.equal(instagram[0].slug, "top-10-instagram-reels-ideas-2026", "the Reels post is the Instagram page's first article");
-    assert.ok(instagram.slice(1).every((p) => p.tools.includes("instagram")), "then other posts about Instagram, not general ones");
+  it("every downloader page has at least two articles written for it, not only general fallbacks", () => {
+    for (const tool of ALL_TOOLS) {
+      const dedicated = getPosts("en").filter((p) => p.tools.includes(tool) && !p.general);
+      assert.ok(dedicated.length >= 2, `${tool} has only ${dedicated.length} dedicated posts: ${dedicated.map((p) => p.slug)}`);
+      const shown = relatedPosts("en", tool);
+      assert.ok(shown.slice(0, 2).every((p) => p.tools.includes(tool) && !p.general), `${tool}: the first two shown must be dedicated: ${shown.map((p) => p.slug)}`);
+    }
   });
 
-  it("a platform with no post of its own is offered the general ones", () => {
-    for (const tool of ["reddit", "snapchat", "threads", "pinterest", "x"] as const) {
-      const related = relatedPosts("en", tool);
-      assert.ok(related.length >= 2 && related.every((p) => p.general), `${tool}: ${related.map((p) => p.slug)}`);
+  it("posts mainly about the platform lead, then ones that mention it, then general ones", () => {
+    const rank = (slug: string, tool: string) => {
+      const post = getPost("en", slug)!;
+      return post.tools[0] === tool ? 0 : post.tools.includes(tool) ? 1 : 2;
+    };
+    for (const tool of ALL_TOOLS) {
+      const ranks = relatedPosts("en", tool).map((p) => rank(p.slug, tool));
+      assert.deepEqual(ranks, [...ranks].sort(), `${tool}: ${ranks}`);
+    }
+    assert.equal(relatedPosts("en", "instagram")[0].tools[0], "instagram");
+    assert.ok(relatedPosts("en", "instagram").map((p) => p.slug).includes("top-10-instagram-reels-ideas-2026"));
+  });
+
+  it("each platform's own posts are the ones the brief asked for", () => {
+    const expected: Record<string, string[]> = {
+      instagram: ["save-instagram-reels-offline", "top-10-instagram-reels-ideas-2026"],
+      youtube: ["save-youtube-shorts-offline", "youtube-shorts-vs-instagram-reels-for-creators"],
+      facebook: ["save-facebook-videos-offline", "facebook-video-privacy-what-you-can-save"],
+      threads: ["threads-vs-x-content-strategy", "save-threads-videos"],
+      x: ["repost-x-twitter-videos-legally", "threads-vs-x-content-strategy"],
+      pinterest: ["pinterest-video-pins-guide", "save-pinterest-videos"],
+      tiktok: ["tiktok-trends-and-saving-favorite-videos", "grow-social-media-following-2026"],
+      reddit: ["best-subreddits-for-video-content", "reddit-videos-no-sound-explained"],
+      snapchat: ["snapchat-spotlight-vs-stories", "save-snapchat-spotlight-videos"],
+    };
+    for (const [tool, slugs] of Object.entries(expected)) {
+      const shown = relatedPosts("en", tool as (typeof ALL_TOOLS)[number]).map((p) => p.slug);
+      for (const slug of slugs) assert.ok(shown.includes(slug), `${tool} should show ${slug}, shows ${shown}`);
     }
   });
 
