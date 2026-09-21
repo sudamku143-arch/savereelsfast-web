@@ -9,7 +9,7 @@ import {
   localePath,
   type Locale,
 } from "@/lib/i18n-config";
-import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { SITE_URL, SITE_NAME, MONETAG_VERIFICATION } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -70,6 +70,7 @@ export async function generateMetadata({
     title: dict.meta.title,
     description: dict.meta.description,
     keywords: dict.meta.keywords,
+    other: { monetag: MONETAG_VERIFICATION },
     alternates: {
       canonical: canonicalUrl,
       languages,
