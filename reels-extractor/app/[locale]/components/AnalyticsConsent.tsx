@@ -11,12 +11,14 @@ import {
   saveChoice,
   type Choice,
 } from "@/lib/analytics";
+import { monetagConfig, type MonetagConfig } from "@/lib/monetag";
 
 type Dict = { title: string; text: string; accept: string; decline: string; privacy: string };
 
 type GtagWindow = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void } & Record<string, unknown>;
 
 const SCRIPT_ID = "srf-ga4";
+const ADS_SCRIPT_ID = "srf-monetag";
 
 /**
  * Loads Google Analytics. Called only after the visitor accepted, so before that nothing is requested from Google and
@@ -54,6 +56,20 @@ function loadAnalytics(id: string): void {
   }
 }
 
+/**
+ * Loads the Monetag Vignette ad: the same thing Monetag's own snippet does (a script tag with the zone in data-zone,
+ * added at the end of the page), but only after the visitor accepted. It runs after hydration, from an effect, so it can
+ * never cause a hydration mismatch. The zone is a plain number and the address a plain https URL (see lib/monetag.ts).
+ */
+function loadAds(ads: MonetagConfig): void {
+  if (document.getElementById(ADS_SCRIPT_ID)) return;
+  const script = document.createElement("script");
+  script.id = ADS_SCRIPT_ID;
+  script.dataset.zone = ads.zone;
+  script.src = ads.src;
+  (document.body ?? document.documentElement).appendChild(script);
+}
+
 /** Withdrawing consent: stop measuring right away and remove the cookies Google set. */
 function stopAnalytics(id: string): void {
   const w = window as unknown as GtagWindow;
@@ -76,36 +92,46 @@ function storage(): Storage | null {
 
 export default function AnalyticsConsent({ locale, dict }: { locale: Locale; dict: Dict }) {
   const id = analyticsId();
+  const ads = monetagConfig();
+  const active = Boolean(id || ads); // the banner exists only when there is something to ask about
   const [choice, setChoice] = useState<Choice | null | undefined>(undefined); // undefined: not read yet
   const [open, setOpen] = useState(false);
 
   // Read the saved answer once, after the page has loaded (never during the server render).
   useEffect(() => {
-    if (!id) return;
+    if (!active) return;
     const saved = readChoice(storage());
     setChoice(saved);
     setOpen(saved === null);
-  }, [id]);
+  }, [active]);
 
   // The footer's "Cookie settings" button reopens the banner.
   useEffect(() => {
-    if (!id) return;
+    if (!active) return;
     const reopen = () => setOpen(true);
     window.addEventListener(CONSENT_EVENT, reopen);
     return () => window.removeEventListener(CONSENT_EVENT, reopen);
-  }, [id]);
+  }, [active]);
 
+  // Accepting switches on whatever is configured: analytics, the ad, or both. Nothing loads before that.
   useEffect(() => {
-    if (id && choice === "granted") loadAnalytics(id);
+    if (choice !== "granted") return;
+    if (id) loadAnalytics(id);
+    if (ads) loadAds(ads);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, choice]);
 
-  if (!id || !open) return null;
+  if (!active || !open) return null;
 
   function answer(next: Choice) {
     saveChoice(storage(), next);
     setChoice(next);
     setOpen(false);
-    if (next === "denied" && id) stopAnalytics(id);
+    if (next === "denied") {
+      if (id) stopAnalytics(id);
+      // An ad script that is already running cannot be taken back out of the page: reload it without the script.
+      if (document.getElementById(ADS_SCRIPT_ID)) window.location.reload();
+    }
   }
 
   const button =

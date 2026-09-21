@@ -536,14 +536,14 @@
           "body": [
             "We set one functional cookie, NEXT_LOCALE, to remember the language you choose. It contains no personal information and expires after one year.",
             "Your browser's local and session storage holds a few convenience settings: your most recent results (cleared when you close the tab), whether you dismissed the install banner or the sticky ad, and your analytics choice (accepted or declined). This data never leaves your device, and you can clear it in your browser settings at any time.",
-            "We set no analytics or tracking cookies unless you accept. If you accept, Google Analytics sets cookies named _ga and _ga_* that identify your browser and can last up to two years. You can change or withdraw your choice at any time with Cookie settings in the footer; withdrawing stops analytics and deletes these cookies."
+            "We set no analytics, advertising or tracking cookies unless you accept. If you accept, Google Analytics sets cookies named _ga and _ga_* that identify your browser and can last up to two years, and our advertising partner may set cookies of its own, described in its privacy policy. You can change or withdraw your choice at any time with Cookie settings in the footer; withdrawing stops analytics, reloads the page without the advertising script and deletes the Google Analytics cookies. Cookies from advertising partners can be cleared in your browser settings."
           ]
         },
         {
           "heading": "Advertising",
           "body": [
-            "SaveReelsFast is free to use because it may show advertisements. Ads are delivered by third-party advertising networks (for example Google AdSense or similar networks). These networks may set or read cookies and use identifiers such as your IP address to show ads, limit how often you see them and measure results.",
-            "The links you paste are never shared with advertisers. Ad networks receive only what your browser sends when it loads an ad. Where the law requires your consent for non-essential advertising cookies (for example in the EU, EEA and UK), it will be requested before such cookies are used.",
+            "SaveReelsFast is free to use because it may show advertisements. Ads are delivered by third-party advertising networks (for example A-ADS, Monetag or Google AdSense). These networks may set or read cookies and use identifiers such as your IP address to show ads, limit how often you see them and measure results.",
+            "The links you paste are never shared with advertisers. Ad networks receive only what your browser sends when it loads an ad. Advertising scripts that use cookies or identifiers, such as Monetag's, are loaded only if you accept in our cookie banner; if you decline, they are not loaded. You can change your choice at any time with Cookie settings in the footer.",
             "You can manage ad personalization at adssettings.google.com or in your browser and device settings, and opt out of interest-based advertising at optout.aboutads.info (US) or youronlinechoices.eu (EU)."
           ]
         },
@@ -802,8 +802,8 @@
     "toolsHeading": "Related downloaders"
   },
   "consent": {
-    "title": "Cookies and analytics",
-    "text": "We use Google Analytics to see which pages are useful and to improve the site. It sets cookies only if you accept, and the downloader works either way.",
+    "title": "Cookies, analytics and ads",
+    "text": "We use Google Analytics to see which pages are useful, and an advertising partner to show ads that keep the tool free. Both set cookies only if you accept, and the downloader works either way.",
     "accept": "Accept",
     "decline": "Decline",
     "privacy": "Privacy policy",

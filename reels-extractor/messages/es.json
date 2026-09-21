@@ -536,14 +536,14 @@
           "body": [
             "Usamos una cookie funcional, NEXT_LOCALE, para recordar el idioma que eliges. No contiene información personal y caduca al cabo de un año.",
             "El almacenamiento local y de sesión de tu navegador guarda algunos ajustes de comodidad: tus resultados más recientes (se borran al cerrar la pestaña), si cerraste el banner de instalación o el anuncio fijo, y tu elección sobre la analítica (aceptada o rechazada). Estos datos nunca salen de tu dispositivo y puedes borrarlos en cualquier momento desde los ajustes de tu navegador.",
-            "No instalamos cookies de analítica ni de seguimiento a menos que aceptes. Si aceptas, Google Analytics instala cookies llamadas _ga y _ga_* que identifican tu navegador y pueden durar hasta dos años. Puedes cambiar o retirar tu elección en cualquier momento con «Configuración de cookies» en el pie de página; al retirarla se detiene la analítica y se borran estas cookies."
+            "No instalamos cookies de analítica, publicidad ni seguimiento a menos que aceptes. Si aceptas, Google Analytics instala cookies llamadas _ga y _ga_* que identifican tu navegador y pueden durar hasta dos años, y nuestro socio publicitario puede instalar cookies propias, descritas en su política de privacidad. Puedes cambiar o retirar tu elección en cualquier momento con «Configuración de cookies» en el pie de página; al retirarla se detiene la analítica, se recarga la página sin el script publicitario y se borran las cookies de Google Analytics. Las cookies de los socios publicitarios puedes borrarlas en los ajustes de tu navegador."
           ]
         },
         {
           "heading": "Publicidad",
           "body": [
-            "SaveReelsFast es gratuito porque puede mostrar anuncios. Los anuncios los sirven redes publicitarias de terceros (por ejemplo, Google AdSense u otras similares). Estas redes pueden instalar o leer cookies y usar identificadores como tu dirección IP para mostrar anuncios, limitar la frecuencia con que los ves y medir resultados.",
-            "Los enlaces que pegas nunca se comparten con anunciantes. Las redes publicitarias solo reciben lo que envía tu navegador al cargar un anuncio. Cuando la ley exija tu consentimiento para las cookies publicitarias no esenciales (por ejemplo, en la UE, el EEE y el Reino Unido), se solicitará antes de usarlas.",
+            "SaveReelsFast es gratuito porque puede mostrar anuncios. Los anuncios los sirven redes publicitarias de terceros (por ejemplo, A-ADS, Monetag o Google AdSense). Estas redes pueden instalar o leer cookies y usar identificadores como tu dirección IP para mostrar anuncios, limitar la frecuencia con que los ves y medir resultados.",
+            "Los enlaces que pegas nunca se comparten con anunciantes. Las redes publicitarias solo reciben lo que envía tu navegador al cargar un anuncio. Los scripts publicitarios que usan cookies o identificadores, como el de Monetag, solo se cargan si aceptas en nuestro banner de cookies; si los rechazas, no se cargan. Puedes cambiar tu elección en cualquier momento con «Configuración de cookies» en el pie de página.",
             "Puedes gestionar la personalización de anuncios en adssettings.google.com o en los ajustes de tu navegador y dispositivo, y darte de baja de la publicidad basada en intereses en optout.aboutads.info (EE. UU.) o youronlinechoices.eu (UE)."
           ]
         },
@@ -802,8 +802,8 @@
     "toolsHeading": "Descargadores relacionados"
   },
   "consent": {
-    "title": "Cookies y analítica",
-    "text": "Usamos Google Analytics para ver qué páginas son útiles y mejorar el sitio. Solo instala cookies si aceptas, y el descargador funciona igual en ambos casos.",
+    "title": "Cookies, analítica y anuncios",
+    "text": "Usamos Google Analytics para ver qué páginas son útiles y un socio publicitario para mostrar anuncios que mantienen la herramienta gratuita. Ambos instalan cookies solo si aceptas, y el descargador funciona igual en ambos casos.",
     "accept": "Aceptar",
     "decline": "Rechazar",
     "privacy": "Política de privacidad",

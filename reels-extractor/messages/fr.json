@@ -536,14 +536,14 @@
           "body": [
             "Nous déposons un seul cookie fonctionnel, NEXT_LOCALE, pour mémoriser la langue que vous choisissez. Il ne contient aucune information personnelle et expire au bout d'un an.",
             "Le stockage local et le stockage de session de votre navigateur contiennent quelques réglages de confort : vos résultats les plus récents (effacés à la fermeture de l'onglet), le fait que vous avez fermé la bannière d'installation ou la publicité fixe, et votre choix concernant les statistiques (accepté ou refusé). Ces données ne quittent jamais votre appareil et vous pouvez les effacer à tout moment dans les paramètres de votre navigateur.",
-            "Nous ne déposons aucun cookie d'analyse ou de suivi sans votre accord. Si vous acceptez, Google Analytics dépose des cookies nommés _ga et _ga_* qui identifient votre navigateur et peuvent durer jusqu'à deux ans. Vous pouvez modifier ou retirer votre choix à tout moment via « Paramètres des cookies » en bas de page ; le retirer arrête les statistiques et supprime ces cookies."
+            "Nous ne déposons aucun cookie d'analyse, de publicité ou de suivi sans votre accord. Si vous acceptez, Google Analytics dépose des cookies nommés _ga et _ga_* qui identifient votre navigateur et peuvent durer jusqu'à deux ans, et notre partenaire publicitaire peut déposer ses propres cookies, décrits dans sa politique de confidentialité. Vous pouvez modifier ou retirer votre choix à tout moment via « Paramètres des cookies » en bas de page ; le retirer arrête les statistiques, recharge la page sans le script publicitaire et supprime les cookies de Google Analytics. Les cookies des partenaires publicitaires peuvent être effacés dans les paramètres de votre navigateur."
           ]
         },
         {
           "heading": "Publicité",
           "body": [
-            "SaveReelsFast est gratuit car il peut afficher des publicités. Elles sont diffusées par des régies publicitaires tierces (par exemple Google AdSense ou des réseaux similaires). Ces réseaux peuvent déposer ou lire des cookies et utiliser des identifiants tels que votre adresse IP pour afficher des annonces, limiter leur fréquence et mesurer les résultats.",
-            "Les liens que vous collez ne sont jamais partagés avec les annonceurs. Les régies ne reçoivent que ce que votre navigateur envoie lorsqu'il charge une annonce. Lorsque la loi exige votre consentement pour les cookies publicitaires non essentiels (par exemple dans l'UE, l'EEE et au Royaume-Uni), il sera demandé avant l'utilisation de tels cookies.",
+            "SaveReelsFast est gratuit car il peut afficher des publicités. Elles sont diffusées par des régies publicitaires tierces (par exemple A-ADS, Monetag ou Google AdSense). Ces réseaux peuvent déposer ou lire des cookies et utiliser des identifiants tels que votre adresse IP pour afficher des annonces, limiter leur fréquence et mesurer les résultats.",
+            "Les liens que vous collez ne sont jamais partagés avec les annonceurs. Les régies ne reçoivent que ce que votre navigateur envoie lorsqu'il charge une annonce. Les scripts publicitaires qui utilisent des cookies ou des identifiants, comme celui de Monetag, ne sont chargés que si vous acceptez dans notre bannière de cookies ; si vous refusez, ils ne sont pas chargés. Vous pouvez modifier votre choix à tout moment via « Paramètres des cookies » en bas de page.",
             "Vous pouvez gérer la personnalisation des annonces sur adssettings.google.com ou dans les paramètres de votre navigateur et de votre appareil, et vous opposer à la publicité ciblée sur optout.aboutads.info (États-Unis) ou youronlinechoices.eu (UE)."
           ]
         },
@@ -802,8 +802,8 @@
     "toolsHeading": "Téléchargeurs associés"
   },
   "consent": {
-    "title": "Cookies et statistiques",
-    "text": "Nous utilisons Google Analytics pour voir quelles pages sont utiles et améliorer le site. Il ne dépose de cookies que si vous acceptez, et le téléchargeur fonctionne dans les deux cas.",
+    "title": "Cookies, statistiques et publicités",
+    "text": "Nous utilisons Google Analytics pour voir quelles pages sont utiles, et un partenaire publicitaire pour afficher des annonces qui gardent l'outil gratuit. Ils ne déposent de cookies que si vous acceptez, et le téléchargeur fonctionne dans les deux cas.",
     "accept": "Accepter",
     "decline": "Refuser",
     "privacy": "Politique de confidentialité",

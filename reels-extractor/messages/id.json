@@ -536,14 +536,14 @@
           "body": [
             "Kami menetapkan satu cookie fungsional, NEXT_LOCALE, untuk mengingat bahasa yang Anda pilih. Cookie ini tidak berisi informasi pribadi dan kedaluwarsa setelah satu tahun.",
             "Penyimpanan lokal dan penyimpanan sesi di peramban Anda menyimpan beberapa pengaturan kemudahan: hasil terbaru Anda (dihapus saat Anda menutup tab), apakah Anda menutup spanduk instalasi atau iklan yang menempel, dan pilihan analitik Anda (diterima atau ditolak). Data ini tidak pernah meninggalkan perangkat Anda, dan Anda dapat menghapusnya kapan saja di pengaturan peramban.",
-            "Kami tidak memasang cookie analitik atau pelacakan kecuali Anda menerimanya. Jika Anda menerima, Google Analytics memasang cookie bernama _ga dan _ga_* yang mengenali peramban Anda dan dapat bertahan hingga dua tahun. Anda dapat mengubah atau menarik pilihan kapan saja lewat “Pengaturan cookie” di bagian bawah halaman; menariknya menghentikan analitik dan menghapus cookie tersebut."
+            "Kami tidak memasang cookie analitik, iklan, atau pelacakan kecuali Anda menerimanya. Jika Anda menerima, Google Analytics memasang cookie bernama _ga dan _ga_* yang mengenali peramban Anda dan dapat bertahan hingga dua tahun, dan mitra periklanan kami dapat memasang cookie sendiri, yang dijelaskan dalam kebijakan privasinya. Anda dapat mengubah atau menarik pilihan kapan saja lewat “Pengaturan cookie” di bagian bawah halaman; menariknya menghentikan analitik, memuat ulang halaman tanpa skrip iklan, dan menghapus cookie Google Analytics. Cookie mitra periklanan dapat Anda hapus di pengaturan peramban."
           ]
         },
         {
           "heading": "Periklanan",
           "body": [
-            "SaveReelsFast gratis digunakan karena dapat menampilkan iklan. Iklan disajikan oleh jaringan iklan pihak ketiga (misalnya Google AdSense atau jaringan serupa). Jaringan ini dapat menetapkan atau membaca cookie dan menggunakan pengenal seperti alamat IP Anda untuk menampilkan iklan, membatasi seberapa sering Anda melihatnya, dan mengukur hasilnya.",
-            "Tautan yang Anda tempelkan tidak pernah dibagikan kepada pengiklan. Jaringan iklan hanya menerima apa yang dikirim peramban Anda saat memuat iklan. Jika hukum mewajibkan persetujuan Anda untuk cookie iklan non-esensial (misalnya di UE, EEA, dan Inggris), persetujuan itu akan diminta sebelum cookie tersebut digunakan.",
+            "SaveReelsFast gratis digunakan karena dapat menampilkan iklan. Iklan disajikan oleh jaringan iklan pihak ketiga (misalnya A-ADS, Monetag, atau Google AdSense). Jaringan ini dapat menetapkan atau membaca cookie dan menggunakan pengenal seperti alamat IP Anda untuk menampilkan iklan, membatasi seberapa sering Anda melihatnya, dan mengukur hasilnya.",
+            "Tautan yang Anda tempelkan tidak pernah dibagikan kepada pengiklan. Jaringan iklan hanya menerima apa yang dikirim peramban Anda saat memuat iklan. Skrip iklan yang memakai cookie atau pengenal, seperti milik Monetag, hanya dimuat jika Anda menerima di banner cookie kami; jika Anda menolak, skrip itu tidak dimuat. Anda dapat mengubah pilihan kapan saja lewat “Pengaturan cookie” di bagian bawah halaman.",
             "Anda dapat mengelola personalisasi iklan di adssettings.google.com atau di pengaturan peramban dan perangkat Anda, dan menolak iklan berbasis minat di optout.aboutads.info (AS) atau youronlinechoices.eu (UE)."
           ]
         },
@@ -802,8 +802,8 @@
     "toolsHeading": "Pengunduh terkait"
   },
   "consent": {
-    "title": "Cookie dan analitik",
-    "text": "Kami memakai Google Analytics untuk melihat halaman mana yang berguna dan meningkatkan situs. Cookie hanya dipasang jika Anda menerima, dan pengunduh tetap berfungsi dalam kedua kasus.",
+    "title": "Cookie, analitik, dan iklan",
+    "text": "Kami memakai Google Analytics untuk melihat halaman mana yang berguna, dan mitra periklanan untuk menampilkan iklan yang menjaga alat ini tetap gratis. Keduanya hanya memasang cookie jika Anda menerima, dan pengunduh tetap berfungsi dalam kedua kasus.",
     "accept": "Terima",
     "decline": "Tolak",
     "privacy": "Kebijakan Privasi",

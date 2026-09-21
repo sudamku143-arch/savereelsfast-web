@@ -103,9 +103,9 @@ describe("nothing reaches Google before the visitor accepts", () => {
   });
 
   it("loads only when the saved answer is 'granted', and declining stops it and removes the cookies", () => {
-    assert.match(component, /if \(id && choice === "granted"\) loadAnalytics\(id\);/);
+    assert.match(component, /if \(choice !== "granted"\) return;\s+if \(id\) loadAnalytics\(id\);/);
     assert.equal(component.split("loadAnalytics(id)").length - 1, 1, "loadAnalytics is called from one place");
-    assert.match(component, /if \(next === "denied" && id\) stopAnalytics\(id\);/);
+    assert.match(component, /if \(next === "denied"\) \{\s+if \(id\) stopAnalytics\(id\);/);
     assert.match(component, /analyticsCookieNames\(document\.cookie\)/);
   });
 
@@ -117,8 +117,9 @@ describe("nothing reaches Google before the visitor accepts", () => {
   });
 
   it("asks nothing and shows nothing when no measurement ID is configured", () => {
-    assert.match(component, /if \(!id \|\| !open\) return null;/);
-    assert.match(source("app/[locale]/layout.tsx"), /cookieLabel=\{analyticsId\(\) \? dict\.consent\.settings : undefined\}/);
+    assert.match(component, /if \(!active \|\| !open\) return null;/);
+    assert.match(component, /const active = Boolean\(id \|\| ads\);/);
+    assert.match(source("app/[locale]/layout.tsx"), /cookieLabel=\{analyticsId\(\) \|\| monetagConfig\(\) \? dict\.consent\.settings : undefined\}/);
   });
 
   it("declining is as easy as accepting: both buttons share one style class and size", () => {

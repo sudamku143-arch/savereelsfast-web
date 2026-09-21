@@ -536,14 +536,14 @@
           "body": [
             "Usamos um cookie funcional, NEXT_LOCALE, para lembrar o idioma que você escolhe. Ele não contém informações pessoais e expira após um ano.",
             "O armazenamento local e de sessão do seu navegador guarda algumas configurações de conveniência: seus resultados mais recentes (apagados ao fechar a aba), se você dispensou o banner de instalação ou o anúncio fixo e a sua escolha sobre as análises (aceita ou recusada). Esses dados nunca saem do seu dispositivo e você pode apagá-los a qualquer momento nas configurações do navegador.",
-            "Não definimos cookies de análise ou de rastreamento, a menos que você aceite. Se aceitar, o Google Analytics define cookies chamados _ga e _ga_* que identificam o seu navegador e podem durar até dois anos. Você pode alterar ou retirar sua escolha a qualquer momento em “Configurações de cookies” no rodapé; ao retirá-la, as análises são interrompidas e esses cookies são apagados."
+            "Não definimos cookies de análise, publicidade ou rastreamento, a menos que você aceite. Se aceitar, o Google Analytics define cookies chamados _ga e _ga_* que identificam o seu navegador e podem durar até dois anos, e nosso parceiro de publicidade pode definir cookies próprios, descritos na política de privacidade dele. Você pode alterar ou retirar sua escolha a qualquer momento em “Configurações de cookies” no rodapé; ao retirá-la, as análises são interrompidas, a página é recarregada sem o script de publicidade e os cookies do Google Analytics são apagados. Os cookies de parceiros de publicidade podem ser apagados nas configurações do navegador."
           ]
         },
         {
           "heading": "Publicidade",
           "body": [
-            "O SaveReelsFast é gratuito porque pode exibir anúncios. Os anúncios são entregues por redes de publicidade de terceiros (por exemplo, o Google AdSense ou redes semelhantes). Essas redes podem definir ou ler cookies e usar identificadores, como seu endereço IP, para exibir anúncios, limitar a frequência com que você os vê e medir resultados.",
-            "Os links que você cola nunca são compartilhados com anunciantes. As redes de publicidade recebem apenas o que o seu navegador envia ao carregar um anúncio. Quando a lei exigir seu consentimento para cookies publicitários não essenciais (por exemplo, na UE, no EEE e no Reino Unido), ele será solicitado antes de esses cookies serem usados.",
+            "O SaveReelsFast é gratuito porque pode exibir anúncios. Os anúncios são entregues por redes de publicidade de terceiros (por exemplo, A-ADS, Monetag ou Google AdSense). Essas redes podem definir ou ler cookies e usar identificadores, como seu endereço IP, para exibir anúncios, limitar a frequência com que você os vê e medir resultados.",
+            "Os links que você cola nunca são compartilhados com anunciantes. As redes de publicidade recebem apenas o que o seu navegador envia ao carregar um anúncio. Scripts de publicidade que usam cookies ou identificadores, como o da Monetag, só são carregados se você aceitar em nosso banner de cookies; se recusar, eles não são carregados. Você pode alterar sua escolha a qualquer momento em “Configurações de cookies” no rodapé.",
             "Você pode gerenciar a personalização de anúncios em adssettings.google.com ou nas configurações do navegador e do dispositivo, e recusar a publicidade baseada em interesses em optout.aboutads.info (EUA) ou youronlinechoices.eu (UE)."
           ]
         },
@@ -802,8 +802,8 @@
     "toolsHeading": "Downloaders relacionados"
   },
   "consent": {
-    "title": "Cookies e análises",
-    "text": "Usamos o Google Analytics para ver quais páginas são úteis e melhorar o site. Ele só define cookies se você aceitar, e o downloader funciona de qualquer forma.",
+    "title": "Cookies, análises e anúncios",
+    "text": "Usamos o Google Analytics para ver quais páginas são úteis e um parceiro de publicidade para exibir anúncios que mantêm a ferramenta gratuita. Ambos só definem cookies se você aceitar, e o downloader funciona de qualquer forma.",
     "accept": "Aceitar",
     "decline": "Recusar",
     "privacy": "Política de Privacidade",

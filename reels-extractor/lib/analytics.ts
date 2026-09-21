@@ -7,8 +7,11 @@
 
 export type Choice = "granted" | "denied";
 
-/** Key in the browser's local storage that remembers the visitor's answer. */
-export const CONSENT_KEY = "srf_analytics_consent";
+/**
+ * Key in the browser's local storage that remembers the visitor's answer. The answer now covers analytics AND
+ * advertising, so the key changed (v2): nobody who only agreed to analytics is treated as having agreed to ads.
+ */
+export const CONSENT_KEY = "srf_consent_v2";
 
 /** The footer's "Cookie settings" button announces itself on window with this event to reopen the banner. */
 export const CONSENT_EVENT = "srf:open-consent";
