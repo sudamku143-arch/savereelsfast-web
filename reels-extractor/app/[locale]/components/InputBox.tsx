@@ -6,6 +6,8 @@ import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 type Dict = {
   pasteButton: string;
   downloadCta: string;
+  /** Short "Processing…" shown on the button, with a spinner, while a link is being looked up. */
+  working: string;
   errorInvalid: string;
 };
 
@@ -127,9 +129,16 @@ export default function InputBox({
           <button
             type="submit"
             disabled={disabled}
-            className="flex-1 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none sm:flex-none"
+            aria-busy={disabled ? true : undefined}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-80 disabled:shadow-none sm:flex-none"
           >
-            {dict.downloadCta}
+            {disabled && (
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4 shrink-0 motion-safe:animate-spin">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
+                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            )}
+            {disabled ? dict.working : dict.downloadCta}
           </button>
         </div>
       </div>

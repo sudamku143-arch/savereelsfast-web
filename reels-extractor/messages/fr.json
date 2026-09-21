@@ -26,7 +26,15 @@
     "downloadCta": "Obtenir la vidéo",
     "loading": "Récupération de votre vidéo…",
     "errorGeneric": "Impossible de récupérer cette vidéo. Vérifiez le lien et réessayez.",
-    "errorInvalid": "Ce lien ne semble pas être un lien vidéo pris en charge."
+    "errorInvalid": "Ce lien ne semble pas être un lien vidéo pris en charge.",
+    "processing": "Traitement de votre lien…",
+    "working": "Traitement…",
+    "steps": [
+      "Vérification du lien…",
+      "Recherche de la vidéo…",
+      "Préparation de votre téléchargement…"
+    ],
+    "slow": "Toujours en cours. Certaines vidéos demandent un peu plus de temps."
   },
   "platforms": {
     "label": "Choisissez une plateforme",

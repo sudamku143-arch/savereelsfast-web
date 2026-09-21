@@ -26,7 +26,15 @@
     "downloadCta": "Get Video",
     "loading": "Fetching your video…",
     "errorGeneric": "Couldn't fetch that video. Check the link and try again.",
-    "errorInvalid": "That doesn't look like a supported video link."
+    "errorInvalid": "That doesn't look like a supported video link.",
+    "processing": "Processing your link…",
+    "working": "Processing…",
+    "steps": [
+      "Checking the link…",
+      "Finding the video…",
+      "Preparing your download…"
+    ],
+    "slow": "Still working. Some videos take a little longer."
   },
   "platforms": {
     "label": "Choose a platform",

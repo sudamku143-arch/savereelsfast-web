@@ -26,7 +26,15 @@
     "downloadCta": "Ambil Video",
     "loading": "Mengambil video Anda…",
     "errorGeneric": "Video tidak dapat diambil. Periksa tautan lalu coba lagi.",
-    "errorInvalid": "Tautan itu tidak terlihat seperti tautan video yang didukung."
+    "errorInvalid": "Tautan itu tidak terlihat seperti tautan video yang didukung.",
+    "processing": "Memproses tautan Anda…",
+    "working": "Memproses…",
+    "steps": [
+      "Memeriksa tautan…",
+      "Mencari video…",
+      "Menyiapkan unduhan Anda…"
+    ],
+    "slow": "Masih berjalan. Beberapa video butuh waktu sedikit lebih lama."
   },
   "platforms": {
     "label": "Pilih platform",

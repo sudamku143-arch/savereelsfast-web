@@ -26,7 +26,15 @@
     "downloadCta": "Obtener Video",
     "loading": "Buscando tu video…",
     "errorGeneric": "No pudimos obtener ese video. Revisa el enlace e inténtalo de nuevo.",
-    "errorInvalid": "Ese no parece un enlace de video compatible."
+    "errorInvalid": "Ese no parece un enlace de video compatible.",
+    "processing": "Procesando tu enlace…",
+    "working": "Procesando…",
+    "steps": [
+      "Comprobando el enlace…",
+      "Buscando el video…",
+      "Preparando tu descarga…"
+    ],
+    "slow": "Sigue en marcha. Algunos videos tardan un poco más."
   },
   "platforms": {
     "label": "Elige una plataforma",

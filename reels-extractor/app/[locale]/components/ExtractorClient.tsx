@@ -28,6 +28,10 @@ type HeroDict = {
   pasteButton: string;
   downloadCta: string;
   loading: string;
+  processing: string;
+  working: string;
+  steps: string[];
+  slow: string;
   errorGeneric: string;
   errorInvalid: string;
 };
@@ -252,7 +256,7 @@ export default function ExtractorClient({
       <AdBanner variant="leaderboard" dict={adDict} className="mt-6" />
 
       <div className="flex w-full flex-col items-center" aria-live="polite">
-        {status === "loading" && <SkeletonLoader label={heroDict.loading} />}
+        {status === "loading" && <SkeletonLoader dict={heroDict} />}
 
         {status === "error" && errorCode && (
           <ErrorCard
