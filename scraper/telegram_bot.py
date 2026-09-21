@@ -15,6 +15,7 @@ Set TELEGRAM_BOT_TOKEN on the host (never in code). Without it nothing here star
 """
 
 import asyncio
+import json
 import logging
 import os
 import re
@@ -36,6 +37,10 @@ WELCOME = (
     "to download."
 )
 FOOTER = "⚡ Downloaded via https://savereelsfast.com"
+WEBSITE_URL = "https://savereelsfast.com"
+# The button under every video the bot sends, and the one under the welcome message.
+VIDEO_BUTTON_LABEL = "🌐 Download in HD / 4K Quality"
+WELCOME_BUTTON_LABEL = "🌐 Visit SaveReelsFast"
 
 API_BASE = "https://api.telegram.org"
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024  # Telegram's limit for a file a bot uploads
@@ -141,6 +146,11 @@ def find_link(text: str) -> tuple[str | None, bool]:
             return word, False
         saw_other = True
     return None, saw_other
+
+
+def website_button(label: str) -> str:
+    """The `reply_markup` for one inline button that opens the website (Telegram wants it as a JSON string)."""
+    return json.dumps({"inline_keyboard": [[{"text": label, "url": WEBSITE_URL}]]}, ensure_ascii=False)
 
 
 def command_of(text: str) -> str | None:
@@ -265,7 +275,9 @@ class TelegramBot:
             raise UnauthorizedError(code, description)
         raise TelegramError(code, description)
 
-    async def send_text(self, chat_id: int, text: str, reply_to: int | None = None) -> None:
+    async def send_text(
+        self, chat_id: int, text: str, reply_to: int | None = None, reply_markup: str | None = None
+    ) -> None:
         try:
             await self._call(
                 "sendMessage",
@@ -275,6 +287,7 @@ class TelegramBot:
                     "reply_to_message_id": reply_to,
                     "allow_sending_without_reply": "true",
                     "disable_web_page_preview": "true",  # a raw CDN address is not worth a preview
+                    "reply_markup": reply_markup,
                 },
             )
         except (TelegramError, httpx.HTTPError) as exc:
@@ -299,7 +312,7 @@ class TelegramBot:
 
         command = command_of(text)
         if command in ("/start", "/help"):
-            await self.send_text(chat_id, WELCOME)
+            await self.send_text(chat_id, WELCOME, reply_markup=website_button(WELCOME_BUTTON_LABEL))
             return
         if command:
             await self.send_text(chat_id, HINT)
@@ -364,6 +377,7 @@ class TelegramBot:
                             {
                                 "chat_id": chat_id,
                                 "caption": caption,
+                                "reply_markup": website_button(VIDEO_BUTTON_LABEL),  # the button sits right under the video
                                 "reply_to_message_id": reply_to,
                                 "allow_sending_without_reply": "true",
                                 "supports_streaming": "true" if method == "sendVideo" else None,

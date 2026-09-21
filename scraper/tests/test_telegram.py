@@ -106,6 +106,15 @@ def temp_video(content: bytes = b"\x00\x00\x00\x18ftypmp42" + b"v" * 5000) -> st
     return path
 
 
+VIDEO_BUTTON = "🌐 Download in HD / 4K Quality"
+
+
+def buttons_of(call: dict) -> list[list[dict]] | None:
+    """The inline keyboard sent with a Bot API call, or None when the message carried none."""
+    raw = call["fields"].get("reply_markup")
+    return json.loads(raw)["inline_keyboard"] if raw else None
+
+
 # ---------------------------------------------------------------------------------------- pure helpers
 
 
@@ -417,6 +426,79 @@ class MessageTests(unittest.IsolatedAsyncioTestCase):
 
 
 # --------------------------------------------------------------------------------------------- polling
+
+
+class WebsiteButtonTests(unittest.IsolatedAsyncioTestCase):
+    """Every video the bot sends, and the welcome message, carry one button that opens the website."""
+
+    async def test_the_video_carries_the_hd_button_right_under_it(self):
+        fake = FakeTelegram()
+        path = temp_video()
+
+        async def fetch(url):
+            return Media(title="Me at the zoo", path=path, size=5000)
+
+        await make_bot(fake, fetch).handle_update(message("https://youtu.be/jNQXAC9IVRw"))
+        sent = fake.of("sendVideo")[0]
+        self.assertEqual(buttons_of(sent), [[{"text": VIDEO_BUTTON, "url": "https://savereelsfast.com"}]])
+        self.assertTrue(sent["fields"]["caption"].endswith(FOOTER_EXACT), "the caption is unchanged")
+
+    async def test_the_button_text_and_address_are_exactly_as_requested(self):
+        self.assertEqual(tb.VIDEO_BUTTON_LABEL, VIDEO_BUTTON)
+        self.assertEqual(tb.WEBSITE_URL, "https://savereelsfast.com")
+
+    async def test_the_document_fallback_keeps_the_button(self):
+        fake = FakeTelegram()
+        fake.plan["sendVideo"] = [error(400, "wrong file type")]
+        path = temp_video()
+
+        async def fetch(url):
+            return Media(title="x", path=path, size=10)
+
+        await make_bot(fake, fetch).handle_update(message("https://youtu.be/jNQXAC9IVRw"))
+        self.assertEqual(buttons_of(fake.of("sendDocument")[0]), [[{"text": VIDEO_BUTTON, "url": "https://savereelsfast.com"}]])
+
+    async def test_start_and_help_show_a_button_that_opens_the_website(self):
+        fake = FakeTelegram()
+        bot = make_bot(fake, no_fetch)
+        await bot.handle_update(message("/start"))
+        await bot.handle_update(message("/help"))
+        for call in fake.of("sendMessage"):
+            self.assertEqual(call["fields"]["text"], WELCOME_EXACT, "the welcome text is unchanged")
+            rows = buttons_of(call)
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(len(rows[0]), 1)
+            self.assertEqual(rows[0][0]["url"], "https://savereelsfast.com")
+            self.assertEqual(rows[0][0]["text"], tb.WELCOME_BUTTON_LABEL)
+
+    async def test_other_replies_have_no_button(self):
+        fake = FakeTelegram()
+        bot = make_bot(fake, no_fetch)
+        await bot.handle_update(message("hello there"))
+        await bot.handle_update(message("https://example.com/not-supported"))
+        await bot.handle_update(message("/unknowncommand"))
+        self.assertEqual(len(fake.of("sendMessage")), 3)
+        for call in fake.of("sendMessage"):
+            self.assertIsNone(buttons_of(call))
+
+    async def test_the_button_is_valid_for_telegram(self):
+        for label in (tb.VIDEO_BUTTON_LABEL, tb.WELCOME_BUTTON_LABEL):
+            markup = json.loads(tb.website_button(label))
+            button = markup["inline_keyboard"][0][0]
+            self.assertTrue(button["url"].startswith("https://"), "Telegram only opens http(s) links from a button")
+            self.assertLessEqual(len(button["text"]), 64, "Telegram limits a button's text")
+            self.assertEqual(set(button), {"text", "url"})
+            self.assertIn("🌐", tb.website_button(label), "the emoji is sent as itself, not as an escape")
+
+    async def test_a_failing_link_reply_stays_button_free(self):
+        fake = FakeTelegram()
+
+        async def fetch(url):
+            raise BotUserError("That video is private.")
+
+        await make_bot(fake, fetch).handle_update(message("https://youtu.be/jNQXAC9IVRw"))
+        self.assertIn("private", fake.texts()[-1])
+        self.assertIsNone(buttons_of(fake.of("sendMessage")[-1]))
 
 
 class PollingTests(unittest.IsolatedAsyncioTestCase):
