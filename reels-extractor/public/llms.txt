@@ -1,0 +1,32 @@
+# SaveReelsFast
+
+> Free tool to download videos from Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat and LinkedIn. Paste a public post link and save an HD MP4, no login, no app, no watermark added.
+
+SaveReelsFast is a browser-based video downloader: paste the link of a public post and the tool fetches the same video file the platform itself serves for playback, as an MP4 (and a separate audio file, when the platform provides one). It works the same on a phone, tablet or computer, needs no account or installed app, and does not re-record or transcode video from your screen. Only publicly viewable posts can be downloaded; private, friends-only or login-gated content is out of scope by design. The site is available in 11 languages (English, Spanish, Portuguese, Hindi, Bengali, Telugu, Tamil, Marathi, Indonesian, French, Arabic) and is not affiliated with, endorsed by or sponsored by any of the platforms it supports.
+
+## Tools
+
+- [Home](https://www.savereelsfast.com/): The main downloader — paste a link from any supported platform, the correct tab is selected automatically.
+- [Instagram Reels Downloader](https://www.savereelsfast.com/instagram-video-downloader): Save public Instagram Reels, video posts and IGTV videos as MP4.
+- [YouTube Video Downloader](https://www.savereelsfast.com/youtube-video-downloader): Save YouTube Shorts and regular videos as MP4.
+- [Facebook Video Downloader](https://www.savereelsfast.com/facebook-video-downloader): Save Facebook videos and Reels from public posts.
+- [Threads Video Downloader](https://www.savereelsfast.com/threads-video-downloader): Save videos from public Threads posts.
+- [X (Twitter) Video Downloader](https://www.savereelsfast.com/twitter-x-video-downloader): Save videos from public posts on X and Twitter.
+- [Pinterest Video Downloader](https://www.savereelsfast.com/pinterest-video-downloader): Save video Pins as MP4.
+- [TikTok Video Downloader](https://www.savereelsfast.com/tiktok-video-downloader): Save public TikTok videos as MP4.
+- [Reddit Video Downloader](https://www.savereelsfast.com/reddit-video-downloader): Save videos from Reddit posts and v.redd.it links.
+- [Snapchat Spotlight Downloader](https://www.savereelsfast.com/snapchat-video-downloader): Save public Snapchat Spotlight videos.
+- [LinkedIn Video Downloader](https://www.savereelsfast.com/linkedin-video-downloader): Save videos from public LinkedIn posts.
+
+## Guides
+
+- [Blog](https://www.savereelsfast.com/blog): Guides and tips on saving, formatting and legally reusing social video.
+
+## Optional
+
+- [Telegram bot](https://t.me/savereelsfast_bot): Send a link in a Telegram chat and get the video back, no need to open the website.
+- [Privacy Policy](https://www.savereelsfast.com/privacy-policy): What is processed, how long a lookup is cached (up to 3 hours), and that no video file is stored.
+- [Terms of Service](https://www.savereelsfast.com/terms-of-service): Rules for using the site, including that users are responsible for the rights to what they download.
+- [DMCA & Copyright Policy](https://www.savereelsfast.com/dmca): How to report copyright infringement; SaveReelsFast hosts no video content itself.
+- [Disclaimer](https://www.savereelsfast.com/disclaimer): Independence from the platforms it works with, and the limits of what the tool guarantees.
+- [Contact](https://www.savereelsfast.com/contact): How to reach the team with questions, bug reports or requests.

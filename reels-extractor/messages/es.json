@@ -157,6 +157,10 @@
         "free": {
           "q": "¿Es gratis descargar {noun} en línea?",
           "a": "Sí. Descargar {noun} aquí no cuesta nada y no necesita cuenta ni app. El sitio se financia con anuncios. Solo funcionan los videos públicos."
+        },
+        "cameraRoll": {
+          "q": "¿Cómo guardar Reels de Instagram en el carrete en iPhone sin ninguna app?",
+          "a": "En iPhone: 1) Pega aquí el enlace del Reel y toca Descargar video; se descarga dentro de Safari, sin necesidad de ninguna app. 2) Abre el icono de Descargas en la barra de Safari, toca el video y usa el icono de compartir para elegir Guardar video y añadirlo a tus Fotos."
         }
       }
     },
@@ -181,6 +185,29 @@
             "q": "¿Por qué el video de Instagram que descargué no tiene sonido?",
             "a": "Algunos clips se publican sin sonido, y a veces Instagram entrega el video y el audio como archivos separados. Cuando solo hay un archivo de video sin audio te lo avisamos, y si se ofrece una pista de audio aparte puedes guardarla con el botón de audio."
           }
+        ],
+        "articles": [
+          {
+            "heading": "¿Qué es un descargador de Reels de Instagram?",
+            "paragraphs": [
+              "Un descargador de Reels de Instagram es una herramienta que guarda un Reel público como un archivo de video que puedes conservar en tu dispositivo y ver sin conexión a internet. Pega el enlace del Reel y la herramienta obtiene el mismo archivo de video que reproduce Instagram; nada se graba desde tu pantalla.",
+              "La gente lo usa para guardar una rutina de ejercicio, una receta o un tutorial para verlo más tarde, para conservar una copia de sus propios Reels antes de borrar una publicación, o para ver un clip sin conexión en un vuelo o con datos limitados. Este descargador de Reels de Instagram no necesita cuenta, extensión de navegador ni app: funciona igual en un teléfono, una tablet o una computadora, y cada descarga viene del Reel real, en la calidad que Instagram ofrece para él."
+            ]
+          },
+          {
+            "heading": "Cómo Guardar Reels de Instagram en tu Carrete",
+            "paragraphs": [
+              "En iPhone, pega el enlace del Reel arriba y toca Descargar video; se descarga dentro de Safari, sin necesidad de ninguna app. Abre el icono de Descargas en la barra de Safari, toca el video y usa el icono de compartir para elegir Guardar video y añadirlo directo a tus Fotos.",
+              "En Android, tocar Descargar suele guardar el archivo directamente en tus Descargas o Galería, según tu navegador. En cualquier caso, lo que llega a tu dispositivo es el mismo archivo de video que Instagram sirve para reproducirlo, no una grabación de pantalla."
+            ]
+          },
+          {
+            "heading": "Descargador Gratis de Audio y Video de Instagram (Sin Iniciar Sesión)",
+            "paragraphs": [
+              "SaveReelsFast es gratis, sin cuenta, sin registro y sin instalar ninguna app. Pega el enlace de un Reel público y descarga el video directamente desde tu navegador; funciona igual en iPhone, Android o una computadora.",
+              "Cuando un Reel tiene una pista de audio aparte, aparece un botón de Descargar audio junto al video para que puedas guardar el sonido por separado, como archivo M4A (no MP3, y sin convertir ni recodificar). Es útil para guardar una voz en off, un fragmento de canción o un sonido que quieras reutilizar; recuerda que la música o el audio siguen perteneciendo a su creador o titular de derechos."
+            ]
+          }
         ]
       },
       "youtube": {
@@ -203,7 +230,8 @@
             "q": "¿Puedo descargar videos de YouTube con restricción de edad o privados?",
             "a": "No. Necesitan una cuenta de YouTube con sesión iniciada, que esta herramienta nunca usa. Los videos públicos funcionan; los privados, solo para miembros o con restricción de edad, no."
           }
-        ]
+        ],
+        "articles": []
       },
       "facebook": {
         "noun": "videos y Reels de Facebook",
@@ -225,7 +253,8 @@
             "q": "¿Por qué falló mi enlace de Facebook?",
             "a": "Probablemente el video no es público, fue eliminado o tiene restricciones en algunas regiones. Comprueba que se abre en una ventana privada del navegador sin iniciar sesión; si es así, inténtalo de nuevo en un minuto."
           }
-        ]
+        ],
+        "articles": []
       },
       "threads": {
         "noun": "videos de Threads",
@@ -247,7 +276,8 @@
             "q": "¿Por qué no funciona mi enlace de Threads?",
             "a": "La compatibilidad con Threads es más reciente y depende de lo que Threads muestre públicamente de cada publicación. Las publicaciones de perfiles privados o sin video no se pueden descargar; si falla un video público, inténtalo más tarde."
           }
-        ]
+        ],
+        "articles": []
       },
       "x": {
         "noun": "videos de Twitter (X)",
@@ -269,7 +299,8 @@
             "q": "¿Y si una publicación tiene varios videos?",
             "a": "Cada video aparece por separado con su propio botón de descarga, y hay una opción para descargar todos."
           }
-        ]
+        ],
+        "articles": []
       },
       "pinterest": {
         "noun": "videos de Pinterest",
@@ -291,7 +322,8 @@
             "q": "¿Funcionan las versiones de Pinterest de cada país?",
             "a": "Sí. Se aceptan enlaces de pinterest.com y de sitios regionales como pinterest.es o pinterest.fr."
           }
-        ]
+        ],
+        "articles": []
       },
       "tiktok": {
         "noun": "videos de TikTok",
@@ -313,7 +345,8 @@
             "q": "¿Por qué a veces falla un enlace de TikTok?",
             "a": "TikTok limita las solicitudes automáticas, así que un enlace puede fallar de vez en cuando aunque el video sea público. Espera un minuto y vuelve a pegarlo."
           }
-        ]
+        ],
+        "articles": []
       },
       "reddit": {
         "noun": "videos de Reddit",
@@ -335,7 +368,8 @@
             "q": "¿Puedo descargar videos NSFW o de subreddits privados?",
             "a": "No. Requieren una cuenta de Reddit con sesión iniciada, algo que esta herramienta no usa. Las publicaciones públicas funcionan."
           }
-        ]
+        ],
+        "articles": []
       },
       "snapchat": {
         "noun": "videos de Snapchat Spotlight",
@@ -357,7 +391,8 @@
             "q": "¿Puedo descargar snaps privados?",
             "a": "No. Los snaps privados solo los ven sus destinatarios y no se puede acceder a ellos con un enlace público."
           }
-        ]
+        ],
+        "articles": []
       },
       "linkedin": {
         "noun": "videos de LinkedIn",
@@ -379,7 +414,8 @@
             "q": "¿Qué calidad obtendré?",
             "a": "El video se guarda con la calidad que LinkedIn ofrece para esa publicación, que varía según lo subido. La herramienta no lo escala ni lo recodifica."
           }
-        ]
+        ],
+        "articles": []
       }
     }
   },

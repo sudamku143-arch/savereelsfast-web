@@ -157,6 +157,10 @@
         "free": {
           "q": "Apakah gratis mengunduh {noun} secara online?",
           "a": "Ya. Mengunduh {noun} di sini tidak dipungut biaya dan tidak memerlukan akun atau aplikasi. Situs ini didukung iklan. Hanya video publik yang berfungsi."
+        },
+        "cameraRoll": {
+          "q": "Cara menyimpan Reels Instagram ke galeri di iPhone tanpa aplikasi?",
+          "a": "Di iPhone: 1) Tempel tautan Reel di sini dan ketuk Unduh Video; unduhan terjadi langsung di dalam Safari, tanpa perlu aplikasi apa pun. 2) Buka ikon Downloads di toolbar Safari, ketuk videonya, lalu gunakan ikon bagikan dan pilih Save Video untuk menambahkannya ke Photos Anda."
         }
       }
     },
@@ -181,6 +185,29 @@
             "q": "Mengapa video Instagram yang saya unduh tidak ada suaranya?",
             "a": "Beberapa klip diunggah tanpa suara, dan kadang Instagram mengirim video dan audio sebagai file terpisah. Jika hanya file video yang tersedia, kami memberi tahu Anda, dan jika ada trek audio terpisah, Anda bisa menyimpannya dengan tombol audio."
           }
+        ],
+        "articles": [
+          {
+            "heading": "Apa Itu Pengunduh Reels Instagram?",
+            "paragraphs": [
+              "Pengunduh Reels Instagram adalah alat yang menyimpan Reel publik sebagai file video yang bisa Anda simpan di perangkat dan tonton tanpa koneksi internet. Tempel tautan Reel, dan alat ini mengambil file video yang sama persis dengan yang diputar Instagram sendiri — tidak ada yang direkam ulang dari layar Anda.",
+              "Orang memakainya untuk menyimpan video olahraga, resep, atau tutorial untuk ditonton nanti, menyimpan salinan Reels milik sendiri sebelum menghapus postingan, atau menonton klip secara offline saat di pesawat atau dengan data terbatas. Pengunduh Reels Instagram ini tidak perlu akun, ekstensi browser, atau aplikasi: alat ini bekerja sama di ponsel, tablet, atau komputer, dan setiap unduhan berasal dari Reel aslinya, dalam kualitas yang disediakan Instagram untuk video tersebut."
+            ]
+          },
+          {
+            "heading": "Cara Menyimpan Reels Instagram ke Galeri Anda",
+            "paragraphs": [
+              "Di iPhone, tempel tautan Reel di atas dan ketuk Unduh Video; unduhan terjadi di dalam Safari, tanpa perlu aplikasi apa pun. Buka ikon Downloads di toolbar Safari, ketuk videonya, lalu gunakan ikon bagikan dan pilih Save Video untuk langsung menambahkannya ke Photos Anda.",
+              "Di Android, mengetuk Unduh biasanya langsung menyimpan file ke Downloads atau Galeri, tergantung browser Anda. Bagaimanapun caranya, file video yang tersimpan di perangkat Anda sama persis dengan yang diputar Instagram, bukan hasil rekam layar."
+            ]
+          },
+          {
+            "heading": "Pengunduh Audio & Video Instagram Gratis (Tanpa Login)",
+            "paragraphs": [
+              "SaveReelsFast gratis digunakan, tanpa akun, tanpa pendaftaran, dan tanpa perlu memasang aplikasi apa pun. Tempel tautan Reel publik dan unduh videonya langsung dari browser Anda; alat ini bekerja sama di iPhone, Android, atau komputer.",
+              "Saat sebuah Reel memiliki trek audio terpisah, tombol Unduh Audio muncul di samping video sehingga Anda bisa menyimpan suaranya sendiri, sebagai file M4A (bukan MP3, dan tidak dikonversi atau dienkode ulang). Ini berguna untuk menyimpan voice-over, cuplikan lagu, atau suara yang ingin Anda gunakan kembali; ingat bahwa musik atau audio apa pun tetap milik pembuat atau pemegang haknya."
+            ]
+          }
         ]
       },
       "youtube": {
@@ -203,7 +230,8 @@
             "q": "Bisakah saya mengunduh video YouTube berbatas usia atau pribadi?",
             "a": "Tidak. Video seperti itu memerlukan akun YouTube yang sudah login, yang tidak pernah dipakai alat ini. Video publik bisa; video pribadi, khusus anggota, dan berbatas usia tidak bisa."
           }
-        ]
+        ],
+        "articles": []
       },
       "facebook": {
         "noun": "video dan Reels Facebook",
@@ -225,7 +253,8 @@
             "q": "Mengapa tautan Facebook saya gagal?",
             "a": "Kemungkinan video itu tidak publik, sudah dihapus, atau dibatasi di wilayah tertentu. Pastikan video terbuka di jendela pribadi tanpa login; jika terbuka, coba lagi dalam semenit."
           }
-        ]
+        ],
+        "articles": []
       },
       "threads": {
         "noun": "video Threads",
@@ -247,7 +276,8 @@
             "q": "Mengapa tautan Threads saya tidak berfungsi?",
             "a": "Dukungan Threads lebih baru dan bergantung pada apa yang Threads tampilkan secara publik untuk sebuah postingan. Postingan dari profil pribadi, atau tanpa video, tidak bisa diunduh; jika video publik gagal, coba lagi nanti."
           }
-        ]
+        ],
+        "articles": []
       },
       "x": {
         "noun": "video Twitter (X)",
@@ -269,7 +299,8 @@
             "q": "Bagaimana jika satu postingan berisi beberapa video?",
             "a": "Setiap video ditampilkan terpisah dengan tombol Unduh masing-masing, dan ada juga opsi Unduh semua."
           }
-        ]
+        ],
+        "articles": []
       },
       "pinterest": {
         "noun": "video Pinterest",
@@ -291,7 +322,8 @@
             "q": "Apakah versi Pinterest tiap negara bisa dipakai?",
             "a": "Ya. Tautan dari pinterest.com dan situs regional seperti pinterest.co.uk atau pinterest.fr diterima."
           }
-        ]
+        ],
+        "articles": []
       },
       "tiktok": {
         "noun": "video TikTok",
@@ -313,7 +345,8 @@
             "q": "Mengapa tautan TikTok kadang gagal?",
             "a": "TikTok membatasi permintaan otomatis, sehingga tautan kadang gagal meski videonya publik. Tunggu semenit lalu tempel lagi."
           }
-        ]
+        ],
+        "articles": []
       },
       "reddit": {
         "noun": "video Reddit",
@@ -335,7 +368,8 @@
             "q": "Bisakah saya mengunduh video NSFW atau dari subreddit pribadi?",
             "a": "Tidak. Video seperti itu memerlukan akun Reddit yang sudah login, yang tidak dipakai alat ini. Postingan publik bisa."
           }
-        ]
+        ],
+        "articles": []
       },
       "snapchat": {
         "noun": "video Snapchat Spotlight",
@@ -357,7 +391,8 @@
             "q": "Bisakah saya mengunduh snap pribadi?",
             "a": "Tidak. Snap pribadi hanya terlihat oleh penerimanya dan tidak bisa dijangkau lewat tautan publik."
           }
-        ]
+        ],
+        "articles": []
       },
       "linkedin": {
         "noun": "video LinkedIn",
@@ -379,7 +414,8 @@
             "q": "Kualitas apa yang akan saya dapat?",
             "a": "Video disimpan dalam kualitas yang disediakan LinkedIn untuk postingan itu, yang berbeda-beda tergantung unggahan. Alat ini tidak memperbesar atau mengodekan ulang videonya."
           }
-        ]
+        ],
+        "articles": []
       }
     }
   },

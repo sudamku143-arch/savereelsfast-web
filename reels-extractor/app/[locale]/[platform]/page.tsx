@@ -161,6 +161,20 @@ export default async function PlatformLandingPage({ params }: Props) {
         />
       </div>
 
+      {/* Genuine, platform-specific explainers (only present where they have been written; most platforms lean
+          on the shared sections below and render nothing extra here). Each section's first sentence answers
+          its heading directly, so it can stand alone as a featured-snippet answer. */}
+      {content.articles.map((article) => (
+        <section key={article.heading} className="mt-16 w-full max-w-2xl">
+          <h2 className="mb-4 text-xl font-bold text-zinc-50">{article.heading}</h2>
+          <div className="space-y-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
+            {article.paragraphs.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
+        </section>
+      ))}
+
       <section className="mt-16 w-full max-w-2xl">
         <h2 className="mb-4 text-xl font-bold text-zinc-50">
           {fillTemplate(common.howToHeading, vars)}

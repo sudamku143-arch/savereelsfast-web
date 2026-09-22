@@ -157,6 +157,10 @@
         "free": {
           "q": "É grátis baixar {noun} online?",
           "a": "Sim. Baixar {noun} aqui não custa nada e não exige conta nem app. O site é mantido por anúncios. Só funcionam vídeos públicos."
+        },
+        "cameraRoll": {
+          "q": "Como salvar Reels do Instagram na galeria do iPhone sem aplicativo?",
+          "a": "No iPhone: 1) Cole o link do Reel aqui e toque em Baixar vídeo; ele baixa dentro do Safari, sem precisar de nenhum aplicativo. 2) Abra o ícone de Downloads na barra do Safari, toque no vídeo e use o ícone de compartilhar para escolher Salvar vídeo e adicioná-lo aos seus Fotos."
         }
       }
     },
@@ -181,6 +185,29 @@
             "q": "Por que o vídeo do Instagram que baixei está sem som?",
             "a": "Alguns clipes são publicados sem som, e às vezes o Instagram entrega vídeo e áudio como arquivos separados. Quando só há um arquivo de vídeo sem áudio, avisamos; e se uma faixa de áudio separada for oferecida, você pode salvá-la pelo botão de áudio."
           }
+        ],
+        "articles": [
+          {
+            "heading": "O que é um downloader de Reels do Instagram?",
+            "paragraphs": [
+              "Um downloader de Reels do Instagram é uma ferramenta que salva um Reel público como um arquivo de vídeo que você pode guardar no seu dispositivo e assistir sem conexão com a internet. Cole o link do Reel, e a ferramenta busca o mesmo arquivo de vídeo que o próprio Instagram reproduz — nada é gravado da sua tela.",
+              "As pessoas usam isso para salvar um treino, uma receita ou um tutorial para assistir depois, para guardar uma cópia dos próprios Reels antes de apagar uma publicação, ou para rever um vídeo offline em um voo ou com dados limitados. Esse downloader de Reels do Instagram não precisa de conta, extensão de navegador ou app: funciona da mesma forma no celular, tablet ou computador, e cada download vem do Reel real, na qualidade que o Instagram oferece para ele."
+            ]
+          },
+          {
+            "heading": "Como Salvar Reels do Instagram na Galeria do Celular",
+            "paragraphs": [
+              "No iPhone, cole o link do Reel acima e toque em Baixar vídeo; ele baixa dentro do Safari, sem precisar de nenhum aplicativo. Abra o ícone de Downloads na barra do Safari, toque no vídeo e use o ícone de compartilhar para escolher Salvar vídeo e adicioná-lo direto aos seus Fotos.",
+              "No Android, tocar em Baixar geralmente salva o arquivo direto nos seus Downloads ou na Galeria, dependendo do navegador. De qualquer forma, o que chega ao seu aparelho é o mesmo arquivo de vídeo que o Instagram usa para reproduzir, não uma gravação de tela."
+            ]
+          },
+          {
+            "heading": "Baixador Gratuito de Áudio e Vídeo do Instagram (Sem Login)",
+            "paragraphs": [
+              "O SaveReelsFast é gratuito, sem conta, sem cadastro e sem instalar nenhum aplicativo. Cole o link de um Reel público e baixe o vídeo direto do seu navegador; funciona igual no iPhone, Android ou computador.",
+              "Quando um Reel tem uma faixa de áudio separada, um botão Baixar áudio aparece ao lado do vídeo para você salvar o som sozinho, como arquivo M4A (não MP3, e sem conversão ou recodificação). É útil para guardar uma narração, um trecho de música ou um som que você queira reaproveitar; lembre-se de que a música ou áudio continua pertencendo ao criador ou detentor dos direitos."
+            ]
+          }
         ]
       },
       "youtube": {
@@ -203,7 +230,8 @@
             "q": "Posso baixar vídeos do YouTube com restrição de idade ou privados?",
             "a": "Não. Eles exigem uma conta do YouTube com login, que esta ferramenta nunca usa. Vídeos públicos funcionam; privados, exclusivos para membros e com restrição de idade não."
           }
-        ]
+        ],
+        "articles": []
       },
       "facebook": {
         "noun": "vídeos e Reels do Facebook",
@@ -225,7 +253,8 @@
             "q": "Por que meu link do Facebook falhou?",
             "a": "O vídeo provavelmente não é público, foi apagado ou tem restrição em algumas regiões. Verifique se ele abre em uma janela anônima do navegador sem fazer login; se abrir, tente de novo em um minuto."
           }
-        ]
+        ],
+        "articles": []
       },
       "threads": {
         "noun": "vídeos do Threads",
@@ -247,7 +276,8 @@
             "q": "Por que meu link do Threads não funciona?",
             "a": "O suporte ao Threads é mais recente e depende do que o Threads mostra publicamente de cada publicação. Publicações de perfis privados ou sem vídeo não podem ser baixadas; se um vídeo público falhar, tente mais tarde."
           }
-        ]
+        ],
+        "articles": []
       },
       "x": {
         "noun": "vídeos do Twitter (X)",
@@ -269,7 +299,8 @@
             "q": "E se uma publicação tiver vários vídeos?",
             "a": "Cada vídeo aparece separadamente com seu próprio botão de download, e há uma opção para baixar todos."
           }
-        ]
+        ],
+        "articles": []
       },
       "pinterest": {
         "noun": "vídeos do Pinterest",
@@ -291,7 +322,8 @@
             "q": "As versões do Pinterest de cada país funcionam?",
             "a": "Sim. Links do pinterest.com e de sites regionais, como pinterest.com.br ou pinterest.pt, são aceitos."
           }
-        ]
+        ],
+        "articles": []
       },
       "tiktok": {
         "noun": "vídeos do TikTok",
@@ -313,7 +345,8 @@
             "q": "Por que um link do TikTok às vezes falha?",
             "a": "O TikTok limita solicitações automáticas, então um link pode falhar de vez em quando mesmo com o vídeo público. Espere um minuto e cole de novo."
           }
-        ]
+        ],
+        "articles": []
       },
       "reddit": {
         "noun": "vídeos do Reddit",
@@ -335,7 +368,8 @@
             "q": "Posso baixar vídeos NSFW ou de subreddits privados?",
             "a": "Não. Eles exigem uma conta do Reddit com login, que esta ferramenta não usa. Publicações públicas funcionam."
           }
-        ]
+        ],
+        "articles": []
       },
       "snapchat": {
         "noun": "vídeos do Snapchat Spotlight",
@@ -357,7 +391,8 @@
             "q": "Posso baixar snaps privados?",
             "a": "Não. Snaps privados só são vistos pelos destinatários e não podem ser acessados por um link público."
           }
-        ]
+        ],
+        "articles": []
       },
       "linkedin": {
         "noun": "vídeos do LinkedIn",
@@ -379,7 +414,8 @@
             "q": "Que qualidade vou receber?",
             "a": "O vídeo é salvo na qualidade que o LinkedIn oferece para aquela publicação, que varia conforme o envio. A ferramenta não amplia nem recodifica o vídeo."
           }
-        ]
+        ],
+        "articles": []
       }
     }
   },

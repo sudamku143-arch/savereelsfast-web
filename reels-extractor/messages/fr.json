@@ -157,6 +157,10 @@
         "free": {
           "q": "Est-il gratuit de télécharger {noun} en ligne ?",
           "a": "Oui. Télécharger {noun} ici ne coûte rien et ne demande ni compte ni appli. Le site est financé par la publicité. Seules les vidéos publiques fonctionnent."
+        },
+        "cameraRoll": {
+          "q": "Comment enregistrer des Reels Instagram dans la pellicule sur iPhone sans appli ?",
+          "a": "Sur iPhone : 1) Collez le lien du Reel ici et touchez Télécharger la vidéo ; le téléchargement se fait directement dans Safari, sans aucune appli. 2) Ouvrez l'icône Téléchargements dans la barre d'outils de Safari, touchez la vidéo, puis utilisez l'icône de partage et choisissez Enregistrer la vidéo pour l'ajouter à vos Photos."
         }
       }
     },
@@ -181,6 +185,29 @@
             "q": "Pourquoi ma vidéo Instagram téléchargée n'a-t-elle pas de son ?",
             "a": "Certains clips sont publiés sans son, et Instagram fournit parfois la vidéo et l'audio dans des fichiers séparés. Quand seul un fichier vidéo est disponible, nous vous le signalons, et si une piste audio séparée existe, vous pouvez l'enregistrer avec le bouton audio."
           }
+        ],
+        "articles": [
+          {
+            "heading": "Qu'est-ce qu'un téléchargeur de Reels Instagram ?",
+            "paragraphs": [
+              "Un téléchargeur de Reels Instagram est un outil qui enregistre un Reel public sous forme de fichier vidéo que vous pouvez garder sur votre appareil et regarder sans connexion internet. Collez le lien du Reel, et l'outil récupère le même fichier vidéo qu'Instagram lit lui-même — rien n'est réenregistré depuis votre écran.",
+              "On l'utilise pour garder un entraînement, une recette ou un tutoriel à regarder plus tard, pour conserver une copie de ses propres Reels avant de supprimer une publication, ou pour revoir un extrait hors ligne dans un avion ou avec des données limitées. Ce téléchargeur de Reels Instagram ne demande ni compte, ni extension de navigateur, ni application : il fonctionne de la même façon sur téléphone, tablette ou ordinateur, et chaque téléchargement provient du vrai Reel, dans la qualité qu'Instagram fournit pour celui-ci."
+            ]
+          },
+          {
+            "heading": "Comment Enregistrer des Reels Instagram dans votre Pellicule",
+            "paragraphs": [
+              "Sur iPhone, collez le lien du Reel ci-dessus et touchez Télécharger la vidéo ; le téléchargement se fait dans Safari, sans aucune appli. Ouvrez l'icône Téléchargements de la barre d'outils de Safari, touchez la vidéo, puis utilisez l'icône de partage et choisissez Enregistrer la vidéo pour l'ajouter directement à vos Photos.",
+              "Sur Android, toucher Télécharger enregistre généralement le fichier directement dans vos Téléchargements ou votre Galerie, selon votre navigateur. Dans tous les cas, le fichier qui arrive sur votre appareil est exactement celui qu'Instagram diffuse pour la lecture, pas un enregistrement d'écran."
+            ]
+          },
+          {
+            "heading": "Téléchargeur Gratuit Audio et Vidéo Instagram (Sans Connexion)",
+            "paragraphs": [
+              "SaveReelsFast est gratuit, sans compte, sans inscription et sans aucune appli à installer. Collez le lien d'un Reel public et téléchargez la vidéo directement depuis votre navigateur ; cela fonctionne de la même façon sur iPhone, Android ou un ordinateur.",
+              "Quand un Reel a une piste audio séparée, un bouton Télécharger l'audio apparaît à côté de la vidéo pour enregistrer le son seul, en fichier M4A (pas en MP3, et sans conversion ni réencodage). C'est utile pour garder une voix off, un extrait de chanson ou un son à réutiliser ; n'oubliez pas qu'une musique ou un son appartient toujours à son créateur ou ayant droit."
+            ]
+          }
         ]
       },
       "youtube": {
@@ -203,7 +230,8 @@
             "q": "Puis-je télécharger des vidéos YouTube privées ou soumises à une limite d'âge ?",
             "a": "Non. Elles exigent un compte YouTube connecté, que cet outil n'utilise jamais. Les vidéos publiques fonctionnent ; les vidéos privées, réservées aux membres ou soumises à une limite d'âge, non."
           }
-        ]
+        ],
+        "articles": []
       },
       "facebook": {
         "noun": "les vidéos et Reels Facebook",
@@ -225,7 +253,8 @@
             "q": "Pourquoi mon lien Facebook a-t-il échoué ?",
             "a": "La vidéo n'est probablement pas publique, a été supprimée ou est restreinte dans certaines régions. Vérifiez qu'elle s'ouvre dans une fenêtre de navigation privée sans connexion ; si c'est le cas, réessayez dans une minute."
           }
-        ]
+        ],
+        "articles": []
       },
       "threads": {
         "noun": "les vidéos Threads",
@@ -247,7 +276,8 @@
             "q": "Pourquoi mon lien Threads ne fonctionne-t-il pas ?",
             "a": "La prise en charge de Threads est plus récente et dépend de ce que Threads affiche publiquement pour une publication. Celles des profils privés, ou sans vidéo, ne peuvent pas être téléchargées ; si une vidéo publique échoue, réessayez plus tard."
           }
-        ]
+        ],
+        "articles": []
       },
       "x": {
         "noun": "les vidéos Twitter (X)",
@@ -269,7 +299,8 @@
             "q": "Que se passe-t-il si une publication contient plusieurs vidéos ?",
             "a": "Chaque vidéo est listée séparément avec son propre bouton Télécharger, et il existe aussi une option Tout télécharger."
           }
-        ]
+        ],
+        "articles": []
       },
       "pinterest": {
         "noun": "les vidéos Pinterest",
@@ -291,7 +322,8 @@
             "q": "Les versions nationales de Pinterest fonctionnent-elles ?",
             "a": "Oui. Les liens de pinterest.com et des sites régionaux comme pinterest.fr ou pinterest.co.uk sont acceptés."
           }
-        ]
+        ],
+        "articles": []
       },
       "tiktok": {
         "noun": "les vidéos TikTok",
@@ -313,7 +345,8 @@
             "q": "Pourquoi un lien TikTok échoue-t-il parfois ?",
             "a": "TikTok limite les requêtes automatisées, un lien peut donc échouer de temps en temps même si la vidéo est publique. Attendez une minute et collez-le à nouveau."
           }
-        ]
+        ],
+        "articles": []
       },
       "reddit": {
         "noun": "les vidéos Reddit",
@@ -335,7 +368,8 @@
             "q": "Puis-je télécharger des vidéos NSFW ou de subreddits privés ?",
             "a": "Non. Elles exigent un compte Reddit connecté, que cet outil n'utilise pas. Les publications publiques fonctionnent."
           }
-        ]
+        ],
+        "articles": []
       },
       "snapchat": {
         "noun": "les vidéos Snapchat Spotlight",
@@ -357,7 +391,8 @@
             "q": "Puis-je télécharger des snaps privés ?",
             "a": "Non. Les snaps privés ne sont visibles que par leurs destinataires et on ne peut pas y accéder par un lien public."
           }
-        ]
+        ],
+        "articles": []
       },
       "linkedin": {
         "noun": "les vidéos LinkedIn",
@@ -379,7 +414,8 @@
             "q": "Quelle qualité vais-je obtenir ?",
             "a": "La vidéo est enregistrée dans la qualité que LinkedIn propose pour cette publication, qui varie selon l'envoi. L'outil ne l'agrandit ni ne la réencode."
           }
-        ]
+        ],
+        "articles": []
       }
     }
   },

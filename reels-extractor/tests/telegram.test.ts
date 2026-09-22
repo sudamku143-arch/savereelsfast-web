@@ -103,7 +103,7 @@ describe("long-tail FAQs per platform", () => {
   it("every platform gets the ones that are true for it, and none that are not", () => {
     assert.deepEqual(Object.keys(LONGTAIL_FAQ).sort(), [...LANDING_PLATFORMS].sort());
     for (const id of LANDING_PLATFORMS) assert.ok(LONGTAIL_FAQ[id].length >= 1, id);
-    assert.deepEqual(LONGTAIL_FAQ.instagram, ["reelsQuality", "audio", "free"]);
+    assert.deepEqual(LONGTAIL_FAQ.instagram, ["reelsQuality", "cameraRoll", "audio", "free"]);
     assert.ok(LONGTAIL_FAQ.youtube.includes("audio"), "Shorts audio is on the YouTube page");
     assert.ok(LONGTAIL_FAQ.snapchat.includes("snapchatNoApp"));
     assert.deepEqual(LONGTAIL_FAQ.facebook, ["freeFbThreads"]);
@@ -134,7 +134,7 @@ describe("long-tail FAQs per platform", () => {
   for (const locale of LOCALES) {
     it(`${locale}: five real questions and answers, with the steps where promised`, () => {
       const l = messages(locale).landing.common.longtail as Record<string, { q: string; a: string }>;
-      assert.deepEqual(Object.keys(l).sort(), ["audio", "free", "freeFbThreads", "reelsQuality", "snapchatNoApp"]);
+      assert.deepEqual(Object.keys(l).sort(), ["audio", "cameraRoll", "free", "freeFbThreads", "reelsQuality", "snapchatNoApp"]);
       for (const [key, item] of Object.entries(l)) {
         assert.ok(/[?؟]$/.test(item.q.trim()), `${key}: question mark`);
         assert.ok(item.a.trim().length >= 60, `${key}: answer too thin`);
@@ -143,6 +143,10 @@ describe("long-tail FAQs per platform", () => {
         assert.match(l[key].a, /[1১]\)/, `${locale}.${key} lists step 1`);
         assert.match(l[key].a, /[3৩]\)/, `${locale}.${key} lists step 3`);
       }
+      // cameraRoll is a deliberate 2-step answer.
+      assert.match(l.cameraRoll.a, /[1১]\)/, `${locale}.cameraRoll lists step 1`);
+      assert.match(l.cameraRoll.a, /[2২]\)/, `${locale}.cameraRoll lists step 2`);
+      assert.doesNotMatch(l.cameraRoll.a, /[3৩]\)/, `${locale}.cameraRoll should stay 2 steps`);
       if (locale !== "en") assert.notEqual(l.free.q, messages("en").landing.common.longtail.free.q);
     });
 
