@@ -14,6 +14,7 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal
     changeFrequency: "daily" as const,
     priority: 0.9,
   })),
+  { path: "/audio-downloader", changeFrequency: "daily", priority: 0.85 },
   { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/terms-of-service", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/dmca", changeFrequency: "monthly", priority: 0.3, legal: true },

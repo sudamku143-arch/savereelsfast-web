@@ -106,8 +106,8 @@ describe("the tab component", () => {
   });
 
   it("the heading, intro, placeholder and helper text all come from the selected platform", () => {
-    assert.match(client, /follows \? platformInfo\[platform\]\.h1 : active\.title/);
-    assert.match(client, /follows \? platformInfo\[platform\]\.lead : heroDict\.subtitle/);
+    assert.match(client, /follows \? platformInfo\[platform\]\.h1 : \(heroHeading \?\? active\.title\)/);
+    assert.match(client, /follows \? platformInfo\[platform\]\.lead : \(heroLead \?\? heroDict\.subtitle\)/);
     assert.match(client, /placeholder=\{active\.placeholder\}/);
     assert.match(client, /\{platformInfo\[platform\]\.copyHint\}/);
   });

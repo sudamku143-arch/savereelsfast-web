@@ -929,5 +929,60 @@
     "fab": "Use Telegram Bot",
     "open": "Open the SaveReelsFast Telegram bot",
     "hide": "Hide this button"
+  },
+  "audioDownloader": {
+    "metaTitle": "Free Audio Downloader - Save Sound from Instagram, YouTube",
+    "metaDescription": "Extract and download audio from Instagram Reels, YouTube videos and 8 more platforms. Free, no login, no app. Real quality, not a lossy MP3 conversion.",
+    "h1": "Free Audio Downloader for Instagram, YouTube & More",
+    "lead": "Paste a public video link and save just the audio — the platform's own file, not a lossy MP3 conversion.",
+    "breadcrumb": "Audio Downloader",
+    "sections": [
+      {
+        "heading": "What Is an Audio Downloader?",
+        "paragraphs": [
+          "An audio downloader saves the sound from a public video as its own file, separate from the video, so you can keep a voiceover, a song clip or a podcast-style clip without the picture. Paste the link here, and when the platform provides a separate audio track, a Download Audio button appears next to the video result.",
+          "It's useful for saving a Reel's soundtrack to listen to later, pulling the audio from a talk or interview you don't need the video for, or keeping a short clip of dialogue or a sound effect you want to reuse, with the creator's permission, since the audio still belongs to them. It works the same on a phone, tablet or computer, in any modern browser."
+        ]
+      },
+      {
+        "heading": "How to Download Audio from Any Video Link",
+        "paragraphs": [
+          "1) Copy the link of a public post from Instagram, YouTube, TikTok or any of our 10 supported platforms. 2) Paste it into the box above and wait for the preview to load. 3) If the platform provides a separate audio track, tap Download Audio next to the video; the file saves straight to your device, the same way the video download does.",
+          "On iPhone, the file downloads inside Safari; open the Downloads icon in the toolbar and use the share icon to save it wherever you keep audio files. On Android or desktop, it saves to your usual Downloads folder. No account, browser extension or app install is needed at any step."
+        ]
+      },
+      {
+        "heading": "Works With 10 Platforms, No Login Required",
+        "paragraphs": [
+          "Audio can be pulled from a public post on Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat or LinkedIn, whichever of these actually has a separate audio track for that post. It's free to use, with no account, sign-up or app install.",
+          "Only public posts work: private accounts, login-gated content and anything a platform restricts to a specific audience are out of reach, by design (SaveReelsFast doesn't sign in to anything on your behalf). What you get is always the platform's own audio file, at whatever quality it provides for that post; nothing is re-recorded or invented."
+        ]
+      },
+      {
+        "heading": "Audio Quality: What You Actually Get",
+        "paragraphs": [
+          "The audio file you download is exactly what the platform serves for that post, nothing more. Quality depends entirely on how the original video was uploaded, so it varies from post to post, and SaveReelsFast does not upscale, boost or otherwise change it. There is no bitrate to choose, because nothing is being encoded: what you get is the same audio data the platform's own player uses, saved as a file instead of streamed. If a tool elsewhere promises a fixed bitrate such as 320kbps no matter the source, treat that as a red flag: no legitimate downloader can add quality that was never in the original file."
+        ]
+      }
+    ],
+    "faqHeading": "Audio downloader FAQ",
+    "faq": [
+      {
+        "q": "Can I convert YouTube videos to MP3?",
+        "a": "Not exactly. SaveReelsFast doesn't convert or re-encode audio into MP3; when a video has a separate audio track, you get that track in its original format, usually M4A (sometimes WebM/Opus). It plays in any standard music or video app. It's just not literally an .mp3 file, and we'd rather say that plainly than label a file wrong."
+      },
+      {
+        "q": "Why is there no audio option for some links?",
+        "a": "A Download Audio button only appears when the platform provides a separate audio-only stream for that specific post. Many videos are served as a single combined file with no separate track to extract, in which case only the video download is available."
+      },
+      {
+        "q": "Is this free, and do I need to log in?",
+        "a": "Yes. It's free to use, with no account, sign-up or app install. Paste a public link and download; nothing is asked of you first."
+      },
+      {
+        "q": "Can I download audio from a private account or video?",
+        "a": "No. This only works on public posts, since private content is intentionally restricted by each platform and isn't accessible via a shared link."
+      }
+    ]
   }
 }

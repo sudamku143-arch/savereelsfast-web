@@ -75,9 +75,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 11 home + 110 platform pages + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, 11 + 11 * ids.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 156 + 1 + allBlogPosts, "156 site pages + the blog index + one entry per post");
+  it("adds up: 11 home + 110 platform + 11 audio-downloader + 5 legal pages x every translated language", () => {
+    assert.equal(entries.length, 11 + 11 * ids.length + locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 167 + 1 + allBlogPosts, "167 site pages + the blog index + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -108,6 +108,7 @@ describe("frequency and priority", () => {
     const path = url.replace(SITE, "").replace(new RegExp(`^/(${locales.join("|")})(?=/|$)`), "");
     if (path === "" || path === "/") return "home";
     if (Object.values(PLATFORM_SLUGS).includes(path.slice(1))) return "platform";
+    if (path === "/audio-downloader") return "audio";
     if (/^\/blog(\/|$)/.test(path)) return "blog";
     return "legal";
   };
@@ -140,6 +141,15 @@ describe("frequency and priority", () => {
     }
     for (const locale of locales.filter((l) => l !== "en")) {
       assert.equal(byUrl.has(`${SITE}/${locale}/blog`), false, `${locale} has no posts, so no blog page`);
+    }
+  });
+
+  it("audio downloader: daily, 0.85 - in every language", () => {
+    const pages = entries.filter((x) => rule(x.url) === "audio");
+    assert.equal(pages.length, locales.length);
+    for (const e of pages) {
+      assert.equal(e.changeFrequency, "daily", e.url);
+      assert.equal(e.priority, 0.85, e.url);
     }
   });
 

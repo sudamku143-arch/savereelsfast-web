@@ -116,7 +116,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} telegram={dict.telegram} />
           {children}
-          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} telegram={dict.telegram} />
+          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} telegram={dict.telegram} audioDownloaderLabel={dict.audioDownloader.breadcrumb} />
           <AnalyticsConsent locale={locale} dict={dict.consent} />
           <IosInstallModal dict={dict.pwa} />
           <TelegramFab dict={dict.telegram} />

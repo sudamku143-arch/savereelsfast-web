@@ -58,6 +58,8 @@ export default function ExtractorClient({
   platformInfo,
   initialPlatform = "instagram",
   landing = false,
+  heroHeading,
+  heroLead,
 }: {
   locale: Locale;
   heroDict: HeroDict;
@@ -72,6 +74,13 @@ export default function ExtractorClient({
   initialPlatform?: PlatformId;
   /** True on a platform's own page, whose heading follows the active tab from the start. */
   landing?: boolean;
+  /**
+   * Replaces the default heading/intro (the active tab's own title/subtitle) until the visitor picks a tab,
+   * for a page whose own topic isn't any single platform (e.g. the audio downloader, which works with all of
+   * them). Ignored once a tab is chosen, or on a platform's own page (`landing`), same as the default heading.
+   */
+  heroHeading?: string;
+  heroLead?: string;
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -223,10 +232,10 @@ export default function ExtractorClient({
         {heroDict.badge}
       </span>
       <h1 className="max-w-2xl text-center text-3xl font-extrabold tracking-tight text-zinc-50 sm:text-5xl">
-        {follows ? platformInfo[platform].h1 : active.title}
+        {follows ? platformInfo[platform].h1 : (heroHeading ?? active.title)}
       </h1>
       <p className="mt-4 max-w-xl text-center text-sm text-zinc-400 sm:text-base">
-        {follows ? platformInfo[platform].lead : heroDict.subtitle}
+        {follows ? platformInfo[platform].lead : (heroLead ?? heroDict.subtitle)}
       </p>
 
       <div className="mt-8 w-full max-w-xl space-y-3">

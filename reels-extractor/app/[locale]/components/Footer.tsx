@@ -63,6 +63,7 @@ export default function Footer({
   hasBlog = false,
   cookieLabel,
   telegram,
+  audioDownloaderLabel,
 }: {
   locale: Locale;
   dict: Dict;
@@ -72,11 +73,16 @@ export default function Footer({
   /** Label of the footer's "Cookie settings" button; leave out when analytics is not configured. */
   cookieLabel?: string;
   telegram: TelegramDict;
+  /** Short label for the audio-downloader link, alongside the platform tools. */
+  audioDownloaderLabel: string;
 }) {
-  const tools = LANDING_PLATFORMS.map((id) => ({
-    href: localePath(locale, landingPath(id)),
-    label: platformNames[id],
-  }));
+  const tools = [
+    ...LANDING_PLATFORMS.map((id) => ({
+      href: localePath(locale, landingPath(id)),
+      label: platformNames[id],
+    })),
+    { href: localePath(locale, "/audio-downloader"), label: audioDownloaderLabel },
+  ];
 
   const legal = [
     { href: localePath(locale, "/privacy-policy"), label: dict.links.privacy },
@@ -103,7 +109,7 @@ export default function Footer({
         >
           <div className="col-span-2 sm:col-span-1">
             <h2 className="text-sm font-semibold text-zinc-200">{dict.columns.tools}</h2>
-            {/* Ten links would be a long single column, so they flow into two on small screens. */}
+            {/* Eleven links would be a long single column, so they flow into two on small screens. */}
             <ul className="mt-3 columns-2 gap-x-6 space-y-2 text-sm sm:columns-1">
               {tools.map((link) => (
                 <li key={link.href} className="break-inside-avoid">

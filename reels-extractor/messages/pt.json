@@ -929,5 +929,60 @@
     "fab": "Usar o bot do Telegram",
     "open": "Abrir o bot do Telegram do SaveReelsFast",
     "hide": "Ocultar este botão"
+  },
+  "audioDownloader": {
+    "metaTitle": "Baixador de Áudio Grátis - Salve Som do Instagram, YouTube",
+    "metaDescription": "Extraia e baixe áudio de Reels do Instagram, vídeos do YouTube e mais 8 plataformas. Grátis, sem login, sem app. Qualidade real, não uma conversão para MP3.",
+    "h1": "Baixador de Áudio Grátis para Instagram, YouTube e Mais",
+    "lead": "Cole o link de um vídeo público e salve só o áudio: o arquivo original da plataforma, não uma conversão para MP3 com perda de qualidade.",
+    "breadcrumb": "Baixador de Áudio",
+    "sections": [
+      {
+        "heading": "O que é um Baixador de Áudio?",
+        "paragraphs": [
+          "Um baixador de áudio salva o som de um vídeo público como um arquivo próprio, separado do vídeo, para você guardar uma narração, um trecho de música ou um clipe estilo podcast sem a imagem. Cole o link aqui, e quando a plataforma tiver uma faixa de áudio separada, um botão Baixar áudio aparece ao lado do resultado do vídeo.",
+          "É útil para salvar a trilha sonora de um Reel e ouvir depois, extrair o áudio de uma palestra ou entrevista que você não precisa em vídeo, ou guardar um trecho de fala ou efeito sonoro que queira reaproveitar, com a permissão do criador, já que o áudio continua sendo dele. Funciona igual no celular, tablet ou computador, em qualquer navegador moderno."
+        ]
+      },
+      {
+        "heading": "Como Baixar Áudio de Qualquer Link de Vídeo",
+        "paragraphs": [
+          "1) Copie o link de uma publicação pública do Instagram, YouTube, TikTok ou qualquer uma das nossas 10 plataformas compatíveis. 2) Cole na caixa acima e espere a prévia carregar. 3) Se a plataforma tiver uma faixa de áudio separada, toque em Baixar áudio ao lado do vídeo; o arquivo salva direto no seu aparelho, do mesmo jeito que o download do vídeo.",
+          "No iPhone, o arquivo baixa dentro do Safari; abra o ícone de Downloads na barra e use o ícone de compartilhar para salvar onde você guarda arquivos de áudio. No Android ou computador, ele salva na sua pasta de Downloads de sempre. Nenhuma conta, extensão de navegador ou app é necessária em qualquer etapa."
+        ]
+      },
+      {
+        "heading": "Funciona com 10 Plataformas, Sem Login",
+        "paragraphs": [
+          "O áudio pode ser extraído de uma publicação pública do Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat ou LinkedIn, a que realmente tiver uma faixa de áudio separada para aquela publicação. É grátis, sem conta, sem cadastro e sem instalar app.",
+          "Só funciona com publicações públicas: contas privadas, conteúdo que exige login e qualquer coisa que uma plataforma restrinja a um público específico ficam fora de alcance, por design (o SaveReelsFast não faz login em nada em seu nome). O que você recebe é sempre o arquivo de áudio da própria plataforma, na qualidade que ela oferece para aquela publicação; nada é regravado ou inventado."
+        ]
+      },
+      {
+        "heading": "Qualidade do Áudio: O Que Você Realmente Recebe",
+        "paragraphs": [
+          "O arquivo de áudio que você baixa é exatamente o que a plataforma fornece para aquela publicação, nada mais. A qualidade depende totalmente de como o vídeo original foi enviado, então varia de publicação para publicação, e o SaveReelsFast não aumenta, melhora ou altera isso de nenhuma forma. Não há bitrate para escolher, porque nada é codificado: você recebe os mesmos dados de áudio que o player da própria plataforma usa, salvos como arquivo em vez de transmitidos. Se uma ferramenta em outro lugar promete um bitrate fixo como 320kbps não importa a origem, veja isso como um sinal de alerta: nenhum baixador legítimo consegue adicionar qualidade que nunca existiu no arquivo original."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas frequentes do baixador de áudio",
+    "faq": [
+      {
+        "q": "Posso converter vídeos do YouTube para MP3?",
+        "a": "Não exatamente. O SaveReelsFast não converte nem recodifica áudio para MP3; quando um vídeo tem uma faixa de áudio separada, você recebe essa faixa no formato original, geralmente M4A (às vezes WebM/Opus). Ela toca em qualquer player de música ou vídeo padrão. Só não é literalmente um arquivo .mp3, e preferimos dizer isso claramente a rotular um arquivo errado."
+      },
+      {
+        "q": "Por que não há opção de áudio em alguns links?",
+        "a": "O botão Baixar áudio só aparece quando a plataforma oferece uma faixa de áudio separada para aquela publicação específica. Muitos vídeos são servidos como um único arquivo combinado, sem faixa separada para extrair, e nesse caso só o download do vídeo fica disponível."
+      },
+      {
+        "q": "Isso é grátis e preciso fazer login?",
+        "a": "Sim. É grátis, sem conta, sem cadastro e sem instalar app. Cole um link público e baixe; nada é pedido antes."
+      },
+      {
+        "q": "Posso baixar áudio de uma conta ou vídeo privado?",
+        "a": "Não. Isso só funciona com publicações públicas, já que o conteúdo privado é intencionalmente restrito por cada plataforma e não é acessível por um link compartilhado."
+      }
+    ]
   }
 }
