@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return legalMetadata(
     locale,
     "/terms-of-service",
-    legal.terms.title,
+    legal.terms.metaTitle, // distinct from the on-page H1 (legal.terms.title): keeps the two from being identical
     legal.terms.description
   );
 }

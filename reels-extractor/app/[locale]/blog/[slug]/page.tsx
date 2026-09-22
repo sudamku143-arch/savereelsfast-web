@@ -75,7 +75,8 @@ export default async function BlogPostPage({ params }: Props) {
         itemListElement: [
           { "@type": "ListItem", position: 1, name: dict.landing.common.breadcrumbHome, item: homeUrl },
           { "@type": "ListItem", position: 2, name: blog.heading, item: blogUrl },
-          { "@type": "ListItem", position: 3, name: post.title, item: pageUrl },
+          // The last item is the current page: Google's breadcrumb guidelines say to omit its URL.
+          { "@type": "ListItem", position: 3, name: post.title },
         ],
       },
     ],

@@ -639,7 +639,8 @@
             "Podemos actualizar esta política de vez en cuando. La fecha al inicio indica cuándo cambió por última vez."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Política de Privacidad - Cómo SaveReelsFast Usa tus Datos"
     },
     "terms": {
       "title": "Términos del servicio",
@@ -718,7 +719,8 @@
             "Podemos actualizar estos términos de vez en cuando. Seguir usando el servicio después de los cambios implica que aceptas los términos actualizados."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Términos de Servicio - Reglas de Uso de SaveReelsFast"
     },
     "contact": {
       "title": "Contacto",
@@ -732,7 +734,25 @@
         "Informes de errores y sugerencias de funciones",
         "Solicitudes de derechos de autor o de retirada de contenido",
         "Solicitudes de privacidad sobre tus datos"
-      ]
+      ],
+      "metaTitle": "Contacta con SaveReelsFast - Soporte, Consultas y Ayuda",
+      "beforeHeading": "Antes de escribirnos",
+      "beforeIntro": "Algunas respuestas rápidas, por si alguna ya resuelve tu duda.",
+      "quickAnswers": [
+        {
+          "q": "¿Cuánto tiempo guardan el enlace de mi video en sus servidores?",
+          "a": "No guardamos el archivo de video en sí. Un resultado de búsqueda puede quedar en caché hasta 3 horas para responder más rápido a solicitudes repetidas, y luego se borra automáticamente. Consulta nuestra Política de Privacidad para más detalles."
+        },
+        {
+          "q": "El enlace de una plataforma concreta no funciona, ¿qué debo incluir?",
+          "a": "El enlace que pegaste (o la plataforma y aproximadamente cuándo se publicó, si el enlace es privado), en qué dispositivo y navegador estás, y el mensaje de error exacto que viste. Con eso suele bastar para reproducirlo."
+        },
+        {
+          "q": "¿Pueden añadir una plataforma que no está en la lista?",
+          "a": "Sí. Dinos qué plataforma es y, si puedes, un enlace a una publicación pública de ella. Comprobamos si es técnicamente posible antes de añadirla."
+        }
+      ],
+      "relatedHeading": "Páginas relacionadas"
     },
     "dmca": {
       "title": "DMCA y política de derechos de autor",
@@ -794,7 +814,8 @@
         "label": "Envía las notificaciones a",
         "subject": "Notificación de retirada DMCA",
         "note": "Si es posible, escribe en inglés e incluye los seis puntos anteriores. Las notificaciones enviadas a otras direcciones pueden retrasarse. Esta página es información general, no asesoramiento jurídico."
-      }
+      },
+      "metaTitle": "Política DMCA y Derechos de Autor - Cómo Reportarlo Ahora"
     },
     "disclaimer": {
       "title": "Aviso legal",
@@ -838,7 +859,8 @@
             "Usas SaveReelsFast bajo tu propio riesgo. En la medida permitida por la ley, no somos responsables de ninguna pérdida derivada del uso de la herramienta o del contenido descargado."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Aviso Legal - Términos y Límites de Uso de SaveReelsFast"
     }
   },
   "blog": {

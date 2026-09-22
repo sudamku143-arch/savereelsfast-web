@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return legalMetadata(
     locale,
     "/disclaimer",
-    legal.disclaimer.title,
+    legal.disclaimer.metaTitle, // distinct from the on-page H1 (legal.disclaimer.title): keeps the two from being identical
     legal.disclaimer.description
   );
 }

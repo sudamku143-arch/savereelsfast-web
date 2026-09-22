@@ -42,7 +42,7 @@ export default async function LocalePage({
         inLanguage: locale,
         isAccessibleForFree: true,
         image: `${SITE_URL}/icons/icon-512.png`,
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
         publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
       },
       {

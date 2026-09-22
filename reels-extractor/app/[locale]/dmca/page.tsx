@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return legalMetadata(
     locale,
     "/dmca",
-    legal.dmca.title,
+    legal.dmca.metaTitle, // distinct from the on-page H1 (legal.dmca.title): keeps the two from being identical
     legal.dmca.description
   );
 }

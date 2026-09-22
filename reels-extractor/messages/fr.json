@@ -639,7 +639,8 @@
             "Nous pouvons mettre cette politique à jour de temps à autre. La date en haut indique sa dernière modification."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Politique de Confidentialité - Vos Données sur SaveReelsFast"
     },
     "terms": {
       "title": "Conditions d'utilisation",
@@ -718,7 +719,8 @@
             "Nous pouvons mettre ces conditions à jour de temps à autre. Continuer à utiliser le service après les modifications signifie que vous acceptez les conditions mises à jour."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Conditions d'Utilisation - Règles de SaveReelsFast"
     },
     "dmca": {
       "title": "DMCA et politique de droit d'auteur",
@@ -780,7 +782,8 @@
         "label": "Envoyer les notifications à",
         "subject": "Notification de retrait DMCA",
         "note": "Veuillez écrire en anglais si possible et inclure les six éléments ci-dessus. Les notifications envoyées à d'autres adresses peuvent être retardées. Cette page est une information générale, pas un avis juridique."
-      }
+      },
+      "metaTitle": "Politique DMCA et Droits d'Auteur - Comment Signaler"
     },
     "disclaimer": {
       "title": "Avertissement",
@@ -824,7 +827,8 @@
             "Vous utilisez SaveReelsFast à vos propres risques. Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes résultant de l'utilisation de l'outil ou des contenus téléchargés."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Avertissement - Conditions et Limites de SaveReelsFast"
     },
     "contact": {
       "title": "Nous contacter",
@@ -838,7 +842,25 @@
         "Signalement de bugs et suggestions de fonctionnalités",
         "Demandes relatives au droit d'auteur ou au retrait de contenu",
         "Demandes relatives à la confidentialité de vos données"
-      ]
+      ],
+      "metaTitle": "Contacter SaveReelsFast - Assistance, Retours et Demandes",
+      "beforeHeading": "Avant de nous écrire",
+      "beforeIntro": "Quelques réponses rapides, au cas où l'une d'elles répondrait déjà à votre question.",
+      "quickAnswers": [
+        {
+          "q": "Combien de temps le lien de ma vidéo reste-t-il sur vos serveurs ?",
+          "a": "Nous ne stockons pas le fichier vidéo lui-même. Le résultat d'une recherche peut être mis en cache jusqu'à 3 heures pour répondre plus vite aux demandes répétées, puis il est supprimé automatiquement. Voir notre Politique de Confidentialité pour le détail complet."
+        },
+        {
+          "q": "Le lien d'une plateforme précise ne fonctionne pas, que dois-je indiquer ?",
+          "a": "Le lien que vous avez collé (ou la plateforme et à peu près la date de la publication, si le lien lui-même est privé), l'appareil et le navigateur que vous utilisez, et le message d'erreur exact affiché. Cela suffit généralement à reproduire le problème."
+        },
+        {
+          "q": "Pouvez-vous ajouter une plateforme qui n'est pas dans la liste ?",
+          "a": "Oui — dites-nous laquelle et, si possible, le lien d'une publication publique de cette plateforme. Nous vérifions que c'est techniquement possible avant de l'ajouter."
+        }
+      ],
+      "relatedHeading": "Pages liées"
     }
   },
   "blog": {

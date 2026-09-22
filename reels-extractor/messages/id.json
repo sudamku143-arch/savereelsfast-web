@@ -639,7 +639,8 @@
             "Kami dapat memperbarui kebijakan ini dari waktu ke waktu. Tanggal di bagian atas menunjukkan kapan kebijakan ini terakhir diubah."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Kebijakan Privasi - Cara SaveReelsFast Mengelola Data Anda"
     },
     "terms": {
       "title": "Ketentuan Layanan",
@@ -718,7 +719,8 @@
             "Kami dapat memperbarui ketentuan ini dari waktu ke waktu. Melanjutkan penggunaan layanan setelah perubahan berarti Anda menerima ketentuan yang diperbarui."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Ketentuan Layanan - Aturan Penggunaan SaveReelsFast"
     },
     "dmca": {
       "title": "DMCA & Kebijakan Hak Cipta",
@@ -780,7 +782,8 @@
         "label": "Kirim pemberitahuan ke",
         "subject": "Pemberitahuan penghapusan DMCA",
         "note": "Mohon tulis dalam bahasa Inggris jika memungkinkan dan sertakan keenam butir di atas. Pemberitahuan yang dikirim ke alamat lain mungkin tertunda. Halaman ini adalah informasi umum, bukan nasihat hukum."
-      }
+      },
+      "metaTitle": "Kebijakan DMCA & Hak Cipta - Cara Melapor Pelanggaran"
     },
     "disclaimer": {
       "title": "Penafian",
@@ -824,7 +827,8 @@
             "Anda menggunakan SaveReelsFast dengan risiko Anda sendiri. Sejauh diizinkan oleh hukum, kami tidak bertanggung jawab atas kerugian apa pun yang timbul dari penggunaan alat ini atau konten yang diunduh."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Sangkalan - Ketentuan dan Batasan Alat SaveReelsFast"
     },
     "contact": {
       "title": "Hubungi Kami",
@@ -838,7 +842,25 @@
         "Laporan bug dan saran fitur",
         "Permintaan terkait hak cipta atau penghapusan konten",
         "Permintaan privasi terkait data Anda"
-      ]
+      ],
+      "metaTitle": "Hubungi Tim SaveReelsFast - Dukungan dan Permintaan Anda",
+      "beforeHeading": "Sebelum menghubungi kami",
+      "beforeIntro": "Beberapa jawaban cepat, siapa tahu salah satunya sudah menjawab pertanyaan Anda.",
+      "quickAnswers": [
+        {
+          "q": "Berapa lama link video saya disimpan di server Anda?",
+          "a": "Kami tidak menyimpan file videonya sendiri. Hasil pencarian bisa di-cache hingga 3 jam agar permintaan berulang direspons lebih cepat, lalu dihapus otomatis. Lihat Kebijakan Privasi kami untuk rinciannya."
+        },
+        {
+          "q": "Link dari platform tertentu tidak berfungsi — apa yang perlu saya sertakan?",
+          "a": "Link yang Anda tempel (atau nama platform dan perkiraan kapan postingan dibuat, jika linknya sendiri privat), perangkat dan browser yang Anda gunakan, serta pesan error persis yang muncul. Biasanya itu sudah cukup bagi kami untuk mereproduksi masalahnya."
+        },
+        {
+          "q": "Bisakah Anda menambahkan platform yang belum ada di daftar?",
+          "a": "Bisa — beri tahu kami platform apa dan, jika memungkinkan, link postingan publik darinya. Kami memeriksa apakah secara teknis mendukungnya dimungkinkan sebelum menambahkannya."
+        }
+      ],
+      "relatedHeading": "Halaman terkait"
     }
   },
   "blog": {

@@ -101,7 +101,7 @@ export default async function PlatformLandingPage({ params }: Props) {
         inLanguage: locale,
         isAccessibleForFree: true,
         image: `${SITE_URL}/icons/icon-512.png`,
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
         publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
       },
       {
@@ -118,7 +118,8 @@ export default async function PlatformLandingPage({ params }: Props) {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: common.breadcrumbHome, item: homeUrl },
-          { "@type": "ListItem", position: 2, name: content.h1, item: pageUrl },
+          // The last item is the current page: Google's breadcrumb guidelines say to omit its URL.
+          { "@type": "ListItem", position: 2, name: content.h1 },
         ],
       },
     ],

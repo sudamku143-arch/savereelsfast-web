@@ -361,7 +361,7 @@
       },
       "linkedin": {
         "noun": "LinkedIn videos",
-        "metaTitle": "LinkedIn Video Downloader - Save Videos Free",
+        "metaTitle": "LinkedIn Video Downloader - Save Public Post Videos Free",
         "metaDescription": "Free LinkedIn video downloader. Paste the link of a public LinkedIn post and save its video as an MP4. No login, no app.",
         "h1": "Free LinkedIn Video Downloader",
         "lead": "Paste the link of a public LinkedIn post that contains a video and save it as an MP4. No account or app is needed.",
@@ -639,7 +639,8 @@
             "We may update this policy from time to time. The date at the top shows when it last changed."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Privacy Policy - How SaveReelsFast Handles Your Data"
     },
     "terms": {
       "title": "Terms of Service",
@@ -718,7 +719,8 @@
             "We may update these terms from time to time. Continued use of the service after changes means you accept the updated terms."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Terms of Service - SaveReelsFast Usage Rules & Rights"
     },
     "contact": {
       "title": "Contact Us",
@@ -732,7 +734,25 @@
         "Bug reports and feature suggestions",
         "Copyright or content removal requests",
         "Privacy requests about your data"
-      ]
+      ],
+      "metaTitle": "Contact SaveReelsFast - Support, Feedback & Requests",
+      "beforeHeading": "Before you write to us",
+      "beforeIntro": "A few quick answers, in case one of these already covers it.",
+      "quickAnswers": [
+        {
+          "q": "How long is my video link kept on your servers?",
+          "a": "We don't store the video file itself. A lookup result may be cached for up to 3 hours to answer repeat requests faster, then it is cleared automatically. See our Privacy Policy for the full breakdown."
+        },
+        {
+          "q": "A specific platform link isn't working — what should I include?",
+          "a": "The link you pasted (or the platform and roughly when the post was made, if the link itself is private), what device and browser you're on, and the exact error message you saw. That's usually enough for us to reproduce it."
+        },
+        {
+          "q": "Can you add a platform that isn't listed?",
+          "a": "Yes — tell us which platform and, if you can, a public post link from it. We check whether it's technically possible to support before adding it."
+        }
+      ],
+      "relatedHeading": "Related pages"
     },
     "dmca": {
       "title": "DMCA & Copyright Policy",
@@ -794,7 +814,8 @@
         "label": "Send notices to",
         "subject": "DMCA takedown notice",
         "note": "Please write in English if possible and include all six items above. Notices sent to other addresses may be delayed. This page is general information, not legal advice."
-      }
+      },
+      "metaTitle": "DMCA & Copyright Policy - How to Report Infringement"
     },
     "disclaimer": {
       "title": "Disclaimer",
@@ -838,11 +859,12 @@
             "You use SaveReelsFast at your own risk. To the extent permitted by law, we are not liable for any loss arising from use of the tool or of downloaded content."
           ]
         }
-      ]
+      ],
+      "metaTitle": "Disclaimer - SaveReelsFast Tool Terms & Limitations"
     }
   },
   "blog": {
-    "metaTitle": "Blog: Guides and Tips for Social Video",
+    "metaTitle": "SaveReelsFast Blog: Guides and Tips for Social Video",
     "metaDescription": "Practical guides for creators and viewers: video ideas, formats, safe downloading and growing your audience.",
     "heading": "Blog",
     "lead": "Practical guides on short-form video, formats, safe downloading and growing your audience.",
