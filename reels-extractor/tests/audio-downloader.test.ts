@@ -17,6 +17,7 @@ type AudioDownloader = {
   h1: string;
   lead: string;
   breadcrumb: string;
+  footerLabel: string;
   sections: Section[];
   faqHeading: string;
   faq: Faq[];
@@ -40,6 +41,14 @@ describe("audio downloader: honest about format and quality (English, word for w
     assert.match(all, /320kbps no matter the source, treat that as a red flag/);
   });
 
+  it("never uses the MP3-converter search phrases the page was asked to target", () => {
+    const all = [d.metaTitle, d.metaDescription, d.h1, d.lead, ...d.sections.flatMap((s) => s.paragraphs)]
+      .join(" ")
+      .toLowerCase();
+    assert.doesNotMatch(all, /mp3 converter/, "the tool is not an MP3 converter and must not claim to be");
+    assert.doesNotMatch(all, /sound to mp3/, "no wording promises an MP3 file");
+  });
+
   it("the FAQ answers the MP3 question honestly instead of avoiding it", () => {
     const mp3 = d.faq.find((f) => /mp3/i.test(f.q));
     assert.ok(mp3, "expected a FAQ addressing MP3 directly");
@@ -54,14 +63,39 @@ describe("audio downloader: honest about format and quality (English, word for w
     assert.match(priv!.a, /^No\./);
   });
 
-  it("has 4 distinct sections and 4 FAQs totalling 600+ words", () => {
+  it("has 4 distinct sections and 7 FAQs totalling 600+ words", () => {
     assert.equal(d.sections.length, 4);
     assert.equal(new Set(d.sections.map((s) => s.heading)).size, 4, "duplicate section heading");
-    assert.equal(d.faq.length, 4);
+    assert.equal(d.faq.length, 7);
+    assert.equal(new Set(d.faq.map((f) => f.q)).size, 7, "duplicate FAQ question");
     const words =
       d.sections.reduce((n, s) => n + s.paragraphs.reduce((m, p) => m + wordCount(p), 0), 0) +
       d.faq.reduce((n, f) => n + wordCount(f.q) + wordCount(f.a), 0);
     assert.ok(words >= 600, `only ${words} words`);
+  });
+
+  it("names both Instagram and YouTube up front (H1, lead and the two SEO sections), honestly", () => {
+    assert.equal(d.h1, "Instagram & YouTube Audio Downloader");
+    assert.match(d.lead, /Instagram Reels, YouTube Shorts/);
+    assert.equal(d.sections[1].heading, "How to Extract Audio from Instagram & YouTube Online");
+    assert.equal(d.sections[2].heading, "Why Choose SaveReelsFast Audio Downloader?");
+    // Still says, honestly, that 8 more platforms work too - narrower headings, not a narrower product.
+    assert.match(d.sections[2].paragraphs[0], /Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat/);
+  });
+
+  it("new FAQs answer honestly: both platforms work, quality is the platform's own, no fixed download cap", () => {
+    const both = d.faq.find((f) => /both/i.test(f.q));
+    assert.ok(both, "expected a FAQ about Instagram + YouTube together");
+    assert.match(both!.a, /^Yes\./);
+
+    const quality = d.faq.find((f) => /keep.*quality|original quality/i.test(f.q));
+    assert.ok(quality, "expected a FAQ about audio quality");
+    assert.match(quality!.a, /^Yes\./);
+    assert.doesNotMatch(quality!.a, /320|guarantee/i);
+
+    const limit = d.faq.find((f) => /limit/i.test(f.q));
+    assert.ok(limit, "expected a FAQ about download limits");
+    assert.doesNotMatch(limit!.a, /\d+\s*(MB|GB|requests?|downloads?)\b/, "no exact threshold is published");
   });
 });
 
@@ -75,17 +109,17 @@ for (const locale of locales) {
         length(d.metaDescription) >= 90 && length(d.metaDescription) <= 160,
         `description is ${length(d.metaDescription)} chars`
       );
-      for (const field of [d.h1, d.lead, d.breadcrumb, d.faqHeading]) assert.ok(field.trim().length > 0);
+      for (const field of [d.h1, d.lead, d.breadcrumb, d.footerLabel, d.faqHeading]) assert.ok(field.trim().length > 0);
     });
 
-    it("has 4 sections with real paragraphs, and 4 FAQs with a question mark", () => {
+    it("has 4 sections with real paragraphs, and 7 FAQs with a question mark", () => {
       assert.equal(d.sections.length, 4);
       for (const s of d.sections) {
         assert.ok(s.heading.trim().length > 0);
         assert.ok(s.paragraphs.length >= 1);
         for (const p of s.paragraphs) assert.ok(p.trim().length > 40, `${locale}: thin paragraph under "${s.heading}"`);
       }
-      assert.equal(d.faq.length, 4);
+      assert.equal(d.faq.length, 7);
       for (const f of d.faq) {
         assert.ok(/[?؟]$/.test(f.q.trim()), `${locale}: question mark on "${f.q}"`);
         assert.ok(f.a.trim().length >= 40, `${locale}: thin answer to "${f.q}"`);
@@ -128,7 +162,7 @@ describe("linked from the footer and the sitemap", () => {
     const footer = source("app/[locale]/components/Footer.tsx");
     assert.match(footer, /href: localePath\(locale, "\/audio-downloader"\), label: audioDownloaderLabel/);
     const layout = source("app/[locale]/layout.tsx");
-    assert.match(layout, /audioDownloaderLabel=\{dict\.audioDownloader\.breadcrumb\}/);
+    assert.match(layout, /audioDownloaderLabel=\{dict\.audioDownloader\.footerLabel\}/);
   });
 
   it("app/sitemap.ts includes the page once per language, at 0.85 daily", () => {

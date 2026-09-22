@@ -931,31 +931,31 @@
     "hide": "Sembunyikan tombol ini"
   },
   "audioDownloader": {
-    "metaTitle": "Pengunduh Audio Gratis - Instagram, YouTube & Lainnya",
-    "metaDescription": "Ekstrak dan unduh audio dari Reels Instagram, video YouTube, dan 8 platform lainnya. Gratis, tanpa login, tanpa aplikasi. Kualitas asli, bukan konversi MP3.",
-    "h1": "Pengunduh Audio Gratis untuk Instagram, YouTube & Lainnya",
-    "lead": "Tempel tautan video publik dan simpan audionya saja — file asli dari platform, bukan konversi MP3 yang mengurangi kualitas.",
+    "metaTitle": "Pengunduh Audio Instagram & YouTube - Cepat, Gratis",
+    "metaDescription": "Pengunduh audio gratis untuk Reels Instagram dan video atau Shorts YouTube. Ambil suaranya dalam hitungan detik, kualitas asli, tanpa login, tanpa aplikasi.",
+    "h1": "Pengunduh Audio Instagram & YouTube",
+    "lead": "Ekstrak audio berkualitas tinggi dan musik latar dari Reels Instagram, Shorts YouTube, dan video lengkap dalam hitungan detik — pengunduh audio cepat, tanpa aplikasi untuk dipasang, tanpa login, dan tanpa konversi MP3 yang mengurangi kualitas.",
     "breadcrumb": "Pengunduh Audio",
     "sections": [
       {
         "heading": "Apa Itu Pengunduh Audio?",
         "paragraphs": [
-          "Pengunduh audio menyimpan suara dari video publik sebagai file tersendiri, terpisah dari videonya, sehingga Anda bisa menyimpan voice-over, cuplikan lagu, atau klip mirip podcast tanpa gambarnya. Tempel tautannya di sini, dan saat platform menyediakan trek audio terpisah, tombol Unduh Audio muncul di samping hasil video.",
+          "Pengunduh audio menyimpan suara dari video publik — sebuah Reel Instagram, Short YouTube, atau video YouTube lengkap — sebagai file tersendiri, terpisah dari videonya, sehingga Anda bisa menyimpan voice-over, cuplikan lagu, atau klip mirip podcast tanpa gambarnya. Tempel tautannya di sini, dan saat platform menyediakan trek audio terpisah, tombol Unduh Audio muncul di samping hasil video.",
           "Berguna untuk menyimpan soundtrack sebuah Reel agar bisa didengarkan nanti, mengambil audio dari sebuah ceramah atau wawancara yang videonya tidak Anda perlukan, atau menyimpan cuplikan dialog atau efek suara yang ingin digunakan kembali, dengan izin pembuatnya, karena audio itu tetap miliknya. Alat ini bekerja sama di ponsel, tablet, atau komputer, di browser modern mana pun."
         ]
       },
       {
-        "heading": "Cara Mengunduh Audio dari Tautan Video Mana Pun",
+        "heading": "Cara Mengekstrak Audio dari Instagram & YouTube Online",
         "paragraphs": [
-          "1) Salin tautan postingan publik dari Instagram, YouTube, TikTok, atau salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau dimuat. 3) Jika platform menyediakan trek audio terpisah, ketuk Unduh Audio di samping video; file langsung tersimpan di perangkat Anda, sama seperti unduhan video.",
+          "1) Salin tautan Reel Instagram publik, video atau Short YouTube, atau postingan dari salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau dimuat. 3) Jika platform menyediakan trek audio terpisah, ketuk Unduh Audio di samping video; file langsung tersimpan di perangkat Anda, sama seperti unduhan video — pengunduh audio cepat, tanpa perlu memasang apa pun.",
           "Di iPhone, file diunduh di dalam Safari; buka ikon Downloads di toolbar dan gunakan ikon bagikan untuk menyimpannya di tempat Anda biasa menyimpan file audio. Di Android atau komputer, file tersimpan di folder Downloads biasa. Tidak perlu akun, ekstensi browser, atau aplikasi apa pun di langkah mana pun."
         ]
       },
       {
-        "heading": "Bekerja dengan 10 Platform, Tanpa Login",
+        "heading": "Kenapa Memilih Pengunduh Audio SaveReelsFast?",
         "paragraphs": [
-          "Audio bisa diambil dari postingan publik di Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, atau LinkedIn, tergantung mana yang benar-benar punya trek audio terpisah untuk postingan itu. Gratis digunakan, tanpa akun, pendaftaran, atau memasang aplikasi apa pun.",
-          "Hanya postingan publik yang berfungsi: akun privat, konten yang memerlukan login, dan apa pun yang dibatasi platform untuk audiens tertentu memang sengaja tidak bisa dijangkau (SaveReelsFast tidak login ke mana pun atas nama Anda). Yang Anda dapatkan selalu file audio asli dari platform, dengan kualitas apa pun yang disediakannya untuk postingan itu; tidak ada yang direkam ulang atau dikarang."
+          "Mendukung unduhan audio Instagram maupun YouTube dari kotak yang sama — juga Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn, tergantung mana yang benar-benar punya trek audio terpisah untuk postingan itu. Gratis digunakan, tanpa akun, pendaftaran, atau memasang aplikasi maupun software apa pun: semuanya berjalan di browser Anda, sama saja di iPhone, Android, atau komputer.",
+          "Yang Anda dapatkan selalu file audio asli dari platform, dengan kualitas apa pun yang disediakannya untuk postingan itu, bukan rekaman ulang atau bitrate karangan. Hanya postingan publik yang berfungsi: akun privat dan konten yang memerlukan login memang sengaja tidak bisa dijangkau (SaveReelsFast tidak login ke mana pun atas nama Anda)."
         ]
       },
       {
@@ -965,11 +965,23 @@
         ]
       }
     ],
-    "faqHeading": "FAQ pengunduh audio",
+    "faqHeading": "Pertanyaan yang Sering Diajukan",
     "faq": [
       {
+        "q": "Bisakah saya mengunduh audio dari Reels Instagram maupun video YouTube?",
+        "a": "Ya. Tempel tautan dari salah satunya (atau dari Facebook, TikTok, dan platform lain yang didukung), dan saat postingan itu punya trek audio terpisah, tombol Unduh Audio muncul di samping videonya."
+      },
+      {
         "q": "Bisakah saya mengonversi video YouTube ke MP3?",
-        "a": "Tidak persis begitu. SaveReelsFast tidak mengonversi atau meng-encode ulang audio ke MP3; saat video memiliki trek audio terpisah, Anda mendapat trek itu dalam format aslinya, biasanya M4A (kadang WebM/Opus). File ini bisa diputar di aplikasi musik atau video standar mana pun. Hanya saja secara harfiah bukan file .mp3, dan kami lebih memilih mengatakannya dengan jelas daripada memberi label yang salah pada sebuah file."
+        "a": "Tidak persis begitu. SaveReelsFast tidak mengonversi atau meng-encode ulang audio ke MP3; saat video memiliki trek audio terpisah, Anda mendapat trek itu dalam format aslinya, biasanya M4A (kadang WebM/Opus). File ini bisa diputar di aplikasi standar mana pun. Hanya saja secara harfiah bukan file .mp3, dan kami lebih memilih mengatakannya dengan jelas."
+      },
+      {
+        "q": "Apakah audio yang diekstrak mempertahankan kualitas aslinya?",
+        "a": "Ya. File tersebut adalah trek audio asli dari platform, persis seperti yang disediakannya untuk postingan itu; tidak ada yang direkam ulang, ditingkatkan, atau dikompres lagi. Kualitasnya tetap tergantung pada apa yang disajikan platform untuk unggahan spesifik itu, yang berbeda-beda antar postingan."
+      },
+      {
+        "q": "Apakah ada batas berapa banyak audio yang bisa saya unduh?",
+        "a": "Tidak ada batas tetap untuk penggunaan normal. File yang sangat besar, atau banyak permintaan dalam waktu singkat, mungkin diperlambat atau diminta menunggu sebentar, agar layanan tetap cepat dan adil untuk semua orang."
       },
       {
         "q": "Kenapa tidak ada opsi audio untuk beberapa tautan?",
@@ -983,7 +995,8 @@
         "q": "Bisakah saya mengunduh audio dari akun atau video privat?",
         "a": "Tidak. Ini hanya berfungsi untuk postingan publik, karena konten privat memang sengaja dibatasi oleh setiap platform dan tidak bisa diakses lewat tautan yang dibagikan."
       }
-    ]
+    ],
+    "footerLabel": "Pengunduh Audio (Insta & YT)"
   },
   "modeSwitcher": {
     "toAudioLabel": "Ekstrak Audio",

@@ -931,31 +931,31 @@
     "hide": "Ocultar este botón"
   },
   "audioDownloader": {
-    "metaTitle": "Descargador de Audio Gratis - Instagram, YouTube y Más",
-    "metaDescription": "Extrae y descarga audio de Reels, YouTube y 8 plataformas más. Gratis, sin iniciar sesión, sin app. Calidad real, no una conversión a MP3.",
-    "h1": "Descargador de Audio Gratis para Instagram, YouTube y Más",
-    "lead": "Pega el enlace de un video público y guarda solo el audio: el archivo propio de la plataforma, no una conversión a MP3 con pérdida de calidad.",
+    "metaTitle": "Descargador de Audio de Instagram y YouTube Rápido",
+    "metaDescription": "Descargador de audio gratis para Reels de Instagram y videos o Shorts de YouTube. Descarga el sonido en segundos, calidad original, sin iniciar sesión ni app.",
+    "h1": "Descargador de Audio de Instagram y YouTube",
+    "lead": "Extrae audio de alta calidad y música de fondo de Reels de Instagram, Shorts de YouTube y videos completos en segundos: un descargador de audio rápido, sin app que instalar, sin iniciar sesión y sin conversión con pérdida a MP3.",
     "breadcrumb": "Descargador de Audio",
     "sections": [
       {
         "heading": "¿Qué es un Descargador de Audio?",
         "paragraphs": [
-          "Un descargador de audio guarda el sonido de un video público como un archivo aparte, separado del video, para que puedas conservar una voz en off, un fragmento de canción o un clip tipo pódcast sin la imagen. Pega el enlace aquí, y cuando la plataforma ofrezca una pista de audio separada, aparecerá un botón de Descargar audio junto al resultado del video.",
+          "Un descargador de audio guarda el sonido de un video público, un Reel de Instagram, un Short de YouTube o un video completo de YouTube, como un archivo aparte, separado del video, para que puedas conservar una voz en off, un fragmento de canción o un clip tipo pódcast sin la imagen. Pega el enlace aquí, y cuando la plataforma ofrezca una pista de audio separada, aparecerá un botón de Descargar audio junto al resultado del video.",
           "Es útil para guardar la banda sonora de un Reel y escucharla después, extraer el audio de una charla o entrevista que no necesitas en video, o conservar un fragmento de diálogo o un efecto de sonido que quieras reutilizar, con permiso del creador, ya que el audio sigue siendo suyo. Funciona igual en un teléfono, una tablet o una computadora, en cualquier navegador moderno."
         ]
       },
       {
-        "heading": "Cómo Descargar Audio de Cualquier Enlace de Video",
+        "heading": "Cómo Extraer Audio de Instagram y YouTube en Línea",
         "paragraphs": [
-          "1) Copia el enlace de una publicación pública de Instagram, YouTube, TikTok o cualquiera de nuestras 10 plataformas compatibles. 2) Pégalo en el cuadro de arriba y espera a que cargue la vista previa. 3) Si la plataforma ofrece una pista de audio separada, toca Descargar audio junto al video; el archivo se guarda directo en tu dispositivo, igual que la descarga del video.",
+          "1) Copia el enlace de un Reel público de Instagram, un video o Short de YouTube, o una publicación de cualquiera de nuestras 10 plataformas compatibles. 2) Pégalo en el cuadro de arriba y espera a que cargue la vista previa. 3) Si la plataforma ofrece una pista de audio separada, toca Descargar audio junto al video; el archivo se guarda directo en tu dispositivo, igual que la descarga del video: un descargador de audio rápido, sin nada que instalar.",
           "En iPhone, el archivo se descarga dentro de Safari; abre el icono de Descargas en la barra y usa el icono de compartir para guardarlo donde guardes tus archivos de audio. En Android o computadora, se guarda en tu carpeta de Descargas habitual. No hace falta cuenta, extensión de navegador ni ninguna app en ningún paso."
         ]
       },
       {
-        "heading": "Funciona con 10 Plataformas, Sin Iniciar Sesión",
+        "heading": "¿Por qué Elegir el Descargador de Audio de SaveReelsFast?",
         "paragraphs": [
-          "Se puede extraer audio de una publicación pública de Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat o LinkedIn, la que realmente tenga una pista de audio separada para esa publicación. Es gratis, sin cuenta, sin registro y sin instalar ninguna app.",
-          "Solo funcionan las publicaciones públicas: las cuentas privadas, el contenido que requiere inicio de sesión y todo lo que una plataforma restrinja a una audiencia específica quedan fuera de alcance, por diseño (SaveReelsFast no inicia sesión en nada en tu nombre). Lo que obtienes es siempre el archivo de audio propio de la plataforma, en la calidad que ofrezca para esa publicación; nada se graba de nuevo ni se inventa."
+          "Admite tanto la descarga de audio de Instagram como de YouTube desde el mismo cuadro, además de Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat y LinkedIn, la que realmente tenga una pista de audio separada para esa publicación. Es gratis, sin cuenta, sin registro y sin instalar ninguna app ni software: todo funciona en tu navegador, igual en iPhone, Android o una computadora.",
+          "Lo que obtienes es siempre el archivo de audio propio de la plataforma, en la calidad que ofrezca para esa publicación, no una regrabación ni un bitrate inventado. Solo funcionan las publicaciones públicas: las cuentas privadas y el contenido que requiere inicio de sesión quedan fuera de alcance, por diseño (SaveReelsFast no inicia sesión en nada en tu nombre)."
         ]
       },
       {
@@ -965,11 +965,23 @@
         ]
       }
     ],
-    "faqHeading": "Preguntas frecuentes del descargador de audio",
+    "faqHeading": "Preguntas Frecuentes",
     "faq": [
       {
+        "q": "¿Puedo descargar audio de Reels de Instagram y de videos de YouTube?",
+        "a": "Sí. Pega un enlace de cualquiera de los dos (o de Facebook, TikTok y las demás plataformas compatibles) y, cuando esa publicación tenga una pista de audio separada, aparecerá un botón de Descargar audio junto al video."
+      },
+      {
         "q": "¿Puedo convertir videos de YouTube a MP3?",
-        "a": "No exactamente. SaveReelsFast no convierte ni recodifica el audio a MP3; cuando un video tiene una pista de audio separada, obtienes esa pista en su formato original, normalmente M4A (a veces WebM/Opus). Se reproduce en cualquier reproductor de música o video estándar. Simplemente no es literalmente un archivo .mp3, y preferimos decirlo con claridad antes que etiquetar mal un archivo."
+        "a": "No exactamente. SaveReelsFast no convierte ni recodifica el audio a MP3; cuando un video tiene una pista de audio separada, obtienes esa pista en su formato original, normalmente M4A (a veces WebM/Opus). Se reproduce en cualquier reproductor estándar. Simplemente no es literalmente un archivo .mp3, y preferimos decirlo con claridad antes que etiquetar mal un archivo."
+      },
+      {
+        "q": "¿El audio extraído conserva su calidad original?",
+        "a": "Sí. El archivo es la propia pista de audio de la plataforma, tal como la ofrece para esa publicación; nada se regraba, mejora ni comprime más. La calidad sigue dependiendo de lo que la plataforma haya servido para esa publicación en concreto, que varía de una a otra."
+      },
+      {
+        "q": "¿Hay un límite de cuánto audio puedo descargar?",
+        "a": "No hay un límite fijo para el uso normal. Un archivo muy grande, o muchas solicitudes en poco tiempo, pueden ralentizarse o pedirte que esperes un momento, para mantener el servicio rápido y justo para todos."
       },
       {
         "q": "¿Por qué no hay opción de audio en algunos enlaces?",
@@ -983,7 +995,8 @@
         "q": "¿Puedo descargar audio de una cuenta o video privado?",
         "a": "No. Esto solo funciona con publicaciones públicas, ya que el contenido privado está intencionalmente restringido por cada plataforma y no es accesible mediante un enlace compartido."
       }
-    ]
+    ],
+    "footerLabel": "Descargador de Audio (Insta y YT)"
   },
   "modeSwitcher": {
     "toAudioLabel": "Extraer audio",
