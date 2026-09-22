@@ -21,6 +21,10 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// Pure static HTML, served from Vercel's Edge Network. See the home page for why this is declared
+// explicitly rather than left implicit.
+export const dynamic = "force-static";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = resolveLocale(params.locale);
   const dict = await getDictionary(locale);

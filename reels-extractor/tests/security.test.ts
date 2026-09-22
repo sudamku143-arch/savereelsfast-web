@@ -89,6 +89,16 @@ describe("security headers (next.config.js)", () => {
     assert.match(rule!.source, /sw\\\.js/);
   });
 
+  it("home, every platform page and the audio downloader declare themselves pure static (no SSR fallback)", () => {
+    for (const file of [
+      "app/[locale]/page.tsx",
+      "app/[locale]/[platform]/page.tsx",
+      "app/[locale]/audio-downloader/page.tsx",
+    ] as const) {
+      assert.match(source(file), /export const dynamic = "force-static";/, file);
+    }
+  });
+
   it("every <Image> in the app is unoptimized (so turning the optimizer off breaks nothing)", () => {
     for (const file of [
       "app/[locale]/components/PreviewCard.tsx",

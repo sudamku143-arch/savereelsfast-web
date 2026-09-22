@@ -13,6 +13,12 @@ import InstallBanner from "./components/InstallBanner";
 import PlatformLinks from "./components/PlatformLinks";
 import LatestPosts from "./components/LatestPosts";
 
+// Pure static HTML, built once per locale (params come from the layout's generateStaticParams) and served
+// straight from Vercel's Edge Network - nothing here depends on the request, so there is nothing to render
+// per-visit. Declared explicitly so a future edit that reaches for a per-request API (cookies(), headers(),
+// an uncached fetch) fails the build instead of silently turning the whole page dynamic.
+export const dynamic = "force-static";
+
 export default async function LocalePage({
   params,
 }: {

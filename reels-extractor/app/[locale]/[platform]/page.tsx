@@ -25,6 +25,9 @@ type Props = { params: { locale: string; platform: string } };
 
 // Only the ten known platforms exist; anything else is a 404.
 export const dynamicParams = false;
+// Pure static HTML, built once per locale/platform and served from Vercel's Edge Network. See the home page
+// for why this is declared explicitly rather than left implicit.
+export const dynamic = "force-static";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
