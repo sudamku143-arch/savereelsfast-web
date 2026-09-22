@@ -137,8 +137,9 @@ for (const locale of LOCALES) {
       for (const id of ids) {
         const t = landing.platforms[id].metaTitle;
         assert.match(t, /^[A-Za-z ]+ (Video |Reels |Spotlight )?Downloader - /, `${id}: "${t}" should start "<Platform> ... Downloader - "`);
-        // LinkedIn does not report a resolution we could promise, so its title makes no HD claim.
-        if (id !== "linkedin") assert.ok(t.split(" ").includes("HD"), `${id}: title should mention HD`);
+        // LinkedIn doesn't report a resolution, and YouTube's fast (cookie-less) route tops out at 360p
+        // (see the YouTube quality FAQ, and main.py's YOUTUBE_LEAN comment) - neither title claims HD.
+        if (id !== "linkedin" && id !== "youtube") assert.ok(t.split(" ").includes("HD"), `${id}: title should mention HD`);
         assert.ok(t.length <= 60, `${id}: title is ${t.length} chars, Google cuts around 60`);
       }
     });
@@ -249,4 +250,17 @@ describe("Hindi search targeting", () => {
   it("does not promise HD for YouTube, which is capped at 360p", () => {
     assert.doesNotMatch(hi.youtube.metaTitle + hi.youtube.metaDescription + hi.youtube.h1, /HD|4k|1080/i);
   });
+});
+
+describe("YouTube never claims HD, in any language", () => {
+  // The fast (cookie-less) route yt-dlp uses is capped at 360p (main.py's YOUTUBE_LEAN comment); the
+  // dedicated quality FAQ says so honestly. English's title said "HD" regardless until this test - the
+  // other 10 languages never did, which is what caught it.
+  for (const locale of LOCALES) {
+    it(locale, () => {
+      const yt = messages[locale].landing.platforms.youtube;
+      const all = [yt.metaTitle, yt.metaDescription, yt.h1, yt.lead, ...(yt.articles ?? []).flatMap((a: { paragraphs: string[] }) => a.paragraphs)].join(" ");
+      assert.doesNotMatch(all, /\bHD\b|\b4[Kk]\b|1080/, `${locale}: YouTube copy claims a resolution it can't guarantee`);
+    });
+  }
 });

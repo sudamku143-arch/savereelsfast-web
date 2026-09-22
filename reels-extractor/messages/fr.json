@@ -231,7 +231,15 @@
             "a": "Non. Elles exigent un compte YouTube connecté, que cet outil n'utilise jamais. Les vidéos publiques fonctionnent ; les vidéos privées, réservées aux membres ou soumises à une limite d'âge, non."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Qu'est-ce qu'un Téléchargeur de Vidéos YouTube ?",
+            "paragraphs": [
+              "Un téléchargeur de vidéos YouTube enregistre un Short ou une vidéo classique publique de YouTube sous forme de fichier MP4, pour que vous puissiez la regarder plus tard sans avoir besoin de l'appli ouverte ni de connexion internet. Collez un lien youtube.com ou youtu.be ci-dessus, et l'outil récupère le même fichier vidéo que YouTube lit lui-même, avec le son.",
+              "Cela fonctionne aussi bien pour les Shorts YouTube que pour les vidéos classiques : copiez le lien depuis le menu Partager de l'appli YouTube sur mobile, ou copiez l'adresse depuis votre navigateur sur ordinateur, puis collez-le ici et touchez Télécharger la vidéo. Aucun compte, extension de navigateur ni logiciel à installer n'est nécessaire, et cela fonctionne de la même façon sur iPhone, Android ou ordinateur."
+            ]
+          }
+        ]
       },
       "facebook": {
         "noun": "les vidéos et Reels Facebook",
@@ -254,7 +262,15 @@
             "a": "La vidéo n'est probablement pas publique, a été supprimée ou est restreinte dans certaines régions. Vérifiez qu'elle s'ouvre dans une fenêtre de navigation privée sans connexion ; si c'est le cas, réessayez dans une minute."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Qu'est-ce qu'un Téléchargeur de Vidéos Facebook ?",
+            "paragraphs": [
+              "Un téléchargeur de vidéos Facebook enregistre une vidéo publique, un Reel ou une publication Watch sous forme de fichier MP4, pour que vous puissiez la garder ou la regarder hors ligne. Collez un lien vidéo facebook.com, un lien de Reel, ou un lien raccourci fb.watch, et l'outil récupère le même fichier vidéo que Facebook fournit pour la lecture.",
+              "Seules les publications publiques fonctionnent : les vidéos partagées dans des groupes privés, les publications réservées aux amis et tout ce qui nécessite une connexion pour être vu restent hors de portée, puisque SaveReelsFast ne se connecte à rien en votre nom. Aucun compte, appli ni extension de navigateur n'est non plus nécessaire de votre côté."
+            ]
+          }
+        ]
       },
       "threads": {
         "noun": "les vidéos Threads",
@@ -346,7 +362,15 @@
             "a": "TikTok limite les requêtes automatisées, un lien peut donc échouer de temps en temps même si la vidéo est publique. Attendez une minute et collez-le à nouveau."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Qu'est-ce qu'un Téléchargeur de Vidéos TikTok ?",
+            "paragraphs": [
+              "Un téléchargeur de vidéos TikTok enregistre un TikTok public sous forme de fichier MP4 que vous pouvez garder sur votre appareil, sans ouvrir l'appli TikTok. Collez le lien d'une publication TikTok, que ce soit une adresse complète tiktok.com/@utilisateur/video/... ou un lien raccourci vm.tiktok.com ou vt.tiktok.com, et l'outil récupère le même fichier vidéo que TikTok fournit pour la lecture.",
+              "C'est utile pour garder une vidéo à regarder hors ligne, conserver une copie de vos propres TikToks, ou revoir un extrait que vous voulez garder en référence, en créditant son créateur si vous le réutilisez. Aucun compte, appli à installer ni extension de navigateur n'est nécessaire de votre côté ; collez un lien et touchez Télécharger la vidéo."
+            ]
+          }
+        ]
       },
       "reddit": {
         "noun": "les vidéos Reddit",

@@ -231,7 +231,15 @@
             "a": "Não. Eles exigem uma conta do YouTube com login, que esta ferramenta nunca usa. Vídeos públicos funcionam; privados, exclusivos para membros e com restrição de idade não."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "O que é um Baixador de Vídeo do YouTube?",
+            "paragraphs": [
+              "Um baixador de vídeo do YouTube salva um Short ou vídeo comum público do YouTube como arquivo MP4, para você assistir depois sem precisar do app aberto ou de conexão com a internet. Cole um link do youtube.com ou youtu.be acima, e a ferramenta busca o mesmo arquivo de vídeo que o YouTube reproduz, com som incluído.",
+              "Funciona tanto para Shorts do YouTube quanto para vídeos completos: copie o link no menu Compartilhar do app do YouTube no celular, ou copie o endereço do seu navegador no computador, depois cole aqui e toque em Baixar vídeo. Não precisa de conta, extensão de navegador nem instalar software, e funciona igual no iPhone, Android ou computador."
+            ]
+          }
+        ]
       },
       "facebook": {
         "noun": "vídeos e Reels do Facebook",
@@ -254,7 +262,15 @@
             "a": "O vídeo provavelmente não é público, foi apagado ou tem restrição em algumas regiões. Verifique se ele abre em uma janela anônima do navegador sem fazer login; se abrir, tente de novo em um minuto."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "O que é um Baixador de Vídeo do Facebook?",
+            "paragraphs": [
+              "Um baixador de vídeo do Facebook salva um vídeo público, Reel ou publicação do Watch como arquivo MP4, para você guardar ou assistir offline. Cole um link de vídeo do facebook.com, um link de Reel, ou um link encurtado do fb.watch, e a ferramenta busca o mesmo arquivo de vídeo que o Facebook fornece para reprodução.",
+              "Só funciona com publicações públicas: vídeos compartilhados em grupos privados, publicações só para amigos e qualquer coisa que exija login para ver ficam fora de alcance, já que o SaveReelsFast não faz login em nada em seu nome. Também não é preciso conta, app nem extensão de navegador da sua parte."
+            ]
+          }
+        ]
       },
       "threads": {
         "noun": "vídeos do Threads",
@@ -346,7 +362,15 @@
             "a": "O TikTok limita solicitações automáticas, então um link pode falhar de vez em quando mesmo com o vídeo público. Espere um minuto e cole de novo."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "O que é um Baixador de Vídeo do TikTok?",
+            "paragraphs": [
+              "Um baixador de vídeo do TikTok salva um TikTok público como arquivo MP4 que você pode guardar no seu aparelho, sem abrir o app do TikTok. Cole o link de uma publicação do TikTok, seja um endereço completo tiktok.com/@usuario/video/... ou um link encurtado vm.tiktok.com ou vt.tiktok.com, e a ferramenta busca o mesmo arquivo de vídeo que o TikTok fornece para reprodução.",
+              "É útil para salvar um vídeo e assistir offline, guardar uma cópia dos seus próprios TikToks, ou rever um trecho que queira usar como referência depois, dando crédito ao criador se você reutilizar. Não precisa de conta, instalar app nem extensão de navegador da sua parte; cole um link e toque em Baixar vídeo."
+            ]
+          }
+        ]
       },
       "reddit": {
         "noun": "vídeos do Reddit",

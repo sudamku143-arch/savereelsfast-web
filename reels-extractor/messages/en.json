@@ -212,7 +212,7 @@
       },
       "youtube": {
         "noun": "YouTube Shorts and videos",
-        "metaTitle": "YouTube Video Downloader - Download Shorts & MP4 HD Free",
+        "metaTitle": "YouTube Video Downloader - Download Shorts & MP4 Free",
         "metaDescription": "Download YouTube Shorts and videos as MP4 for free. Paste a youtube.com or youtu.be link and save it with sound. No login, no software.",
         "h1": "Download YouTube Shorts in Seconds",
         "lead": "Paste a YouTube Shorts or video link (youtube.com or youtu.be) and save it as an MP4 with sound. It's free, needs no account and works in any browser.",
@@ -231,7 +231,15 @@
             "a": "No. Those need a signed-in YouTube account, which this tool never uses. Public videos work; private, members-only and age-restricted ones don't."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "What Is a YouTube Video Downloader?",
+            "paragraphs": [
+              "A YouTube video downloader saves a public YouTube Short or regular video as an MP4 file, so you can watch it later without needing the app open or an internet connection. Paste a youtube.com or youtu.be link above, and the tool fetches the same video file YouTube itself plays back, complete with sound.",
+              "It works for both YouTube Shorts and full-length videos: copy the link from the YouTube app's Share menu on mobile, or copy the address from your browser on a computer, then paste it here and tap Download Video. No account, browser extension or software install is needed, and it works the same on iPhone, Android or a computer."
+            ]
+          }
+        ]
       },
       "facebook": {
         "noun": "Facebook videos and Reels",
@@ -254,7 +262,15 @@
             "a": "The video is probably not public, has been deleted, or is restricted in some regions. Check that it opens in a private browser window without logging in; if it does, try again in a minute."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "What Is a Facebook Video Downloader?",
+            "paragraphs": [
+              "A Facebook video downloader saves a public video, Reel or Watch post as an MP4 file, so you can keep it or watch it offline. Paste a facebook.com video link, a Reel link, or a shortened fb.watch link, and the tool fetches the same video file Facebook serves for playback.",
+              "Only public posts work: videos shared in private groups, friends-only posts and anything that needs you to be logged in to view are out of reach, since SaveReelsFast doesn't sign in to anything on your behalf. No account, app or browser extension is needed on your end either."
+            ]
+          }
+        ]
       },
       "threads": {
         "noun": "Threads videos",
@@ -346,7 +362,15 @@
             "a": "TikTok limits automated requests, so a link can occasionally fail even though the video is public. Wait a minute and paste it again."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "What Is a TikTok Video Downloader?",
+            "paragraphs": [
+              "A TikTok video downloader saves a public TikTok as an MP4 file you can keep on your device, without opening the TikTok app. Paste the link of a TikTok post, either a full tiktok.com/@user/video/... address or a shortened vm.tiktok.com or vt.tiktok.com link, and the tool fetches the same video file TikTok serves for playback.",
+              "It is useful for saving a video to watch offline, keeping a copy of your own TikToks, or reviewing a clip you want to reference later, with credit to its creator if you reuse it. No account, app install or browser extension is needed on your end; paste a link and tap Download Video."
+            ]
+          }
+        ]
       },
       "reddit": {
         "noun": "Reddit videos",

@@ -231,7 +231,15 @@
             "a": "Tidak. Video seperti itu memerlukan akun YouTube yang sudah login, yang tidak pernah dipakai alat ini. Video publik bisa; video pribadi, khusus anggota, dan berbatas usia tidak bisa."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Apa Itu Pengunduh Video YouTube?",
+            "paragraphs": [
+              "Pengunduh video YouTube menyimpan Short atau video biasa YouTube yang publik sebagai file MP4, agar Anda bisa menontonnya nanti tanpa perlu membuka aplikasi atau koneksi internet. Tempel tautan youtube.com atau youtu.be di atas, dan alat ini mengambil file video yang sama persis dengan yang diputar YouTube, lengkap dengan suara.",
+              "Alat ini berfungsi untuk YouTube Shorts maupun video berdurasi penuh: salin tautan dari menu Bagikan di aplikasi YouTube pada ponsel, atau salin alamat dari browser di komputer, lalu tempel di sini dan ketuk Unduh Video. Tidak perlu akun, ekstensi browser, atau memasang perangkat lunak apa pun, dan bekerja sama di iPhone, Android, atau komputer."
+            ]
+          }
+        ]
       },
       "facebook": {
         "noun": "video dan Reels Facebook",
@@ -254,7 +262,15 @@
             "a": "Kemungkinan video itu tidak publik, sudah dihapus, atau dibatasi di wilayah tertentu. Pastikan video terbuka di jendela pribadi tanpa login; jika terbuka, coba lagi dalam semenit."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Apa Itu Pengunduh Video Facebook?",
+            "paragraphs": [
+              "Pengunduh video Facebook menyimpan video publik, Reel, atau postingan Watch sebagai file MP4, agar Anda bisa menyimpannya atau menontonnya secara offline. Tempel tautan video facebook.com, tautan Reel, atau tautan pendek fb.watch, dan alat ini mengambil file video yang sama persis dengan yang disajikan Facebook untuk diputar.",
+              "Hanya postingan publik yang berfungsi: video yang dibagikan di grup privat, postingan khusus teman, dan apa pun yang memerlukan login untuk dilihat tidak dapat diakses, karena SaveReelsFast tidak login ke mana pun atas nama Anda. Anda juga tidak perlu akun, aplikasi, atau ekstensi browser."
+            ]
+          }
+        ]
       },
       "threads": {
         "noun": "video Threads",
@@ -346,7 +362,15 @@
             "a": "TikTok membatasi permintaan otomatis, sehingga tautan kadang gagal meski videonya publik. Tunggu semenit lalu tempel lagi."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Apa Itu Pengunduh Video TikTok?",
+            "paragraphs": [
+              "Pengunduh video TikTok menyimpan TikTok publik sebagai file MP4 yang bisa Anda simpan di perangkat, tanpa membuka aplikasi TikTok. Tempel tautan postingan TikTok, baik alamat lengkap tiktok.com/@user/video/... atau tautan pendek vm.tiktok.com atau vt.tiktok.com, dan alat ini mengambil file video yang sama persis dengan yang disajikan TikTok untuk diputar.",
+              "Berguna untuk menyimpan video agar bisa ditonton offline, menyimpan salinan TikTok Anda sendiri, atau meninjau kembali klip yang ingin dijadikan referensi nanti, dengan mencantumkan kredit ke pembuatnya jika Anda menggunakannya kembali. Tidak perlu akun, memasang aplikasi, atau ekstensi browser dari pihak Anda; tempel tautan dan ketuk Unduh Video."
+            ]
+          }
+        ]
       },
       "reddit": {
         "noun": "video Reddit",
