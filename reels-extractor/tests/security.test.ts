@@ -64,6 +64,30 @@ describe("security headers (next.config.js)", () => {
     assert.ok(rules.some((r) => r.source === "/api/:path*" && r.headers.some((x) => x.key === "X-Robots-Tag")));
   });
 
+  it("caches every page at the edge, but never the API or the service worker", async () => {
+    const rules: { source: string; headers: { key: string; value: string }[] }[] = await config.headers();
+    const rule = rules.find((r) => r.headers.some((h) => h.key === "Cache-Control" && /s-maxage/.test(h.value)));
+    assert.ok(rule, "no page-caching Cache-Control rule found");
+    const value = rule!.headers.find((h) => h.key === "Cache-Control")!.value;
+
+    // s-maxage is what lets Vercel's Edge Network serve a cache hit without re-running middleware or the
+    // origin function for an already-cached URL, which is most of what an external TTFB check measures.
+    assert.match(value, /public/);
+    assert.match(value, /s-maxage=86400/);
+    assert.match(value, /stale-while-revalidate=59/);
+    // A visitor's own browser must still revalidate every visit, so nobody is stuck looking at a stale copy.
+    assert.match(value, /max-age=0/);
+    assert.match(value, /must-revalidate/);
+
+    // The pattern must exclude the API, /_next's own immutably-cached assets, and the service worker (whose
+    // own rule above always revalidates it) - checked here at the source level, and against a live
+    // `next start` server (curl -I on /, /es/instagram-video-downloader, /api/extract, /sw.js and a /_next
+    // chunk) while this rule was written, confirming the API and the service worker keep their own headers.
+    assert.match(rule!.source, /\(\?!.*\bapi\b/);
+    assert.match(rule!.source, /_next/);
+    assert.match(rule!.source, /sw\\\.js/);
+  });
+
   it("every <Image> in the app is unoptimized (so turning the optimizer off breaks nothing)", () => {
     for (const file of [
       "app/[locale]/components/PreviewCard.tsx",

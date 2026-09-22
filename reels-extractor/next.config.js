@@ -66,6 +66,24 @@ const nextConfig = {
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
       {
+        // Every real page (home, the platform tools, blog, legal) is static HTML that reads the same for
+        // everyone: locale is baked into the URL, and anything visitor-specific (ads, consent, the language
+        // switcher) is client-side JS, not server output. Telling Vercel's Edge Network it can cache the
+        // response for up to a day lets it serve these straight from the edge on a cache hit, without
+        // re-running the locale-detection middleware or the origin function - which is most of what "Time to
+        // First Byte" measures on an uncached request. `max-age=0, must-revalidate` keeps a visitor's own
+        // browser from holding on to a stale copy; only the shared edge cache (s-maxage) is long-lived, and a
+        // new deployment invalidates it automatically. Excludes the API, the service worker (its own rule
+        // above always revalidates it) and anything under /_next (already immutably cached by Next.js itself).
+        source: "/:path((?!api|_next|sw\\.js).*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate, s-maxage=86400, stale-while-revalidate=59",
+          },
+        ],
+      },
+      {
         // Always revalidate the service worker so updates reach users promptly.
         source: "/sw.js",
         headers: [
