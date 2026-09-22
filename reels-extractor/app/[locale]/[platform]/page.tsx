@@ -92,14 +92,14 @@ export default async function PlatformLandingPage({ params }: Props) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "SoftwareApplication",
+        "@type": "WebApplication",
         "@id": `${pageUrl}#app`,
         name: `${platformName} — ${SITE_NAME}`,
         alternateName: content.metaTitle, // the localized page title, as shown in search results
         url: pageUrl,
         description: fillTemplate(common.structuredDescription, vars),
         applicationCategory: "MultimediaApplication",
-        operatingSystem: "Any (web browser)",
+        operatingSystem: "All",
         browserRequirements: "Requires JavaScript",
         inLanguage: locale,
         isAccessibleForFree: true,

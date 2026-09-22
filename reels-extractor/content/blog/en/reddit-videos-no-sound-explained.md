@@ -47,6 +47,8 @@ Try these steps in order:
 
 If you have the right to use the video, you can combine the video and audio yourself in a video editor. That is more work than most people want for a single clip, so try the steps above first. If the clip is yours, the better answer is to keep the original file you uploaded.
 
+If you only need the sound, our [audio downloader](/audio-downloader) saves just the separate audio track Reddit provides, without needing to fetch or combine anything with the video.
+
 ## What not to do
 
 Do not install unknown programs or browser extensions just to fix a silent clip, and never enter your Reddit password into a downloader. A silent file is an annoyance, not a reason to take security risks. Our guide to [downloading videos safely and legally](/blog/download-social-media-videos-safely-and-legally) explains what to watch for.

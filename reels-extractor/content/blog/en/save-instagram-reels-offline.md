@@ -39,7 +39,7 @@ Reels also differ from photos and carousels. A link to a carousel with no video 
 
 Instagram serves Reels in a compressed form, so a saved copy will never be sharper than what the app shows. If you want the best possible version of your own work, keep the original file from your editing app, and treat the downloaded copy as a convenient backup.
 
-Sound normally comes with the video. If a saved clip is silent, try the link again in a minute, or check that the original Reel plays with sound in the app.
+Sound normally comes with the video; if a saved clip is silent, try the link again or check the app. For just the soundtrack, our [Instagram audio downloader](/audio-downloader) saves the audio track on its own, as an M4A file.
 
 ## Be fair to the creator
 

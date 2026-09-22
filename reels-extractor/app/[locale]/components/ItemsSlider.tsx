@@ -80,9 +80,12 @@ export default function ItemsSlider({
   return (
     <section className="mt-4" aria-label={fill(dict.postItems, { n: items.length })}>
       <div className="mb-2 flex items-center justify-between gap-2">
-        <h3 className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+        {/* A caption, not a heading: this only ever appears inside a client-rendered result after a visitor
+            pastes a link (so it's never part of what a crawler sees), and an <h3> here with no <h2> above
+            it on the page at that point would skip a heading level. */}
+        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
           {fill(dict.postItems, { n: items.length })}
-        </h3>
+        </p>
       </div>
 
       <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:thin]">

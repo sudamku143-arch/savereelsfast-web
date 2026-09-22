@@ -33,6 +33,8 @@ You do not need to sign in, and you should never enter your Google password into
 
 A saved Short is a standard MP4 with sound, so it plays on phones, laptops and most televisions. The quality depends on what YouTube offers for that video. Some downloads are a little lower than the highest resolution you can watch online, because the version that comes with sound built in is not always the largest one. If you need the best quality of your own video, use your original upload file instead.
 
+If it's the sound you're after, not the picture, our [YouTube audio downloader](/audio-downloader) saves just the audio track, in the format YouTube provides it.
+
 Very long videos are a different matter. Shorts are small, but a long video can be large, and for that reason the tool may refuse files above a size limit.
 
 ## Only public videos work

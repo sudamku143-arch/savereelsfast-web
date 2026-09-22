@@ -36,14 +36,14 @@ export default async function LocalePage({
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "SoftwareApplication",
+        "@type": "WebApplication",
         "@id": `${homeUrl}#app`,
         name: SITE_NAME,
         alternateName: dict.meta.title, // the localized page title, as shown in search results
         url: homeUrl,
         description: dict.meta.description,
         applicationCategory: "MultimediaApplication",
-        operatingSystem: "Any (web browser)",
+        operatingSystem: "All",
         browserRequirements: "Requires JavaScript",
         inLanguage: locale,
         isAccessibleForFree: true,

@@ -53,14 +53,14 @@ export default async function AudioDownloaderPage({ params }: Props) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "SoftwareApplication",
+        "@type": "WebApplication",
         "@id": `${pageUrl}#app`,
         name: `${audioDownloader.h1} — ${SITE_NAME}`,
         alternateName: audioDownloader.metaTitle,
         url: pageUrl,
         description: audioDownloader.metaDescription,
         applicationCategory: "MultimediaApplication",
-        operatingSystem: "Any (web browser)",
+        operatingSystem: "All",
         browserRequirements: "Requires JavaScript",
         inLanguage: locale,
         isAccessibleForFree: true,

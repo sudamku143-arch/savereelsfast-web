@@ -99,7 +99,7 @@ describe("posts on disk", () => {
   });
 
   it("every internal link in a post goes to a page that exists", () => {
-    const valid = new Set(["/", "/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact", "/blog", ...LANDING_PLATFORMS.map(landingPath)]);
+    const valid = new Set(["/", "/audio-downloader", "/privacy-policy", "/terms-of-service", "/dmca", "/disclaimer", "/contact", "/blog", ...LANDING_PLATFORMS.map(landingPath)]);
     for (const post of posts) {
       for (const slugged of allPosts().filter((p) => p.locale === post.locale)) valid.add(`/blog/${slugged.slug}`);
       for (const [, target] of post.body.matchAll(/\]\((\/[^)\s]*)\)/g)) {
