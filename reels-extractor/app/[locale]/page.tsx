@@ -69,6 +69,7 @@ export default async function LocalePage({
           errorsDict={dict.errors}
           downloadDict={dict.download}
           adDict={dict.ad}
+          modeSwitcherDict={dict.modeSwitcher}
           platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
         />
       </div>

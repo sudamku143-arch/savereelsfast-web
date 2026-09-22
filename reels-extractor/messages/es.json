@@ -984,5 +984,13 @@
         "a": "No. Esto solo funciona con publicaciones públicas, ya que el contenido privado está intencionalmente restringido por cada plataforma y no es accesible mediante un enlace compartido."
       }
     ]
+  },
+  "modeSwitcher": {
+    "toAudioLabel": "Extraer audio",
+    "toAudioBadge": "NUEVO",
+    "toAudioAria": "Cambiar al descargador de audio",
+    "toVideoLabel": "Descargar video HD",
+    "toVideoBadge": "HD",
+    "toVideoAria": "Cambiar al descargador de video"
   }
 }

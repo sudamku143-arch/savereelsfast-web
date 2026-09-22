@@ -984,5 +984,13 @@
         "a": "Tidak. Ini hanya berfungsi untuk postingan publik, karena konten privat memang sengaja dibatasi oleh setiap platform dan tidak bisa diakses lewat tautan yang dibagikan."
       }
     ]
+  },
+  "modeSwitcher": {
+    "toAudioLabel": "Ekstrak Audio",
+    "toAudioBadge": "BARU",
+    "toAudioAria": "Beralih ke pengunduh audio",
+    "toVideoLabel": "Unduh Video HD",
+    "toVideoBadge": "HD",
+    "toVideoAria": "Beralih ke pengunduh video"
   }
 }

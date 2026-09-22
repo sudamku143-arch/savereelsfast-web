@@ -15,6 +15,7 @@ import {
   setLastViewed,
 } from "@/lib/result-cache";
 import InputBox from "./InputBox";
+import ModeSwitcher, { type ModeSwitcherDict } from "./ModeSwitcher";
 import PlatformTabs from "./PlatformTabs";
 import SkeletonLoader from "./SkeletonLoader";
 import PreviewCard, { type PreviewDict, type ReelResult } from "./PreviewCard";
@@ -55,6 +56,7 @@ export default function ExtractorClient({
   errorsDict,
   downloadDict,
   adDict,
+  modeSwitcherDict,
   platformInfo,
   initialPlatform = "instagram",
   landing = false,
@@ -68,6 +70,8 @@ export default function ExtractorClient({
   errorsDict: ErrorsDict;
   downloadDict: DownloadDict;
   adDict: AdDict;
+  /** The pill that jumps between the video downloader and the audio-only one. */
+  modeSwitcherDict: ModeSwitcherDict;
   /** Heading, intro, helper text, title and address of every platform: what a tab switch shows at once. */
   platformInfo: Record<PlatformId, PlatformInfo>;
   /** Platform tab selected on first render (platform landing pages preselect theirs). */
@@ -237,6 +241,8 @@ export default function ExtractorClient({
       <p className="mt-4 max-w-xl text-center text-sm text-zinc-400 sm:text-base">
         {follows ? platformInfo[platform].lead : (heroLead ?? heroDict.subtitle)}
       </p>
+
+      <ModeSwitcher locale={locale} dict={modeSwitcherDict} />
 
       <div className="mt-8 w-full max-w-xl space-y-3">
         <PlatformTabs

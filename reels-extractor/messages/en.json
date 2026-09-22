@@ -984,5 +984,13 @@
         "a": "No. This only works on public posts, since private content is intentionally restricted by each platform and isn't accessible via a shared link."
       }
     ]
+  },
+  "modeSwitcher": {
+    "toAudioLabel": "Extract Audio",
+    "toAudioBadge": "NEW",
+    "toAudioAria": "Switch to the audio downloader",
+    "toVideoLabel": "Download HD Video",
+    "toVideoBadge": "HD",
+    "toVideoAria": "Switch to the video downloader"
   }
 }

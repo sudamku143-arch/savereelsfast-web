@@ -155,6 +155,7 @@ export default async function PlatformLandingPage({ params }: Props) {
           errorsDict={dict.errors}
           downloadDict={dict.download}
           adDict={dict.ad}
+          modeSwitcherDict={dict.modeSwitcher}
           platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
           initialPlatform={id}
           landing

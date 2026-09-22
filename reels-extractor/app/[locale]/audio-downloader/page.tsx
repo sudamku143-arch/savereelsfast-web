@@ -113,6 +113,7 @@ export default async function AudioDownloaderPage({ params }: Props) {
           errorsDict={dict.errors}
           downloadDict={dict.download}
           adDict={dict.ad}
+          modeSwitcherDict={dict.modeSwitcher}
           platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
           heroHeading={audioDownloader.h1}
           heroLead={audioDownloader.lead}
