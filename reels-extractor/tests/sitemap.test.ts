@@ -31,7 +31,13 @@ writeFileSync(
   source("app/sitemap.ts").replace(/"@\/lib\/([\w-]+)"/g, '"./$1.ts"')
 );
 const { default: sitemap } = (await import(pathToFileURL(join(dir, "sitemap.ts")).href)) as {
-  default: () => { url: string; changeFrequency: string; priority: number; alternates: { languages: Record<string, string> } }[];
+  default: () => {
+    url: string;
+    lastModified?: Date;
+    changeFrequency: string;
+    priority: number;
+    alternates: { languages: Record<string, string> };
+  }[];
 };
 const entries = sitemap();
 const blogEntries = entries.filter((e) => /\/blog(\/|$)/.test(e.url));
@@ -82,6 +88,17 @@ describe("sitemap contents", () => {
 
   it("no address uses the old /downloader/ shape", () => {
     for (const e of entries) assert.doesNotMatch(e.url, /\/downloader\//);
+  });
+
+  it("carries lastmod only where it is genuinely known (blog posts), never a build-time 'now'", () => {
+    // A lastmod that changes on every deploy regardless of real edits is a signal Google says it will start
+    // to ignore - omitting it is the documented, honest alternative for pages with no per-page change date.
+    for (const e of entries.filter((x) => !/\/blog(\/|$)/.test(x.url))) {
+      assert.equal(e.lastModified, undefined, `${e.url} should not carry a build-time lastmod`);
+    }
+    for (const e of blogEntries) {
+      assert.ok(e.lastModified instanceof Date, `${e.url} should carry its real post date`);
+    }
   });
 });
 

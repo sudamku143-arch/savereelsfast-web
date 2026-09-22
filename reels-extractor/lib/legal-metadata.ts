@@ -33,6 +33,9 @@ export function pageMetadata(
   // A page shown in a language it has not been translated into duplicates the English one.
   const shown = translated.includes(locale) ? locale : defaultLocale;
   const url = `${SITE_URL}${localePath(shown, path)}`;
+  // Tells Facebook/LinkedIn-style crawlers this same page exists in other languages, so they can offer the
+  // visitor's own language instead of always the one that happened to get crawled first.
+  const alternateLocale = translated.filter((l) => l !== shown).map((l) => OG_LOCALE[l]);
 
   return {
     title,
@@ -44,6 +47,7 @@ export function pageMetadata(
       url,
       siteName: SITE_NAME,
       locale: OG_LOCALE[locale],
+      alternateLocale,
       type: "website",
       images: [{ url: image, width: 1200, height: 630, alt: title }],
     },

@@ -84,6 +84,8 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: SITE_NAME,
       locale: OG_LOCALE[locale],
+      // Tells Facebook/LinkedIn-style crawlers the home page exists in the other 10 languages too.
+      alternateLocale: locales.filter((l) => l !== locale).map((l) => OG_LOCALE[l]),
       type: "website",
       images: [
         {

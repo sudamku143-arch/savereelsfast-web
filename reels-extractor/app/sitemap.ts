@@ -23,7 +23,7 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal
 ];
 
 /** The blog index in each language that has posts, and every post, with its translations as alternates. */
-function blogEntries(lastModified: Date): MetadataRoute.Sitemap {
+function blogEntries(): MetadataRoute.Sitemap {
   const alternates = (available: readonly Locale[], path: string) => {
     const languages: Record<string, string> = {};
     available.forEach((l) => {
@@ -53,9 +53,6 @@ function blogEntries(lastModified: Date): MetadataRoute.Sitemap {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Generated at build time, so every deploy refreshes lastmod.
-  const lastModified = new Date();
-
   const pages = PAGES.flatMap(({ path, changeFrequency, priority, legal }) => {
     // Legal pages are listed only in the languages where they are really translated.
     const available = legal ? LEGAL_TRANSLATED : locales;
@@ -67,12 +64,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return available.map((locale) => ({
       url: `${SITE_URL}${localePath(locale, path)}`,
-      lastModified,
+      // No lastModified here: these pages have no real per-page "last changed" date (they're all rendered
+      // from the same shared JSON files, so one wouldn't reflect the others), and Google's own guidance is
+      // that a lastmod which doesn't track genuine changes gets disregarded - worse than not sending one.
+      // Blog posts, below, do have a real date and keep it.
       changeFrequency,
       priority, // the same in every language: a Hindi home page matters as much as the English one
       alternates: { languages },
     }));
   });
 
-  return [...pages, ...blogEntries(lastModified)];
+  return [...pages, ...blogEntries()];
 }
