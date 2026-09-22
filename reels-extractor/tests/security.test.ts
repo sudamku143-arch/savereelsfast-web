@@ -58,6 +58,7 @@ describe("security headers (next.config.js)", () => {
   it("hides the framework, disables the image optimizer, and keeps the service-worker rule", async () => {
     assert.equal(config.poweredByHeader, false);
     assert.equal(config.images.unoptimized, true);
+    assert.equal(config.compress, true);
     const rules: { source: string; headers: { key: string; value: string }[] }[] = await config.headers();
     const sw = rules.find((r) => r.source === "/sw.js");
     assert.ok(sw?.headers.some((x) => x.key === "Cache-Control" && /no-store/.test(x.value)));

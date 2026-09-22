@@ -6,9 +6,15 @@ import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import PlatformIcon from "./PlatformIcon";
 
 /**
- * The platform switcher. Each tab is a real link to that platform's page (so it can be opened in a new tab,
- * is crawlable, and Next prefetches the page as soon as the tab is on screen). A plain click is handled by
- * `onSelect`, which updates the form at once and then navigates without a reload.
+ * The platform switcher. Each tab is a real link to that platform's page (so it can be opened in a new tab
+ * and is crawlable). A plain click is handled by `onSelect`, which updates the form at once and then
+ * navigates without a reload.
+ *
+ * Only the active tab prefetches (there is nothing to prefetch: it is the current page). All 10 tabs sit
+ * above the fold, so Next's default viewport prefetch would fire a background RSC fetch for every other
+ * platform the moment this loads - 9 extra requests competing with the page's own critical resources, worst
+ * felt on a throttled mobile connection. The pages are edge-cached (see next.config.js), so an unprefetched
+ * click still lands on a warm cache instead of a cold one.
  */
 export default function PlatformTabs({
   label,
@@ -42,6 +48,7 @@ export default function PlatformTabs({
             key={id}
             href={hrefs[id]}
             scroll={false}
+            prefetch={isActive ? undefined : false}
             aria-current={isActive ? "true" : undefined}
             aria-label={names[id]}
             title={names[id]}

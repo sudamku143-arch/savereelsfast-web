@@ -152,3 +152,18 @@ describe("a lookup never leaves the visitor waiting", () => {
     assert.match(route, /"Cache-Control": "no-store"/);
   });
 });
+
+describe("the tab bar does not fetch every other platform on load", () => {
+  const tabs = source("app/[locale]/components/PlatformTabs.tsx");
+
+  it("only the active tab is allowed to prefetch", () => {
+    // All 10 tabs sit above the fold, so Next's default viewport prefetch would otherwise fire a background
+    // RSC request for every other platform the moment the page loads - worst on a throttled mobile connection.
+    assert.match(tabs, /prefetch=\{isActive \? undefined : false\}/);
+  });
+
+  it("is still a real, crawlable link to that platform's own page", () => {
+    assert.match(tabs, /<Link\b/);
+    assert.match(tabs, /href=\{hrefs\[id\]\}/);
+  });
+});

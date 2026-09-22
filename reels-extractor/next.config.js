@@ -29,6 +29,10 @@ const nextConfig = {
   reactStrictMode: true,
   // Don't advertise the framework (and version) to scanners.
   poweredByHeader: false,
+  // Gzip/Brotli the response body. This is Next's own default (true); set explicitly so it reads from the
+  // config rather than relying on the default, and because Vercel's Edge Network compresses every response
+  // regardless - this only matters if the app is ever run off Vercel.
+  compress: true,
   images: {
     // Every <Image> in the app is already `unoptimized`, so the /_next/image optimizer is never used.
     // Turning it off removes its attack surface (several Next.js DoS advisories are about it).
