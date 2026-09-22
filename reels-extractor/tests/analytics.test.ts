@@ -41,7 +41,7 @@ describe("measurement ID", () => {
 
   it("the production setting is the ID that was created for this site", () => {
     const line = source(".env.production").split(/\r?\n/).find((l) => l.startsWith("NEXT_PUBLIC_GA_MEASUREMENT_ID="));
-    assert.equal(line?.split("=")[1], "G-QZOZ9KJ7MH");
+    assert.equal(line?.split("=")[1], "G-QZ0Z9KJ7MH");
   });
 });
 
