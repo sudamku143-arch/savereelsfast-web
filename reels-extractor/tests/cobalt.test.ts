@@ -55,8 +55,27 @@ describe("media URL allowlist with the fallback", () => {
     }
   });
 
-  it("is fetched through the scraper, not straight from the website", () => {
+  it("is fetched through the scraper, not straight from the website (its link is single-use)", () => {
     const route = readFileSync(new URL("../app/api/download/route.ts", import.meta.url), "utf8");
-    assert.match(route, /return isCobaltUrl\(target\) \|\|/);
+    assert.match(route, /function isIpBound\(target: string\): boolean \{\s*return isCobaltUrl\(target\);\s*\}/);
+  });
+
+  it("googlevideo.com is no longer forced through the scraper: it gets a direct attempt like any other CDN", () => {
+    const route = readFileSync(new URL("../app/api/download/route.ts", import.meta.url), "utf8");
+    assert.doesNotMatch(route, /IP_BOUND_HOSTS/, "the blanket googlevideo.com skip was removed on purpose");
+  });
+
+  it("tryDirect follows redirects by hand, never blindly, and only onto an allowed CDN host", () => {
+    const route = readFileSync(new URL("../app/api/download/route.ts", import.meta.url), "utf8");
+    // Still "manual", never "follow": fetch must never be allowed to silently follow a redirect on its own.
+    assert.match(route, /redirect: "manual",/);
+    // A redirect response (3xx) is the only case that loops for another hop; every other status breaks out.
+    assert.match(route, /if \(upstream\.status < 300 \|\| upstream\.status >= 400\) break;/);
+    // The redirect target is resolved against the current URL and checked against the same allow-list
+    // as the original request before it is ever fetched.
+    assert.match(route, /next = new URL\(location, current\)\.toString\(\);/);
+    assert.match(route, /if \(!isAllowedMediaUrl\(next\)\) return null;/);
+    // Bounded: a redirect loop (or a CDN that never stops redirecting) can't hang the request forever.
+    assert.match(route, /for \(let hop = 0; hop < MAX_REDIRECTS; hop\+\+\)/);
   });
 });

@@ -19,16 +19,22 @@ const DOWNLOAD_LIMIT = 40;
 const DOWNLOAD_WINDOW_MS = 60_000;
 const limiterStore: RateLimitStore = new Map();
 
-// CDNs whose links are bound to the IP that resolved them. The scraper resolved
-// these, so they can only be downloaded from the scraper's IP: skip the direct
-// attempt (it would just 403) and stream through the scraper.
-const IP_BOUND_HOSTS = ["googlevideo.com"];
-
+/**
+ * A Cobalt link is single-use and short-lived: it is fetched by the scraper only, never straight from this
+ * site, so a failed or partial attempt here can't waste it.
+ *
+ * googlevideo.com links carry a signed `ip=` parameter naming the address that resolved them, but that is
+ * NOT consistently enforced: confirmed empirically that the same link, fetched from a different IP than the
+ * one it names, succeeds for some videos and gets a 403 for others. So it is no longer treated as always
+ * IP-bound - tryDirect() below is attempted for it like any other CDN, spending this site's own bandwidth
+ * (never the scraper's paid residential proxy) whenever Google happens to allow it, and only falling back to
+ * the scraper (see viaScraperStream) on the videos where it does not.
+ */
 function isIpBound(target: string): boolean {
-  const host = new URL(target).hostname.toLowerCase();
-  // A Cobalt link is not bound to an IP, but it is fetched by the scraper only, never straight from this site.
-  return isCobaltUrl(target) || IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  return isCobaltUrl(target);
 }
+
+const MAX_REDIRECTS = 4;
 
 const AUDIO_CONTENT_TYPES: Record<string, string> = {
   m4a: "audio/mp4",
@@ -109,37 +115,59 @@ async function fetchWithHeaderTimeout(
   }
 }
 
-/** Try the CDN URL directly. Returns a streaming response, or null when it can't be used. */
+/**
+ * Try the CDN URL directly. Returns a streaming response, or null when it can't be used.
+ *
+ * Follows redirects by hand, up to MAX_REDIRECTS hops, checking every hop against the same CDN allow-list
+ * as the initial URL (a hostile redirect target is refused, never followed) - googlevideo.com in particular
+ * commonly 302s to a specific edge node before it will actually serve the bytes.
+ */
 async function tryDirect(
   target: string,
   filename: string,
   media: Media,
   range: string | null
 ): Promise<Response | null> {
-  let upstream: Response;
-  try {
-    upstream = await fetchWithHeaderTimeout(
-      target,
-      {
-        headers: {
-          "User-Agent": BROWSER_UA,
-          Referer: refererFor(target),
-          Accept:
-            media.kind === "audio" ? "audio/*,*/*;q=0.5" : "video/mp4,video/*;q=0.9,*/*;q=0.5",
-          "Accept-Language": "en-US,en;q=0.9",
-          ...(range ? { Range: range } : {}),
+  let current = target;
+  let upstream: Response | null = null;
+
+  for (let hop = 0; hop < MAX_REDIRECTS; hop++) {
+    try {
+      upstream = await fetchWithHeaderTimeout(
+        current,
+        {
+          headers: {
+            "User-Agent": BROWSER_UA,
+            Referer: refererFor(current),
+            Accept:
+              media.kind === "audio" ? "audio/*,*/*;q=0.5" : "video/mp4,video/*;q=0.9,*/*;q=0.5",
+            "Accept-Language": "en-US,en;q=0.9",
+            ...(range ? { Range: range } : {}),
+          },
+          redirect: "manual",
         },
-        redirect: "manual", // never follow a redirect off the allow-list
-      },
-      HEADER_TIMEOUT_MS
-    );
-  } catch {
-    return null;
+        HEADER_TIMEOUT_MS
+      );
+    } catch {
+      return null;
+    }
+
+    if (upstream.status < 300 || upstream.status >= 400) break;
+    const location = upstream.headers.get("location");
+    if (!location) return null;
+    let next: string;
+    try {
+      next = new URL(location, current).toString();
+    } catch {
+      return null;
+    }
+    if (!isAllowedMediaUrl(next)) return null; // never follow a redirect off the allow-list
+    current = next;
   }
 
-  if (!upstream.ok || !upstream.body) {
+  if (!upstream || !upstream.ok || !upstream.body) {
     console.warn(
-      `[/api/download] CDN responded ${upstream.status} for ${new URL(target).hostname}`
+      `[/api/download] CDN responded ${upstream?.status ?? "no response"} for ${new URL(current).hostname}`
     );
     return null;
   }
