@@ -140,7 +140,7 @@ describe("the page wires the honest content in, and reuses the tested extraction
   it("renders all 4 sections and the FAQ from the same dictionary the metadata uses", () => {
     assert.match(page, /audioDownloader\.sections\.map/);
     assert.match(page, /audioDownloader\.faq/);
-    assert.match(page, /pageMetadata\(locale, "\/audio-downloader", audioDownloader\.metaTitle, audioDownloader\.metaDescription\)/);
+    assert.match(page, /pageMetadata\(\s*locale,\s*"\/audio-downloader",\s*audioDownloader\.metaTitle,\s*audioDownloader\.metaDescription,\s*platformOgImage\("audio", locale\)\s*\)/);
   });
 
   it("Offer.price is a Number, and the breadcrumb's last item has no redundant URL (same as every other page)", () => {
@@ -220,5 +220,41 @@ describe("linked from the footer and the sitemap", () => {
   it("app/sitemap.ts includes the page once per language, at 0.85 daily", () => {
     const sitemap = source("app/sitemap.ts");
     assert.match(sitemap, /\{ path: "\/audio-downloader", changeFrequency: "daily", priority: 0\.85 \}/);
+  });
+
+  it("the home page and every platform page also cross-link it as a card, not just from the footer", () => {
+    const links = source("app/[locale]/components/PlatformLinks.tsx");
+    assert.match(links, /audioLabel\?: string/);
+    assert.match(links, /localePath\(locale, "\/audio-downloader"\)/);
+
+    const home = source("app/[locale]/page.tsx");
+    assert.match(home, /<PlatformLinks[\s\S]*?audioLabel=\{dict\.audioDownloader\.breadcrumb\}[\s\S]*?\/>/);
+
+    const platform = source("app/[locale]/[platform]/page.tsx");
+    assert.match(platform, /<PlatformLinks[\s\S]*?audioLabel=\{dict\.audioDownloader\.breadcrumb\}[\s\S]*?\/>/);
+  });
+
+  it("the audio-downloader page doesn't link to itself from that same card grid", () => {
+    const audioPage = source("app/[locale]/audio-downloader/page.tsx");
+    assert.doesNotMatch(audioPage, /<PlatformLinks[\s\S]*?audioLabel[\s\S]*?\/>/);
+  });
+});
+
+describe("social share previews (og:image)", () => {
+  it("the home page and the audio-downloader page each get their own share card, not the platform default", () => {
+    const layout = source("app/[locale]/layout.tsx");
+    assert.match(layout, /platformOgImage\("home", locale\)/);
+
+    const audioPage = source("app/[locale]/audio-downloader/page.tsx");
+    assert.match(audioPage, /platformOgImage\("audio", locale\)/);
+
+    const og = source("app/api/og/route.tsx");
+    assert.match(og, /platform === "home"/);
+    assert.match(og, /audio: "Audio"/);
+  });
+
+  it("the share image is cached hard, so WhatsApp/Telegram get it back instantly", () => {
+    const og = source("app/api/og/route.tsx");
+    assert.match(og, /Cache-Control.*immutable/);
   });
 });

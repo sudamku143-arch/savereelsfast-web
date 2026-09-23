@@ -24,6 +24,7 @@ function block(marker: string): string {
 }
 
 const names = block("const NAMES");
+const homeHeadline = block("const HOME_HEADLINE");
 const wording = block("const WORDING");
 
 describe("share image route", () => {
@@ -31,13 +32,20 @@ describe("share image route", () => {
     for (const locale of locales) assert.match(wording, new RegExp(`\\b${locale}: \\{`), `no wording for ${locale}`);
   });
 
-  it("names every platform slug and nothing else", () => {
+  it("has a home-page headline for every language too", () => {
+    for (const locale of locales) assert.match(homeHeadline, new RegExp(`\\b${locale}: "`), `no home headline for ${locale}`);
+  });
+
+  it("names every platform slug, plus the audio downloader and home cards", () => {
     const keys = [...names.matchAll(/^\s*(\w+):/gm)].map((m) => m[1]).sort();
-    assert.deepEqual(keys, Object.values(PLATFORM_KEYS).sort());
+    assert.deepEqual(keys, [...Object.values(PLATFORM_KEYS), "audio"].sort());
   });
 
   it("only draws characters the renderer's font has (Latin), never Indic or Arabic script", () => {
-    const literals = [...(names + wording).matchAll(/"([^"]*)"/g), ...wording.matchAll(/`([^`]*)`/g)].map((m) => m[1]);
+    const literals = [
+      ...(names + wording + homeHeadline).matchAll(/"([^"]*)"/g),
+      ...wording.matchAll(/`([^`]*)`/g),
+    ].map((m) => m[1]);
     assert.ok(literals.length > 20, "expected to find the strings");
     for (const text of literals) {
       for (const char of text) {
@@ -47,9 +55,16 @@ describe("share image route", () => {
   });
 
   it("chooses text from the fixed tables only: a query value is a lookup key, never printed", () => {
-    assert.match(route, /NAMES\[query\.get\("p"\) \?\? ""\] \?\? NAMES\.instagram/);
-    assert.match(route, /WORDING\[query\.get\("l"\) \?\? ""\] \?\? WORDING\.en/);
+    assert.match(route, /const platform = query\.get\("p"\) \?\? "";/);
+    assert.match(route, /const locale = query\.get\("l"\) \?\? "en";/);
+    assert.match(route, /WORDING\[locale\] \?\? WORDING\.en/);
+    assert.match(route, /HOME_HEADLINE\[locale\] \?\? HOME_HEADLINE\.en/);
+    assert.match(route, /NAMES\[platform\] \?\? NAMES\.instagram/);
     assert.doesNotMatch(route, /query\.get\([^)]*\)\s*}\s*<\/|\{query\.get/, "a raw query value must not be rendered");
+  });
+
+  it("caches the image hard: it's fully determined by (p, l), nothing per-request", () => {
+    assert.match(route, /"Cache-Control": "public, max-age=\d+, immutable"/);
   });
 
   it("every localized page points its share image at its own language and platform", () => {

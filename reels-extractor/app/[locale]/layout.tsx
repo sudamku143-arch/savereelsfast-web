@@ -11,6 +11,7 @@ import {
 } from "@/lib/i18n-config";
 import { SITE_URL, SITE_NAME, MONETAG_VERIFICATION } from "@/lib/site";
 import { getDictionary } from "@/lib/get-dictionary";
+import { platformOgImage } from "@/lib/legal-metadata";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { blogAvailability, localesWithPosts } from "@/lib/blog";
@@ -35,7 +36,6 @@ type Props = {
   params: { locale: string };
 };
 
-const OG_IMAGE = `${SITE_URL}/api/og`;
 const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 
 export const viewport: Viewport = {
@@ -58,6 +58,8 @@ export async function generateMetadata({
   languages["x-default"] = `${SITE_URL}${localePath(defaultLocale)}`;
 
   const canonicalUrl = `${SITE_URL}${localePath(locale)}`;
+  // A catchy multi-platform card, not the per-platform template: see app/api/og/route.tsx.
+  const ogImage = platformOgImage("home", locale);
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -89,7 +91,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: OG_IMAGE,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: dict.meta.ogAlt,
@@ -100,7 +102,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
   };
 }

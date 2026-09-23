@@ -91,6 +91,7 @@ export default async function LocalePage({
         names={names}
         heading={dict.landing.common.otherHeading}
         lead={dict.landing.common.otherLead}
+        audioLabel={dict.audioDownloader.breadcrumb}
       />
 
       <FaqAccordion heading={dict.faq.heading} items={dict.faq.items} />

@@ -4,7 +4,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { getDictionary } from "@/lib/get-dictionary";
 import { landingPath } from "@/lib/landing";
-import { pageMetadata } from "@/lib/legal-metadata";
+import { pageMetadata, platformOgImage } from "@/lib/legal-metadata";
 import { buildPlatformInfo } from "@/lib/platform-info";
 import ExtractorClient from "../components/ExtractorClient";
 import FaqAccordion from "../components/FaqAccordion";
@@ -29,7 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = resolveLocale(params.locale);
   const dict = await getDictionary(locale);
   const { audioDownloader } = dict;
-  return pageMetadata(locale, "/audio-downloader", audioDownloader.metaTitle, audioDownloader.metaDescription);
+  return pageMetadata(
+    locale,
+    "/audio-downloader",
+    audioDownloader.metaTitle,
+    audioDownloader.metaDescription,
+    platformOgImage("audio", locale)
+  );
 }
 
 /** JSON in a <script> must not be able to close the tag. */

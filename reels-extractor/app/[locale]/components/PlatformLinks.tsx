@@ -3,6 +3,16 @@ import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
 import type { PlatformId } from "@/lib/platforms";
 import PlatformIcon from "./PlatformIcon";
 
+function HeadphonesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden="true">
+      <path d="M4 14v-2a8 8 0 0 1 16 0v2" />
+      <rect x="2.5" y="14" width="4" height="6" rx="2" />
+      <rect x="17.5" y="14" width="4" height="6" rx="2" />
+    </svg>
+  );
+}
+
 /** Grid of links to every platform's landing page: the internal-linking backbone for SEO. */
 export default function PlatformLinks({
   locale,
@@ -11,6 +21,7 @@ export default function PlatformLinks({
   lead,
   currentId,
   currentLabel,
+  audioLabel,
 }: {
   locale: Locale;
   names: Record<PlatformId, string>;
@@ -18,6 +29,12 @@ export default function PlatformLinks({
   lead: string;
   currentId?: PlatformId;
   currentLabel?: string;
+  /**
+   * Label for an extra "Audio Downloader" card appended after the 10 platforms, so every platform page and
+   * the home page cross-links the audio tool by name, not just from the footer. Omitted on the audio page
+   * itself (linking a page to itself here would be redundant, not helpful).
+   */
+  audioLabel?: string;
 }) {
   return (
     <nav aria-label={heading} className="mt-16 w-full max-w-2xl">
@@ -48,6 +65,17 @@ export default function PlatformLinks({
             </li>
           );
         })}
+        {audioLabel && (
+          <li>
+            <a
+              href={localePath(locale, "/audio-downloader")}
+              className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm font-medium text-zinc-300 outline-none transition hover:bg-white/10 hover:text-zinc-50 focus-visible:ring-2 focus-visible:ring-brand-500"
+            >
+              <HeadphonesIcon />
+              <span className="truncate">{audioLabel}</span>
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
   );
