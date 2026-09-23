@@ -5,6 +5,7 @@ trusts links on the instance itself (or a platform CDN), never uses the paid pro
 Run from the scraper/ folder:  python -m unittest discover -s tests -v
 """
 
+import asyncio
 import json
 import os
 import sys
@@ -534,6 +535,58 @@ class ScraperTests(unittest.TestCase):
         self.assertIs(body["cobalt"]["apiKeySet"], True)
         self.assertEqual(body["cobalt"]["timeoutSeconds"], 4.0)
         self.assertNotIn("secret-key", json.dumps(body))
+
+
+class KeepaliveTests(unittest.IsolatedAsyncioTestCase):
+    """
+    A self-hosted Cobalt instance must never be allowed to fall asleep between downloads (see
+    _cobalt_keepalive_loop's docstring): the app starts a background pinger for it, and only when one is
+    actually configured, and shuts it down cleanly.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            import main
+        except ImportError as exc:  # pragma: no cover
+            raise unittest.SkipTest(f"dependencies missing: {exc}")
+        cls.main = main
+
+    async def asyncTearDown(self):
+        await self.main._stop_cobalt_keepalive()
+
+    async def test_starts_a_background_task_only_when_an_instance_is_configured(self):
+        with mock.patch.object(self.main, "COBALT", make(instances=())):
+            await self.main._start_cobalt_keepalive()
+        self.assertIsNone(self.main._cobalt_keepalive_task)
+
+        with mock.patch.object(self.main, "COBALT", make(instances=(INSTANCE,))):
+            await self.main._start_cobalt_keepalive()
+        self.assertIsNotNone(self.main._cobalt_keepalive_task)
+        self.assertFalse(self.main._cobalt_keepalive_task.done())
+
+    async def test_shutdown_cancels_it_cleanly(self):
+        with mock.patch.object(self.main, "COBALT", make(instances=(INSTANCE,))):
+            await self.main._start_cobalt_keepalive()
+        task = self.main._cobalt_keepalive_task
+        await self.main._stop_cobalt_keepalive()
+        self.assertTrue(task.done())
+        self.assertIsNone(self.main._cobalt_keepalive_task)
+
+    async def test_a_failed_ping_is_swallowed_and_never_touches_the_paid_proxy(self):
+        seen = []
+
+        async def fake_get(self_, url, *a, **k):
+            seen.append(url)
+            raise httpx.ConnectError("refused")
+
+        with mock.patch.object(self.main, "COBALT", make(instances=(INSTANCE,))):
+            with mock.patch("httpx.AsyncClient.get", fake_get):
+                task = asyncio.ensure_future(self.main._cobalt_keepalive_loop())
+                await asyncio.sleep(0)  # let the first ping run
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
+        self.assertEqual(seen, [INSTANCE])  # it tried, quietly failed, and did not raise
 
 
 if __name__ == "__main__":

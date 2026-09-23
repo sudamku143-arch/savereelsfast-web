@@ -1576,6 +1576,51 @@ async def _stop_telegram_bot() -> None:
     _telegram_bot, _telegram_task = None, None
 
 
+# ------------------------------------------------------------------------------------ Cobalt keep-alive
+# A self-hosted Cobalt instance on Render's free tier sleeps after ~15 minutes idle, and the first request
+# after that takes 30+ seconds to wake it - far longer than _cobalt_video_url's short, deliberately-capped
+# budget (COBALT_FIRST_BUDGET_SECONDS), which always gives up on a cold instance and falls back to the paid
+# proxy long before it wakes up. The fix is not to wait longer (that would just make every cold download
+# slower without helping - Vercel's own edge function gives up on this server after 12 s regardless of how
+# long it waits here), but to stop the instance falling asleep in the first place.
+COBALT_KEEPALIVE_INTERVAL_SECONDS = 600.0  # 10 min: comfortably under a typical free-tier ~15 min sleep window
+_cobalt_keepalive_task: "asyncio.Task | None" = None
+
+
+async def _cobalt_keepalive_loop() -> None:
+    """
+    Pings every configured Cobalt instance on a timer so it stays warm. A plain GET is enough - it only needs
+    to see *some* traffic, so this never sends a real lookup (no video id or API key involved) and never
+    touches the paid proxy. Runs forever in the background; a failed ping is silently retried next cycle,
+    since it must never be allowed to crash the app or hold up a real request.
+    """
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        while True:
+            for instance in COBALT.instances:
+                try:
+                    await client.get(instance)
+                except Exception:  # noqa: BLE001 - best-effort only; a failed ping just means it stays cold a bit longer
+                    pass
+            await asyncio.sleep(COBALT_KEEPALIVE_INTERVAL_SECONDS)
+
+
+@app.on_event("startup")
+async def _start_cobalt_keepalive() -> None:
+    global _cobalt_keepalive_task
+    if COBALT.instances:
+        _cobalt_keepalive_task = asyncio.ensure_future(_cobalt_keepalive_loop())
+        _log.info("Cobalt keep-alive: pinging every %.0f min so it doesn't fall asleep between downloads.", COBALT_KEEPALIVE_INTERVAL_SECONDS / 60)
+
+
+@app.on_event("shutdown")
+async def _stop_cobalt_keepalive() -> None:
+    global _cobalt_keepalive_task
+    if _cobalt_keepalive_task is not None:
+        _cobalt_keepalive_task.cancel()
+        await asyncio.gather(_cobalt_keepalive_task, return_exceptions=True)
+    _cobalt_keepalive_task = None
+
+
 # ------------------------------------------------------------------------------------ YouTube diagnostics
 # GET /diagnose/youtube (needs the shared secret, like /stats): where does a YouTube lookup stall on THIS host?
 # Reports the cookies file (names and counts only, never a value), DNS/TCP/TLS/HTTP timings to YouTube from
@@ -1645,12 +1690,13 @@ async def diagnose_youtube(
 def _report_cobalt_fallback() -> None:
     if COBALT.enabled:
         _log.info(
-            "YouTube fallback (Cobalt): ON via %s%s. Used when yt-dlp is blocked or stalls.",
+            "YouTube via Cobalt: ON via %s%s. Tried first for a plain video download (saves paid-proxy "
+            "bandwidth), and still the fallback when yt-dlp itself is blocked or stalls.",
             ", ".join(sorted(COBALT.hosts())),
             " (API key set)" if COBALT.api_key else " (no API key)",
         )
     else:
-        _log.info("YouTube fallback (Cobalt): OFF (COBALT_API_URL is not set), so a blocked YouTube lookup fails.")
+        _log.info("YouTube via Cobalt: OFF (COBALT_API_URL is not set); every video download uses yt-dlp (plus the paid proxy, if configured).")
 
 
 @app.on_event("startup")
