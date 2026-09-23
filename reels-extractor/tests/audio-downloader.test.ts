@@ -157,6 +157,58 @@ describe("the page wires the honest content in, and reuses the tested extraction
   });
 });
 
+describe("the result card on /audio-downloader never offers the video file", () => {
+  const page = source("app/[locale]/audio-downloader/page.tsx");
+  const client = source("app/[locale]/components/ExtractorClient.tsx");
+  const card = source("app/[locale]/components/PreviewCard.tsx");
+  const slider = source("app/[locale]/components/ItemsSlider.tsx");
+
+  it("the page turns audioOnly on, and ExtractorClient threads it down to PreviewCard", () => {
+    assert.match(page, /<ExtractorClient[\s\S]*?\baudioOnly\b[\s\S]*?\/>/, "page must pass audioOnly to ExtractorClient");
+    assert.match(client, /audioOnly\?: boolean/);
+    assert.match(client, /audioOnly=\{audioOnly\}/, "ExtractorClient must forward it to PreviewCard");
+  });
+
+  it("PreviewCard swaps the single-item button for the audio track and drops the video-only quality badge", () => {
+    assert.match(card, /audioOnly\?: boolean/);
+    // The primary button's href/label switch to audio when audioOnly is on, instead of a separate always-shown video button.
+    assert.match(card, /href=\{audioOnly \? audioHref! : videoHref\}/);
+    assert.match(card, /result\.quality && !isCarousel && !audioOnly/, "the resolution badge is video-specific");
+    assert.match(card, /result\.warning === "NO_AUDIO" && !audioOnly/, "the video-audio warning doesn't apply to the audio card");
+  });
+
+  it("PreviewCard tells the truth when a post has no separate audio stream, instead of falling back to video", () => {
+    assert.match(card, /audioOnly && !audioHref/);
+    assert.match(card, /dict\.audioUnavailable/);
+  });
+
+  it("ItemsSlider (carousel posts) does the same: audio action only, per item and for \"download all\"", () => {
+    assert.match(slider, /audioOnly\?: boolean/);
+    assert.match(slider, /audioOnly \? \(/, "per-item branch on audioOnly");
+    assert.match(slider, /audioItems/, "download-all only targets items that actually have a separate audio stream");
+    // "download all" picks the audio href when audioOnly, never the video one, for both the link and the filename.
+    assert.match(slider, /link\.href = audioOnly \? audioHref\(item\)! : videoHref\(item\);/);
+    assert.match(
+      slider,
+      /link\.download = audioOnly \? downloadFilename\(item\.id, "audio", item\.audioExt\) : downloadFilename\(item\.id\);/
+    );
+    // The per-item audioOnly branch offers only the audio button (or the unavailable message), never the video one.
+    const perItem = slider.match(/\{audioOnly \? \(\s*audio \? \(([\s\S]*?)\) : \(([\s\S]*?)\)\s*\) : \(/);
+    assert.ok(perItem, "expected the per-item audioOnly ternary");
+    assert.doesNotMatch(perItem![1], /videoHref/, "the audio-available branch must not offer the video file");
+    assert.match(perItem![2], /dict\.audioUnavailable/, "the no-audio branch must say so honestly");
+  });
+
+  it("every locale has the audio-card copy: a distinct title and an honest unavailable message", () => {
+    for (const locale of locales) {
+      const p = JSON.parse(source(`messages/${locale}.json`)).preview;
+      assert.ok(p.audioTitle?.trim(), `${locale}: missing preview.audioTitle`);
+      assert.notEqual(p.audioTitle, p.title, `${locale}: audioTitle must not just repeat the video title`);
+      assert.ok(p.audioUnavailable?.trim(), `${locale}: missing preview.audioUnavailable`);
+    }
+  });
+});
+
 describe("linked from the footer and the sitemap", () => {
   it("the footer lists it alongside the platform tools", () => {
     const footer = source("app/[locale]/components/Footer.tsx");

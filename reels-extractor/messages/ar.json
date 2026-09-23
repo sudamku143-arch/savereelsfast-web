@@ -445,6 +445,7 @@
   },
   "preview": {
     "title": "الفيديو جاهز",
+    "audioTitle": "الصوت جاهز",
     "author": "بواسطة",
     "duration": "المدة",
     "downloadButton": "تنزيل الفيديو (MP4 بجودة HD)",
@@ -452,6 +453,7 @@
     "thumbnailAlt": "صورة مصغّرة للريل",
     "noAudio": "تم التنزيل بلا صوت (المنصة تقيّد المسار الصوتي)",
     "downloadAudio": "تنزيل الصوت ({format})",
+    "audioUnavailable": "لا يتوفر ملف صوت منفصل لهذا الرابط — صوته مدمج مع الفيديو.",
     "postItems": "{n} فيديوهات في هذا المنشور",
     "itemTitle": "الفيديو {n}",
     "downloadItem": "تنزيل",

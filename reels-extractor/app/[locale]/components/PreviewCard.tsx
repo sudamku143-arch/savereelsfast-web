@@ -42,6 +42,8 @@ export type ReelResult = {
 
 export type PreviewDict = ItemsDict & {
   title: string;
+  /** Card heading on /audio-downloader, once a result is ready. */
+  audioTitle: string;
   author: string;
   downloadButton: string;
   downloadAudio: string;
@@ -73,6 +75,7 @@ export default function PreviewCard({
   errorsDict,
   platform,
   platformName,
+  audioOnly = false,
   onReset,
 }: {
   locale: Locale;
@@ -82,6 +85,8 @@ export default function PreviewCard({
   errorsDict: ErrorsDict;
   platform: PlatformId;
   platformName: string;
+  /** True on /audio-downloader: only ever offer the separate audio track, never the video file. */
+  audioOnly?: boolean;
   onReset: () => void;
 }) {
   // The share row appears only after the visitor has actually saved something.
@@ -114,13 +119,14 @@ export default function PreviewCard({
   return (
     <div className="glass mt-6 w-full max-w-md animate-fade-in-up rounded-2xl p-4 shadow-glow">
       <div className="mb-3 flex items-center justify-between gap-2">
-        <p className="text-sm font-semibold text-zinc-50">{dict.title}</p>
+        <p className="text-sm font-semibold text-zinc-50">{audioOnly ? dict.audioTitle : dict.title}</p>
         <div className="flex shrink-0 items-center gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-zinc-300">
             <PlatformIcon id={platform} className="h-3 w-3" />
             {platformName}
           </span>
-          {result.quality && !isCarousel && (
+          {/* The resolution badge describes the video stream; it has no meaning on the audio-only card. */}
+          {result.quality && !isCarousel && !audioOnly && (
             <span className="rounded-full border border-brand-500/40 bg-brand-500/10 px-2 py-0.5 text-[11px] font-semibold text-brand-300">
               {result.quality}
             </span>
@@ -171,11 +177,13 @@ export default function PreviewCard({
           downloadDict={downloadDict}
           errorsDict={errorsDict}
           platformName={platformName}
+          audioOnly={audioOnly}
           onDownloaded={() => setDownloaded(true)}
         />
       ) : (
         <>
-          {result.warning === "NO_AUDIO" && (
+          {/* Only meaningful for the video button below; the audio-only card has its own fallback instead. */}
+          {result.warning === "NO_AUDIO" && !audioOnly && (
             <p
               role="status"
               className="mt-4 flex items-start gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-xs leading-relaxed text-amber-200"
@@ -197,29 +205,37 @@ export default function PreviewCard({
             </p>
           )}
 
-          <div className="mt-4 flex flex-col gap-2">
-            <DownloadButton
-              href={videoHref}
-              filename={filename}
-              label={dict.downloadButton}
-              dict={downloadDict}
-              errorsDict={errorsDict}
-              platformName={platformName}
-              onSaved={() => setDownloaded(true)}
-            />
-            {audioHref && (
+          {audioOnly && !audioHref ? (
+            <p className="mt-4 text-center text-xs leading-relaxed text-zinc-500">{dict.audioUnavailable}</p>
+          ) : (
+            <div className="mt-4 flex flex-col gap-2">
               <DownloadButton
-                href={audioHref}
-                filename={downloadFilename(result.id, "audio", result.audioExt)}
-                label={dict.downloadAudio.replaceAll("{format}", audioFormat)}
-                variant="secondary"
+                href={audioOnly ? audioHref! : videoHref}
+                filename={
+                  audioOnly ? downloadFilename(result.id, "audio", result.audioExt) : filename
+                }
+                label={
+                  audioOnly ? dict.downloadAudio.replaceAll("{format}", audioFormat) : dict.downloadButton
+                }
                 dict={downloadDict}
                 errorsDict={errorsDict}
                 platformName={platformName}
                 onSaved={() => setDownloaded(true)}
               />
-            )}
-          </div>
+              {!audioOnly && audioHref && (
+                <DownloadButton
+                  href={audioHref}
+                  filename={downloadFilename(result.id, "audio", result.audioExt)}
+                  label={dict.downloadAudio.replaceAll("{format}", audioFormat)}
+                  variant="secondary"
+                  dict={downloadDict}
+                  errorsDict={errorsDict}
+                  platformName={platformName}
+                  onSaved={() => setDownloaded(true)}
+                />
+              )}
+            </div>
+          )}
         </>
       )}
 

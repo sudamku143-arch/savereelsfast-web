@@ -17,6 +17,8 @@ export type ItemsDict = {
   downloadAllHint: string;
   duration: string;
   thumbnailAlt: string;
+  /** Shown instead of a download action when a post/item has no separate audio stream to offer. */
+  audioUnavailable: string;
 };
 
 const DOWNLOAD_GAP_MS = 900; // browsers drop downloads that start in the same tick
@@ -39,6 +41,7 @@ export default function ItemsSlider({
   downloadDict,
   errorsDict,
   platformName,
+  audioOnly = false,
   onDownloaded,
 }: {
   items: ReelItem[];
@@ -46,6 +49,8 @@ export default function ItemsSlider({
   downloadDict: DownloadDict;
   errorsDict: ErrorsDict;
   platformName: string;
+  /** True on /audio-downloader: only ever offer the separate audio track, never the video file. */
+  audioOnly?: boolean;
   /** Called when any download from this post has been saved or started. */
   onDownloaded?: () => void;
 }) {
@@ -59,13 +64,16 @@ export default function ItemsSlider({
       ? buildDownloadHref({ url: item.audioUrl, id: item.id, kind: "audio", ext: item.audioExt })
       : null;
 
+  // Not every item has a separate audio stream (see PreviewCard); on the audio page, skip the ones that don't.
+  const audioItems = audioOnly ? items.filter((item) => audioHref(item)) : items;
+
   async function downloadAll() {
     setBusy(true);
     try {
-      for (const item of items) {
+      for (const item of audioItems) {
         const link = document.createElement("a");
-        link.href = videoHref(item);
-        link.download = downloadFilename(item.id);
+        link.href = audioOnly ? audioHref(item)! : videoHref(item);
+        link.download = audioOnly ? downloadFilename(item.id, "audio", item.audioExt) : downloadFilename(item.id);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -121,27 +129,48 @@ export default function ItemsSlider({
               </div>
 
               <div className="mt-2 flex flex-col gap-1.5">
-                <DownloadButton
-                  href={videoHref(item)}
-                  filename={downloadFilename(item.id)}
-                  label={`${dict.downloadItem}${item.quality ? ` · ${item.quality}` : ""}`}
-                  variant="compact"
-                  dict={downloadDict}
-                  errorsDict={errorsDict}
-                  platformName={platformName}
-                  onSaved={onDownloaded}
-                />
-                {audio && (
-                  <DownloadButton
-                    href={audio}
-                    filename={downloadFilename(item.id, "audio", item.audioExt)}
-                    label={dict.downloadItemAudio}
-                    variant="compact-secondary"
-                    dict={downloadDict}
-                    errorsDict={errorsDict}
-                    platformName={platformName}
-                    onSaved={onDownloaded}
-                  />
+                {audioOnly ? (
+                  audio ? (
+                    <DownloadButton
+                      href={audio}
+                      filename={downloadFilename(item.id, "audio", item.audioExt)}
+                      label={dict.downloadItem}
+                      variant="compact"
+                      dict={downloadDict}
+                      errorsDict={errorsDict}
+                      platformName={platformName}
+                      onSaved={onDownloaded}
+                    />
+                  ) : (
+                    <p className="px-0.5 text-center text-[10px] leading-snug text-zinc-500">
+                      {dict.audioUnavailable}
+                    </p>
+                  )
+                ) : (
+                  <>
+                    <DownloadButton
+                      href={videoHref(item)}
+                      filename={downloadFilename(item.id)}
+                      label={`${dict.downloadItem}${item.quality ? ` · ${item.quality}` : ""}`}
+                      variant="compact"
+                      dict={downloadDict}
+                      errorsDict={errorsDict}
+                      platformName={platformName}
+                      onSaved={onDownloaded}
+                    />
+                    {audio && (
+                      <DownloadButton
+                        href={audio}
+                        filename={downloadFilename(item.id, "audio", item.audioExt)}
+                        label={dict.downloadItemAudio}
+                        variant="compact-secondary"
+                        dict={downloadDict}
+                        errorsDict={errorsDict}
+                        platformName={platformName}
+                        onSaved={onDownloaded}
+                      />
+                    )}
+                  </>
                 )}
               </div>
             </li>
@@ -149,15 +178,23 @@ export default function ItemsSlider({
         })}
       </ul>
 
-      <button
-        type="button"
-        onClick={downloadAll}
-        disabled={busy}
-        className="mt-2 w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none"
-      >
-        {busy ? dict.downloadAllBusy : fill(dict.downloadAll, { n: items.length })}
-      </button>
-      <p className="mt-1.5 text-center text-[11px] text-zinc-500">{dict.downloadAllHint}</p>
+      {audioItems.length > 0 ? (
+        <>
+          <button
+            type="button"
+            onClick={downloadAll}
+            disabled={busy}
+            className="mt-2 w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none"
+          >
+            {busy ? dict.downloadAllBusy : fill(dict.downloadAll, { n: audioItems.length })}
+          </button>
+          <p className="mt-1.5 text-center text-[11px] text-zinc-500">{dict.downloadAllHint}</p>
+        </>
+      ) : (
+        audioOnly && (
+          <p className="mt-2 text-center text-xs text-zinc-500">{dict.audioUnavailable}</p>
+        )
+      )}
     </section>
   );
 }

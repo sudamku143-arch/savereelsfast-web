@@ -445,6 +445,7 @@
   },
   "preview": {
     "title": "Your video is ready",
+    "audioTitle": "Your audio is ready",
     "author": "By",
     "duration": "Duration",
     "downloadButton": "Download Video (HD MP4)",
@@ -452,6 +453,7 @@
     "thumbnailAlt": "Reel thumbnail",
     "noAudio": "Downloaded without audio (audio stream restricted by platform)",
     "downloadAudio": "Download Audio ({format})",
+    "audioUnavailable": "A separate audio file isn't available for this link — its sound is bundled with the video.",
     "postItems": "{n} videos in this post",
     "itemTitle": "Video {n}",
     "downloadItem": "Download",

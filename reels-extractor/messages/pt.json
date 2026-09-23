@@ -445,6 +445,7 @@
   },
   "preview": {
     "title": "Seu vídeo está pronto",
+    "audioTitle": "Seu áudio está pronto",
     "author": "Por",
     "duration": "Duração",
     "downloadButton": "Baixar vídeo (MP4 HD)",
@@ -452,6 +453,7 @@
     "thumbnailAlt": "Miniatura do Reel",
     "noAudio": "Baixado sem áudio (a plataforma restringe o fluxo de áudio)",
     "downloadAudio": "Baixar áudio ({format})",
+    "audioUnavailable": "Não há um arquivo de áudio separado disponível para este link — o som vem junto com o vídeo.",
     "postItems": "{n} vídeos nesta publicação",
     "itemTitle": "Vídeo {n}",
     "downloadItem": "Baixar",

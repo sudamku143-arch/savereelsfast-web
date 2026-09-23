@@ -445,6 +445,7 @@
   },
   "preview": {
     "title": "Video Anda sudah siap",
+    "audioTitle": "Audio Anda sudah siap",
     "author": "Oleh",
     "duration": "Durasi",
     "downloadButton": "Unduh Video (MP4 HD)",
@@ -452,6 +453,7 @@
     "thumbnailAlt": "Thumbnail Reel",
     "noAudio": "Diunduh tanpa suara (aliran audio dibatasi oleh platform)",
     "downloadAudio": "Unduh Audio ({format})",
+    "audioUnavailable": "File audio terpisah tidak tersedia untuk tautan ini — suaranya menyatu dengan videonya.",
     "postItems": "{n} video di postingan ini",
     "itemTitle": "Video {n}",
     "downloadItem": "Unduh",

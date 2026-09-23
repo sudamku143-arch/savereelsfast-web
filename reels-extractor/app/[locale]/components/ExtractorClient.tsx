@@ -60,6 +60,7 @@ export default function ExtractorClient({
   platformInfo,
   initialPlatform = "instagram",
   landing = false,
+  audioOnly = false,
   heroHeading,
   heroLead,
 }: {
@@ -78,6 +79,8 @@ export default function ExtractorClient({
   initialPlatform?: PlatformId;
   /** True on a platform's own page, whose heading follows the active tab from the start. */
   landing?: boolean;
+  /** True on /audio-downloader: the result card only ever offers the separate audio track, never the video file. */
+  audioOnly?: boolean;
   /**
    * Replaces the default heading/intro (the active tab's own title/subtitle) until the visitor picks a tab,
    * for a page whose own topic isn't any single platform (e.g. the audio downloader, which works with all of
@@ -294,6 +297,7 @@ export default function ExtractorClient({
               errorsDict={errorsDict}
               platform={result.platform ?? platform}
               platformName={platformsDict[result.platform ?? platform].name}
+              audioOnly={audioOnly}
               onReset={handleReset}
             />
             {/* Slot 2: directly below the download result. */}
