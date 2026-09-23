@@ -362,6 +362,137 @@ class ScraperTests(unittest.TestCase):
         self.assertNotIn("proxy", made[0])
         self.assertEqual(made[1], TUNNEL)
 
+    # ---- Cobalt-first for video downloads (tried proactively, not just on a yt-dlp failure) ----
+
+    GOOD_YTDLP_RESULT = {
+        "id": VIDEO,
+        "title": "t",
+        "formats": [
+            {"url": "https://rr1.googlevideo.com/videoplayback?a=1", "ext": "mp4", "vcodec": "avc1",
+             "acodec": "mp4a", "height": 360, "protocol": "https"},
+            {"url": "https://rr1.googlevideo.com/videoplayback?a=2", "ext": "m4a", "vcodec": "none",
+             "acodec": "mp4a", "protocol": "https"},
+        ],
+    }
+
+    def test_a_plain_video_download_tries_cobalt_first_even_though_ytdlp_itself_worked(self):
+        with mock.patch.object(self.main, "_extract_info", return_value=self.GOOD_YTDLP_RESULT):
+            resolved, info = self.main._resolve_and_extract(YT)
+        self.assertNotIn("_via", info)  # a normal yt-dlp success, not the extraction-level fallback
+
+        calls = []
+
+        def fake_open_cdn_stream(url, referer, kind, range_header):
+            calls.append((url, kind))
+            return mock.Mock(via_proxy=False)
+
+        with mock.patch.object(self.main, "_open_cdn_stream", side_effect=fake_open_cdn_stream):
+            stream = self.main._open_stream_from_info(resolved, info, "video", 0)
+
+        self.assertEqual(self.client.attempts, 1)  # Cobalt was asked proactively, not after a failure
+        self.assertEqual(calls, [(TUNNEL, "video")])  # streamed from Cobalt's link, never the googlevideo one
+        self.assertFalse(stream.via_proxy)
+
+    def test_falls_back_to_the_paid_proxy_when_cobalt_has_nothing_for_an_otherwise_working_download(self):
+        self.transport = answer({"status": "error", "error": {"code": "error.api.fetch.fail"}})
+
+        class Response:
+            headers = {"Content-Length": "5"}
+
+            def read(self, n):
+                return b""
+
+            def close(self):
+                pass
+
+        class YDL:
+            def __init__(self, params, *a, **k):
+                pass
+
+            def urlopen(self, request):
+                return Response()
+
+            def close(self):
+                pass
+
+        with mock.patch.object(self.main, "_extract_info", return_value=self.GOOD_YTDLP_RESULT):
+            resolved, info = self.main._resolve_and_extract(YT)
+        with mock.patch.object(self.main.yt_dlp, "YoutubeDL", YDL):
+            stream = self.main._open_stream_from_info(resolved, info, "video", 0)
+        self.assertEqual(self.client.attempts, 1)  # tried, but had nothing
+        self.assertTrue(stream.via_proxy)  # the usual paid-proxy route was used instead
+
+    def test_audio_downloads_never_ask_cobalt_it_only_ever_returns_one_muxed_format(self):
+        class Response:
+            headers = {"Content-Length": "5"}
+
+            def read(self, n):
+                return b""
+
+            def close(self):
+                pass
+
+        class YDL:
+            def __init__(self, params, *a, **k):
+                pass
+
+            def urlopen(self, request):
+                return Response()
+
+            def close(self):
+                pass
+
+        with mock.patch.object(self.main, "_extract_info", return_value=self.GOOD_YTDLP_RESULT):
+            resolved, info = self.main._resolve_and_extract(YT)
+        with mock.patch.object(self.main.yt_dlp, "YoutubeDL", YDL):
+            stream = self.main._open_stream_from_info(resolved, info, "audio", 0)
+        self.assertEqual(self.client.attempts, 0)
+        self.assertTrue(stream.via_proxy)
+
+    def test_the_stream_endpoint_helper_prefers_cobalt_for_a_youtube_video(self):
+        calls = []
+
+        def fake_open_cdn_stream(url, referer, kind, range_header):
+            calls.append((url, kind))
+            return mock.Mock(via_proxy=False)
+
+        with mock.patch.object(self.main, "_open_cdn_stream", side_effect=fake_open_cdn_stream):
+            self.main._open_stream_preferring_cobalt(
+                "https://rr1.googlevideo.com/videoplayback?a=1", None, VIDEO, "video", None
+            )
+        self.assertEqual(self.client.attempts, 1)
+        self.assertEqual(calls, [(TUNNEL, "video")])
+
+    def test_the_stream_endpoint_helper_falls_back_to_the_original_url_when_cobalt_has_nothing(self):
+        self.transport = answer({"status": "error", "error": {"code": "error.api.fetch.fail"}})
+        calls = []
+
+        def fake_open_cdn_stream(url, referer, kind, range_header):
+            calls.append((url, kind))
+            return mock.Mock(via_proxy=True)
+
+        with mock.patch.object(self.main, "_open_cdn_stream", side_effect=fake_open_cdn_stream):
+            self.main._open_stream_preferring_cobalt(
+                "https://rr1.googlevideo.com/videoplayback?a=1", None, VIDEO, "video", None
+            )
+        self.assertEqual(calls, [("https://rr1.googlevideo.com/videoplayback?a=1", "video")])
+
+    def test_the_stream_endpoint_helper_never_asks_cobalt_for_audio_or_a_non_youtube_host(self):
+        calls = []
+
+        def fake_open_cdn_stream(url, referer, kind, range_header):
+            calls.append((url, kind))
+            return mock.Mock(via_proxy=False)
+
+        with mock.patch.object(self.main, "_open_cdn_stream", side_effect=fake_open_cdn_stream):
+            self.main._open_stream_preferring_cobalt(
+                "https://rr1.googlevideo.com/videoplayback?a=1", None, VIDEO, "audio", None
+            )
+            self.main._open_stream_preferring_cobalt(
+                "https://scontent.cdninstagram.com/x.mp4", None, "post123", "video", None
+            )
+        self.assertEqual(self.client.attempts, 0)
+
     def test_a_link_off_the_instance_is_still_refused_for_streaming(self):
         hostile = {"id": "x", "formats": [{"url": "https://evil.example.net/x.mp4", "ext": "mp4", "vcodec": "h264", "acodec": "aac", "protocol": "https"}], "_via": "cobalt"}
         with self.assertRaises(ScraperError):

@@ -709,6 +709,27 @@ def _cobalt_fallback(url: str, failure: ScraperError) -> tuple[str, dict] | None
     return url, info
 
 
+def _cobalt_video_url(video_id: str | None) -> str | None:
+    """
+    A ready-to-fetch YouTube video URL that costs no paid-proxy bandwidth (Cobalt fetches and re-serves it
+    from its own infrastructure), or None when Cobalt is off, paused, has nothing for this video, or the id
+    is missing/malformed - in every one of those cases the caller falls back to the usual paid-proxy route.
+
+    Video only: Cobalt's "auto" mode always returns one muxed video+audio format, never a separate
+    audio-only track, so the audio downloader (which needs that separate track) never calls this.
+    """
+    if not video_id or not COBALT.usable():
+        return None
+    try:
+        info = COBALT.fetch(video_id, COBALT.timeout)
+    except CobaltUnavailable as exc:
+        _log.info("Cobalt-first (video download) had no answer: %s", exc)
+        return None
+    formats = info.get("formats") or []
+    url = formats[0].get("url") if formats else None
+    return url if isinstance(url, str) and _media_url_allowed(url) else None
+
+
 def _resolve_and_extract_ytdlp(url: str, first_route: int = 0) -> tuple[str, dict]:
     """
     Validate/expand the link and fetch its metadata. Raises ScraperError.
@@ -1044,6 +1065,18 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
         via_proxy = bool(YTDLP_PROXY) and not COBALT.is_media_url(media_url) and (
             is_youtube_host(urlparse(resolved).hostname or "") or is_youtube_media_host(urlparse(media_url).hostname or "")
         )
+
+        # Cobalt-first: for a plain video download that would otherwise cost paid-proxy bandwidth, try a fresh
+        # Cobalt link before falling back to it. Checked (and so billed against the daily budget) only once
+        # Cobalt has nothing, so a Cobalt success never touches the budget at all.
+        if kind == "video" and via_proxy:
+            cobalt_url = _cobalt_video_url(info.get("id") if isinstance(info.get("id"), str) else None)
+            if cobalt_url:
+                try:
+                    return _open_cdn_stream(cobalt_url, None, "video", None)
+                except ScraperError:
+                    pass  # Cobalt's own link didn't pan out either: fall through to the paid-proxy route below
+
         if via_proxy:
             _proxy_check_budget()
         ydl = yt_dlp.YoutubeDL(_ydl_options(use_proxy=via_proxy))
@@ -1261,6 +1294,25 @@ def _open_cdn_stream(
         raise ScraperError(errors.PLATFORM_TIMEOUT)
 
 
+def _open_stream_preferring_cobalt(
+    url: str, referer: str | None, id_: str, kind: str, range_header: str | None
+) -> OpenStream:
+    """
+    `_open_cdn_stream`, but for a plain YouTube video download it tries a fresh Cobalt link first, so the
+    common case (this server's own `/extract` already resolved `url` through the paid proxy) doesn't have to
+    spend proxy bandwidth on the bytes too. Falls straight through to `url` itself - the existing, already
+    proxy-bound link - whenever Cobalt is off, paused, has nothing, or its own link doesn't pan out either.
+    """
+    if kind == "video" and YTDLP_PROXY and is_youtube_media_host(urlparse(url).hostname or ""):
+        cobalt_url = _cobalt_video_url(id_)
+        if cobalt_url:
+            try:
+                return _open_cdn_stream(cobalt_url, None, "video", range_header)
+            except ScraperError:
+                pass  # Cobalt's own link didn't pan out either: fall through to the paid-proxy route below
+    return _open_cdn_stream(url, referer, kind, range_header)
+
+
 @app.get("/stream")
 async def stream(
     url: str = Query(..., description="Video URL on a platform CDN, as returned by /extract"),
@@ -1282,7 +1334,7 @@ async def stream(
     if lease is None:
         raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        opened = await asyncio.to_thread(_open_cdn_stream, url, referer, kind, range_header)
+        opened = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, kind, range_header)
     except ScraperError as err:
         lease.release()
         raise _http_error(err)
