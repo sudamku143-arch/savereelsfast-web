@@ -393,6 +393,22 @@ class ScraperTests(unittest.TestCase):
         self.assertEqual(calls, [(TUNNEL, "video")])  # streamed from Cobalt's link, never the googlevideo one
         self.assertFalse(stream.via_proxy)
 
+    def test_cobalt_first_gets_its_own_short_budget_not_the_full_configured_timeout(self):
+        """
+        A slow-but-not-quite-failing Cobalt must not be able to add COBALT_TIMEOUT_SECONDS of latency to
+        every single video download - that budget is for the rare already-failed case (_cobalt_fallback
+        above), not the happy path every download takes.
+        """
+        seen_budgets = []
+        real_fetch = self.client.fetch
+        self.client.fetch = lambda vid, budget=None, transport=None: (
+            seen_budgets.append(budget) or real_fetch(vid, budget, self.transport)
+        )
+        self.client.timeout = 30.0  # a generously configured COBALT_TIMEOUT_SECONDS, for the failure fallback
+        self.main._cobalt_video_url(VIDEO)
+        self.assertEqual(seen_budgets, [self.main.COBALT_FIRST_BUDGET_SECONDS])
+        self.assertLess(self.main.COBALT_FIRST_BUDGET_SECONDS, 30.0)
+
     def test_falls_back_to_the_paid_proxy_when_cobalt_has_nothing_for_an_otherwise_working_download(self):
         self.transport = answer({"status": "error", "error": {"code": "error.api.fetch.fail"}})
 

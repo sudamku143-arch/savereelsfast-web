@@ -709,11 +709,25 @@ def _cobalt_fallback(url: str, failure: ScraperError) -> tuple[str, dict] | None
     return url, info
 
 
+
+# COBALT_TIMEOUT_SECONDS is tuned for _cobalt_fallback above: yt-dlp has already failed there, so waiting
+# longer for Cobalt is the only option left and cheap either way. _cobalt_video_url below is different: it
+# runs on the *happy path* of every single video download, where yt-dlp already has a proven, working,
+# already-resolved link ready to go. Reusing the same generous budget there means a slow Cobalt response (a
+# free-tier instance under load, not just a cold start - a plain health check can be fast while the actual
+# extraction call is not) adds that same delay to every download instead of only the rare failure case, and
+# can push the whole request past Vercel's own timeout. So this path gets its own short, separate budget:
+# Cobalt gets a fast, fair shot, but never enough rope to make a download slower than the plain proxy route
+# would have been on its own.
+COBALT_FIRST_BUDGET_SECONDS = 3.0
+
+
 def _cobalt_video_url(video_id: str | None) -> str | None:
     """
     A ready-to-fetch YouTube video URL that costs no paid-proxy bandwidth (Cobalt fetches and re-serves it
-    from its own infrastructure), or None when Cobalt is off, paused, has nothing for this video, or the id
-    is missing/malformed - in every one of those cases the caller falls back to the usual paid-proxy route.
+    from its own infrastructure), or None when Cobalt is off, paused, has nothing for this video, is too
+    slow to answer within COBALT_FIRST_BUDGET_SECONDS, or the id is missing/malformed - in every one of
+    those cases the caller falls back to the usual paid-proxy route, at essentially no extra cost.
 
     Video only: Cobalt's "auto" mode always returns one muxed video+audio format, never a separate
     audio-only track, so the audio downloader (which needs that separate track) never calls this.
@@ -721,7 +735,7 @@ def _cobalt_video_url(video_id: str | None) -> str | None:
     if not video_id or not COBALT.usable():
         return None
     try:
-        info = COBALT.fetch(video_id, COBALT.timeout)
+        info = COBALT.fetch(video_id, min(COBALT.timeout, COBALT_FIRST_BUDGET_SECONDS))
     except CobaltUnavailable as exc:
         _log.info("Cobalt-first (video download) had no answer: %s", exc)
         return None
