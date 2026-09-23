@@ -966,14 +966,14 @@
       {
         "heading": "Apa Itu Pengunduh Audio?",
         "paragraphs": [
-          "Pengunduh audio menyimpan suara dari video publik — sebuah Reel Instagram, Short YouTube, atau video YouTube lengkap — sebagai file tersendiri, terpisah dari videonya, sehingga Anda bisa menyimpan voice-over, cuplikan lagu, atau klip mirip podcast tanpa gambarnya. Tempel tautannya di sini, dan saat platform menyediakan trek audio terpisah, tombol Unduh Audio muncul di samping hasil video.",
+          "Pengunduh audio menyimpan suara dari video publik — sebuah Reel Instagram, Short YouTube, atau video YouTube lengkap — sebagai file tersendiri, terpisah dari videonya, sehingga Anda bisa menyimpan voice-over, cuplikan lagu, atau klip mirip podcast tanpa gambarnya. Tempel tautannya di sini, dan saat platform menyediakan trek audio terpisah, tombol Unduh Audio muncul untuknya.",
           "Berguna untuk menyimpan soundtrack sebuah Reel agar bisa didengarkan nanti, mengambil audio dari sebuah ceramah atau wawancara yang videonya tidak Anda perlukan, atau menyimpan cuplikan dialog atau efek suara yang ingin digunakan kembali, dengan izin pembuatnya, karena audio itu tetap miliknya. Alat ini bekerja sama di ponsel, tablet, atau komputer, di browser modern mana pun."
         ]
       },
       {
         "heading": "Cara Mengekstrak Audio dari Instagram & YouTube Online",
         "paragraphs": [
-          "1) Salin tautan Reel Instagram publik, video atau Short YouTube, atau postingan dari salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau dimuat. 3) Jika platform menyediakan trek audio terpisah, ketuk Unduh Audio di samping video; file langsung tersimpan di perangkat Anda, sama seperti unduhan video — pengunduh audio cepat, tanpa perlu memasang apa pun.",
+          "1) Salin tautan Reel Instagram publik, video atau Short YouTube, atau postingan dari salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau dimuat. 3) Jika platform menyediakan trek audio terpisah, ketuk Unduh Audio; file langsung tersimpan di perangkat Anda — pengunduh audio cepat, tanpa perlu memasang apa pun.",
           "Di iPhone, file diunduh di dalam Safari; buka ikon Downloads di toolbar dan gunakan ikon bagikan untuk menyimpannya di tempat Anda biasa menyimpan file audio. Di Android atau komputer, file tersimpan di folder Downloads biasa. Tidak perlu akun, ekstensi browser, atau aplikasi apa pun di langkah mana pun."
         ]
       },
@@ -995,7 +995,7 @@
     "faq": [
       {
         "q": "Bisakah saya mengunduh audio dari Reels Instagram maupun video YouTube?",
-        "a": "Ya. Tempel tautan dari salah satunya (atau dari Facebook, TikTok, dan platform lain yang didukung), dan saat postingan itu punya trek audio terpisah, tombol Unduh Audio muncul di samping videonya."
+        "a": "Ya. Tempel tautan dari salah satunya (atau dari Facebook, TikTok, dan platform lain yang didukung), dan saat postingan itu punya trek audio terpisah, tombol Unduh Audio muncul."
       },
       {
         "q": "Bisakah saya mengonversi video YouTube ke MP3?",
@@ -1011,7 +1011,7 @@
       },
       {
         "q": "Kenapa tidak ada opsi audio untuk beberapa tautan?",
-        "a": "Tombol Unduh Audio hanya muncul saat platform menyediakan stream audio-saja terpisah untuk postingan spesifik itu. Banyak video disajikan sebagai satu file gabungan tanpa trek terpisah untuk diambil, dan dalam kasus itu hanya unduhan video yang tersedia."
+        "a": "Tombol Unduh Audio hanya muncul saat platform menyediakan stream audio-saja terpisah untuk postingan spesifik itu. Banyak video disajikan sebagai satu file gabungan tanpa trek terpisah untuk diambil, dan dalam kasus itu tidak ada file audio terpisah yang bisa ditawarkan — suaranya hanya tersedia menyatu dengan videonya."
       },
       {
         "q": "Apakah ini gratis, dan perlukah saya login?",

@@ -966,14 +966,14 @@
       {
         "heading": "Qu'est-ce qu'un Téléchargeur Audio ?",
         "paragraphs": [
-          "Un téléchargeur audio enregistre le son d'une vidéo publique — un Reel Instagram, un Short YouTube ou une vidéo YouTube complète — comme un fichier à part, séparé de la vidéo, pour que vous puissiez garder une voix off, un extrait de chanson ou un clip façon podcast sans l'image. Collez le lien ici, et quand la plateforme fournit une piste audio séparée, un bouton Télécharger l'audio apparaît à côté du résultat vidéo.",
+          "Un téléchargeur audio enregistre le son d'une vidéo publique — un Reel Instagram, un Short YouTube ou une vidéo YouTube complète — comme un fichier à part, séparé de la vidéo, pour que vous puissiez garder une voix off, un extrait de chanson ou un clip façon podcast sans l'image. Collez le lien ici, et quand la plateforme fournit une piste audio séparée, un bouton Télécharger l'audio apparaît pour elle.",
           "C'est utile pour garder la bande son d'un Reel à écouter plus tard, extraire l'audio d'une conférence ou d'une interview dont vous n'avez pas besoin en vidéo, ou conserver un extrait de dialogue ou un effet sonore à réutiliser, avec l'accord du créateur, puisque l'audio lui appartient toujours. Ça fonctionne de la même façon sur téléphone, tablette ou ordinateur, dans n'importe quel navigateur récent."
         ]
       },
       {
         "heading": "Comment Extraire l'Audio d'Instagram et YouTube en Ligne",
         "paragraphs": [
-          "1) Copiez le lien d'un Reel Instagram public, d'une vidéo ou d'un Short YouTube, ou d'une publication sur l'une de nos 10 plateformes prises en charge. 2) Collez-le dans le champ ci-dessus et attendez que l'aperçu se charge. 3) Si la plateforme fournit une piste audio séparée, touchez Télécharger l'audio à côté de la vidéo ; le fichier s'enregistre directement sur votre appareil, comme pour la vidéo — un téléchargeur audio rapide, sans rien à installer.",
+          "1) Copiez le lien d'un Reel Instagram public, d'une vidéo ou d'un Short YouTube, ou d'une publication sur l'une de nos 10 plateformes prises en charge. 2) Collez-le dans le champ ci-dessus et attendez que l'aperçu se charge. 3) Si la plateforme fournit une piste audio séparée, touchez Télécharger l'audio ; le fichier s'enregistre directement sur votre appareil — un téléchargeur audio rapide, sans rien à installer.",
           "Sur iPhone, le fichier se télécharge dans Safari ; ouvrez l'icône Téléchargements dans la barre d'outils et utilisez l'icône de partage pour l'enregistrer où vous gardez vos fichiers audio. Sur Android ou ordinateur, il s'enregistre dans votre dossier Téléchargements habituel. Aucun compte, extension de navigateur ni appli n'est nécessaire à aucune étape."
         ]
       },
@@ -995,7 +995,7 @@
     "faq": [
       {
         "q": "Puis-je télécharger l'audio des Reels Instagram et des vidéos YouTube ?",
-        "a": "Oui. Collez un lien de l'un ou l'autre (ou de Facebook, TikTok et des autres plateformes prises en charge), et quand cette publication a une piste audio séparée, un bouton Télécharger l'audio apparaît à côté de la vidéo."
+        "a": "Oui. Collez un lien de l'un ou l'autre (ou de Facebook, TikTok et des autres plateformes prises en charge), et quand cette publication a une piste audio séparée, un bouton Télécharger l'audio apparaît."
       },
       {
         "q": "Puis-je convertir des vidéos YouTube en MP3 ?",
@@ -1011,7 +1011,7 @@
       },
       {
         "q": "Pourquoi n'y a-t-il pas d'option audio pour certains liens ?",
-        "a": "Le bouton Télécharger l'audio n'apparaît que lorsque la plateforme fournit un flux audio seul séparé pour cette publication précise. Beaucoup de vidéos sont servies en un seul fichier combiné sans piste séparée à extraire ; dans ce cas, seul le téléchargement vidéo est disponible."
+        "a": "Le bouton Télécharger l'audio n'apparaît que lorsque la plateforme fournit un flux audio seul séparé pour cette publication précise. Beaucoup de vidéos sont servies en un seul fichier combiné sans piste séparée à extraire ; dans ce cas, aucun fichier audio séparé n'est disponible : le son est alors uniquement fourni avec la vidéo."
       },
       {
         "q": "Est-ce gratuit, et dois-je me connecter ?",

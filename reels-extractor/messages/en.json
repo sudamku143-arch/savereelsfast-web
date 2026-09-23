@@ -966,14 +966,14 @@
       {
         "heading": "What Is an Audio Downloader?",
         "paragraphs": [
-          "An audio downloader saves the sound from a public video — an Instagram Reel, a YouTube Short or a full YouTube video — as its own file, separate from the video, so you can keep a voiceover, a song clip or a podcast-style clip without the picture. Paste the link here, and when the platform provides a separate audio track, a Download Audio button appears next to the video result.",
+          "An audio downloader saves the sound from a public video — an Instagram Reel, a YouTube Short or a full YouTube video — as its own file, separate from the video, so you can keep a voiceover, a song clip or a podcast-style clip without the picture. Paste the link here, and when the platform provides a separate audio track, a Download Audio button appears for it.",
           "It's useful for saving a Reel's soundtrack to listen to later, pulling the audio from a talk or interview you don't need the video for, or keeping a short clip of dialogue or a sound effect you want to reuse, with the creator's permission, since the audio still belongs to them. It works the same on a phone, tablet or computer, in any modern browser."
         ]
       },
       {
         "heading": "How to Extract Audio from Instagram & YouTube Online",
         "paragraphs": [
-          "1) Copy the link of a public Instagram Reel, a YouTube video or Short, or a post from any of our 10 supported platforms. 2) Paste it into the box above and wait for the preview to load. 3) If the platform provides a separate audio track, tap Download Audio next to the video; the file saves straight to your device, the same way the video download does — a fast audio downloader with nothing to install.",
+          "1) Copy the link of a public Instagram Reel, a YouTube video or Short, or a post from any of our 10 supported platforms. 2) Paste it into the box above and wait for the preview to load. 3) If the platform provides a separate audio track, tap Download Audio; the file saves straight to your device — a fast audio downloader with nothing to install.",
           "On iPhone, the file downloads inside Safari; open the Downloads icon in the toolbar and use the share icon to save it wherever you keep audio files. On Android or desktop, it saves to your usual Downloads folder. No account, browser extension or app install is needed at any step."
         ]
       },
@@ -995,7 +995,7 @@
     "faq": [
       {
         "q": "Can I download audio from both Instagram Reels and YouTube videos?",
-        "a": "Yes. Paste a link from either one (or from Facebook, TikTok and the other supported platforms) and, when that post has a separate audio track, a Download Audio button appears next to the video."
+        "a": "Yes. Paste a link from either one (or from Facebook, TikTok and the other supported platforms) and, when that post has a separate audio track, a Download Audio button appears."
       },
       {
         "q": "Can I convert YouTube videos to MP3?",
@@ -1011,7 +1011,7 @@
       },
       {
         "q": "Why is there no audio option for some links?",
-        "a": "A Download Audio button only appears when the platform provides a separate audio-only stream for that specific post. Many videos are served as a single combined file with no separate track to extract, in which case only the video download is available."
+        "a": "A Download Audio button only appears when the platform provides a separate audio-only stream for that specific post. Many videos are served as a single combined file with no separate track to extract, in which case there's no separate audio file to offer — the sound is only available bundled with the video itself."
       },
       {
         "q": "Is this free, and do I need to log in?",

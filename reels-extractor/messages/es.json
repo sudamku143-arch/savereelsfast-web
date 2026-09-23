@@ -966,14 +966,14 @@
       {
         "heading": "¿Qué es un Descargador de Audio?",
         "paragraphs": [
-          "Un descargador de audio guarda el sonido de un video público, un Reel de Instagram, un Short de YouTube o un video completo de YouTube, como un archivo aparte, separado del video, para que puedas conservar una voz en off, un fragmento de canción o un clip tipo pódcast sin la imagen. Pega el enlace aquí, y cuando la plataforma ofrezca una pista de audio separada, aparecerá un botón de Descargar audio junto al resultado del video.",
+          "Un descargador de audio guarda el sonido de un video público, un Reel de Instagram, un Short de YouTube o un video completo de YouTube, como un archivo aparte, separado del video, para que puedas conservar una voz en off, un fragmento de canción o un clip tipo pódcast sin la imagen. Pega el enlace aquí, y cuando la plataforma ofrezca una pista de audio separada, aparecerá un botón de Descargar audio para él.",
           "Es útil para guardar la banda sonora de un Reel y escucharla después, extraer el audio de una charla o entrevista que no necesitas en video, o conservar un fragmento de diálogo o un efecto de sonido que quieras reutilizar, con permiso del creador, ya que el audio sigue siendo suyo. Funciona igual en un teléfono, una tablet o una computadora, en cualquier navegador moderno."
         ]
       },
       {
         "heading": "Cómo Extraer Audio de Instagram y YouTube en Línea",
         "paragraphs": [
-          "1) Copia el enlace de un Reel público de Instagram, un video o Short de YouTube, o una publicación de cualquiera de nuestras 10 plataformas compatibles. 2) Pégalo en el cuadro de arriba y espera a que cargue la vista previa. 3) Si la plataforma ofrece una pista de audio separada, toca Descargar audio junto al video; el archivo se guarda directo en tu dispositivo, igual que la descarga del video: un descargador de audio rápido, sin nada que instalar.",
+          "1) Copia el enlace de un Reel público de Instagram, un video o Short de YouTube, o una publicación de cualquiera de nuestras 10 plataformas compatibles. 2) Pégalo en el cuadro de arriba y espera a que cargue la vista previa. 3) Si la plataforma ofrece una pista de audio separada, toca Descargar audio; el archivo se guarda directo en tu dispositivo: un descargador de audio rápido, sin nada que instalar.",
           "En iPhone, el archivo se descarga dentro de Safari; abre el icono de Descargas en la barra y usa el icono de compartir para guardarlo donde guardes tus archivos de audio. En Android o computadora, se guarda en tu carpeta de Descargas habitual. No hace falta cuenta, extensión de navegador ni ninguna app en ningún paso."
         ]
       },
@@ -995,7 +995,7 @@
     "faq": [
       {
         "q": "¿Puedo descargar audio de Reels de Instagram y de videos de YouTube?",
-        "a": "Sí. Pega un enlace de cualquiera de los dos (o de Facebook, TikTok y las demás plataformas compatibles) y, cuando esa publicación tenga una pista de audio separada, aparecerá un botón de Descargar audio junto al video."
+        "a": "Sí. Pega un enlace de cualquiera de los dos (o de Facebook, TikTok y las demás plataformas compatibles) y, cuando esa publicación tenga una pista de audio separada, aparecerá un botón de Descargar audio."
       },
       {
         "q": "¿Puedo convertir videos de YouTube a MP3?",
@@ -1011,7 +1011,7 @@
       },
       {
         "q": "¿Por qué no hay opción de audio en algunos enlaces?",
-        "a": "El botón Descargar audio solo aparece cuando la plataforma ofrece una pista de audio independiente para esa publicación específica. Muchos videos se sirven como un solo archivo combinado, sin pista separada que extraer, en cuyo caso solo está disponible la descarga del video."
+        "a": "El botón Descargar audio solo aparece cuando la plataforma ofrece una pista de audio independiente para esa publicación específica. Muchos videos se sirven como un solo archivo combinado, sin pista separada que extraer, en cuyo caso no hay un archivo de audio independiente que ofrecer: el sonido solo está disponible junto con el video."
       },
       {
         "q": "¿Es gratis y necesito iniciar sesión?",

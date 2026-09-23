@@ -966,14 +966,14 @@
       {
         "heading": "O que é um Baixador de Áudio?",
         "paragraphs": [
-          "Um baixador de áudio salva o som de um vídeo público, um Reel do Instagram, um Short do YouTube ou um vídeo completo do YouTube, como um arquivo próprio, separado do vídeo, para você guardar uma narração, um trecho de música ou um clipe estilo podcast sem a imagem. Cole o link aqui, e quando a plataforma tiver uma faixa de áudio separada, um botão Baixar áudio aparece ao lado do resultado do vídeo.",
+          "Um baixador de áudio salva o som de um vídeo público, um Reel do Instagram, um Short do YouTube ou um vídeo completo do YouTube, como um arquivo próprio, separado do vídeo, para você guardar uma narração, um trecho de música ou um clipe estilo podcast sem a imagem. Cole o link aqui, e quando a plataforma tiver uma faixa de áudio separada, um botão Baixar áudio aparece para ele.",
           "É útil para salvar a trilha sonora de um Reel e ouvir depois, extrair o áudio de uma palestra ou entrevista que você não precisa em vídeo, ou guardar um trecho de fala ou efeito sonoro que queira reaproveitar, com a permissão do criador, já que o áudio continua sendo dele. Funciona igual no celular, tablet ou computador, em qualquer navegador moderno."
         ]
       },
       {
         "heading": "Como Extrair Áudio do Instagram e YouTube Online",
         "paragraphs": [
-          "1) Copie o link de um Reel público do Instagram, um vídeo ou Short do YouTube, ou uma publicação de qualquer uma das nossas 10 plataformas compatíveis. 2) Cole na caixa acima e espere a prévia carregar. 3) Se a plataforma tiver uma faixa de áudio separada, toque em Baixar áudio ao lado do vídeo; o arquivo salva direto no seu aparelho, do mesmo jeito que o download do vídeo: um baixador de áudio rápido, sem nada para instalar.",
+          "1) Copie o link de um Reel público do Instagram, um vídeo ou Short do YouTube, ou uma publicação de qualquer uma das nossas 10 plataformas compatíveis. 2) Cole na caixa acima e espere a prévia carregar. 3) Se a plataforma tiver uma faixa de áudio separada, toque em Baixar áudio; o arquivo salva direto no seu aparelho: um baixador de áudio rápido, sem nada para instalar.",
           "No iPhone, o arquivo baixa dentro do Safari; abra o ícone de Downloads na barra e use o ícone de compartilhar para salvar onde você guarda arquivos de áudio. No Android ou computador, ele salva na sua pasta de Downloads de sempre. Nenhuma conta, extensão de navegador ou app é necessária em qualquer etapa."
         ]
       },
@@ -995,7 +995,7 @@
     "faq": [
       {
         "q": "Posso baixar áudio de Reels do Instagram e de vídeos do YouTube?",
-        "a": "Sim. Cole um link de qualquer um dos dois (ou do Facebook, TikTok e das outras plataformas compatíveis) e, quando aquela publicação tiver uma faixa de áudio separada, um botão Baixar áudio aparece ao lado do vídeo."
+        "a": "Sim. Cole um link de qualquer um dos dois (ou do Facebook, TikTok e das outras plataformas compatíveis) e, quando aquela publicação tiver uma faixa de áudio separada, um botão Baixar áudio aparece."
       },
       {
         "q": "Posso converter vídeos do YouTube para MP3?",
@@ -1011,7 +1011,7 @@
       },
       {
         "q": "Por que não há opção de áudio em alguns links?",
-        "a": "O botão Baixar áudio só aparece quando a plataforma oferece uma faixa de áudio separada para aquela publicação específica. Muitos vídeos são servidos como um único arquivo combinado, sem faixa separada para extrair, e nesse caso só o download do vídeo fica disponível."
+        "a": "O botão Baixar áudio só aparece quando a plataforma oferece uma faixa de áudio separada para aquela publicação específica. Muitos vídeos são servidos como um único arquivo combinado, sem faixa separada para extrair, e nesse caso não há um arquivo de áudio separado para oferecer: o som só está disponível junto com o vídeo."
       },
       {
         "q": "Isso é grátis e preciso fazer login?",
