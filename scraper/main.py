@@ -1388,10 +1388,16 @@ def _youtube_cache_ttl(info: dict) -> float:
 
 # The proxy is billed by traffic. These counters show where it goes (see /stats); the optional daily limit
 # stops YouTube downloads (never lookups from the cache) once a day's allowance is used.
-PROXY_DAILY_LIMIT_MB = _env_number("YOUTUBE_PROXY_DAILY_LIMIT_MB", 0)  # 0 = no limit
+#
+# Both defaults lowered after real DataImpulse spend on media bytes (Cobalt-first, see _cobalt_video_url,
+# already tries to avoid the proxy for video entirely - these two caps are what bound the cost on whatever
+# still falls back to it: a Cobalt failure, or any audio request, which Cobalt can never serve). A Render env
+# var of the same name overrides this default either way - check what's actually set there before assuming
+# this change alone moves the number.
+PROXY_DAILY_LIMIT_MB = _env_number("YOUTUBE_PROXY_DAILY_LIMIT_MB", 200)  # 0 = no limit
 # The biggest YouTube file we will pull through the paid proxy (0 = no limit). One long video can cost as much
 # as a thousand lookups, so it is refused up front (from its reported size) and, failing that, cut off mid-stream.
-PROXY_MAX_FILE_MB = _env_number("YOUTUBE_PROXY_MAX_FILE_MB", 60)
+PROXY_MAX_FILE_MB = _env_number("YOUTUBE_PROXY_MAX_FILE_MB", 25)
 _proxy_lock = threading.Lock()
 _proxy_usage = {"lookups": 0, "streams": 0, "streamBytes": 0, "day": "", "todayBytes": 0}
 

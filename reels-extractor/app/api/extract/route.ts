@@ -97,11 +97,19 @@ const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram pag
 // YouTube gets more room at every step: its requests may take up to 8 s each on a small host, and a blocked
 // lookup can try a second route. Every other platform keeps the short limits.
 //
-// Raised alongside scraper/main.py's YOUTUBE_EXTRACTION_TIMEOUT_SECONDS (20 s -> 22 s): each hop here must
+// Tuned alongside scraper/main.py's YOUTUBE_EXTRACTION_TIMEOUT_SECONDS (20 s -> 22 s): each hop here must
 // keep outlasting the one behind it (see tests/time-budget.test.ts) without pushing the page's own wait
 // (YOUTUBE_EXTRACT_TIMEOUT_MS, ExtractorClient.tsx) past its tested 25 s ceiling.
-const YOUTUBE_LOOKUP_BUDGET_MS = 24000;
-const YOUTUBE_SCRAPER_TIMEOUT_MS = 23500;
+//
+// That 25 s ceiling isn't just our own choice: Vercel's Edge Functions must BEGIN sending a response within
+// 25 s of invocation, full stop - miss it and the platform itself kills the function and returns its own
+// raw EDGE_FUNCTION_INVOCATION_TIMEOUT 504, before this route's own try/catch ever gets a chance to answer
+// with a clean PLATFORM_TIMEOUT JSON body. An earlier pass here (24000/23500) left only ~1 s between this
+// route's own deadline and that platform cutoff - too tight once cold starts and serialization are added on
+// top. Backed off to keep real margin: this route now always finishes (success or its own clean timeout
+// error) with time to spare before Vercel's hard limit, not right up against it.
+const YOUTUBE_LOOKUP_BUDGET_MS = 23500;
+const YOUTUBE_SCRAPER_TIMEOUT_MS = 23000;
 const lookupBudget = new AsyncLocalStorage<{ deadline: number; scraperMs: number }>();
 
 /** How long the scraper may be waited for in this lookup (longer for YouTube). */

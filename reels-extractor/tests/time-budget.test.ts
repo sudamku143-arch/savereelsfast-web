@@ -68,6 +68,12 @@ describe("the extract route uses the budget", () => {
     assert.ok(page > budget, `the page (${page} ms) must outlast the site (${budget} ms)`);
     assert.ok(2 * 0 + budget < 40_000, "and stay inside the function's time limit");
     assert.ok(page <= 25_000, "but never a 30-second hang");
+    // Vercel's Edge Functions must BEGIN a response within 25 s of invocation or the platform itself kills
+    // the function with its own raw 504 (EDGE_FUNCTION_INVOCATION_TIMEOUT) - before this route's own
+    // try/catch ever gets a chance to answer with a clean PLATFORM_TIMEOUT JSON body instead. This route's
+    // own deadline (`budget`) must leave real margin under that 25 s wall for cold starts and serialization,
+    // not sit right up against it.
+    assert.ok(25_000 - budget >= 1200, `only ${25_000 - budget} ms of margin under Vercel's 25 s hard limit`);
   });
 
   it("only YouTube lookups use the longer limits", () => {

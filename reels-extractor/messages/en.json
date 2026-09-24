@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Free Video Downloader - Instagram, YouTube, TikTok",
-    "description": "Download videos from Instagram, YouTube, Facebook, TikTok, X, Reddit and more for free. Paste a link, save an MP4. No login, no app.",
+    "title": "Free 1-Click Video Downloader - Instagram, YouTube, TikTok",
+    "description": "Download videos from Instagram, YouTube, Facebook, TikTok, X, Reddit and more, completely free. Paste a link and save an MP4 in seconds — no login, no app.",
     "ogAlt": "Social media video downloader tool preview",
     "keywords": [
       "video downloader",
@@ -12,6 +12,12 @@
       "download video online free",
       "save video as MP4",
       "no login video downloader"
+    ],
+    "howToHeading": "How to Download a Video in 3 Steps",
+    "howToSteps": [
+      "Copy the video link from Instagram, YouTube, TikTok or any supported app.",
+      "Paste it into the box above — the platform is detected automatically.",
+      "Check the preview, then tap Download to save the video (or just the audio) to your device."
     ]
   },
   "nav": {

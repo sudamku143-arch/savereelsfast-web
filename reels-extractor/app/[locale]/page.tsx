@@ -61,6 +61,17 @@ export default async function LocalePage({
           acceptedAnswer: { "@type": "Answer", text: item.a },
         })),
       },
+      {
+        "@type": "HowTo",
+        "@id": `${homeUrl}#howto`,
+        inLanguage: locale,
+        name: dict.meta.howToHeading,
+        step: dict.meta.howToSteps.map((text, index) => ({
+          "@type": "HowToStep",
+          position: index + 1,
+          text,
+        })),
+      },
     ],
   };
 
@@ -85,6 +96,24 @@ export default async function LocalePage({
       <FeatureGrid heading={dict.seo.featuresHeading} features={dict.seo.features} />
 
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
+
+      {/* Same visible steps the HowTo JSON-LD below describes - never the other way around. */}
+      <section className="mt-16 w-full max-w-2xl">
+        <h2 className="mb-4 text-xl font-bold text-zinc-50">{dict.meta.howToHeading}</h2>
+        <ol className="space-y-3">
+          {dict.meta.howToSteps.map((step, index) => (
+            <li
+              key={index}
+              className="glass flex gap-3 rounded-2xl p-4 text-sm leading-relaxed text-zinc-300 sm:text-base"
+            >
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-sm font-bold text-brand-300">
+                {index + 1}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <PlatformLinks
         locale={locale}

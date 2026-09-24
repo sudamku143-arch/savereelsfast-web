@@ -88,9 +88,12 @@ class Base(unittest.TestCase):
 
 
 class LimitSettingTests(Base):
-    def test_default_is_60_mb_and_zero_switches_it_off(self):
-        self.assertEqual(self.main._env_number("NO_SUCH_SETTING_XYZ", 60), 60)
-        self.assertEqual(self.main._proxy_file_limit_bytes(), 60 * MB)
+    def test_default_is_25_mb_and_zero_switches_it_off(self):
+        self.assertEqual(self.main._env_number("NO_SUCH_SETTING_XYZ", 25), 25)
+        # Base.setUp mocks PROXY_MAX_FILE_MB to 60 for the rest of this file's tests (a stable, arbitrary
+        # value); re-declare the real default here to check its actual byte conversion.
+        with mock.patch.object(self.main, "PROXY_MAX_FILE_MB", 25):
+            self.assertEqual(self.main._proxy_file_limit_bytes(), 25 * MB)
         with mock.patch.object(self.main, "PROXY_MAX_FILE_MB", 0):
             self.assertEqual(self.main._proxy_file_limit_bytes(), 0)
             self.main._refuse_if_too_large_for_proxy(10_000 * MB)  # no limit: nothing raised
