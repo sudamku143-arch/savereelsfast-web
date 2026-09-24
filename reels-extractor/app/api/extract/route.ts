@@ -96,8 +96,12 @@ const LOOKUP_BUDGET_MS = 9000;
 const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram page
 // YouTube gets more room at every step: its requests may take up to 8 s each on a small host, and a blocked
 // lookup can try a second route. Every other platform keeps the short limits.
-const YOUTUBE_LOOKUP_BUDGET_MS = 23000;
-const YOUTUBE_SCRAPER_TIMEOUT_MS = 22000;
+//
+// Raised alongside scraper/main.py's YOUTUBE_EXTRACTION_TIMEOUT_SECONDS (20 s -> 22 s): each hop here must
+// keep outlasting the one behind it (see tests/time-budget.test.ts) without pushing the page's own wait
+// (YOUTUBE_EXTRACT_TIMEOUT_MS, ExtractorClient.tsx) past its tested 25 s ceiling.
+const YOUTUBE_LOOKUP_BUDGET_MS = 24000;
+const YOUTUBE_SCRAPER_TIMEOUT_MS = 23500;
 const lookupBudget = new AsyncLocalStorage<{ deadline: number; scraperMs: number }>();
 
 /** How long the scraper may be waited for in this lookup (longer for YouTube). */

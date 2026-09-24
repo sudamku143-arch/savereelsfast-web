@@ -181,7 +181,7 @@ class ScopeTests(Base):
     def test_the_whole_lookup_budget_covers_all_the_attempts(self):
         worst_case = self.main.YOUTUBE_PROXY_SOCKET_TIMEOUT * (1 + self.main.YOUTUBE_PROXY_RETRIES)
         self.assertGreaterEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, worst_case)
-        self.assertEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, 20.0)
+        self.assertEqual(self.main.YOUTUBE_EXTRACTION_TIMEOUT_SECONDS, 22.0)
 
     def test_other_platforms_never_touch_the_proxy(self):
         for url in (TIKTOK, "https://www.instagram.com/reel/AbC_123/", "https://www.reddit.com/r/videos/comments/6rrwyj/x/",

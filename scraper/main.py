@@ -151,8 +151,14 @@ def _extraction_timeout(raw: str | None, default: float = 5.0, low: float = 2.0,
 EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(os.environ.get("EXTRACTION_TIMEOUT_SECONDS"))
 # YouTube needs room for a slow first connection (a residential proxy takes several seconds to reach it) and a
 # second route, so its ceiling is higher (band 6-25 s).
+#
+# Raised from 20.0: live traffic showed real (successful) proxy connections regularly taking 15-21 s, some
+# close enough to the old default that the site's own outer budget (see YOUTUBE_LOOKUP_BUDGET_MS in
+# app/api/extract/route.ts) - not even this one - was cutting them off first as "YouTube isn't responding",
+# despite the lookup being seconds from finishing. 22 s keeps every hop of the chain still outlasting the one
+# behind it (see tests/time-budget.test.ts) without moving the page's own ceiling past 25 s.
 YOUTUBE_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
-    os.environ.get("YOUTUBE_EXTRACTION_TIMEOUT_SECONDS"), default=20.0, low=6.0, high=25.0
+    os.environ.get("YOUTUBE_EXTRACTION_TIMEOUT_SECONDS"), default=22.0, low=6.0, high=25.0
 )
 
 

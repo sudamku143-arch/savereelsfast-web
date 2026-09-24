@@ -59,7 +59,7 @@ describe("the extract route uses the budget", () => {
   });
 
   it("YouTube gets longer limits at every hop, each one outlasting the hop behind it", () => {
-    const scraper = 20_000 + 750; // the scraper's YouTube budget plus its grace (scraper/main.py)
+    const scraper = 22_000 + 750; // the scraper's YouTube budget plus its grace (scraper/main.py)
     const scraperWait = num(route, "YOUTUBE_SCRAPER_TIMEOUT_MS");
     const budget = num(route, "YOUTUBE_LOOKUP_BUDGET_MS");
     const page = num(client, "YOUTUBE_EXTRACT_TIMEOUT_MS");
