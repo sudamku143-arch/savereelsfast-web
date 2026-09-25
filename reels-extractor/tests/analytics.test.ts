@@ -128,6 +128,16 @@ describe("nothing reaches Google before the visitor accepts", () => {
     assert.match(component, /const button =\s+"min-w-\[6\.5rem\] flex-1 rounded-xl px-4 py-2 text-sm font-semibold/);
   });
 
+  it("the banner is drawn by the server (not after JavaScript, which made it a slow LCP) and hidden before paint once answered", () => {
+    assert.match(component, /const \[open, setOpen\] = useState\(active\);/);
+    assert.match(component, /localStorage\.getItem\(\$\{JSON\.stringify\(CONSENT_KEY\)\}\)/);
+    assert.match(component, /setAttribute\("data-srf-consent",""\)/);
+    assert.match(component, /data-consent-banner=""/);
+    assert.match(component, /removeAttribute\("data-srf-consent"\);[^\n]*\n\s+setOpen\(true\);/, "reopening from the footer un-hides it");
+    assert.match(source("app/globals.css"), /html\[data-srf-consent\] \[data-consent-banner\] \{\s+display: none;/);
+    assert.match(source("app/[locale]/layout.tsx"), /<html lang=\{locale\} dir=\{localeDir\(locale\)\} suppressHydrationWarning>/);
+  });
+
   it("the site's layout renders the banner and the footer has a way to change the choice", () => {
     assert.match(source("app/[locale]/layout.tsx"), /<AnalyticsConsent locale=\{locale\} dict=\{dict\.consent\} \/>/);
     assert.match(source("app/[locale]/components/Footer.tsx"), /<CookieSettingsButton label=\{cookieLabel\} \/>/);

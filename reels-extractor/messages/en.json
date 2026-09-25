@@ -149,16 +149,12 @@
           "a": "Paste the Reel's link and tap Download. You get the video file Instagram itself serves for playback, in the highest quality it offers for that Reel (up to 1080p when the Reel was uploaded in that quality). We add no watermark of our own, and we don't re-encode or upscale, so a low-resolution original stays low-resolution. Steps: 1) Tap Share on the Reel, then Copy link. 2) Paste the link in the box above. 3) Tap Download Video and save the MP4."
         },
         "audio": {
-          "q": "Can I download audio/MP3 from Instagram Reels and Shorts?",
+          "q": "Can I download audio/MP3 from {noun}?",
           "a": "Partly. When {platform} provides a separate audio track for a video, a Download Audio button appears under the result and saves it as an audio file (M4A or WebM), exactly as {platform} serves it. We don't convert to MP3, and some videos have no separate audio track, in which case only the video is offered. M4A plays in any modern music or video player."
         },
         "snapchatNoApp": {
           "q": "How to save Snapchat Spotlight videos without app install?",
           "a": "Everything runs in your browser, so there is nothing to install. Steps: 1) Open the public Spotlight video and tap Share, then Copy link. 2) Paste the link in the box above. 3) Tap Download Video and save the MP4. Only public Spotlight videos work; Stories and private snaps are not supported."
-        },
-        "freeFbThreads": {
-          "q": "Is it free to download Facebook & Threads videos online?",
-          "a": "Yes. Both are free, with no account, no app and no watermark of our own. The site is supported by ads. Only public videos can be downloaded: private Facebook posts, groups that need a login and private Threads profiles can't be reached."
         },
         "free": {
           "q": "Is it free to download {noun} online?",
@@ -792,7 +788,7 @@
     },
     "contact": {
       "title": "Contact Us",
-      "description": "Get in touch with the SaveReelsFast team.",
+      "description": "Contact the SaveReelsFast team by email for help with the downloader, bug reports, feature ideas, copyright or content removal, and privacy requests.",
       "intro": "Have a question, feedback, or a copyright or removal request? Send us an email and we will get back to you.",
       "emailLabel": "Email",
       "responseTime": "We do our best to reply within a few business days.",

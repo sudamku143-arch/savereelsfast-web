@@ -11,7 +11,7 @@ const config: Config = {
           50: "#fdf2f8",
           300: "#f9a8c9",
           400: "#f2609a",
-          500: "#e1306c",
+          500: "#da2c67", // white text on it reaches 4.6:1 (WCAG AA); the original #e1306c fell just short at 4.3:1
           600: "#c81d5c",
           700: "#a3134a",
         },

@@ -98,6 +98,23 @@ function AAdsUnit({
   primary: boolean;
 }) {
   const desktop = useIsDesktop();
+  const snippetRef = useRef<HTMLDivElement>(null);
+
+  // The issued snippet's <iframe> has no title (screen readers and Lighthouse flag that), but its server
+  // HTML must stay character for character as A-ADS issued it, so the title is added in the browser only.
+  // A-ADS's own script can swap the iframe out afterwards, so new ones are labelled as they appear.
+  useEffect(() => {
+    const host = snippetRef.current;
+    if (!host) return;
+    const label = () =>
+      host.querySelectorAll("iframe:not([title])").forEach((frame) => {
+        frame.setAttribute("title", "Advertisement");
+      });
+    label();
+    const observer = new MutationObserver(label);
+    observer.observe(host, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [desktopUnit, primary]);
 
   // One Adaptive unit needs no device check, so A-ADS's embed code goes into the server-rendered
   // HTML as-is, with no client-side delay. That is what its verification bot looks for.
@@ -106,6 +123,7 @@ function AAdsUnit({
   if (mobileUnit === null) {
     return (
       <div
+        ref={snippetRef}
         className="isolate h-full w-full [&>div]:h-full"
         dangerouslySetInnerHTML={{ __html: aadsSnippet(desktopUnit, primary) }}
       />

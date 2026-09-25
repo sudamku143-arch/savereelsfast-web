@@ -115,7 +115,7 @@ const ZINC_400 = "#a1a1aa";
 const ZINC_100 = "#f4f4f5";
 const ZINC_50 = "#fafafa";
 const BRAND_400 = "#f2609a";
-const BRAND_500 = "#e1306c";
+const BRAND_500 = "#da2c67"; // keep in step with brand-500 in tailwind.config.ts
 const GLOW = "0 0 24px -4px rgba(225, 48, 108, 0.65)";
 
 const buttonBase: CSSProperties = {

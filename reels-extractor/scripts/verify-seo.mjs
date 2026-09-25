@@ -14,19 +14,26 @@ import { readFileSync } from "node:fs";
 const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
 const SITE = "https://www.savereelsfast.com"; // canonical URLs always point at production
 const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"];
+const source = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 // Legal pages are translated (and listed in the sitemap) only in these; the rest show English.
-const LEGAL_LOCALES = ["en", "es", "pt", "hi"];
+// Read from the app's own config so this script can never drift from it again.
+const LEGAL_LOCALES = JSON.parse(source("lib/i18n-config.ts").match(/LEGAL_TRANSLATED[^=]*=\s*(\[[^\]]*\])/)[1]);
+// The long-tail FAQ keys each platform page adds (lib/landing.ts, LONGTAIL_FAQ).
+const LONGTAIL = Object.fromEntries(
+  [...source("lib/landing.ts").match(/LONGTAIL_FAQ[^{]*\{([^}]*)\}/)[1].matchAll(/(\w+): (\[[^\]]*\])/g)].map(([, id, keys]) => [id, JSON.parse(keys)])
+);
 const RTL = ["ar"];
 const OG_LOCALE = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
 const SLUGS = {
   instagram: "instagram-video-downloader", youtube: "youtube-video-downloader", facebook: "facebook-video-downloader",
   threads: "threads-video-downloader", x: "twitter-x-video-downloader", pinterest: "pinterest-video-downloader",
   tiktok: "tiktok-video-downloader", reddit: "reddit-video-downloader", snapchat: "snapchat-video-downloader",
+  linkedin: "linkedin-video-downloader",
 };
 // The share-image key of each platform (not a page address).
-const KEYS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
+const KEYS = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", x: "twitter", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat", linkedin: "linkedin" };
 // Where each old /downloader/<name> address now redirects to.
-const LEGACY = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", twitter: "x", x: "x", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat" };
+const LEGACY = { instagram: "instagram", youtube: "youtube", facebook: "facebook", threads: "threads", twitter: "x", x: "x", pinterest: "pinterest", tiktok: "tiktok", reddit: "reddit", snapchat: "snapchat", linkedin: "linkedin" };
 
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"))])
@@ -87,9 +94,9 @@ async function verifyHome(locale) {
   check(hasAlternate(html, "x-default", `${SITE}/`), `${tag} hreflang x-default should point at the English home page`);
   check(meta(html, "property", "og:title") === dict.title, `${tag} og:title differs`);
   const graph = jsonLd(html).flatMap((d) => d["@graph"] ?? [d]);
-  const app = graph.find((n) => n["@type"] === "SoftwareApplication");
+  const app = graph.find((n) => n["@type"] === "WebApplication");
   const faq = graph.find((n) => n["@type"] === "FAQPage");
-  check(!!app && app.url === `${SITE}${home(locale)}` && app.inLanguage === locale && app.offers?.price === "0", `${tag} SoftwareApplication missing or wrong`);
+  check(!!app && sameUrl(app.url, `${SITE}${home(locale)}`) && app.inLanguage === locale && Number(app.offers?.price) === 0, `${tag} WebApplication missing or wrong`);
   check(!!faq && faq.inLanguage === locale && faq.mainEntity?.length === messages[locale].faq.items.length, `${tag} FAQPage missing or wrong`);
   check(faq?.mainEntity?.[0]?.name === messages[locale].faq.items[0].q, `${tag} the FAQ schema is not in ${locale}`);
   check(app?.alternateName === dict.title, `${tag} schema alternateName "${app?.alternateName}" differs from the title`);
@@ -160,12 +167,19 @@ async function verifyLanding(locale, id, slug) {
   }
   const graph = data.flatMap((d) => d["@graph"] ?? [d]);
   const type = (t) => graph.find((n) => n["@type"] === t);
-  const app = type("SoftwareApplication");
+  const app = type("WebApplication");
   const faq = type("FAQPage");
   const crumbs = type("BreadcrumbList");
-  check(!!app && app.applicationCategory === "MultimediaApplication" && app.offers?.price === "0", `${tag} SoftwareApplication missing/invalid`);
+  check(!!app && app.applicationCategory === "MultimediaApplication" && Number(app.offers?.price) === 0, `${tag} WebApplication missing/invalid`);
   check(!app || !("aggregateRating" in app), `${tag} must not invent an aggregateRating`);
-  check(faq?.mainEntity?.length === 6, `${tag} FAQPage has ${faq?.mainEntity?.length} questions (expected 6)`);
+  // Platform questions, then its long-tail ones, then the shared basics (app/[locale]/[platform]/page.tsx).
+  const faqCount = content.faq.length + (LONGTAIL[id]?.length ?? 0) + messages[locale].landing.common.sharedFaq.length;
+  check(faq?.mainEntity?.length === faqCount, `${tag} FAQPage has ${faq?.mainEntity?.length} questions (expected ${faqCount})`);
+  // A platform's FAQ must not ask about a different platform (the YouTube page once asked about Instagram Reels).
+  for (const [other, { name }] of Object.entries(messages[locale].platforms)) {
+    if (other === id || !SLUGS[other] || name.length < 3) continue; // skip "X": too short to search for safely
+    check(!(faq?.mainEntity ?? []).some((q) => q.name.includes(name)), `${tag} an FAQ question names ${name}`);
+  }
   check(crumbs?.itemListElement?.length === 2, `${tag} BreadcrumbList incomplete`);
   check(app?.url === `${SITE}${path(locale, `/${slug}`)}`, `${tag} schema url mismatch`);
   check(app?.inLanguage === locale && faq?.inLanguage === locale, `${tag} schema inLanguage is ${app?.inLanguage}/${faq?.inLanguage}, expected ${locale}`);
@@ -281,8 +295,13 @@ async function main() {
   const xml = await sitemapRes.text();
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
   const locs = entries.map((e) => e.match(/<loc>([^<]*)<\/loc>/)?.[1]);
-  const expectedUrls = 10 * LOCALES.length + 5 * LEGAL_LOCALES.length;
-  check(entries.length === expectedUrls, `sitemap has ${entries.length} URLs (expected ${expectedUrls})`);
+  const blogEntries = entries.filter((e) => /<loc>[^<]*\/blog(\/|<)/.test(e));
+  // Home + every platform page + the audio downloader in every language, and the translated legal pages.
+  const expectedUrls = (2 + Object.keys(SLUGS).length) * LOCALES.length + 5 * LEGAL_LOCALES.length;
+  check(entries.length - blogEntries.length === expectedUrls, `sitemap has ${entries.length - blogEntries.length} non-blog URLs (expected ${expectedUrls})`);
+  check(blogEntries.length > 0, "sitemap lists no blog pages");
+  // Only blog pages have a genuine "last changed" date; the others deliberately send none (see app/sitemap.ts).
+  for (const e of blogEntries) check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(e), `${e.match(/<loc>([^<]*)/)?.[1]} lastmod missing`);
   check(new Set(locs).size === locs.length, "sitemap has duplicate URLs");
   for (const locale of LOCALES) {
     for (const slug of Object.values(SLUGS)) {
@@ -291,7 +310,6 @@ async function main() {
       check(!!entry, `sitemap is missing ${loc}`);
       if (entry) {
         check(/<changefreq>daily<\/changefreq>/.test(entry), `${loc} changefreq is not daily`);
-        check(/<lastmod>\d{4}-\d{2}-\d{2}T[\d:.]+Z<\/lastmod>/.test(entry), `${loc} lastmod missing`);
         check(LOCALES.every((l) => new RegExp(`hreflang="${l}"`).test(entry)), `${loc} lacks hreflang alternates`);
         check(/hreflang="x-default"/.test(entry), `${loc} lacks the x-default alternate`);
       }
@@ -309,10 +327,16 @@ async function main() {
     const rest = loc.replace(SITE, "").replace(/^\/(es|pt|hi|bn|te|ta|mr|id|fr|ar)(?=\/|$)/, "");
     const isHome = rest === "" || rest === "/";
     const isPlatform = Object.values(SLUGS).includes(rest.replace(/^\//, ""));
+    const isAudio = rest === "/audio-downloader";
+    const isBlogIndex = rest === "/blog";
+    const isPost = rest.startsWith("/blog/");
     const changefreq = entry.match(/<changefreq>([^<]*)</)?.[1];
     const priority = Number(entry.match(/<priority>([^<]*)</)?.[1]);
     if (isHome) check(changefreq === "daily" && priority === 1, `${loc}: home should be daily / 1.0 (got ${changefreq} / ${priority})`);
     else if (isPlatform) check(changefreq === "daily" && priority === 0.9, `${loc}: platform page should be daily / 0.9 (got ${changefreq} / ${priority})`);
+    else if (isAudio) check(changefreq === "daily" && priority === 0.85, `${loc}: audio downloader should be daily / 0.85 (got ${changefreq} / ${priority})`);
+    else if (isBlogIndex) check(changefreq === "weekly" && priority === 0.7, `${loc}: blog index should be weekly / 0.7 (got ${changefreq} / ${priority})`);
+    else if (isPost) check(changefreq === "monthly" && priority === 0.6, `${loc}: blog post should be monthly / 0.6 (got ${changefreq} / ${priority})`);
     else check(changefreq === "monthly", `${loc}: legal page should be monthly (got ${changefreq})`);
     check(!/\/downloader\//.test(loc), `${loc}: still uses the old /downloader/ address`);
   }
@@ -351,7 +375,7 @@ async function main() {
 
   // robots.txt
   const robots = await (await get("/robots.txt")).text();
-  check(/Sitemap: https:\/\/savereelsfast\.com\/sitemap\.xml/.test(robots), "robots.txt does not point at the sitemap");
+  check(robots.includes(`Sitemap: ${SITE}/sitemap.xml`), "robots.txt does not point at the sitemap");
   check(/Disallow: \/api\//.test(robots), "robots.txt should block /api/");
   check(/Allow: \/api\/og/.test(robots), "robots.txt should allow the share image /api/og");
   check(!/Disallow: \/\s*$/m.test(robots), "robots.txt must not block the whole site");

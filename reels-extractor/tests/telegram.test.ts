@@ -106,20 +106,20 @@ describe("long-tail FAQs per platform", () => {
     assert.deepEqual(LONGTAIL_FAQ.instagram, ["reelsQuality", "cameraRoll", "audio", "free"]);
     assert.ok(LONGTAIL_FAQ.youtube.includes("audio"), "Shorts audio is on the YouTube page");
     assert.ok(LONGTAIL_FAQ.snapchat.includes("snapchatNoApp"));
-    assert.deepEqual(LONGTAIL_FAQ.facebook, ["freeFbThreads"]);
-    assert.deepEqual(LONGTAIL_FAQ.threads, ["freeFbThreads"]);
+    assert.deepEqual(LONGTAIL_FAQ.facebook, ["free"], "Facebook asks about Facebook only, not Facebook & Threads");
+    assert.deepEqual(LONGTAIL_FAQ.threads, ["free"], "Threads asks about Threads only, not Facebook & Threads");
     for (const id of LANDING_PLATFORMS) {
       if (id !== "instagram") assert.ok(!LONGTAIL_FAQ[id].includes("reelsQuality"), `${id} must not claim Instagram's quality`);
       if (id !== "snapchat") assert.ok(!LONGTAIL_FAQ[id].includes("snapchatNoApp"), id);
     }
   });
 
-  it("English asks the four questions exactly as requested", () => {
+  it("English asks the long-tail questions exactly as requested", () => {
     const l = messages("en").landing.common.longtail;
     assert.equal(l.reelsQuality.q, "How to download Instagram Reels in 1080p without watermark?");
-    assert.equal(l.audio.q, "Can I download audio/MP3 from Instagram Reels and Shorts?");
+    // Asked about the page's own platform (the YouTube page must not ask about Instagram Reels).
+    assert.equal(l.audio.q, "Can I download audio/MP3 from {noun}?");
     assert.equal(l.snapchatNoApp.q, "How to save Snapchat Spotlight videos without app install?");
-    assert.equal(l.freeFbThreads.q, "Is it free to download Facebook & Threads videos online?");
   });
 
   it("English answers are honest: no MP3 conversion promised, no guaranteed 1080p, no invented watermark claims", () => {
@@ -128,13 +128,30 @@ describe("long-tail FAQs per platform", () => {
     assert.match(l.reelsQuality.a, /up to 1080p when the Reel was uploaded in that quality/);
     assert.match(l.reelsQuality.a, /no watermark of our own/);
     assert.match(l.snapchatNoApp.a, /Stories and private snaps are not supported/);
-    assert.match(l.freeFbThreads.a, /Only public videos/);
+    assert.match(l.free.a, /Only public videos/);
   });
+
+  for (const locale of LOCALES) {
+    it(`${locale}: no platform page's long-tail questions name a different platform`, () => {
+      const m = messages(locale);
+      const vars = (id: (typeof LANDING_PLATFORMS)[number]) => ({ platform: m.platforms[id].name, noun: m.landing.platforms[id].noun, copyHint: m.landing.platforms[id].copyHint });
+      for (const id of LANDING_PLATFORMS) {
+        for (const key of LONGTAIL_FAQ[id]) {
+          const q = fillTemplate(m.landing.common.longtail[key].q, vars(id));
+          for (const other of LANDING_PLATFORMS) {
+            if (other === id) continue;
+            // Instagram's page may name Instagram; every page must not name another platform.
+            assert.ok(!q.includes(m.platforms[other].name), `${locale}/${id} "${q}" names ${m.platforms[other].name}`);
+          }
+        }
+      }
+    });
+  }
 
   for (const locale of LOCALES) {
     it(`${locale}: five real questions and answers, with the steps where promised`, () => {
       const l = messages(locale).landing.common.longtail as Record<string, { q: string; a: string }>;
-      assert.deepEqual(Object.keys(l).sort(), ["audio", "cameraRoll", "free", "freeFbThreads", "reelsQuality", "snapchatNoApp"]);
+      assert.deepEqual(Object.keys(l).sort(), ["audio", "cameraRoll", "free", "reelsQuality", "snapchatNoApp"]);
       for (const [key, item] of Object.entries(l)) {
         assert.ok(/[?؟]$/.test(item.q.trim()), `${key}: question mark`);
         assert.ok(item.a.trim().length >= 60, `${key}: answer too thin`);

@@ -115,7 +115,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   ) as Record<PlatformId, string>;
 
   return (
-    <html lang={locale} dir={localeDir(locale)}>
+    // suppressHydrationWarning: AnalyticsConsent's inline script may add data-srf-consent to <html> before React hydrates.
+    <html lang={locale} dir={localeDir(locale)} suppressHydrationWarning>
       <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} telegram={dict.telegram} />

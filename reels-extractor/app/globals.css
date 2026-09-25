@@ -25,6 +25,12 @@ body {
   }
 }
 
+/* A visitor who already answered the cookie question: hide the server-drawn banner before first paint
+   (the attribute is set by an inline script in AnalyticsConsent). */
+html[data-srf-consent] [data-consent-banner] {
+  display: none;
+}
+
 .skeleton {
   background: linear-gradient(90deg, #18181b 25%, #27272a 37%, #18181b 63%);
   background-size: 1000px 100%;
