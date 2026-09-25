@@ -132,7 +132,18 @@ describe("latest articles on the home page", () => {
 
   it("shows nothing in a language without a blog, so it can never link to a 404", () => {
     assert.match(component, /if \(posts\.length === 0\) return null;/);
-    for (const locale of ["es", "hi", "fr", "ar"] as const) assert.equal(getPosts(locale).length, 0, `${locale} has no posts`);
+    for (const locale of ["hi", "fr", "ar"] as const) assert.equal(getPosts(locale).length, 0, `${locale} has no posts`);
+  });
+
+  it("Spanish has its first translated posts, each 600-800 words, linking only to pages that exist in Spanish", () => {
+    const es = getPosts("es");
+    assert.deepEqual(es.map((p) => p.slug).sort(), ["save-facebook-videos-offline", "save-pinterest-videos", "save-threads-videos"]);
+    for (const post of es) {
+      assert.ok(post.wordCount >= 600 && post.wordCount <= 800, `es/${post.slug} is ${post.wordCount} words`);
+      assert.ok(parseMarkdown(post.body).filter((b) => b.type === "heading" && b.level === 2).length >= 5, `es/${post.slug} headings`);
+      assert.ok(translationsOf(post.slug).includes("en"), `es/${post.slug} translates an English post`);
+      assert.deepEqual(getPost("en", post.slug)!.tools, post.tools, `es/${post.slug} is about the same tool`);
+    }
   });
 
   it("shows at most three posts, newest first, and links each one and the blog index", () => {
@@ -211,9 +222,16 @@ describe("posts and tool pages link to each other", () => {
   });
 
   it("a language without a blog gets no related articles, so a tool page never links to English text", () => {
-    for (const locale of ["es", "hi", "fr", "ar", "bn", "id"] as const) {
+    for (const locale of ["hi", "fr", "ar", "bn", "id"] as const) {
       for (const tool of ALL_TOOLS) assert.deepEqual(relatedPosts(locale, tool), [], `${locale}/${tool}`);
     }
+  });
+
+  it("Spanish tool pages list only Spanish posts, never English text", () => {
+    for (const tool of ALL_TOOLS) {
+      for (const post of relatedPosts("es", tool)) assert.equal(post.locale, "es", `es/${tool} lists ${post.locale}/${post.slug}`);
+    }
+    assert.equal(relatedPosts("es", "facebook")[0]?.slug, "save-facebook-videos-offline");
   });
 
   it("the tool page and the post page render the links", () => {
@@ -253,13 +271,14 @@ describe("scheduled publishing", () => {
     }
   };
   const TOTAL = STARTERS.length;
+  const SPANISH = 3; // translations published on 2026-09-25
   const day1 = ["save-instagram-reels-offline", "save-youtube-shorts-offline", "save-facebook-videos-offline"];
 
   it("a post dated in the future is not published, and one dated today or earlier is", () => {
     assert.equal(onDay("2026-09-21", () => allPosts().length), 5, "the five posts dated 2026-09-21");
-    assert.equal(onDay("2026-09-21", () => scheduledPosts().length), TOTAL - 5);
+    assert.equal(onDay("2026-09-21", () => scheduledPosts().length), TOTAL + SPANISH - 5);
     assert.equal(onDay("2026-09-22", () => allPosts().length), 8, "three more on the 22nd");
-    assert.equal(onDay("2026-09-27", () => allPosts().length), TOTAL);
+    assert.equal(onDay("2026-09-27", () => allPosts().length), TOTAL + SPANISH);
     assert.equal(onDay("2026-09-27", () => scheduledPosts().length), 0);
   });
 

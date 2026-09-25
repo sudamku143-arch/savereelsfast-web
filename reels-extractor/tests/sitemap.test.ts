@@ -43,6 +43,7 @@ const entries = sitemap();
 const blogEntries = entries.filter((e) => /\/blog(\/|$)/.test(e.url));
 const blogEntryCount = blogEntries.length;
 const allBlogPosts = readdirSync(new URL("../content/blog/en", import.meta.url)).filter((f) => f.endsWith(".md")).length;
+const spanishBlogPosts = readdirSync(new URL("../content/blog/es", import.meta.url)).filter((f) => f.endsWith(".md")).length;
 const byUrl = new Map(entries.map((e) => [e.url, e]));
 const urlFor = (locale: string, path: string) => `${SITE}${locale === "en" ? path || "/" : `/${locale}${path}`}`;
 
@@ -83,7 +84,7 @@ describe("sitemap contents", () => {
 
   it("adds up: 11 home + 110 platform + 11 audio-downloader + 5 legal pages x every translated language", () => {
     assert.equal(entries.length, 11 + 11 * ids.length + locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 167 + 1 + allBlogPosts, "167 site pages + the blog index + one entry per post");
+    assert.equal(entries.length, 167 + 1 + allBlogPosts + 1 + spanishBlogPosts, "167 site pages + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -116,7 +117,7 @@ describe("scheduled posts stay out of the sitemap until their day", () => {
     assert.ok(!urls("2026-09-21").includes(`${SITE}/blog/save-instagram-reels-offline`));
     assert.equal(urls("2026-09-22").length, 8);
     assert.ok(urls("2026-09-22").includes(`${SITE}/blog/save-instagram-reels-offline`));
-    assert.equal(urls("2026-09-27").length, allBlogPosts);
+    assert.equal(urls("2026-09-27").length, allBlogPosts + spanishBlogPosts, "English posts, plus the Spanish posts (from 2026-09-25)");
   });
 });
 
@@ -148,15 +149,17 @@ describe("frequency and priority", () => {
 
   it("blog: the index weekly at 0.7, each post monthly at 0.6, only in languages that have posts", () => {
     const pages = entries.filter((x) => rule(x.url) === "blog");
-    assert.equal(pages.length, 1 + allBlogPosts, "the blog index and every post, English only");
+    assert.equal(pages.length, 1 + allBlogPosts + 1 + spanishBlogPosts, "the blog index and every post, in English and Spanish");
     for (const e of pages) {
-      assert.ok(e.url.startsWith(`${SITE}/blog`), `${e.url} should be an English (unprefixed) address`);
-      const index = e.url === `${SITE}/blog`;
+      const spanish = e.url.startsWith(`${SITE}/es/blog`);
+      assert.ok(spanish || e.url.startsWith(`${SITE}/blog`), `${e.url} should be an English or Spanish blog address`);
+      const index = e.url === `${SITE}/blog` || e.url === `${SITE}/es/blog`;
       assert.equal(e.changeFrequency, index ? "weekly" : "monthly", e.url);
       assert.equal(e.priority, index ? 0.7 : 0.6, e.url);
-      assert.equal(e.alternates.languages["x-default"], e.url, "English is the default for a post that only exists in English");
+      // English is the default: a Spanish page points x-default at its English original.
+      assert.equal(e.alternates.languages["x-default"], spanish ? e.url.replace("/es/blog", "/blog") : e.url, e.url);
     }
-    for (const locale of locales.filter((l) => l !== "en")) {
+    for (const locale of locales.filter((l) => l !== "en" && l !== "es")) {
       assert.equal(byUrl.has(`${SITE}/${locale}/blog`), false, `${locale} has no posts, so no blog page`);
     }
   });
