@@ -103,7 +103,10 @@ describe("long-tail FAQs per platform", () => {
   it("every platform gets the ones that are true for it, and none that are not", () => {
     assert.deepEqual(Object.keys(LONGTAIL_FAQ).sort(), [...LANDING_PLATFORMS].sort());
     for (const id of LANDING_PLATFORMS) assert.ok(LONGTAIL_FAQ[id].length >= 1, id);
-    assert.deepEqual(LONGTAIL_FAQ.instagram, ["reelsQuality", "cameraRoll", "audio", "free"]);
+    assert.deepEqual(LONGTAIL_FAQ.instagram, ["reelsQuality", "cameraRoll", "igWhereSaved", "igCarousel", "igStories", "audio", "free"]);
+    for (const id of LANDING_PLATFORMS) {
+      if (id !== "instagram") assert.ok(!LONGTAIL_FAQ[id].some((k) => k.startsWith("ig")), `${id} must not carry Instagram-only questions`);
+    }
     assert.ok(LONGTAIL_FAQ.youtube.includes("audio"), "Shorts audio is on the YouTube page");
     assert.ok(LONGTAIL_FAQ.snapchat.includes("snapchatNoApp"));
     assert.deepEqual(LONGTAIL_FAQ.facebook, ["free"], "Facebook asks about Facebook only, not Facebook & Threads");
@@ -129,6 +132,9 @@ describe("long-tail FAQs per platform", () => {
     assert.match(l.reelsQuality.a, /no watermark of our own/);
     assert.match(l.snapchatNoApp.a, /Stories and private snaps are not supported/);
     assert.match(l.free.a, /Only public videos/);
+    // Instagram-only questions: a plain no for Stories, and photos in a carousel are said to be skipped.
+    assert.match(l.igStories.a, /^No. Stories and Highlights are not supported/);
+    assert.match(l.igCarousel.a, /Photos inside a carousel are skipped/);
   });
 
   for (const locale of LOCALES) {
@@ -151,7 +157,7 @@ describe("long-tail FAQs per platform", () => {
   for (const locale of LOCALES) {
     it(`${locale}: five real questions and answers, with the steps where promised`, () => {
       const l = messages(locale).landing.common.longtail as Record<string, { q: string; a: string }>;
-      assert.deepEqual(Object.keys(l).sort(), ["audio", "cameraRoll", "free", "reelsQuality", "snapchatNoApp"]);
+      assert.deepEqual(Object.keys(l).sort(), ["audio", "cameraRoll", "free", "igCarousel", "igStories", "igWhereSaved", "reelsQuality", "snapchatNoApp"]);
       for (const [key, item] of Object.entries(l)) {
         assert.ok(/[?؟]$/.test(item.q.trim()), `${key}: question mark`);
         assert.ok(item.a.trim().length >= 60, `${key}: answer too thin`);

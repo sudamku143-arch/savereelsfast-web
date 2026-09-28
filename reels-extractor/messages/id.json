@@ -175,6 +175,18 @@
         "cameraRoll": {
           "q": "Cara menyimpan Reels Instagram ke galeri di iPhone tanpa aplikasi?",
           "a": "Di iPhone: 1) Tempel tautan Reel di sini dan ketuk Unduh Video; unduhan terjadi langsung di dalam Safari, tanpa perlu aplikasi apa pun. 2) Buka ikon Downloads di toolbar Safari, ketuk videonya, lalu gunakan ikon bagikan dan pilih Save Video untuk menambahkannya ke Photos Anda."
+        },
+        "igCarousel": {
+          "q": "Bisakah saya mengunduh semua video dari postingan carousel Instagram?",
+          "a": "Bisa, jika postingan berisi lebih dari satu video. Tempel tautannya dan setiap video ditampilkan terpisah dengan tombol unduhnya sendiri, ditambah opsi Unduh semua. Foto di dalam carousel dilewati, karena alat ini hanya menyimpan video."
+        },
+        "igStories": {
+          "q": "Bisakah saya mengunduh Story atau Sorotan Instagram?",
+          "a": "Tidak. Story dan Sorotan tidak didukung, hanya Reels, postingan video, dan video IGTV. Story hilang setelah 24 jam dan sering hanya bisa dilihat pengikut, dan alat ini tidak pernah masuk ke Instagram untuk mengaksesnya."
+        },
+        "igWhereSaved": {
+          "q": "Di mana Reels Instagram yang diunduh tersimpan di ponsel saya?",
+          "a": "Di Android, MP4 masuk ke folder Download dan biasanya juga muncul di Galeri. Di iPhone, Safari menyimpannya di Download (di aplikasi File); buka, ketuk Bagikan, lalu pilih Simpan Video untuk memindahkannya ke Foto."
         }
       }
     },
@@ -220,6 +232,27 @@
             "paragraphs": [
               "SaveReelsFast gratis digunakan, tanpa akun, tanpa pendaftaran, dan tanpa perlu memasang aplikasi apa pun. Tempel tautan Reel publik dan unduh videonya langsung dari browser Anda; alat ini bekerja sama di iPhone, Android, atau komputer.",
               "Saat sebuah Reel memiliki trek audio terpisah, tombol Unduh Audio muncul di samping video sehingga Anda bisa menyimpan suaranya sendiri, sebagai file M4A (bukan MP3, dan tidak dikonversi atau dienkode ulang). Ini berguna untuk menyimpan voice-over, cuplikan lagu, atau suara yang ingin Anda gunakan kembali; ingat bahwa musik atau audio apa pun tetap milik pembuat atau pemegang haknya."
+            ]
+          },
+          {
+            "heading": "Cara mengunduh Reels Instagram di PC atau Mac",
+            "paragraphs": [
+              "Di komputer, buka Reel di instagram.com dan salin alamat dari bilah alamat browser; bentuknya seperti instagram.com/reel/…. Tempel di kotak di atas dan klik Unduh Video. MP4 tersimpan di folder Download seperti biasa, siap diputar atau dimasukkan ke aplikasi edit video.",
+              "Cara ini sama di Chrome, Edge, Firefox, dan Safari, di Windows, macOS, dan Linux, tanpa ekstensi atau software. Masuk ke Instagram di browser itu tidak mengubah apa pun: alat ini tidak pernah memakai sesi Anda dan hanya membaca postingan publik."
+            ]
+          },
+          {
+            "heading": "Apa saja yang bisa diunduh dari Reel Instagram",
+            "paragraphs": [
+              "Videonya sendiri, sebagai MP4 dalam kualitas yang disediakan Instagram untuk Reel itu, hingga 1080p jika diunggah dengan kualitas tersebut. Jika Instagram menyediakan suara sebagai trek terpisah, Anda juga bisa menyimpan audionya saja sebagai file M4A.",
+              "Postingan dengan beberapa video (carousel) menampilkan setiap video dengan tombolnya sendiri dan opsi Unduh semua. Foto, Story, Sorotan, komentar, dan keterangan tidak diunduh, begitu pula apa pun dari akun privat."
+            ]
+          },
+          {
+            "heading": "Reel Instagram tidak bisa diunduh? Solusi cepat",
+            "paragraphs": [
+              "Sebagian besar kegagalan berasal dari postingannya sendiri: akunnya privat, Reel sudah dihapus, atau tautannya mengarah ke profil atau postingan berisi foto saja, bukan Reel. Buka tautan di jendela browser privat tanpa login; jika video tidak terlihat di sana, tidak ada pengunduh yang bisa menjangkaunya.",
+              "Jika Reel-nya publik, tunggu satu menit lalu tempel tautannya lagi, karena Instagram kadang membatasi permintaan untuk sementara. Gunakan Bagikan lalu Salin tautan, bukan menyalin alamat secara manual, dan jika video yang tersimpan tanpa suara, periksa apakah ada tombol Unduh Audio terpisah."
             ]
           }
         ]

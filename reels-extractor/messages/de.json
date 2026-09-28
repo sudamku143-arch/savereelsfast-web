@@ -175,6 +175,18 @@
         "cameraRoll": {
           "q": "Wie speichere ich Instagram Reels auf dem iPhone ohne App in der Fotos-App?",
           "a": "Auf dem iPhone: 1) Füge hier den Link des Reels ein und tippe auf Video herunterladen – der Download läuft in Safari, ohne App. 2) Öffne das Download-Symbol in der Safari-Leiste, tippe auf das Video, dann auf das Teilen-Symbol und wähle „Video sichern“, um es zu deinen Fotos hinzuzufügen."
+        },
+        "igCarousel": {
+          "q": "Kann ich alle Videos aus einem Instagram-Karussell-Beitrag herunterladen?",
+          "a": "Ja, wenn der Beitrag mehr als ein Video enthält. Füge den Link ein, und jedes Video wird einzeln mit eigenem Download-Button aufgeführt, dazu die Option „Alle herunterladen“. Fotos im Karussell werden übersprungen, da dieses Tool nur Videos speichert."
+        },
+        "igStories": {
+          "q": "Kann ich Instagram Stories oder Highlights herunterladen?",
+          "a": "Nein. Stories und Highlights werden nicht unterstützt, nur Reels, Video-Posts und IGTV-Videos. Stories verschwinden nach 24 Stunden und sind oft nur für Follower sichtbar, und dieses Tool meldet sich nie bei Instagram an, um sie abzurufen."
+        },
+        "igWhereSaved": {
+          "q": "Wo landen heruntergeladene Instagram Reels auf meinem Handy?",
+          "a": "Auf Android landet die MP4 im Ordner „Downloads“ und erscheint meist auch in der Galerie. Auf dem iPhone legt Safari sie unter Downloads ab (in der Dateien-App); öffne sie, tippe auf Teilen und wähle „Video sichern“, um sie in die Fotos-App zu verschieben."
         }
       }
     },
@@ -220,6 +232,27 @@
             "paragraphs": [
               "SaveReelsFast ist kostenlos – ohne Konto, Registrierung oder App. Füge den Link eines öffentlichen Reels ein und lade das Video direkt im Browser herunter; es funktioniert gleich auf iPhone, Android oder Computer.",
               "Hat ein Reel eine separate Tonspur, erscheint neben dem Video ein Button „Audio herunterladen“, mit dem du den Ton einzeln als M4A-Datei speicherst (kein MP3, nicht umgewandelt oder neu codiert). Praktisch für ein Voiceover, einen Songausschnitt oder einen Sound, den du wiederverwenden willst – denk daran, dass Musik und Audio weiterhin den Urhebern oder Rechteinhabern gehören."
+            ]
+          },
+          {
+            "heading": "Instagram Reels auf PC oder Mac herunterladen",
+            "paragraphs": [
+              "Öffne das Reel am Computer auf instagram.com und kopiere die Adresse aus der Adresszeile des Browsers; sie sieht so aus: instagram.com/reel/…. Füge sie oben ins Feld ein und klicke auf Video herunterladen. Die MP4 landet in deinem üblichen Download-Ordner, bereit zum Abspielen oder für dein Schnittprogramm.",
+              "Das funktioniert gleich in Chrome, Edge, Firefox und Safari unter Windows, macOS und Linux, ohne Browsererweiterung oder Software. Ob du in diesem Browser bei Instagram angemeldet bist, spielt keine Rolle: Das Tool nutzt nie deine Sitzung und liest nur den öffentlichen Beitrag."
+            ]
+          },
+          {
+            "heading": "Was du aus einem Instagram Reel herunterladen kannst",
+            "paragraphs": [
+              "Das Video selbst als MP4 in der Qualität, die Instagram für dieses Reel ausliefert, bis zu 1080p, wenn es so hochgeladen wurde. Liefert Instagram den Ton als separate Spur, kannst du das Audio auch einzeln als M4A-Datei speichern.",
+              "Beiträge mit mehreren Videos (Karussells) zeigen jedes Video mit eigenem Button und der Option „Alle herunterladen“. Fotos, Stories, Highlights, Kommentare und Bildunterschriften werden nicht heruntergeladen, ebenso nichts von privaten Konten."
+            ]
+          },
+          {
+            "heading": "Instagram Reel lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Die meisten Fehler liegen am Beitrag selbst: Das Konto ist privat, das Reel wurde gelöscht, oder der Link führt zu einem Profil oder einem reinen Foto-Beitrag statt zu einem Reel. Öffne den Link in einem privaten Browserfenster ohne Anmeldung; wenn du das Video dort nicht siehst, kommt auch kein Downloader heran.",
+              "Ist das Reel öffentlich, warte eine Minute und füge den Link erneut ein, denn Instagram begrenzt Anfragen manchmal kurzzeitig. Nutze Teilen und dann Link kopieren, statt die Adresse von Hand abzuschreiben, und wenn das gespeicherte Video keinen Ton hat, prüfe, ob ein separater Button „Audio herunterladen“ angeboten wurde."
             ]
           }
         ]

@@ -175,6 +175,18 @@
         "cameraRoll": {
           "q": "How to save Instagram Reels to camera roll on iPhone without an app?",
           "a": "On iPhone: 1) Paste the Reel's link here and tap Download Video — it downloads inside Safari, no app needed. 2) Open the Downloads icon in Safari's toolbar, tap the video, then use the share icon and choose Save Video to add it to your Photos."
+        },
+        "igCarousel": {
+          "q": "Can I download every video from an Instagram carousel post?",
+          "a": "Yes, when the post contains more than one video. Paste the post link and each video is listed separately with its own Download button, plus a Download all option. Photos inside a carousel are skipped, since this tool only saves videos."
+        },
+        "igStories": {
+          "q": "Can I download Instagram Stories or Highlights?",
+          "a": "No. Stories and Highlights are not supported, only Reels, video posts and IGTV videos. Stories disappear after 24 hours and are often limited to followers, and this tool never logs in to Instagram to reach them."
+        },
+        "igWhereSaved": {
+          "q": "Where do downloaded Instagram Reels go on my phone?",
+          "a": "On Android, the MP4 goes to your Downloads folder and usually shows up in your Gallery too. On iPhone, Safari keeps it in Downloads (in the Files app); open it, tap Share and choose Save Video to move it into Photos."
         }
       }
     },
@@ -220,6 +232,27 @@
             "paragraphs": [
               "SaveReelsFast is free to use, with no account, sign-up or app install. Paste a public Reel's link and download the video straight from your browser — it works the same on iPhone, Android or a computer.",
               "When a Reel has a separate audio track, a Download Audio button appears next to the video so you can save the sound on its own, as an M4A file (not MP3, and not converted or re-encoded). It's useful for keeping a voiceover, a song clip or a sound you want to reuse — remember that any music or audio still belongs to its creator or rights holder."
+            ]
+          },
+          {
+            "heading": "How to Download Instagram Reels on PC or Mac",
+            "paragraphs": [
+              "On a computer, open the Reel on instagram.com and copy the address from your browser's address bar; it looks like instagram.com/reel/…. Paste it into the box above and click Download Video. The MP4 saves to your usual Downloads folder, ready to play or drop into a video editor.",
+              "It works the same in Chrome, Edge, Firefox and Safari on Windows, macOS and Linux, with no browser extension or desktop software. Being signed in to Instagram in that browser changes nothing: the tool never uses your session and only reads the public post."
+            ]
+          },
+          {
+            "heading": "What You Can Download from an Instagram Reel",
+            "paragraphs": [
+              "The video itself, as an MP4 in the quality Instagram serves for that Reel, up to 1080p when it was uploaded that way. When Instagram delivers the sound as a separate track, you can also save the audio on its own as an M4A file.",
+              "Posts with several videos (carousels) list each video with its own button and a Download all option. Photos, Stories, Highlights, comments and captions are not downloaded, and neither is anything from a private account."
+            ]
+          },
+          {
+            "heading": "Instagram Reel Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Most failures come from the post itself: the account is private, the Reel was deleted, or the link points to a profile or a photo-only post instead of a Reel. Open the link in a private browser window without logging in; if you can't see the video there, no downloader can reach it.",
+              "If the Reel is public, wait a minute and paste the link again, because Instagram sometimes limits requests for a short time. Use Share, then Copy link, rather than copying the address by hand, and if the saved video is silent, check whether a separate Download Audio button was offered."
             ]
           }
         ]

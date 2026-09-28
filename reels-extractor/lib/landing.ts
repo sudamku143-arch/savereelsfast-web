@@ -81,10 +81,19 @@ export function fillTemplate(text: string, values: Record<string, string>): stri
  * Only claims that hold for the platform are listed for it (for example, the audio question is asked about the page's
  * own platform via {noun}, and the Snapchat question only on Snapchat).
  */
-export type LongtailKey = "reelsQuality" | "audio" | "cameraRoll" | "snapchatNoApp" | "free";
+export type LongtailKey =
+  | "reelsQuality"
+  | "audio"
+  | "cameraRoll"
+  | "snapchatNoApp"
+  | "free"
+  // Instagram-only: carousels with several videos, Stories/Highlights (a plain no), and where the file lands.
+  | "igCarousel"
+  | "igStories"
+  | "igWhereSaved";
 
 export const LONGTAIL_FAQ: Record<PlatformId, LongtailKey[]> = {
-  instagram: ["reelsQuality", "cameraRoll", "audio", "free"],
+  instagram: ["reelsQuality", "cameraRoll", "igWhereSaved", "igCarousel", "igStories", "audio", "free"],
   youtube: ["audio", "free"],
   facebook: ["free"],
   threads: ["free"],

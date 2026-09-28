@@ -175,6 +175,18 @@
         "cameraRoll": {
           "q": "Como salvar Reels do Instagram na galeria do iPhone sem aplicativo?",
           "a": "No iPhone: 1) Cole o link do Reel aqui e toque em Baixar vídeo; ele baixa dentro do Safari, sem precisar de nenhum aplicativo. 2) Abra o ícone de Downloads na barra do Safari, toque no vídeo e use o ícone de compartilhar para escolher Salvar vídeo e adicioná-lo aos seus Fotos."
+        },
+        "igCarousel": {
+          "q": "Posso baixar todos os vídeos de um post em carrossel do Instagram?",
+          "a": "Sim, quando o post tem mais de um vídeo. Cole o link e cada vídeo aparece separado com seu próprio botão de download, além da opção Baixar todos. As fotos do carrossel são ignoradas, porque esta ferramenta só salva vídeos."
+        },
+        "igStories": {
+          "q": "Posso baixar Stories ou Destaques do Instagram?",
+          "a": "Não. Stories e Destaques não são suportados, apenas Reels, posts com vídeo e vídeos do IGTV. Os Stories somem em 24 horas e muitas vezes só os seguidores podem vê-los, e esta ferramenta nunca faz login no Instagram para acessá-los."
+        },
+        "igWhereSaved": {
+          "q": "Onde ficam os Reels do Instagram baixados no meu celular?",
+          "a": "No Android, o MP4 vai para a pasta Downloads e normalmente também aparece na Galeria. No iPhone, o Safari guarda em Downloads (no app Arquivos); abra, toque em Compartilhar e escolha Salvar Vídeo para levá-lo às Fotos."
         }
       }
     },
@@ -220,6 +232,27 @@
             "paragraphs": [
               "O SaveReelsFast é gratuito, sem conta, sem cadastro e sem instalar nenhum aplicativo. Cole o link de um Reel público e baixe o vídeo direto do seu navegador; funciona igual no iPhone, Android ou computador.",
               "Quando um Reel tem uma faixa de áudio separada, um botão Baixar áudio aparece ao lado do vídeo para você salvar o som sozinho, como arquivo M4A (não MP3, e sem conversão ou recodificação). É útil para guardar uma narração, um trecho de música ou um som que você queira reaproveitar; lembre-se de que a música ou áudio continua pertencendo ao criador ou detentor dos direitos."
+            ]
+          },
+          {
+            "heading": "Como baixar Reels do Instagram no PC ou Mac",
+            "paragraphs": [
+              "No computador, abra o Reel em instagram.com e copie o endereço da barra do navegador; ele fica assim: instagram.com/reel/…. Cole na caixa acima e clique em Baixar vídeo. O MP4 é salvo na sua pasta Downloads, pronto para assistir ou levar para um editor de vídeo.",
+              "Funciona igual no Chrome, Edge, Firefox e Safari, no Windows, macOS e Linux, sem extensão nem programa. Estar logado no Instagram nesse navegador não muda nada: a ferramenta nunca usa sua sessão e só lê o post público."
+            ]
+          },
+          {
+            "heading": "O que dá para baixar de um Reel do Instagram",
+            "paragraphs": [
+              "O próprio vídeo, em MP4, na qualidade que o Instagram oferece para aquele Reel, até 1080p se ele foi enviado assim. Quando o Instagram entrega o som como uma faixa separada, você também pode salvar só o áudio como arquivo M4A.",
+              "Posts com vários vídeos (carrosséis) mostram cada vídeo com seu botão e a opção Baixar todos. Fotos, Stories, Destaques, comentários e legendas não são baixados, nem nada de uma conta privada."
+            ]
+          },
+          {
+            "heading": "Reel do Instagram não baixa? Soluções rápidas",
+            "paragraphs": [
+              "A maioria das falhas vem do próprio post: a conta é privada, o Reel foi apagado ou o link leva a um perfil ou a um post só de fotos, e não a um Reel. Abra o link numa janela anônima sem fazer login; se o vídeo não aparecer ali, nenhum baixador consegue acessá-lo.",
+              "Se o Reel for público, espere um minuto e cole o link de novo, porque o Instagram às vezes limita as solicitações por um tempo. Use Compartilhar e depois Copiar link em vez de copiar o endereço à mão, e se o vídeo salvo estiver sem som, veja se apareceu um botão separado de Baixar áudio."
             ]
           }
         ]

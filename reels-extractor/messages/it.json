@@ -175,6 +175,18 @@
         "cameraRoll": {
           "q": "Come salvare i Reels di Instagram nel rullino dell'iPhone senza app?",
           "a": "Su iPhone: 1) Incolla qui il link del Reel e tocca Scarica video: il download avviene in Safari, senza app. 2) Apri l'icona Download nella barra di Safari, tocca il video, poi l'icona di condivisione e scegli «Salva video» per aggiungerlo alle Foto."
+        },
+        "igCarousel": {
+          "q": "Posso scaricare tutti i video di un post a carosello di Instagram?",
+          "a": "Sì, quando il post contiene più di un video. Incolla il link e ogni video viene elencato separatamente con il suo pulsante di download, più l'opzione «Scarica tutto». Le foto del carosello vengono saltate, perché questo strumento salva solo video."
+        },
+        "igStories": {
+          "q": "Posso scaricare Storie o Storie in evidenza di Instagram?",
+          "a": "No. Storie e Storie in evidenza non sono supportate, solo Reels, post video e video IGTV. Le Storie scompaiono dopo 24 ore e spesso sono visibili solo ai follower, e questo strumento non accede mai a Instagram per raggiungerle."
+        },
+        "igWhereSaved": {
+          "q": "Dove finiscono i Reels di Instagram scaricati sul telefono?",
+          "a": "Su Android l'MP4 va nella cartella Download e di solito compare anche nella Galleria. Su iPhone Safari lo tiene in Download (nell'app File); aprilo, tocca Condividi e scegli «Salva video» per spostarlo nelle Foto."
         }
       }
     },
@@ -220,6 +232,27 @@
             "paragraphs": [
               "SaveReelsFast è gratuito, senza account, registrazione o app. Incolla il link di un Reel pubblico e scarica il video direttamente dal browser: funziona allo stesso modo su iPhone, Android o computer.",
               "Quando un Reel ha una traccia audio separata, accanto al video compare il pulsante «Scarica audio» per salvare solo il suono come file M4A (non MP3, e non convertito né ricodificato). È utile per conservare una voce fuori campo, un pezzo di canzone o un suono da riutilizzare; ricorda che musica e audio appartengono sempre ai loro autori o titolari dei diritti."
+            ]
+          },
+          {
+            "heading": "Come scaricare i Reels di Instagram su PC o Mac",
+            "paragraphs": [
+              "Sul computer, apri il Reel su instagram.com e copia l'indirizzo dalla barra del browser; ha questo aspetto: instagram.com/reel/…. Incollalo nel campo qui sopra e fai clic su Scarica video. L'MP4 viene salvato nella solita cartella Download, pronto da guardare o da importare in un programma di montaggio.",
+              "Funziona allo stesso modo in Chrome, Edge, Firefox e Safari, su Windows, macOS e Linux, senza estensioni né software. Essere connessi a Instagram in quel browser non cambia nulla: lo strumento non usa mai la tua sessione e legge solo il post pubblico."
+            ]
+          },
+          {
+            "heading": "Cosa puoi scaricare da un Reel di Instagram",
+            "paragraphs": [
+              "Il video stesso, come MP4 nella qualità che Instagram fornisce per quel Reel, fino a 1080p se è stato caricato così. Quando Instagram fornisce l'audio come traccia separata, puoi salvare anche solo l'audio come file M4A.",
+              "I post con più video (caroselli) mostrano ogni video con il suo pulsante e l'opzione «Scarica tutto». Foto, Storie, Storie in evidenza, commenti e didascalie non vengono scaricati, e nemmeno nulla da un account privato."
+            ]
+          },
+          {
+            "heading": "Il Reel di Instagram non si scarica? Soluzioni rapide",
+            "paragraphs": [
+              "La maggior parte degli errori dipende dal post stesso: l'account è privato, il Reel è stato eliminato o il link porta a un profilo o a un post di sole foto invece che a un Reel. Apri il link in una finestra di navigazione privata senza login; se lì non vedi il video, nessun downloader può raggiungerlo.",
+              "Se il Reel è pubblico, aspetta un minuto e incolla di nuovo il link, perché a volte Instagram limita le richieste per un breve periodo. Usa Condividi e poi Copia link invece di copiare l'indirizzo a mano, e se il video salvato è muto, controlla se è comparso un pulsante separato «Scarica audio»."
             ]
           }
         ]
