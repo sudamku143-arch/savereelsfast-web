@@ -1,21 +1,21 @@
 {
   "meta": {
-    "title": "Free 1-Click Video Downloader - Instagram, YouTube, TikTok",
-    "description": "Download videos from Instagram, YouTube, Facebook, TikTok, X, Reddit and more, completely free. Paste a link and save an MP4 in seconds — no login, no app.",
+    "title": "Instagram Reels Downloader – YouTube, TikTok & More, Free",
+    "description": "Download Instagram Reels in HD for free: no login, no app, no watermark added. Also saves YouTube, TikTok, Facebook and more. Paste a link and go.",
     "ogAlt": "Social media video downloader tool preview",
     "keywords": [
-      "video downloader",
       "Instagram reels downloader",
+      "download Instagram reels in HD",
+      "Instagram reels downloader without watermark",
+      "download Instagram reels without login",
+      "save Instagram reels to gallery",
+      "video downloader",
       "YouTube video downloader",
-      "TikTok downloader",
-      "Facebook video downloader",
-      "download video online free",
-      "save video as MP4",
-      "no login video downloader"
+      "TikTok downloader"
     ],
-    "howToHeading": "How to Download a Video in 3 Steps",
+    "howToHeading": "How to Download Instagram Reels in 3 Steps",
     "howToSteps": [
-      "Copy the video link from Instagram, YouTube, TikTok or any supported app.",
+      "Copy the link: in Instagram, open the Reel, tap Share, then Copy link. Links from YouTube, TikTok and other supported apps work too.",
       "Paste it into the box above — the platform is detected automatically.",
       "Check the preview, then tap Download to save the video (or just the audio) to your device."
     ]
@@ -27,7 +27,7 @@
   },
   "hero": {
     "badge": "100% Free · No Login Required",
-    "subtitle": "Paste a video link below and save an HD MP4 to your device. Works with Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat and LinkedIn.",
+    "subtitle": "Paste a public Instagram Reel link below and save it as an HD MP4 in seconds, on iPhone, Android or PC. Also works with YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat and LinkedIn.",
     "pasteButton": "Paste",
     "downloadCta": "Get Video",
     "loading": "Fetching your video…",
@@ -46,7 +46,7 @@
     "label": "Choose a platform",
     "instagram": {
       "name": "Instagram",
-      "title": "Download Instagram Reels in Seconds",
+      "title": "Instagram Reels Downloader: Save Reels in HD, Free",
       "placeholder": "Paste Instagram Reel link here…"
     },
     "youtube": {
@@ -169,9 +169,9 @@
     "platforms": {
       "instagram": {
         "noun": "Instagram Reels and videos",
-        "metaTitle": "Instagram Reels Downloader - Fast, Free HD Download Online",
-        "metaDescription": "Download Instagram Reels, videos, and audio in HD quality. Free, fast, and secure - no login or app required.",
-        "h1": "Free Instagram Reels Downloader",
+        "metaTitle": "Instagram Video Downloader - Free HD Reels & Posts Online",
+        "metaDescription": "Download Instagram videos from posts, Reels and IGTV as HD MP4, plus Reel audio as M4A. Free, no login, works on iPhone, Android and PC.",
+        "h1": "Instagram Video Downloader: Save Posts & Reels in HD",
         "lead": "Paste the link of any public Instagram Reel, video post or IGTV video and save it as an HD MP4 in seconds. It works on iPhone, Android and desktop, with no login and nothing to install.",
         "copyHint": "In the Instagram app, open the Reel, tap Share, then Copy link.",
         "faq": [
@@ -574,27 +574,27 @@
     "items": [
       {
         "q": "Is this Reels downloader really free?",
-        "a": "Yes. There's no subscription, no watermark added, and no limit tied to an account, since no account is needed at all."
+        "a": "Yes. There's no subscription, no sign-up and no watermark added. You only need the link to a public Reel or video."
       },
       {
-        "q": "Do I need to log in to any account?",
-        "a": "No. You only need the public link to the video. We never ask for your username or password on any platform."
+        "q": "Can I download Instagram Reels without a watermark?",
+        "a": "Yes. Instagram's own download button, where it appears, adds a watermark. We save the original video file Instagram plays and never add any branding of our own."
       },
       {
-        "q": "Can I download private videos?",
-        "a": "No. This tool only works on public videos, since private content is intentionally restricted by each platform and isn't accessible via a shared link."
+        "q": "Do I need to log in or install an app?",
+        "a": "No. It runs in your browser on iPhone, Android, Windows and Mac. We never ask for your username or password on any platform."
       },
       {
-        "q": "What video quality do I get?",
-        "a": "You get the best quality available as a single MP4 file with sound — typically HD for short clips and Reels. Some long videos may be limited to a lower resolution."
+        "q": "How do I save Instagram Reels to my iPhone camera roll?",
+        "a": "Paste the Reel link here and tap Download in Safari. Then open Safari's Downloads, tap the video, tap Share and choose Save Video to add it to Photos."
+      },
+      {
+        "q": "Can I download Reels from a private account?",
+        "a": "No. Only public videos can be downloaded. Private accounts limit their content to approved followers, and we never ask for your login to get around that."
       },
       {
         "q": "Is it legal to download Reels?",
         "a": "Downloading for personal, offline viewing is generally fine, but re-uploading someone else's content without permission can violate copyright and Instagram's terms. Always credit the original creator."
-      },
-      {
-        "q": "Does this work on iPhone and Android?",
-        "a": "Yes, it runs in any modern mobile or desktop browser without needing an app install."
       }
     ]
   },
