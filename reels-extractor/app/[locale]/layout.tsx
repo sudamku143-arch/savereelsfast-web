@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Inter, Sora } from "next/font/google";
+import localFont from "next/font/local";
 import "../globals.css";
 import {
   locales,
@@ -25,10 +25,11 @@ import IosInstallModal from "./components/IosInstallModal";
 import TelegramFab from "./components/TelegramFab";
 import SiteSchema from "./components/SiteSchema";
 
-// Self-hosted by next/font (no request to Google at runtime). Latin only: the Indic and Arabic locales fall
-// back to the system font for their own script, which reads better than a Latin face would.
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
-const sora = Sora({ subsets: ["latin"], weight: ["600", "700", "800"], display: "swap", variable: "--font-sora" });
+// Variable fonts committed to the repo (app/fonts, SIL OFL, from @fontsource-variable), not next/font/google:
+// the Google loader fetches the CSS at build time, and that fetch failed on Vercel and broke the deploy.
+// Latin only: the Indic and Arabic locales fall back to the system font for their own script.
+const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", weight: "100 900", display: "swap", variable: "--font-inter" });
+const sora = localFont({ src: "../fonts/sora-latin-wght-normal.woff2", weight: "100 800", display: "swap", variable: "--font-sora" });
 
 // Unknown locales 404 instead of rendering the default language.
 export const dynamicParams = false;
