@@ -177,8 +177,8 @@
           "a": "Sur iPhone : 1) Collez le lien du Reel ici et touchez Télécharger la vidéo ; le téléchargement se fait directement dans Safari, sans aucune appli. 2) Ouvrez l'icône Téléchargements dans la barre d'outils de Safari, touchez la vidéo, puis utilisez l'icône de partage et choisissez Enregistrer la vidéo pour l'ajouter à vos Photos."
         },
         "igCarousel": {
-          "q": "Puis-je télécharger toutes les vidéos d'une publication carrousel Instagram ?",
-          "a": "Oui, lorsque la publication contient plus d'une vidéo. Collez le lien : chaque vidéo s'affiche séparément avec son propre bouton de téléchargement, plus une option Tout télécharger. Les photos du carrousel sont ignorées, car cet outil n'enregistre que les vidéos."
+          "q": "Puis-je télécharger toutes les photos et vidéos d'un carrousel Instagram ?",
+          "a": "Oui. Collez le lien de la publication : chaque élément s'affiche séparément avec son propre bouton de téléchargement, les vidéos en MP4 et les photos en JPG pleine taille. L'option Tout télécharger enregistre toute la publication en une fois."
         },
         "igStories": {
           "q": "Puis-je télécharger des Stories ou des Stories à la une Instagram ?",
@@ -194,9 +194,9 @@
       "instagram": {
         "noun": "les Reels et vidéos Instagram",
         "metaTitle": "Télécharger Reels Instagram - Vidéo HD Gratuite",
-        "metaDescription": "Téléchargeur gratuit de Reels Instagram. Collez le lien d'un Reel, d'une vidéo ou d'une publication et enregistrez-le en MP4. Sans connexion ni appli.",
+        "metaDescription": "Téléchargez Reels, vidéos et photos Instagram : MP4 HD pour les vidéos, JPG pleine taille pour les photos, audio des Reels en M4A. Gratuit.",
         "h1": "Téléchargeur gratuit de Reels Instagram",
-        "lead": "Collez le lien de n'importe quel Reel, vidéo ou IGTV Instagram public et enregistrez-le en MP4 en quelques secondes. Ça marche sur iPhone, Android et ordinateur, sans connexion et sans rien installer.",
+        "lead": "Collez le lien d'un Reel, d'une publication vidéo, d'une publication photo ou d'une vidéo IGTV publique d'Instagram et enregistrez-la en quelques secondes : les vidéos en MP4 HD, les photos en JPG pleine taille. Fonctionne sur iPhone, Android et ordinateur, sans connexion ni installation.",
         "copyHint": "Dans l'appli Instagram, ouvrez le Reel, touchez Partager, puis Copier le lien.",
         "faq": [
           {
@@ -205,7 +205,7 @@
           },
           {
             "q": "Quels liens Instagram fonctionnent ?",
-            "a": "Les liens de Reels (instagram.com/reel/…), de publications vidéo (/p/…), d'IGTV (/tv/…) et les liens de partage Instagram. Les publications qui ne contiennent que des photos n'ont pas de vidéo à enregistrer."
+            "a": "Les liens de Reels (instagram.com/reel/…), les publications vidéo et photo (/p/…), IGTV (/tv/…) et les liens de partage Instagram. Les photos, seules ou dans un carrousel, se téléchargent en JPG pleine taille."
           },
           {
             "q": "Pourquoi ma vidéo Instagram téléchargée n'a-t-elle pas de son ?",
@@ -245,13 +245,13 @@
             "heading": "Ce que vous pouvez télécharger depuis un Reel Instagram",
             "paragraphs": [
               "La vidéo elle-même, en MP4, dans la qualité qu'Instagram fournit pour ce Reel, jusqu'à 1080p s'il a été publié ainsi. Quand Instagram fournit le son sous forme de piste séparée, vous pouvez aussi enregistrer l'audio seul en fichier M4A.",
-              "Les publications à plusieurs vidéos (carrousels) affichent chaque vidéo avec son propre bouton et une option Tout télécharger. Les photos, Stories, Stories à la une, commentaires et légendes ne sont pas téléchargés, pas plus que le contenu d'un compte privé."
+              "Les publications à plusieurs éléments (carrousels) affichent chaque vidéo et chaque photo avec son propre bouton, plus une option Tout télécharger ; les photos arrivent en JPG pleine taille. Les Stories, Stories à la une, commentaires et légendes ne sont pas téléchargés, pas plus que le contenu d'un compte privé."
             ]
           },
           {
             "heading": "Le Reel Instagram ne se télécharge pas ? Solutions rapides",
             "paragraphs": [
-              "La plupart des échecs viennent de la publication elle-même : le compte est privé, le Reel a été supprimé, ou le lien mène à un profil ou à une publication de photos au lieu d'un Reel. Ouvrez le lien dans une fenêtre de navigation privée sans vous connecter ; si la vidéo n'y apparaît pas, aucun outil ne peut y accéder.",
+              "La plupart des échecs viennent de la publication elle-même : le compte est privé, le Reel a été supprimé, ou le lien mène à un profil au lieu d'une publication. Ouvrez le lien dans une fenêtre de navigation privée sans vous connecter ; si la publication n'y apparaît pas, aucun outil ne peut y accéder.",
               "Si le Reel est public, attendez une minute et recollez le lien, car Instagram limite parfois les requêtes pendant un moment. Utilisez Partager puis Copier le lien plutôt que de copier l'adresse à la main, et si la vidéo enregistrée est muette, vérifiez si un bouton Télécharger l'audio séparé a été proposé."
             ]
           }
@@ -536,7 +536,7 @@
     },
     "UNSUPPORTED_POST": {
       "title": "Aucune vidéo trouvée",
-      "message": "Cette publication ne contient que des images ou du texte. Seuls les liens de vidéos ou de Reels sont pris en charge."
+      "message": "Nous n'avons rien trouvé à télécharger dans cette publication. Les photos et vidéos Instagram fonctionnent ; sur les autres plateformes, seules les publications vidéo sont prises en charge."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
       "title": "Impossible d'obtenir cette vidéo pour le moment",

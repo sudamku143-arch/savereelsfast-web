@@ -177,8 +177,8 @@
           "a": "Su iPhone: 1) Incolla qui il link del Reel e tocca Scarica video: il download avviene in Safari, senza app. 2) Apri l'icona Download nella barra di Safari, tocca il video, poi l'icona di condivisione e scegli «Salva video» per aggiungerlo alle Foto."
         },
         "igCarousel": {
-          "q": "Posso scaricare tutti i video di un post a carosello di Instagram?",
-          "a": "Sì, quando il post contiene più di un video. Incolla il link e ogni video viene elencato separatamente con il suo pulsante di download, più l'opzione «Scarica tutto». Le foto del carosello vengono saltate, perché questo strumento salva solo video."
+          "q": "Posso scaricare tutte le foto e i video di un carosello di Instagram?",
+          "a": "Sì. Incolla il link del post e ogni elemento viene elencato separatamente con il suo pulsante di download: i video in MP4, le foto in JPG a dimensione piena. L'opzione «Scarica tutto» salva l'intero post in una volta."
         },
         "igStories": {
           "q": "Posso scaricare Storie o Storie in evidenza di Instagram?",
@@ -194,9 +194,9 @@
       "instagram": {
         "noun": "Reels e video di Instagram",
         "metaTitle": "Scaricare Video Instagram – Reels e post in HD gratis",
-        "metaDescription": "Scarica video di Instagram da post, Reels e IGTV come MP4 in HD, più l'audio dei Reels in M4A. Gratis, senza login, su iPhone, Android e PC.",
+        "metaDescription": "Scarica Reels, video e foto di Instagram: MP4 HD per i video, JPG a dimensione piena per le foto e l'audio dei Reels in M4A. Gratis, senza login.",
         "h1": "Instagram Video Downloader: salva post e Reels in HD",
-        "lead": "Incolla il link di un Reel, di un post video o di un video IGTV pubblico di Instagram e salvalo come MP4 in HD in pochi secondi. Funziona su iPhone, Android e computer, senza login e senza installare nulla.",
+        "lead": "Incolla il link di un Reel, di un post video, di un post fotografico o di un video IGTV pubblico di Instagram e salvalo in pochi secondi: i video in MP4 HD, le foto in JPG a dimensione piena. Funziona su iPhone, Android e computer, senza login e senza installare nulla.",
         "copyHint": "Nell'app di Instagram apri il Reel, tocca Condividi e poi Copia link.",
         "faq": [
           {
@@ -205,7 +205,7 @@
           },
           {
             "q": "Quali link di Instagram funzionano?",
-            "a": "Link dei Reels (instagram.com/reel/…), post video (/p/…), IGTV (/tv/…) e link di condivisione di Instagram. I post con sole foto non hanno video da salvare."
+            "a": "Link dei Reels (instagram.com/reel/…), post con video o foto (/p/…), IGTV (/tv/…) e link di condivisione di Instagram. Le foto, singole o in un carosello, si scaricano come JPG a dimensione piena."
           },
           {
             "q": "Perché il video di Instagram scaricato non ha audio?",
@@ -245,13 +245,13 @@
             "heading": "Cosa puoi scaricare da un Reel di Instagram",
             "paragraphs": [
               "Il video stesso, come MP4 nella qualità che Instagram fornisce per quel Reel, fino a 1080p se è stato caricato così. Quando Instagram fornisce l'audio come traccia separata, puoi salvare anche solo l'audio come file M4A.",
-              "I post con più video (caroselli) mostrano ogni video con il suo pulsante e l'opzione «Scarica tutto». Foto, Storie, Storie in evidenza, commenti e didascalie non vengono scaricati, e nemmeno nulla da un account privato."
+              "I post con più elementi (caroselli) mostrano ogni video e foto con il suo pulsante e l'opzione «Scarica tutto»; le foto arrivano come JPG a dimensione piena. Storie, Storie in evidenza, commenti e didascalie non vengono scaricati, e nemmeno nulla da un account privato."
             ]
           },
           {
             "heading": "Il Reel di Instagram non si scarica? Soluzioni rapide",
             "paragraphs": [
-              "La maggior parte degli errori dipende dal post stesso: l'account è privato, il Reel è stato eliminato o il link porta a un profilo o a un post di sole foto invece che a un Reel. Apri il link in una finestra di navigazione privata senza login; se lì non vedi il video, nessun downloader può raggiungerlo.",
+              "La maggior parte degli errori dipende dal post stesso: l'account è privato, il Reel è stato eliminato o il link porta a un profilo invece che a un post. Apri il link in una finestra di navigazione privata senza login; se lì non vedi il post, nessun downloader può raggiungerlo.",
               "Se il Reel è pubblico, aspetta un minuto e incolla di nuovo il link, perché a volte Instagram limita le richieste per un breve periodo. Usa Condividi e poi Copia link invece di copiare l'indirizzo a mano, e se il video salvato è muto, controlla se è comparso un pulsante separato «Scarica audio»."
             ]
           }
@@ -536,7 +536,7 @@
     },
     "UNSUPPORTED_POST": {
       "title": "Nessun video trovato",
-      "message": "Questo post contiene solo immagini o testo. Sono supportati solo link di video e Reels."
+      "message": "Non abbiamo trovato nulla da scaricare in questo post. Foto e video di Instagram funzionano; sulle altre piattaforme sono supportati solo i post con video."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
       "title": "Impossibile ottenere il video ora",

@@ -177,8 +177,8 @@
           "a": "No iPhone: 1) Cole o link do Reel aqui e toque em Baixar vídeo; ele baixa dentro do Safari, sem precisar de nenhum aplicativo. 2) Abra o ícone de Downloads na barra do Safari, toque no vídeo e use o ícone de compartilhar para escolher Salvar vídeo e adicioná-lo aos seus Fotos."
         },
         "igCarousel": {
-          "q": "Posso baixar todos os vídeos de um post em carrossel do Instagram?",
-          "a": "Sim, quando o post tem mais de um vídeo. Cole o link e cada vídeo aparece separado com seu próprio botão de download, além da opção Baixar todos. As fotos do carrossel são ignoradas, porque esta ferramenta só salva vídeos."
+          "q": "Posso baixar todas as fotos e vídeos de um post em carrossel do Instagram?",
+          "a": "Sim. Cole o link do post e cada item aparece separado com seu próprio botão de download: vídeos em MP4 e fotos em JPG no tamanho original. A opção Baixar todos salva o post inteiro de uma vez."
         },
         "igStories": {
           "q": "Posso baixar Stories ou Destaques do Instagram?",
@@ -194,9 +194,9 @@
       "instagram": {
         "noun": "Reels e vídeos do Instagram",
         "metaTitle": "Baixar Reels do Instagram - Vídeos em HD Grátis",
-        "metaDescription": "Baixador gratuito de Reels do Instagram. Cole o link de um Reel, vídeo ou publicação e salve como MP4. Sem login e sem instalar apps.",
+        "metaDescription": "Baixe Reels, vídeos e fotos do Instagram: MP4 HD para vídeo, JPG em tamanho original para fotos e áudio dos Reels em M4A. Grátis e sem login.",
         "h1": "Baixador de Reels do Instagram Grátis",
-        "lead": "Cole o link de qualquer Reel, vídeo ou IGTV público do Instagram e salve como MP4 em segundos. Funciona no iPhone, no Android e no computador, sem login e sem instalar nada.",
+        "lead": "Cole o link de qualquer Reel, post com vídeo, post com foto ou vídeo do IGTV público do Instagram e salve em segundos: vídeos em MP4 HD e fotos em JPG no tamanho original. Funciona no iPhone, Android e computador, sem login e sem instalar nada.",
         "copyHint": "No app do Instagram, abra o Reel, toque em Compartilhar e depois em Copiar link.",
         "faq": [
           {
@@ -205,7 +205,7 @@
           },
           {
             "q": "Quais links do Instagram funcionam?",
-            "a": "Links de Reels (instagram.com/reel/…), publicações com vídeo (/p/…), IGTV (/tv/…) e links de compartilhamento do Instagram. Publicações que só têm fotos não têm vídeo para salvar."
+            "a": "Links de Reels (instagram.com/reel/…), posts com vídeo ou foto (/p/…), IGTV (/tv/…) e links de compartilhamento do Instagram. As fotos, sozinhas ou em carrossel, são baixadas como JPG em tamanho original."
           },
           {
             "q": "Por que o vídeo do Instagram que baixei está sem som?",
@@ -245,13 +245,13 @@
             "heading": "O que dá para baixar de um Reel do Instagram",
             "paragraphs": [
               "O próprio vídeo, em MP4, na qualidade que o Instagram oferece para aquele Reel, até 1080p se ele foi enviado assim. Quando o Instagram entrega o som como uma faixa separada, você também pode salvar só o áudio como arquivo M4A.",
-              "Posts com vários vídeos (carrosséis) mostram cada vídeo com seu botão e a opção Baixar todos. Fotos, Stories, Destaques, comentários e legendas não são baixados, nem nada de uma conta privada."
+              "Posts com vários itens (carrosséis) mostram cada vídeo e foto com seu botão, além da opção Baixar todos; as fotos vêm como JPG no tamanho original. Stories, Destaques, comentários e legendas não são baixados, nem nada de uma conta privada."
             ]
           },
           {
             "heading": "Reel do Instagram não baixa? Soluções rápidas",
             "paragraphs": [
-              "A maioria das falhas vem do próprio post: a conta é privada, o Reel foi apagado ou o link leva a um perfil ou a um post só de fotos, e não a um Reel. Abra o link numa janela anônima sem fazer login; se o vídeo não aparecer ali, nenhum baixador consegue acessá-lo.",
+              "A maioria das falhas vem do próprio post: a conta é privada, o Reel foi apagado ou o link leva a um perfil, e não a um post. Abra o link numa janela anônima sem fazer login; se o post não aparecer ali, nenhum baixador consegue acessá-lo.",
               "Se o Reel for público, espere um minuto e cole o link de novo, porque o Instagram às vezes limita as solicitações por um tempo. Use Compartilhar e depois Copiar link em vez de copiar o endereço à mão, e se o vídeo salvo estiver sem som, veja se apareceu um botão separado de Baixar áudio."
             ]
           }
@@ -536,7 +536,7 @@
     },
     "UNSUPPORTED_POST": {
       "title": "Nenhum vídeo encontrado",
-      "message": "Esta publicação contém apenas imagens ou texto. Só são aceitos links de vídeos ou reels."
+      "message": "Não encontramos nada para baixar neste post. Fotos e vídeos do Instagram funcionam; nas outras plataformas, só posts com vídeo são suportados."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
       "title": "Não foi possível obter este vídeo agora",

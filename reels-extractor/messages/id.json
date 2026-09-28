@@ -177,8 +177,8 @@
           "a": "Di iPhone: 1) Tempel tautan Reel di sini dan ketuk Unduh Video; unduhan terjadi langsung di dalam Safari, tanpa perlu aplikasi apa pun. 2) Buka ikon Downloads di toolbar Safari, ketuk videonya, lalu gunakan ikon bagikan dan pilih Save Video untuk menambahkannya ke Photos Anda."
         },
         "igCarousel": {
-          "q": "Bisakah saya mengunduh semua video dari postingan carousel Instagram?",
-          "a": "Bisa, jika postingan berisi lebih dari satu video. Tempel tautannya dan setiap video ditampilkan terpisah dengan tombol unduhnya sendiri, ditambah opsi Unduh semua. Foto di dalam carousel dilewati, karena alat ini hanya menyimpan video."
+          "q": "Bisakah saya mengunduh semua foto dan video dari postingan carousel Instagram?",
+          "a": "Bisa. Tempel tautan postingan dan setiap slide ditampilkan terpisah dengan tombol unduhnya sendiri: video sebagai MP4, foto sebagai JPG ukuran penuh. Opsi Unduh semua menyimpan seluruh postingan sekaligus."
         },
         "igStories": {
           "q": "Bisakah saya mengunduh Story atau Sorotan Instagram?",
@@ -194,9 +194,9 @@
       "instagram": {
         "noun": "Reels dan video Instagram",
         "metaTitle": "Download Reels Instagram - Unduh Video HD Gratis",
-        "metaDescription": "Pengunduh Reels Instagram gratis. Tempel tautan Reel, video, atau postingan lalu simpan sebagai MP4. Tanpa login, tanpa aplikasi, tanpa daftar.",
+        "metaDescription": "Unduh Reels, video, dan foto Instagram: MP4 HD untuk video, JPG ukuran penuh untuk foto, plus audio Reels sebagai M4A. Gratis, tanpa login.",
         "h1": "Pengunduh Reels Instagram Gratis",
-        "lead": "Tempel tautan Reel, postingan video, atau video IGTV Instagram publik dan simpan sebagai MP4 dalam hitungan detik. Bisa di iPhone, Android, dan desktop, tanpa login dan tanpa instal apa pun.",
+        "lead": "Tempel tautan Reel, postingan video, postingan foto, atau video IGTV publik dari Instagram dan simpan dalam hitungan detik: video sebagai MP4 HD, foto sebagai JPG ukuran penuh. Bisa di iPhone, Android, dan komputer, tanpa login dan tanpa instal apa pun.",
         "copyHint": "Di aplikasi Instagram, buka Reel, ketuk Bagikan, lalu Salin tautan.",
         "faq": [
           {
@@ -205,7 +205,7 @@
           },
           {
             "q": "Tautan Instagram apa saja yang didukung?",
-            "a": "Tautan Reel (instagram.com/reel/…), postingan video (/p/…), IGTV (/tv/…), dan tautan bagikan Instagram. Postingan yang hanya berisi foto tidak punya video untuk disimpan."
+            "a": "Tautan Reels (instagram.com/reel/…), postingan video dan foto (/p/…), IGTV (/tv/…), dan tautan bagikan Instagram. Foto, satuan maupun dalam carousel, diunduh sebagai JPG ukuran penuh."
           },
           {
             "q": "Mengapa video Instagram yang saya unduh tidak ada suaranya?",
@@ -245,13 +245,13 @@
             "heading": "Apa saja yang bisa diunduh dari Reel Instagram",
             "paragraphs": [
               "Videonya sendiri, sebagai MP4 dalam kualitas yang disediakan Instagram untuk Reel itu, hingga 1080p jika diunggah dengan kualitas tersebut. Jika Instagram menyediakan suara sebagai trek terpisah, Anda juga bisa menyimpan audionya saja sebagai file M4A.",
-              "Postingan dengan beberapa video (carousel) menampilkan setiap video dengan tombolnya sendiri dan opsi Unduh semua. Foto, Story, Sorotan, komentar, dan keterangan tidak diunduh, begitu pula apa pun dari akun privat."
+              "Postingan dengan beberapa slide (carousel) menampilkan setiap video dan foto dengan tombolnya sendiri, ditambah opsi Unduh semua; foto tersimpan sebagai JPG ukuran penuh. Story, Sorotan, komentar, dan keterangan tidak diunduh, begitu pula apa pun dari akun privat."
             ]
           },
           {
             "heading": "Reel Instagram tidak bisa diunduh? Solusi cepat",
             "paragraphs": [
-              "Sebagian besar kegagalan berasal dari postingannya sendiri: akunnya privat, Reel sudah dihapus, atau tautannya mengarah ke profil atau postingan berisi foto saja, bukan Reel. Buka tautan di jendela browser privat tanpa login; jika video tidak terlihat di sana, tidak ada pengunduh yang bisa menjangkaunya.",
+              "Sebagian besar kegagalan berasal dari postingannya sendiri: akunnya privat, Reel sudah dihapus, atau tautannya mengarah ke profil, bukan ke postingan. Buka tautan di jendela browser privat tanpa login; jika postingan tidak terlihat di sana, tidak ada pengunduh yang bisa menjangkaunya.",
               "Jika Reel-nya publik, tunggu satu menit lalu tempel tautannya lagi, karena Instagram kadang membatasi permintaan untuk sementara. Gunakan Bagikan lalu Salin tautan, bukan menyalin alamat secara manual, dan jika video yang tersimpan tanpa suara, periksa apakah ada tombol Unduh Audio terpisah."
             ]
           }
@@ -536,7 +536,7 @@
     },
     "UNSUPPORTED_POST": {
       "title": "Video tidak ditemukan",
-      "message": "Postingan ini hanya berisi gambar atau teks. Hanya tautan video/Reels yang didukung."
+      "message": "Kami tidak menemukan apa pun untuk diunduh di postingan ini. Foto dan video Instagram bisa; di platform lain, hanya postingan video yang didukung."
     },
     "STREAM_EXPIRED_OR_BLOCKED": {
       "title": "Video ini belum bisa diambil sekarang",

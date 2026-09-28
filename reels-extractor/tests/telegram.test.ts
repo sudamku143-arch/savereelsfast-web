@@ -132,9 +132,9 @@ describe("long-tail FAQs per platform", () => {
     assert.match(l.reelsQuality.a, /no watermark of our own/);
     assert.match(l.snapchatNoApp.a, /Stories and private snaps are not supported/);
     assert.match(l.free.a, /Only public videos/);
-    // Instagram-only questions: a plain no for Stories, and photos in a carousel are said to be skipped.
+    // Instagram-only questions: a plain no for Stories, and a carousel's photos come as JPG.
     assert.match(l.igStories.a, /^No. Stories and Highlights are not supported/);
-    assert.match(l.igCarousel.a, /Photos inside a carousel are skipped/);
+    assert.match(l.igCarousel.a, /videos as MP4, photos as full-size JPG/);
   });
 
   for (const locale of LOCALES) {

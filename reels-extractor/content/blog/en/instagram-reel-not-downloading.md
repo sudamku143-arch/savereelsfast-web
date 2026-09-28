@@ -15,11 +15,11 @@ This is the most common cause by far. Reels from private accounts are only shown
 
 **How to check:** open the link in a private or incognito browser window without logging in to Instagram. If you are asked to log in, or the video won't play, the Reel isn't public.
 
-## 2. The link isn't a Reel
+## 2. The link isn't a post
 
-Instagram links look alike, but not all of them point to a video. A link to someone's profile (instagram.com/username), a photo post, or a carousel that only holds images has nothing to download. You will see a message saying no video was found.
+Instagram links look alike, but not all of them point to a post. A link to someone's profile (instagram.com/username), their Stories or a Highlight has nothing the tool can save. You will see a message saying nothing was found to download.
 
-**Fix:** open the Reel itself, tap **Share**, then **Copy link**. A Reel link contains /reel/ followed by a code; video posts use /p/ and older IGTV videos use /tv/, and both work too.
+**Fix:** open the Reel or post itself, tap **Share**, then **Copy link**. A Reel link contains /reel/ followed by a code; video and photo posts use /p/ and older IGTV videos use /tv/, and all of them work. Photos, on their own or in a carousel, download as full-size JPG files.
 
 ## 3. The Reel was deleted or archived
 

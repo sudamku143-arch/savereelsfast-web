@@ -33,7 +33,7 @@ The file arrives as a standard MP4 that plays on almost any device. You do not n
 
 Only public content can be fetched. A Reel from a private account, a Story that has expired or a post that was deleted will not work, and that is by design. If a link fails, first check that you can open it while logged out, because if you cannot, neither can a downloader.
 
-Reels also differ from photos and carousels. A link to a carousel with no video will report that there is nothing to download, while a carousel that contains several videos may offer each one.
+Photo posts and carousels work too. A carousel lists every slide with its own button, videos as MP4 and photos as full-size JPG, plus an option to save the whole post at once.
 
 ## Quality and sound
 
@@ -48,7 +48,7 @@ A saved file is for watching, learning and backing up. Posting someone else's Re
 ## Fixing common problems
 
 - **"Private or login required":** the Reel belongs to a private account. Ask the owner to share it another way.
-- **"No video found":** the link points to a photo or a text post. Copy the link from the Reel itself.
+- **"No video found":** the link points to a profile or a Story rather than a post. Copy the link from the Reel or post itself.
 - **A short link fails:** paste the full link from the Share menu instead of a message preview.
 - **It worked yesterday, not today:** platforms limit automated requests at times. Wait a minute and try again.
 

@@ -53,7 +53,7 @@ You get the same video file Instagram plays, in the best quality it offers for t
 
 ## When it doesn't work
 
-A private or deleted Reel, a link to a profile instead of a Reel, or a photo-only post are the usual reasons. Instagram also slows down requests for short periods, so waiting a minute and trying again often helps. See our [troubleshooting guide](/blog/instagram-reel-not-downloading) for each case.
+A private or deleted Reel, or a link to a profile instead of a post, are the usual reasons. Instagram also slows down requests for short periods, so waiting a minute and trying again often helps. See our [troubleshooting guide](/blog/instagram-reel-not-downloading) for each case.
 
 ## Keep it fair
 
