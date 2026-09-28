@@ -27,7 +27,7 @@ from yt_dlp.utils import DownloadError, ExtractorError
 
 import errors
 from cobalt import Cobalt, CobaltUnavailable, parse_instances
-from cache import CircuitBreaker, SlotPool, TTLCache, slim_info
+from cache import CircuitBreaker, SlotPool, TTLCache, best_image, slim_info
 from errors import ScraperError, classify_failure
 from extractors import CRAWLER_UA, extract_threads
 from diagnose import cookie_summary, interpret, probe_network, probe_proxy, proxy_host, redact_secrets
@@ -39,10 +39,12 @@ from urls import (
     UnsupportedUrl,
     cache_key,
     is_allowed_media_url,
+    is_instagram_host,
     is_threads_host,
     is_youtube_host,
     is_youtube_media_host,
     resolve_url,
+    referer_for,
     safe_referer,
     youtube_video_id,
 )
@@ -377,6 +379,13 @@ AUDIO_TYPES = {
     "ogg": "audio/ogg",
     "opus": "audio/ogg",
 }
+# Picture files an Instagram photo (or a photo slide of a carousel) is saved as, again untouched.
+IMAGE_TYPES = {
+    "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
+    "webp": "image/webp",
+    "png": "image/png",
+}
 MAX_ITEMS = 20  # carousel posts are capped so one request can't fan out unbounded
 
 MAX_STREAM_BYTES = 200 * 1024 * 1024
@@ -537,15 +546,64 @@ def _pick_audio(info: dict) -> dict | None:
     return max(candidates, key=lambda f: (f.get("ext") in ("m4a", "mp4"), f.get("abr") or 0))
 
 
-def _describe(info: dict) -> dict | None:
-    """One downloadable item (video + optional separate audio) from a single-media info dict."""
+def _pick_image(info: dict) -> dict | None:
+    """
+    The full-size picture of a photo (or a photo slide), or None: {"url", "ext", "width", "height"}.
+
+    yt-dlp reports an Instagram photo's sizes as `thumbnails` and no formats at all. Only a picture on a
+    platform CDN over https qualifies, the same rule as every video.
+    """
+    image = best_image(info.get("thumbnails"))
+    if not image or not _media_url_allowed(image["url"]):
+        return None
+    suffix = urlparse(image["url"]).path.rsplit(".", 1)[-1].lower()
+    return {
+        "url": image["url"],
+        "ext": "jpg" if suffix == "jpeg" else suffix if suffix in IMAGE_TYPES else "jpg",
+        "width": image.get("width"),
+        "height": image.get("height"),
+    }
+
+
+def _describe_image(info: dict) -> dict | None:
+    """A photo item, shaped like a video item (the video/audio fields empty) plus kind="image"."""
+    image = _pick_image(info)
+    if not image:
+        return None
+    width, height = image["width"], image["height"]
+    return {
+        "id": info.get("id"),
+        "kind": "image",
+        "title": info.get("title") or info.get("description"),
+        "author": info.get("uploader") or info.get("channel"),
+        "thumbnail": image["url"],
+        "duration": None,
+        "videoUrl": None,
+        "imageUrl": image["url"],
+        "imageExt": image["ext"],
+        "quality": f"{width}x{height}" if width and height else None,
+        "audio": "no",
+        "hasAudio": False,
+        "warning": None,
+        "audioUrl": None,
+        "audioExt": None,
+        "audioBitrate": None,
+    }
+
+
+def _describe(info: dict, images: bool = False) -> dict | None:
+    """
+    One downloadable item from a single-media info dict: a video (plus optional separate audio), or, when
+    `images` is on (Instagram, and only for callers that asked for photos), a photo.
+    """
     fmt, audio = _pick_format(info)
     if not fmt:
-        return None
+        return _describe_image(info) if images else None
     audio_fmt = _pick_audio(info)
     height = fmt.get("height")
     return {
         "id": info.get("id"),
+        "kind": "video",
         "title": info.get("title") or info.get("description"),
         "author": info.get("uploader") or info.get("channel"),
         "thumbnail": info.get("thumbnail"),
@@ -568,8 +626,8 @@ def _entries(info: dict) -> list[dict]:
     return [info]
 
 
-def _describe_items(info: dict) -> list[dict]:
-    items = [d for d in (_describe(entry) for entry in _entries(info)) if d]
+def _describe_items(info: dict, images: bool = False) -> list[dict]:
+    items = [d for d in (_describe(entry, images) for entry in _entries(info)) if d]
     for index, item in enumerate(items, start=1):
         item["index"] = index
     return items
@@ -955,6 +1013,11 @@ async def extract(
         description="Public video URL (Instagram, YouTube, Facebook, Threads, X, "
         "Pinterest, TikTok, Reddit, Snapchat or LinkedIn)",
     ),
+    images: bool = Query(
+        False,
+        description="Also return Instagram photos (single or carousel slides) as kind=image items. Off by "
+        "default, so a caller that only knows videos never receives an item without a videoUrl.",
+    ),
     x_scraper_key: str | None = Header(default=None),
 ) -> dict:
     _check_key(x_scraper_key)
@@ -964,7 +1027,7 @@ async def extract(
     except ScraperError as err:
         raise _http_error(err)
 
-    items = _describe_items(info)
+    items = _describe_items(info, images=images and is_instagram_host(urlparse(_resolved).hostname or ""))
     if not items:
         raise _http_error(_no_video_error(info))
     if YTDLP_PROXY and is_youtube_host(urlparse(_resolved).hostname or "") and info.get("_via") != "cobalt":
@@ -982,7 +1045,7 @@ async def extract(
         "title": first["title"] or info.get("title"),
         "author": first["author"] or info.get("uploader") or info.get("channel"),
         "formats": [],  # a single best progressive stream is returned in videoUrl
-        # Only present for posts with several videos (Instagram carousels, multi-video tweets).
+        # Only present for posts with several videos (or, with images=1, photos): carousels, multi-video tweets.
         "items": items if len(items) > 1 else [],
         "cached": cached,
     }
@@ -1058,6 +1121,11 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
     """Open the best video (or audio-only) stream of an already-resolved post. Blocking."""
     entries = _entries(info)
     entry = entries[item] if 0 <= item < len(entries) else entries[0]
+    if kind == "image":
+        image = _pick_image(entry) if is_instagram_host(urlparse(resolved).hostname or "") else None
+        if not image:
+            raise ScraperError(errors.UNSUPPORTED_POST, "This post has no photo to download.")
+        return _open_cdn_stream(image["url"], referer_for(image["url"]), "image", None, ext=image["ext"])
     if kind == "audio":
         fmt = _pick_audio(entry)
         if not fmt:
@@ -1155,6 +1223,9 @@ def _attachment_response(
     if kind == "audio":
         ext = ext if ext in AUDIO_TYPES else "m4a"
         media_type = AUDIO_TYPES[ext]
+    elif kind == "image":
+        ext = ext if ext in IMAGE_TYPES else "jpg"
+        media_type = IMAGE_TYPES[ext]
     else:
         ext, media_type = "mp4", "video/mp4"
     headers = {
@@ -1181,7 +1252,7 @@ def _attachment_response(
 async def download(
     url: str = Query(..., description="The post URL (not a CDN URL); it is re-resolved here"),
     id: str = Query("video", max_length=60),
-    kind: str = Query("video", pattern="^(video|audio)$"),
+    kind: str = Query("video", pattern="^(video|audio|image)$"),
     item: int = Query(0, ge=0, le=MAX_ITEMS),
     x_scraper_key: str | None = Header(default=None),
 ) -> StreamingResponse:
@@ -1205,7 +1276,7 @@ async def download(
         raise
     stream.add_closer(lease.release)
 
-    # Audio downloads are named after the container of the stream actually served.
+    # Audio (and photo) downloads are named after the container of the stream actually served.
     return _attachment_response(stream, id, kind, stream.ext)
 
 
@@ -1220,7 +1291,7 @@ class _HttpxReader:
 
 
 def _open_cdn_stream(
-    media_url: str, referer: str | None, kind: str = "video", range_header: str | None = None
+    media_url: str, referer: str | None, kind: str = "video", range_header: str | None = None, ext: str | None = None
 ) -> OpenStream:
     """
     Open a CDN video URL from THIS server's IP.
@@ -1236,7 +1307,10 @@ def _open_cdn_stream(
     headers = {
         "User-Agent": BROWSER_UA,
         "Referer": safe_referer(referer, media_url),
-        "Accept": "audio/*,*/*;q=0.5" if kind == "audio" else "video/mp4,video/*;q=0.9,*/*;q=0.5",
+        "Accept": {
+            "audio": "audio/*,*/*;q=0.5",
+            "image": "image/jpeg,image/webp,image/png;q=0.9,*/*;q=0.5",
+        }.get(kind, "video/mp4,video/*;q=0.9,*/*;q=0.5"),
         "Accept-Language": "en-US,en;q=0.9",
     }
     # Forward a single byte range so interrupted downloads can resume and players can seek.
@@ -1273,12 +1347,17 @@ def _open_cdn_stream(
             )
 
         content_type = response.headers.get("content-type", "")
-        allowed = ("audio/", "video/mp4", "video/webm", "application/octet-stream") if kind == "audio" else ("video/", "application/octet-stream")
+        allowed = {
+            "audio": ("audio/", "video/mp4", "video/webm", "application/octet-stream"),
+            "image": tuple(dict.fromkeys(IMAGE_TYPES.values())) + ("application/octet-stream",),
+        }.get(kind, ("video/", "application/octet-stream"))
         if not content_type.startswith(allowed):
             response.close()
             raise ScraperError(
                 errors.UNSUPPORTED_POST,
-                "The requested file is not an audio track." if kind == "audio" else "The requested file is not a video.",
+                {"audio": "The requested file is not an audio track.", "image": "The requested file is not a picture."}.get(
+                    kind, "The requested file is not a video."
+                ),
             )
 
         raw_length = response.headers.get("content-length", "")
@@ -1301,6 +1380,7 @@ def _open_cdn_stream(
             _HttpxReader(response),
             length,
             [response.close, client.close],
+            ext,
             status=206 if response.status_code == 206 else 200,
             content_range=response.headers.get("content-range") if response.status_code == 206 else None,
             accept_ranges=response.headers.get("accept-ranges", "").lower() == "bytes",
@@ -1338,7 +1418,7 @@ async def stream(
     url: str = Query(..., description="Video URL on a platform CDN, as returned by /extract"),
     referer: str | None = Query(None, description="Page the video came from (optional)"),
     id: str = Query("video", max_length=60),
-    kind: str = Query("video", pattern="^(video|audio)$"),
+    kind: str = Query("video", pattern="^(video|audio|image)$"),
     ext: str = Query("m4a", pattern="^[a-z0-9]{2,4}$"),
     x_scraper_key: str | None = Header(default=None),
     range_header: str | None = Header(default=None, alias="range"),

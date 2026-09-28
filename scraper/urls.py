@@ -137,6 +137,11 @@ def is_threads_host(host: str) -> bool:
     return _host_matches(host, "threads.net") or _host_matches(host, "threads.com")
 
 
+def is_instagram_host(host: str) -> bool:
+    """instagram.com: the one platform whose photos (single or in a carousel) can be downloaded too."""
+    return _host_matches((host or "").lower(), "instagram.com")
+
+
 def needs_expansion(url: str) -> bool:
     """True for short links and share links that redirect to the real post."""
     parsed = urlparse(url)

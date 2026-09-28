@@ -151,7 +151,8 @@ class AudioStreamTests(EndpointBase):
         self.assertEqual(response.status_code, 422)
 
     def test_unknown_kind_or_extension_is_rejected(self):
-        for params in ({"kind": "image"}, {"kind": "audio", "ext": "../x"}):
+        # "image" is a real kind now (Instagram photos); "subtitles" still isn't.
+        for params in ({"kind": "subtitles"}, {"kind": "audio", "ext": "../x"}):
             with self.subTest(params=params):
                 response = self.client.get("/stream", params={"url": "https://v.redd.it/x", **params})
                 self.assertEqual(response.status_code, 422)

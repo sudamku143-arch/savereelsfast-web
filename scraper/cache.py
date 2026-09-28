@@ -3,6 +3,7 @@
 No FastAPI / yt-dlp imports, so it can be unit-tested on its own.
 """
 
+import re
 import threading
 import time
 from collections import OrderedDict
@@ -177,9 +178,36 @@ _FORMAT_KEYS = (
 )
 
 
+_SIZE_CAP = re.compile(r"[?&]stp=[^&]*_[sp]\d+x\d+")
+
+
+def best_image(thumbnails) -> dict | None:
+    """
+    The full-size picture among an Instagram post's image variants, or None.
+
+    yt-dlp lists a photo's sizes (image_versions2 / display resources) as "thumbnails". The original is the
+    variant without a size cap in its `stp` parameter (s1080x1080, p640x640 ...); failing that, the widest one,
+    and failing that the last (yt-dlp lists them smallest first).
+    """
+    candidates = [t for t in (thumbnails or []) if isinstance(t, dict) and isinstance(t.get("url"), str)]
+    if not candidates:
+        return None
+    uncapped = [t for t in candidates if not _SIZE_CAP.search(t["url"])]
+    if uncapped:
+        return max(uncapped, key=lambda t: t.get("width") or 0)
+    if any(t.get("width") for t in candidates):
+        return max(candidates, key=lambda t: t.get("width") or 0)
+    return candidates[-1]
+
+
 def slim_info(info: dict) -> dict:
     """Keep just what extraction needs, so a cache entry stays a few KB instead of hundreds."""
     slim = {key: info[key] for key in _INFO_KEYS if key in info}
+    # A photo (no formats at all) keeps its full-size picture, the only one of its many sizes ever used
+    # (Instagram photos, see main._pick_image). A video keeps none: its poster is `thumbnail`.
+    image = None if info.get("formats") else best_image(info.get("thumbnails"))
+    if image:
+        slim["thumbnails"] = [{key: image[key] for key in ("url", "width", "height") if key in image}]
     for list_key in ("formats", "requested_formats"):
         if info.get(list_key):
             slim[list_key] = [
