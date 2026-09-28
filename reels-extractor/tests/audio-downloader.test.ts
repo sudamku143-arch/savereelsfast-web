@@ -190,7 +190,7 @@ describe("the result card on /audio-downloader never offers the video file", () 
     assert.match(slider, /link\.href = audioOnly \? audioHref\(item\)! : videoHref\(item\);/);
     assert.match(
       slider,
-      /link\.download = audioOnly \? downloadFilename\(item\.id, "audio", item\.audioExt\) : downloadFilename\(item\.id\);/
+      /link\.download = audioOnly \? downloadFilename\(item\.id, "audio", item\.audioExt\) : fileFor\(item\);/
     );
     // The per-item audioOnly branch offers only the audio button (or the unavailable message), never the video one.
     const perItem = slider.match(/\{audioOnly \? \(\s*audio \? \(([\s\S]*?)\) : \(([\s\S]*?)\)\s*\) : \(/);

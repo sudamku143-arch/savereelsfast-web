@@ -9,7 +9,7 @@ import {
 } from "@/lib/instagram";
 import { parseSupportedUrl, type PlatformId } from "@/lib/platforms";
 import { isErrorCode, type ErrorCode, type ResultWarning } from "@/lib/errors";
-import { isAudioExtension } from "@/lib/download";
+import { isAudioExtension, isImageExtension, type ImageExtension } from "@/lib/download";
 import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
 import { hasTimeFor, remainingMs } from "@/lib/time-budget";
 import { AsyncLocalStorage } from "node:async_hooks";
@@ -29,7 +29,9 @@ export const maxDuration = 40;
  *     id: string,                 // post/video id, used for the download filename
  *     platform: string,           // instagram | youtube | facebook | …
  *     sourceUrl: string,          // canonical post URL (lets /api/download fall back to the scraper)
- *     videoUrl: string,           // direct MP4 URL on the platform's CDN
+ *     videoUrl: string,           // direct MP4 URL on the platform's CDN (the picture's URL when kind is "image")
+ *     kind?: "image",             // an Instagram photo rather than a video (absent for videos)
+ *     imageExt?: "jpg" | "webp" | "png",
  *     thumbnailUrl: string,       // "" when none could be found
  *     title: string | null,       // caption
  *     author: string | null,      // handle without "@"
@@ -39,7 +41,7 @@ export const maxDuration = 40;
  *     warning?: "NO_AUDIO",       // only a video-only stream was available
  *     audioUrl?: string,          // separate audio-only stream (M4A/WebM; not transcoded)
  *     audioExt?: string,
- *     items?: ReelItem[],         // present only for multi-video posts (carousels)
+ *     items?: ReelItem[],         // present only for posts with several videos and/or photos (carousels)
  *     formats?: { quality, url, width, height }[]   // best first
  *   }
  *
@@ -60,8 +62,14 @@ export type ReelFormat = {
   height: number | null;
 };
 
-/** One video of a multi-video post (Instagram carousel, multi-video tweet). */
-export type ReelItem = {
+/**
+ * Instagram photos travel in the same shape as videos: `videoUrl` then holds the picture's URL, and
+ * `kind: "image"` (with `imageExt`) tells the page to offer a photo download instead of a video.
+ */
+type ImageFields = { kind?: "image"; imageExt?: ImageExtension };
+
+/** One video (or Instagram photo) of a post with several (Instagram carousel, multi-video tweet). */
+export type ReelItem = ImageFields & {
   id: string;
   videoUrl: string;
   thumbnailUrl: string;
@@ -74,7 +82,7 @@ export type ReelItem = {
   audioExt?: string;
 };
 
-export type ReelData = {
+export type ReelData = ImageFields & {
   id: string;
   videoUrl: string;
   thumbnailUrl: string;
@@ -441,6 +449,9 @@ function getScraperBaseUrl(): string | null {
 
 type ScraperItem = {
   id?: string | null;
+  kind?: string | null;
+  imageUrl?: string | null;
+  imageExt?: string | null;
   title?: string | null;
   thumbnail?: string | null;
   duration?: number | null;
@@ -454,6 +465,9 @@ type ScraperItem = {
 
 type ScraperResponse = {
   success?: boolean;
+  kind?: string | null;
+  imageUrl?: string | null;
+  imageExt?: string | null;
   id?: string | null;
   title?: string | null;
   author?: string | null;
@@ -491,10 +505,28 @@ function cleanAudioState(
   return value === "yes" || value === "no" || value === "unknown" ? { audio: value } : {};
 }
 
+/** A photo from the scraper (kind "image"), as the fields to put on an item, or null if it isn't one. */
+function imageFields(raw: { kind?: string | null; imageUrl?: string | null; imageExt?: string | null }) {
+  if (raw.kind !== "image") return null;
+  const url = toSafeMediaUrl(raw.imageUrl);
+  if (!url) return null;
+  return { videoUrl: url, kind: "image" as const, imageExt: isImageExtension(raw.imageExt) ? raw.imageExt : ("jpg" as const) };
+}
+
 function mapScraperItem(raw: ScraperItem, fallbackId: string, index: number): ReelItem | null {
+  const id = typeof raw.id === "string" ? raw.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "";
+  const image = imageFields(raw);
+  if (image) {
+    return {
+      id: id || `${fallbackId}-${index + 1}`,
+      ...image,
+      thumbnailUrl: toSafeMediaUrl(raw.thumbnail) ?? image.videoUrl,
+      title: truncate(typeof raw.title === "string" ? raw.title : null),
+      durationSeconds: null,
+    };
+  }
   const videoUrl = toSafeMediaUrl(raw.videoUrl);
   if (!videoUrl) return null;
-  const id = typeof raw.id === "string" ? raw.id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) : "";
   return {
     id: id || `${fallbackId}-${index + 1}`,
     videoUrl,
@@ -542,7 +574,7 @@ async function extractFromScraperOnce(
   const timer = setTimeout(() => controller.abort(), stepTimeout(scraperStepMs()));
   let json: ScraperResponse;
   try {
-    const res = await fetch(`${base}/extract?url=${encodeURIComponent(reelUrl)}`, {
+    const res = await fetch(`${base}/extract?url=${encodeURIComponent(reelUrl)}&images=1`, {
       headers: { Accept: "application/json", ...scraperHeaders() },
       cache: "no-store",
       signal: controller.signal,
@@ -604,7 +636,9 @@ async function extractFromScraperOnce(
     (a, b) => (b.height ?? 0) * (b.width ?? 0) - (a.height ?? 0) * (a.width ?? 0)
   );
 
-  const videoUrl = formats[0]?.url ?? toSafeMediaUrl(json.videoUrl);
+  // A single Instagram photo: the post's picture takes the video's place (see ImageFields).
+  const image = imageFields(json);
+  const videoUrl = image?.videoUrl ?? formats[0]?.url ?? toSafeMediaUrl(json.videoUrl);
   if (!videoUrl) return null;
 
   const postId =
@@ -622,13 +656,17 @@ async function extractFromScraperOnce(
     thumbnailUrl: toSafeMediaUrl(json.thumbnail) ?? "",
     title: truncate(typeof json.title === "string" ? json.title : null),
     author: typeof json.author === "string" ? json.author : null,
-    durationSeconds: typeof json.duration === "number" ? json.duration : null,
-    ...cleanQuality(json.quality),
-    ...cleanAudioState(json.audio),
-    ...(json.warning === "NO_AUDIO" ? { warning: "NO_AUDIO" as const } : {}),
-    ...audioFields(json),
+    durationSeconds: image ? null : typeof json.duration === "number" ? json.duration : null,
+    ...(image
+      ? { kind: image.kind, imageExt: image.imageExt }
+      : {
+          ...cleanQuality(json.quality),
+          ...cleanAudioState(json.audio),
+          ...(json.warning === "NO_AUDIO" ? { warning: "NO_AUDIO" as const } : {}),
+          ...audioFields(json),
+          ...(formats.length > 0 ? { formats } : {}),
+        }),
     ...(items.length > 1 ? { items } : {}),
-    ...(formats.length > 0 ? { formats } : {}),
   };
 }
 

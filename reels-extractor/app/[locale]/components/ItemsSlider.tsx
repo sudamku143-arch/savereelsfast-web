@@ -9,7 +9,13 @@ import type { ErrorsDict } from "./ErrorCard";
 
 export type ItemsDict = {
   postItems: string;
+  /** "{n} photos in this post" (an Instagram carousel of photos only). */
+  postPhotos: string;
+  /** "{n} photos and videos in this post". */
+  postMixed: string;
   itemTitle: string;
+  /** "Photo {n}": a photo slide's alt text. */
+  itemPhotoTitle: string;
   downloadItem: string;
   downloadItemAudio: string;
   downloadAll: string;
@@ -57,8 +63,18 @@ export default function ItemsSlider({
   const [busy, setBusy] = useState(false);
 
   // No `src`: for a carousel, "re-resolve the post's best video" would pick the wrong slide.
+  const isPhoto = (item: ReelItem) => item.kind === "image";
   const videoHref = (item: ReelItem) =>
-    buildDownloadHref({ url: item.videoUrl, id: item.id });
+    isPhoto(item)
+      ? buildDownloadHref({ url: item.videoUrl, id: item.id, kind: "image", ext: item.imageExt })
+      : buildDownloadHref({ url: item.videoUrl, id: item.id });
+  const fileFor = (item: ReelItem) =>
+    isPhoto(item) ? downloadFilename(item.id, "image", item.imageExt) : downloadFilename(item.id);
+  const photos = items.filter(isPhoto).length;
+  const countLabel = fill(
+    photos === 0 ? dict.postItems : photos === items.length ? dict.postPhotos : dict.postMixed,
+    { n: items.length }
+  );
   const audioHref = (item: ReelItem) =>
     item.audioUrl
       ? buildDownloadHref({ url: item.audioUrl, id: item.id, kind: "audio", ext: item.audioExt })
@@ -73,7 +89,7 @@ export default function ItemsSlider({
       for (const item of audioItems) {
         const link = document.createElement("a");
         link.href = audioOnly ? audioHref(item)! : videoHref(item);
-        link.download = audioOnly ? downloadFilename(item.id, "audio", item.audioExt) : downloadFilename(item.id);
+        link.download = audioOnly ? downloadFilename(item.id, "audio", item.audioExt) : fileFor(item);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -86,13 +102,13 @@ export default function ItemsSlider({
   }
 
   return (
-    <section className="mt-4" aria-label={fill(dict.postItems, { n: items.length })}>
+    <section className="mt-4" aria-label={countLabel}>
       <div className="mb-2 flex items-center justify-between gap-2">
         {/* A caption, not a heading: this only ever appears inside a client-rendered result after a visitor
             pastes a link (so it's never part of what a crawler sees), and an <h3> here with no <h2> above
             it on the page at that point would skip a heading level. */}
         <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-          {fill(dict.postItems, { n: items.length })}
+          {countLabel}
         </p>
       </div>
 
@@ -108,7 +124,7 @@ export default function ItemsSlider({
                 {item.thumbnailUrl && (
                   <Image
                     src={item.thumbnailUrl}
-                    alt={item.title ?? fill(dict.itemTitle, { n: index + 1 })}
+                    alt={item.title ?? fill(isPhoto(item) ? dict.itemPhotoTitle : dict.itemTitle, { n: index + 1 })}
                     fill
                     sizes="144px"
                     className="object-cover"
@@ -150,8 +166,8 @@ export default function ItemsSlider({
                   <>
                     <DownloadButton
                       href={videoHref(item)}
-                      filename={downloadFilename(item.id)}
-                      label={`${dict.downloadItem}${item.quality ? ` · ${item.quality}` : ""}`}
+                      filename={fileFor(item)}
+                      label={`${dict.downloadItem}${item.quality ? ` · ${item.quality}` : isPhoto(item) ? ` · ${(item.imageExt ?? "jpg").toUpperCase()}` : ""}`}
                       variant="compact"
                       dict={downloadDict}
                       errorsDict={errorsDict}

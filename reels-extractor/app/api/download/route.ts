@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BROWSER_UA, isAllowedMediaUrl, isCobaltUrl, refererFor } from "@/lib/instagram";
 import { parseSupportedUrl } from "@/lib/platforms";
 import type { ErrorCode } from "@/lib/errors";
-import { isAudioExtension } from "@/lib/download";
+import { isAudioExtension, isImageExtension, type ImageExtension } from "@/lib/download";
 import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
 
 // Edge runtime streams the body straight through, so large videos are not
@@ -46,7 +46,26 @@ const AUDIO_CONTENT_TYPES: Record<string, string> = {
   opus: "audio/ogg",
 };
 
-type Media = { kind: "video" | "audio"; ext: string; contentType: string };
+// Instagram photos (a single photo or a carousel slide), saved untouched like everything else.
+const IMAGE_CONTENT_TYPES: Record<ImageExtension, string> = {
+  jpg: "image/jpeg",
+  webp: "image/webp",
+  png: "image/png",
+};
+
+type Media = { kind: "video" | "audio" | "image"; ext: string; contentType: string };
+
+/** What the CDN may answer with for each kind of download (anything else is refused). */
+const ACCEPTED_TYPES: Record<Media["kind"], string[]> = {
+  audio: ["audio/", "video/mp4", "video/webm", "application/octet-stream"],
+  image: ["image/jpeg", "image/webp", "image/png", "application/octet-stream"],
+  video: ["video/", "application/octet-stream"],
+};
+const ACCEPT_HEADER: Record<Media["kind"], string> = {
+  audio: "audio/*,*/*;q=0.5",
+  image: "image/jpeg,image/webp,image/png;q=0.9,*/*;q=0.5",
+  video: "video/mp4,video/*;q=0.9,*/*;q=0.5",
+};
 
 function safeFilename(rawId: string | null, media: Media): string {
   const id = (rawId ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
@@ -130,8 +149,7 @@ async function tryDirect(
         headers: {
           "User-Agent": BROWSER_UA,
           Referer: refererFor(target),
-          Accept:
-            media.kind === "audio" ? "audio/*,*/*;q=0.5" : "video/mp4,video/*;q=0.9,*/*;q=0.5",
+          Accept: ACCEPT_HEADER[media.kind],
           "Accept-Language": "en-US,en;q=0.9",
           ...(range ? { Range: range } : {}),
         },
@@ -151,11 +169,7 @@ async function tryDirect(
   }
 
   const type = upstream.headers.get("content-type") ?? "";
-  const accepted =
-    media.kind === "audio"
-      ? ["audio/", "video/mp4", "video/webm", "application/octet-stream"]
-      : ["video/", "application/octet-stream"];
-  if (!accepted.some((prefix) => type.startsWith(prefix))) return null;
+  if (!ACCEPTED_TYPES[media.kind].some((prefix) => type.startsWith(prefix))) return null;
 
   const length = Number(upstream.headers.get("content-length") ?? 0);
   if (length > MAX_BYTES) return null;
@@ -250,7 +264,7 @@ function viaScraperResolve(sourceUrl: string, id: string | null, filename: strin
 }
 
 /**
- * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio&ext=m4a
+ * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio|image&ext=m4a|jpg
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -283,14 +297,15 @@ export async function GET(request: NextRequest) {
 
   const id = searchParams.get("id");
   const requestedExt = searchParams.get("ext");
+  const requestedKind = searchParams.get("kind");
+  const audioExt = isAudioExtension(requestedExt) ? requestedExt : "m4a";
+  const imageExt = isImageExtension(requestedExt) ? requestedExt : "jpg";
   const media: Media =
-    searchParams.get("kind") === "audio"
-      ? {
-          kind: "audio",
-          ext: isAudioExtension(requestedExt) ? requestedExt : "m4a",
-          contentType: AUDIO_CONTENT_TYPES[isAudioExtension(requestedExt) ? requestedExt : "m4a"],
-        }
-      : { kind: "video", ext: "mp4", contentType: "video/mp4" };
+    requestedKind === "audio"
+      ? { kind: "audio", ext: audioExt, contentType: AUDIO_CONTENT_TYPES[audioExt] }
+      : requestedKind === "image"
+        ? { kind: "image", ext: imageExt, contentType: IMAGE_CONTENT_TYPES[imageExt] }
+        : { kind: "video", ext: "mp4", contentType: "video/mp4" };
   const filename = safeFilename(id, media);
   const range = validRange(request.headers.get("range"));
 

@@ -4,14 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import type { PlatformId } from "@/lib/platforms";
 import type { Locale } from "@/lib/i18n-config";
-import { buildDownloadHref, downloadFilename } from "@/lib/download";
+import { buildDownloadHref, downloadFilename, type ImageExtension } from "@/lib/download";
 import PlatformIcon from "./PlatformIcon";
 import ItemsSlider, { type ItemsDict } from "./ItemsSlider";
 import DownloadButton, { type DownloadDict } from "./DownloadButton";
 import type { ErrorsDict } from "./ErrorCard";
 import ShareTool from "./ShareTool";
 
-export type ReelItem = {
+/** Instagram photos come in the same shape as videos: `videoUrl` holds the picture and `kind` is "image". */
+type ImageFields = { kind?: "image"; imageExt?: ImageExtension };
+
+export type ReelItem = ImageFields & {
   id: string;
   videoUrl: string;
   thumbnailUrl: string;
@@ -24,7 +27,7 @@ export type ReelItem = {
   audioExt?: string;
 };
 
-export type ReelResult = {
+export type ReelResult = ImageFields & {
   id: string;
   platform?: PlatformId;
   videoUrl: string;
@@ -44,12 +47,18 @@ export type PreviewDict = ItemsDict & {
   title: string;
   /** Card heading on /audio-downloader, once a result is ready. */
   audioTitle: string;
+  /** Card heading when the post is a single Instagram photo. */
+  photoTitle: string;
   author: string;
   downloadButton: string;
+  /** "Download Photo ({format})" for a single photo. */
+  downloadPhoto: string;
   downloadAudio: string;
   newSearch: string;
   noAudio: string;
 };
+
+const PLACEHOLDER_TITLE = /^(Video|Post) by [\w.]+$/;
 
 function formatDuration(totalSeconds: number): string {
   const rounded = Math.round(totalSeconds);
@@ -93,13 +102,17 @@ export default function PreviewCard({
   const [downloaded, setDownloaded] = useState(false);
   const items = result.items ?? [];
   const isCarousel = items.length > 1;
-  const filename = downloadFilename(result.id);
+  const isPhoto = result.kind === "image" && !isCarousel;
+  // Heading: a photo post (one photo, or a carousel of photos only) says so; anything with a video keeps "video".
+  const allPhotos = isCarousel ? items.every((item) => item.kind === "image") : isPhoto;
+  const filename = isPhoto ? downloadFilename(result.id, "image", result.imageExt) : downloadFilename(result.id);
 
   // `src` lets the server fall back to streaming through the scraper if the CDN refuses it.
   const videoHref = buildDownloadHref({
     url: result.videoUrl,
     id: result.id,
     src: result.sourceUrl,
+    ...(isPhoto ? { kind: "image" as const, ext: result.imageExt } : {}),
   });
   const audioHref = result.audioUrl
     ? buildDownloadHref({
@@ -114,12 +127,15 @@ export default function PreviewCard({
 
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
-  const caption = result.title ? snippet(result.title) : null;
+  // yt-dlp names a post with no caption "Video by <user>" / "Post by <user>": that is a placeholder, not a caption.
+  const caption = result.title && !PLACEHOLDER_TITLE.test(result.title.trim()) ? snippet(result.title) : null;
 
   return (
     <div className="glass mt-6 w-full max-w-md animate-fade-in-up rounded-2xl p-4 shadow-glow">
       <div className="mb-3 flex items-center justify-between gap-2">
-        <p className="text-sm font-semibold text-zinc-50">{audioOnly ? dict.audioTitle : dict.title}</p>
+        <p className="text-sm font-semibold text-zinc-50">
+          {audioOnly ? dict.audioTitle : allPhotos ? dict.photoTitle : dict.title}
+        </p>
         <div className="flex shrink-0 items-center gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-zinc-300">
             <PlatformIcon id={platform} className="h-3 w-3" />
@@ -136,7 +152,9 @@ export default function PreviewCard({
 
       <div className="flex gap-4">
         {!isCarousel && (
-          <div className="relative aspect-[9/16] w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-800 sm:w-28">
+          <div
+            className={`relative w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-800 sm:w-28 ${isPhoto ? "aspect-[4/5]" : "aspect-[9/16]"}`}
+          >
             {result.thumbnailUrl && (
               <Image
                 src={result.thumbnailUrl}
@@ -215,7 +233,11 @@ export default function PreviewCard({
                   audioOnly ? downloadFilename(result.id, "audio", result.audioExt) : filename
                 }
                 label={
-                  audioOnly ? dict.downloadAudio.replaceAll("{format}", audioFormat) : dict.downloadButton
+                  audioOnly
+                    ? dict.downloadAudio.replaceAll("{format}", audioFormat)
+                    : isPhoto
+                      ? dict.downloadPhoto.replaceAll("{format}", (result.imageExt ?? "jpg").toUpperCase())
+                      : dict.downloadButton
                 }
                 dict={downloadDict}
                 errorsDict={errorsDict}
