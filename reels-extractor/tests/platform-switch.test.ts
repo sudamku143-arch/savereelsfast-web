@@ -108,8 +108,9 @@ describe("the tab component", () => {
   it("the heading, intro, placeholder and helper text all come from the selected platform", () => {
     assert.match(client, /follows \? platformInfo\[platform\]\.h1 : \(heroHeading \?\? active\.title\)/);
     assert.match(client, /follows \? platformInfo\[platform\]\.lead : \(heroLead \?\? heroDict\.subtitle\)/);
-    assert.match(client, /placeholder=\{active\.placeholder\}/);
-    assert.match(client, /\{platformInfo\[platform\]\.copyHint\}/);
+    // A page can set its own box text (the photo & carousel page does) until a tab is chosen, like the heading.
+    assert.match(client, /placeholder=\{follows \? active\.placeholder : \(heroPlaceholder \?\? active\.placeholder\)\}/);
+    assert.match(client, /\{follows \? platformInfo\[platform\]\.copyHint : \(heroHint \?\? platformInfo\[platform\]\.copyHint\)\}/);
   });
 
   it("keeps the typed link across the page change, and shows the route's platform on a platform page", () => {

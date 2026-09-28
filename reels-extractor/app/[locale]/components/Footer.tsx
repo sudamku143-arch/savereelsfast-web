@@ -1,5 +1,5 @@
 import { localePath, type Locale } from "@/lib/i18n-config";
-import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
+import { landingPath, LANDING_PLATFORMS, PHOTO_DOWNLOADER_PATH } from "@/lib/landing";
 import type { PlatformId } from "@/lib/platforms";
 import { CONTACT_EMAIL, SITE_NAME, TELEGRAM_BOT_URL } from "@/lib/site";
 import CookieSettingsButton from "./CookieSettingsButton";
@@ -65,6 +65,7 @@ export default function Footer({
   cookieLabel,
   telegram,
   audioDownloaderLabel,
+  photoDownloaderLabel,
 }: {
   locale: Locale;
   dict: Dict;
@@ -76,12 +77,15 @@ export default function Footer({
   telegram: TelegramDict;
   /** Short label for the audio-downloader link, alongside the platform tools. */
   audioDownloaderLabel: string;
+  /** Short label for the Instagram photo & carousel downloader link. */
+  photoDownloaderLabel: string;
 }) {
   const tools = [
     ...LANDING_PLATFORMS.map((id) => ({
       href: localePath(locale, landingPath(id)),
       label: platformNames[id],
     })),
+    { href: localePath(locale, PHOTO_DOWNLOADER_PATH), label: photoDownloaderLabel },
     { href: localePath(locale, "/audio-downloader"), label: audioDownloaderLabel },
   ];
 

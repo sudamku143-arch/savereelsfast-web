@@ -1077,6 +1077,92 @@
     ],
     "footerLabel": "Audio Downloader (Insta & YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Instagram Photo & Carousel Downloader - Free, Full Size",
+    "metaDescription": "Download Instagram photos and every slide of a carousel in full size, free. Photos as JPG, videos as MP4, one by one or all at once. No login, no app.",
+    "h1": "Instagram Photo & Carousel Downloader",
+    "lead": "Paste a public Instagram photo or carousel link and save every slide in full size: photos as JPG, videos as MP4, one by one or all at once. No login and nothing to install.",
+    "placeholder": "Paste Instagram photo or carousel link here…",
+    "copyHint": "In the Instagram app, open the post, tap Share, then Copy link.",
+    "breadcrumb": "Photo & Carousel Downloader",
+    "footerLabel": "Photo & Carousel Downloader (Insta)",
+    "howToHeading": "How to download Instagram photos and carousels",
+    "howToSteps": [
+      "Open the post in Instagram, tap Share, then Copy link. It works for a single photo and for a carousel of several slides.",
+      "Paste the link in the box above. Every slide of the post appears with its own Download button.",
+      "Tap Download on the slides you want, or Download all to save the whole carousel: photos as JPG, videos as MP4."
+    ],
+    "sections": [
+      {
+        "heading": "What Is an Instagram Photo & Carousel Downloader?",
+        "paragraphs": [
+          "It is a tool that saves the pictures from a public Instagram post to your device in their original size. Paste the post's link and it fetches the same image files Instagram itself shows, so nothing is screenshotted, cropped or compressed again, and no watermark is added.",
+          "A carousel is a post with up to 20 slides that you swipe through. Instagram has no button to save a whole carousel, and taking a screenshot of each slide loses quality and cuts off the edges. Here every slide is listed separately, so you can save one picture or the entire post in a single tap."
+        ]
+      },
+      {
+        "heading": "How to Download All Photos from an Instagram Carousel",
+        "paragraphs": [
+          "Copy the carousel's link from Instagram (Share, then Copy link) and paste it above. The result shows each slide in order, numbered, with its own Download button, and a Download all button underneath that saves every slide one after another.",
+          "Your browser may ask whether this site can download several files at once. Allow it, and each slide lands in your downloads as its own file. If you only need a few slides, tap Download on just those."
+        ]
+      },
+      {
+        "heading": "Mixed Carousels: Photos and Videos in One Post",
+        "paragraphs": [
+          "Many carousels mix pictures and short videos. Each slide is saved in its own format: photos as full-size JPG files and videos as MP4 with sound, exactly as Instagram serves them. The card above the slides tells you how many photos and videos the post holds, and Download all saves both kinds together."
+        ]
+      },
+      {
+        "heading": "Save Instagram Photos to Your iPhone or Android Gallery",
+        "paragraphs": [
+          "On iPhone, Safari saves downloads to the Files app. Open the downloads arrow in Safari's address bar, tap the photo, tap Share and choose Save Image to put it in your Photos. On a computer the files go to your usual Downloads folder.",
+          "On Android, the photos go to the Downloads folder and usually appear in your Gallery or Google Photos within a few seconds. If one doesn't show up straight away, open it once from the Files app and the Gallery will pick it up."
+        ]
+      },
+      {
+        "heading": "Full-Size Quality, Nothing Added",
+        "paragraphs": [
+          "You get the largest version of each picture that Instagram stores, typically 1080 pixels wide, in the format Instagram serves, which is almost always JPG. The file is not resized, filtered or re-compressed, and no logo or watermark is added. A photo that was uploaded in low resolution stays that way: no downloader can add detail that was never in the original."
+        ]
+      }
+    ],
+    "faqHeading": "Photo & carousel downloader FAQ",
+    "faq": [
+      {
+        "q": "Can I download every photo from an Instagram carousel at once?",
+        "a": "Yes. Paste the carousel link and use Download all: every slide is saved one after another, photos as JPG and videos as MP4. Your browser may ask you to allow multiple downloads the first time."
+      },
+      {
+        "q": "Does it work for carousels that mix photos and videos?",
+        "a": "Yes. Each slide keeps its own format: photos download as full-size JPG files and videos as MP4 with sound. Every slide has its own button, so you can also pick just the ones you want."
+      },
+      {
+        "q": "How many slides can a carousel have?",
+        "a": "Instagram allows up to 20 slides in one post, and all of them are listed here, in the same order as on Instagram."
+      },
+      {
+        "q": "What quality and format are the photos?",
+        "a": "The largest version Instagram stores for that photo, usually 1080 pixels wide, as a JPG file. Nothing is resized or re-compressed and no watermark is added."
+      },
+      {
+        "q": "Can I download photos from a private account?",
+        "a": "No. Only public posts can be downloaded. Private accounts show their posts only to approved followers, and this tool never asks for your Instagram login."
+      },
+      {
+        "q": "Can I download Instagram Stories, Highlights or profile pictures?",
+        "a": "No. This tool saves photos and videos from posts and Reels only. Stories, Highlights and profile pictures are not supported."
+      },
+      {
+        "q": "Is it free, and do I need an app?",
+        "a": "It is free, with no account and no app to install. It runs in your browser on iPhone, Android, Windows and Mac."
+      },
+      {
+        "q": "Can I repost the photos I download?",
+        "a": "Saving a photo for personal use is generally fine. Reposting someone else's photo without permission can break copyright law and Instagram's terms, so ask the creator first and always credit them."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Extract Audio",
     "toAudioBadge": "NEW",

@@ -1077,6 +1077,92 @@
     ],
     "footerLabel": "Téléchargeur Audio (Insta et YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Télécharger Photos et Carrousels Instagram - Gratuit",
+    "metaDescription": "Téléchargez les photos Instagram et chaque élément d'un carrousel en pleine taille, gratuitement. Photos en JPG, vidéos en MP4. Sans connexion.",
+    "h1": "Téléchargeur de photos et carrousels Instagram",
+    "lead": "Collez le lien d'une photo ou d'un carrousel Instagram public et enregistrez chaque élément en pleine taille : photos en JPG, vidéos en MP4, un par un ou tous d'un coup. Sans connexion, rien à installer.",
+    "placeholder": "Collez ici le lien de la photo ou du carrousel Instagram…",
+    "copyHint": "Dans l'app Instagram, ouvrez la publication, touchez Partager, puis Copier le lien.",
+    "breadcrumb": "Téléchargeur de photos et carrousels",
+    "footerLabel": "Photos et carrousels (Insta)",
+    "howToHeading": "Comment télécharger des photos et carrousels Instagram",
+    "howToSteps": [
+      "Ouvrez la publication dans Instagram, touchez Partager puis Copier le lien. Cela fonctionne pour une seule photo comme pour un carrousel de plusieurs éléments.",
+      "Collez le lien dans le champ ci-dessus. Chaque élément de la publication s'affiche avec son propre bouton de téléchargement.",
+      "Touchez Télécharger sur les éléments voulus, ou Tout télécharger pour enregistrer tout le carrousel : photos en JPG, vidéos en MP4."
+    ],
+    "sections": [
+      {
+        "heading": "Qu'est-ce qu'un téléchargeur de photos et carrousels Instagram ?",
+        "paragraphs": [
+          "C'est un outil qui enregistre sur votre appareil les images d'une publication Instagram publique, dans leur taille d'origine. Collez le lien : il récupère les mêmes fichiers image qu'Instagram affiche, sans capture d'écran, sans recadrage ni nouvelle compression, et sans filigrane ajouté.",
+          "Un carrousel est une publication de 20 éléments maximum que l'on fait défiler. Instagram n'a aucun bouton pour enregistrer un carrousel entier, et une capture de chaque élément perd en qualité et coupe les bords. Ici, chaque élément est listé séparément : vous enregistrez une image ou toute la publication d'un seul geste."
+        ]
+      },
+      {
+        "heading": "Comment télécharger toutes les photos d'un carrousel Instagram",
+        "paragraphs": [
+          "Copiez le lien du carrousel dans Instagram (Partager, puis Copier le lien) et collez-le ci-dessus. Le résultat affiche chaque élément dans l'ordre, numéroté, avec son bouton de téléchargement, et un bouton Tout télécharger en dessous qui les enregistre l'un après l'autre.",
+          "Votre navigateur peut demander si ce site a le droit de télécharger plusieurs fichiers. Autorisez-le, et chaque élément arrive dans vos téléchargements sous forme de fichier séparé. Si vous n'en voulez que quelques-uns, touchez Télécharger uniquement sur ceux-là."
+        ]
+      },
+      {
+        "heading": "Carrousels mixtes : photos et vidéos dans une même publication",
+        "paragraphs": [
+          "Beaucoup de carrousels mélangent images et courtes vidéos. Chaque élément est enregistré dans son propre format : les photos en JPG pleine taille et les vidéos en MP4 avec le son, tels qu'Instagram les fournit. La carte au-dessus des éléments indique combien de photos et de vidéos contient la publication, et Tout télécharger enregistre les deux ensemble."
+        ]
+      },
+      {
+        "heading": "Enregistrer des photos Instagram dans la galerie de l'iPhone ou d'Android",
+        "paragraphs": [
+          "Sur iPhone, Safari enregistre les téléchargements dans l'app Fichiers. Ouvrez la flèche des téléchargements dans la barre d'adresse de Safari, touchez la photo, touchez Partager et choisissez Enregistrer l'image pour la placer dans Photos. Sur ordinateur, les fichiers vont dans votre dossier Téléchargements habituel.",
+          "Sur Android, les photos vont dans le dossier Téléchargements et apparaissent généralement dans la Galerie ou Google Photos en quelques secondes. Si l'une d'elles n'apparaît pas tout de suite, ouvrez-la une fois depuis l'app Fichiers et la Galerie la détectera."
+        ]
+      },
+      {
+        "heading": "Qualité pleine taille, rien d'ajouté",
+        "paragraphs": [
+          "Vous obtenez la plus grande version de chaque image qu'Instagram conserve, en général 1080 pixels de large, dans le format fourni par Instagram, presque toujours JPG. Le fichier n'est ni redimensionné, ni filtré, ni recompressé, et aucun logo ni filigrane n'est ajouté. Une photo publiée en basse résolution le reste : aucun téléchargeur ne peut ajouter des détails qui n'ont jamais existé dans l'original."
+        ]
+      }
+    ],
+    "faqHeading": "FAQ du téléchargeur de photos et carrousels",
+    "faq": [
+      {
+        "q": "Puis-je télécharger toutes les photos d'un carrousel Instagram d'un coup ?",
+        "a": "Oui. Collez le lien du carrousel et utilisez Tout télécharger : chaque élément est enregistré l'un après l'autre, les photos en JPG et les vidéos en MP4. La première fois, votre navigateur peut vous demander d'autoriser plusieurs téléchargements."
+      },
+      {
+        "q": "Cela marche-t-il avec les carrousels qui mélangent photos et vidéos ?",
+        "a": "Oui. Chaque élément garde son format : les photos se téléchargent en JPG pleine taille et les vidéos en MP4 avec le son. Chaque élément a son propre bouton, vous pouvez donc aussi choisir seulement ceux que vous voulez."
+      },
+      {
+        "q": "Combien d'éléments peut contenir un carrousel ?",
+        "a": "Instagram autorise jusqu'à 20 éléments par publication, et tous sont listés ici, dans le même ordre que sur Instagram."
+      },
+      {
+        "q": "Quelle est la qualité et le format des photos ?",
+        "a": "La plus grande version qu'Instagram conserve pour cette photo, en général 1080 pixels de large, en fichier JPG. Rien n'est redimensionné ni recompressé, et aucun filigrane n'est ajouté."
+      },
+      {
+        "q": "Puis-je télécharger les photos d'un compte privé ?",
+        "a": "Non. Seules les publications publiques peuvent être téléchargées. Les comptes privés ne montrent leurs publications qu'aux abonnés approuvés, et cet outil ne demande jamais votre connexion Instagram."
+      },
+      {
+        "q": "Puis-je télécharger les Stories, Stories à la une ou photos de profil ?",
+        "a": "Non. Cet outil enregistre les photos et vidéos des publications et des Reels. Les Stories, les Stories à la une et les photos de profil ne sont pas prises en charge."
+      },
+      {
+        "q": "Est-ce gratuit et faut-il une application ?",
+        "a": "C'est gratuit, sans compte et sans application à installer. Cela fonctionne dans le navigateur sur iPhone, Android, Windows et Mac."
+      },
+      {
+        "q": "Puis-je republier les photos que je télécharge ?",
+        "a": "Enregistrer une photo pour un usage personnel est en général acceptable. Republier la photo de quelqu'un d'autre sans autorisation peut enfreindre le droit d'auteur et les conditions d'Instagram : demandez d'abord à l'auteur et créditez-le toujours."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Extraire l'audio",
     "toAudioBadge": "NOUVEAU",

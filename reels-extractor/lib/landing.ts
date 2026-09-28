@@ -104,3 +104,6 @@ export const LONGTAIL_FAQ: Record<PlatformId, LongtailKey[]> = {
   snapchat: ["snapchatNoApp", "free"],
   linkedin: ["free"],
 };
+
+/** Instagram photos and carousels: one guide page for both (the tool itself handles every Instagram post). */
+export const PHOTO_DOWNLOADER_PATH = "/instagram-photo-downloader";

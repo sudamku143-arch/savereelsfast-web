@@ -89,11 +89,12 @@ describe("security headers (next.config.js)", () => {
     assert.match(rule!.source, /sw\\\.js/);
   });
 
-  it("home, every platform page and the audio downloader declare themselves pure static (no SSR fallback)", () => {
+  it("home, every platform page and the audio and photo downloaders declare themselves pure static (no SSR fallback)", () => {
     for (const file of [
       "app/[locale]/page.tsx",
       "app/[locale]/[platform]/page.tsx",
       "app/[locale]/audio-downloader/page.tsx",
+      "app/[locale]/instagram-photo-downloader/page.tsx",
     ] as const) {
       assert.match(source(file), /export const dynamic = "force-static";/, file);
     }

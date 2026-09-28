@@ -1077,6 +1077,92 @@
     ],
     "footerLabel": "Descargador de Audio (Insta y YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Descargar Fotos y Carruseles de Instagram - Gratis",
+    "metaDescription": "Descarga fotos de Instagram y cada diapositiva de un carrusel a tamaño completo, gratis. Fotos en JPG, videos en MP4, una a una o todas. Sin login.",
+    "h1": "Descargador de fotos y carruseles de Instagram",
+    "lead": "Pega el enlace de una foto o un carrusel público de Instagram y guarda cada diapositiva a tamaño completo: fotos en JPG y videos en MP4, una a una o todas a la vez. Sin iniciar sesión ni instalar nada.",
+    "placeholder": "Pega aquí el enlace de la foto o el carrusel de Instagram…",
+    "copyHint": "En la app de Instagram, abre la publicación, toca Compartir y luego Copiar enlace.",
+    "breadcrumb": "Descargador de fotos y carruseles",
+    "footerLabel": "Fotos y carruseles (Insta)",
+    "howToHeading": "Cómo descargar fotos y carruseles de Instagram",
+    "howToSteps": [
+      "Abre la publicación en Instagram, toca Compartir y luego Copiar enlace. Funciona con una sola foto y con un carrusel de varias diapositivas.",
+      "Pega el enlace en el cuadro de arriba. Cada diapositiva de la publicación aparece con su propio botón de descarga.",
+      "Toca Descargar en las diapositivas que quieras, o Descargar todo para guardar el carrusel entero: fotos en JPG y videos en MP4."
+    ],
+    "sections": [
+      {
+        "heading": "¿Qué es un descargador de fotos y carruseles de Instagram?",
+        "paragraphs": [
+          "Es una herramienta que guarda en tu dispositivo las imágenes de una publicación pública de Instagram en su tamaño original. Pega el enlace y obtiene los mismos archivos de imagen que muestra Instagram, así que no se hace captura de pantalla, no se recorta ni se vuelve a comprimir nada, y no se añade ninguna marca de agua.",
+          "Un carrusel es una publicación de hasta 20 diapositivas que se deslizan. Instagram no tiene un botón para guardar un carrusel entero, y hacer una captura de cada diapositiva pierde calidad y corta los bordes. Aquí cada diapositiva aparece por separado, así que puedes guardar una imagen o la publicación completa con un toque."
+        ]
+      },
+      {
+        "heading": "Cómo descargar todas las fotos de un carrusel de Instagram",
+        "paragraphs": [
+          "Copia el enlace del carrusel en Instagram (Compartir y luego Copiar enlace) y pégalo arriba. El resultado muestra cada diapositiva en orden, numerada, con su propio botón de descarga, y debajo un botón Descargar todo que guarda todas las diapositivas una tras otra.",
+          "Puede que tu navegador pregunte si este sitio puede descargar varios archivos a la vez. Permítelo y cada diapositiva llegará a tus descargas como un archivo propio. Si solo necesitas algunas, toca Descargar únicamente en esas."
+        ]
+      },
+      {
+        "heading": "Carruseles mixtos: fotos y videos en una publicación",
+        "paragraphs": [
+          "Muchos carruseles mezclan imágenes y videos cortos. Cada diapositiva se guarda en su propio formato: las fotos como JPG a tamaño completo y los videos como MP4 con sonido, tal como los entrega Instagram. La tarjeta sobre las diapositivas indica cuántas fotos y videos tiene la publicación, y Descargar todo guarda ambos tipos juntos."
+        ]
+      },
+      {
+        "heading": "Guarda fotos de Instagram en la galería de tu iPhone o Android",
+        "paragraphs": [
+          "En iPhone, Safari guarda las descargas en la app Archivos. Abre la flecha de descargas en la barra de direcciones de Safari, toca la foto, toca Compartir y elige Guardar imagen para llevarla a Fotos. En una computadora, los archivos van a tu carpeta de Descargas habitual.",
+          "En Android, las fotos van a la carpeta Descargas y normalmente aparecen en la Galería o en Google Fotos en pocos segundos. Si alguna no aparece enseguida, ábrela una vez desde la app Archivos y la Galería la detectará."
+        ]
+      },
+      {
+        "heading": "Calidad a tamaño completo, sin nada añadido",
+        "paragraphs": [
+          "Obtienes la versión más grande de cada imagen que guarda Instagram, normalmente de 1080 píxeles de ancho, en el formato que entrega Instagram, que casi siempre es JPG. El archivo no se redimensiona, no se filtra ni se vuelve a comprimir, y no se añade ningún logo ni marca de agua. Una foto que se subió en baja resolución sigue así: ningún descargador puede añadir un detalle que nunca estuvo en el original."
+        ]
+      }
+    ],
+    "faqHeading": "Preguntas sobre el descargador de fotos y carruseles",
+    "faq": [
+      {
+        "q": "¿Puedo descargar todas las fotos de un carrusel de Instagram a la vez?",
+        "a": "Sí. Pega el enlace del carrusel y usa Descargar todo: cada diapositiva se guarda una tras otra, las fotos en JPG y los videos en MP4. La primera vez, tu navegador puede pedirte que permitas varias descargas."
+      },
+      {
+        "q": "¿Funciona con carruseles que mezclan fotos y videos?",
+        "a": "Sí. Cada diapositiva conserva su formato: las fotos se descargan como JPG a tamaño completo y los videos como MP4 con sonido. Cada diapositiva tiene su propio botón, así que también puedes elegir solo las que quieras."
+      },
+      {
+        "q": "¿Cuántas diapositivas puede tener un carrusel?",
+        "a": "Instagram permite hasta 20 diapositivas en una publicación, y aquí aparecen todas, en el mismo orden que en Instagram."
+      },
+      {
+        "q": "¿Qué calidad y formato tienen las fotos?",
+        "a": "La versión más grande que Instagram guarda de esa foto, normalmente de 1080 píxeles de ancho, en un archivo JPG. No se redimensiona ni se vuelve a comprimir nada, y no se añade marca de agua."
+      },
+      {
+        "q": "¿Puedo descargar fotos de una cuenta privada?",
+        "a": "No. Solo se pueden descargar publicaciones públicas. Las cuentas privadas muestran sus publicaciones solo a seguidores aprobados, y esta herramienta nunca pide tu inicio de sesión de Instagram."
+      },
+      {
+        "q": "¿Puedo descargar historias, destacadas o fotos de perfil de Instagram?",
+        "a": "No. Esta herramienta guarda fotos y videos de publicaciones y Reels. Las historias, las destacadas y las fotos de perfil no son compatibles."
+      },
+      {
+        "q": "¿Es gratis y necesito una app?",
+        "a": "Es gratis, sin cuenta y sin app que instalar. Funciona en el navegador de iPhone, Android, Windows y Mac."
+      },
+      {
+        "q": "¿Puedo volver a publicar las fotos que descargo?",
+        "a": "Guardar una foto para uso personal suele estar bien. Publicar la foto de otra persona sin permiso puede infringir los derechos de autor y las condiciones de Instagram, así que pide permiso al autor y menciónalo siempre."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Extraer audio",
     "toAudioBadge": "NUEVO",

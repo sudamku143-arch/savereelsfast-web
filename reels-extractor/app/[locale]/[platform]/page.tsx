@@ -217,6 +217,7 @@ export default async function PlatformLandingPage({ params }: Props) {
         currentId={id}
         currentLabel={common.here}
         audioLabel={dict.audioDownloader.breadcrumb}
+        photoLabel={dict.photoDownloader.breadcrumb}
       />
 
       {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}

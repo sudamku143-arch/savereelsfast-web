@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales, localePath, defaultLocale, LEGAL_TRANSLATED, type Locale } from "@/lib/i18n-config";
 import { blogPath, allPosts, localesWithPosts, translationsOf } from "@/lib/blog";
-import { landingPath, LANDING_PLATFORMS } from "@/lib/landing";
+import { landingPath, LANDING_PLATFORMS, PHOTO_DOWNLOADER_PATH } from "@/lib/landing";
 import { SITE_URL } from "@/lib/site";
 
 type Frequency = "daily" | "weekly" | "monthly";
@@ -15,6 +15,7 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal
     priority: 0.9,
   })),
   { path: "/audio-downloader", changeFrequency: "daily", priority: 0.85 },
+  { path: PHOTO_DOWNLOADER_PATH, changeFrequency: "daily", priority: 0.85 },
   { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/terms-of-service", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/dmca", changeFrequency: "monthly", priority: 0.3, legal: true },

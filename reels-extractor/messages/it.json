@@ -773,6 +773,92 @@
     ],
     "footerLabel": "Downloader audio (Insta e YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Scaricare Foto e Caroselli Instagram - Gratis",
+    "metaDescription": "Scarica le foto di Instagram e ogni elemento di un carosello a dimensione piena, gratis. Foto in JPG, video in MP4, uno alla volta o tutti. Senza login.",
+    "h1": "Downloader di foto e caroselli di Instagram",
+    "lead": "Incolla il link di una foto o di un carosello pubblico di Instagram e salva ogni elemento a dimensione piena: foto in JPG e video in MP4, uno alla volta o tutti insieme. Senza login e senza installare nulla.",
+    "placeholder": "Incolla qui il link della foto o del carosello di Instagram…",
+    "copyHint": "Nell'app di Instagram apri il post, tocca Condividi e poi Copia link.",
+    "breadcrumb": "Downloader di foto e caroselli",
+    "footerLabel": "Foto e caroselli (Insta)",
+    "howToHeading": "Come scaricare foto e caroselli di Instagram",
+    "howToSteps": [
+      "Apri il post in Instagram, tocca Condividi e poi Copia link. Funziona con una singola foto e con un carosello di più elementi.",
+      "Incolla il link nel campo qui sopra. Ogni elemento del post compare con il suo pulsante di download.",
+      "Tocca Scarica sugli elementi che vuoi, oppure «Scarica tutto» per salvare l'intero carosello: foto in JPG e video in MP4."
+    ],
+    "sections": [
+      {
+        "heading": "Che cos'è un downloader di foto e caroselli di Instagram?",
+        "paragraphs": [
+          "È uno strumento che salva sul tuo dispositivo le immagini di un post pubblico di Instagram a dimensione originale. Incolla il link e recupera gli stessi file immagine che mostra Instagram: nessuno screenshot, nessun ritaglio, nessuna nuova compressione e nessuna filigrana aggiunta.",
+          "Un carosello è un post con un massimo di 20 elementi da scorrere. Instagram non ha un pulsante per salvare un carosello intero, e uno screenshot di ogni elemento perde qualità e taglia i bordi. Qui ogni elemento è elencato a parte, così salvi un'immagine o l'intero post con un tocco."
+        ]
+      },
+      {
+        "heading": "Come scaricare tutte le foto di un carosello di Instagram",
+        "paragraphs": [
+          "Copia il link del carosello in Instagram (Condividi, poi Copia link) e incollalo qui sopra. Il risultato mostra ogni elemento in ordine, numerato, con il suo pulsante di download, e sotto un pulsante «Scarica tutto» che li salva uno dopo l'altro.",
+          "Il browser potrebbe chiederti se questo sito può scaricare più file. Consenti, e ogni elemento arriverà nei tuoi download come file separato. Se te ne servono solo alcuni, tocca Scarica solo su quelli."
+        ]
+      },
+      {
+        "heading": "Caroselli misti: foto e video nello stesso post",
+        "paragraphs": [
+          "Molti caroselli mescolano immagini e brevi video. Ogni elemento viene salvato nel suo formato: le foto come JPG a dimensione piena e i video come MP4 con audio, esattamente come li fornisce Instagram. La scheda sopra gli elementi indica quante foto e quanti video contiene il post, e «Scarica tutto» salva entrambi insieme."
+        ]
+      },
+      {
+        "heading": "Salvare le foto di Instagram nella galleria di iPhone o Android",
+        "paragraphs": [
+          "Su iPhone, Safari salva i download nell'app File. Apri la freccia dei download nella barra degli indirizzi di Safari, tocca la foto, tocca Condividi e scegli «Salva immagine» per metterla in Foto. Sul computer i file finiscono nella solita cartella Download.",
+          "Su Android le foto vanno nella cartella Download e di solito compaiono nella Galleria o in Google Foto in pochi secondi. Se una non compare subito, aprila una volta dall'app File e la Galleria la troverà."
+        ]
+      },
+      {
+        "heading": "Qualità a dimensione piena, niente aggiunto",
+        "paragraphs": [
+          "Ottieni la versione più grande di ogni immagine che Instagram conserva, di solito larga 1080 pixel, nel formato che Instagram fornisce, quasi sempre JPG. Il file non viene ridimensionato, filtrato o ricompresso, e non viene aggiunto alcun logo né filigrana. Una foto caricata a bassa risoluzione resta tale: nessun downloader può aggiungere dettagli che nell'originale non ci sono mai stati."
+        ]
+      }
+    ],
+    "faqHeading": "FAQ sul downloader di foto e caroselli",
+    "faq": [
+      {
+        "q": "Posso scaricare tutte le foto di un carosello di Instagram in una volta?",
+        "a": "Sì. Incolla il link del carosello e usa «Scarica tutto»: ogni elemento viene salvato uno dopo l'altro, le foto in JPG e i video in MP4. La prima volta il browser potrebbe chiederti di consentire più download."
+      },
+      {
+        "q": "Funziona con i caroselli che mescolano foto e video?",
+        "a": "Sì. Ogni elemento mantiene il suo formato: le foto si scaricano come JPG a dimensione piena e i video come MP4 con audio. Ogni elemento ha il suo pulsante, quindi puoi anche scegliere solo quelli che vuoi."
+      },
+      {
+        "q": "Quanti elementi può avere un carosello?",
+        "a": "Instagram consente fino a 20 elementi per post, e qui compaiono tutti, nello stesso ordine di Instagram."
+      },
+      {
+        "q": "Che qualità e formato hanno le foto?",
+        "a": "La versione più grande che Instagram conserva per quella foto, di solito larga 1080 pixel, come file JPG. Niente viene ridimensionato o ricompresso e non viene aggiunta alcuna filigrana."
+      },
+      {
+        "q": "Posso scaricare le foto di un account privato?",
+        "a": "No. Si possono scaricare solo i post pubblici. Gli account privati mostrano i post solo ai follower approvati, e questo strumento non chiede mai il tuo login di Instagram."
+      },
+      {
+        "q": "Posso scaricare Storie, Storie in evidenza o foto profilo di Instagram?",
+        "a": "No. Questo strumento salva foto e video di post e Reels. Storie, Storie in evidenza e foto profilo non sono supportate."
+      },
+      {
+        "q": "È gratis e serve un'app?",
+        "a": "È gratis, senza account e senza app da installare. Funziona nel browser su iPhone, Android, Windows e Mac."
+      },
+      {
+        "q": "Posso ripubblicare le foto che scarico?",
+        "a": "Salvare una foto per uso personale in genere va bene. Ripubblicare la foto di qualcun altro senza permesso può violare il diritto d'autore e i termini di Instagram, quindi chiedi prima all'autore e citalo sempre."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Estrai audio",
     "toAudioBadge": "NOVITÀ",

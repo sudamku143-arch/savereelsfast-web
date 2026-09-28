@@ -1077,6 +1077,92 @@
     ],
     "footerLabel": "Baixador de Áudio (Insta e YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Baixar Fotos e Carrosséis do Instagram - Grátis",
+    "metaDescription": "Baixe fotos do Instagram e cada item de um carrossel em tamanho original, grátis. Fotos em JPG, vídeos em MP4, um por um ou todos. Sem login, sem app.",
+    "h1": "Baixador de fotos e carrosséis do Instagram",
+    "lead": "Cole o link de uma foto ou de um carrossel público do Instagram e salve cada item em tamanho original: fotos em JPG e vídeos em MP4, um por um ou todos de uma vez. Sem login e sem instalar nada.",
+    "placeholder": "Cole aqui o link da foto ou do carrossel do Instagram…",
+    "copyHint": "No app do Instagram, abra o post, toque em Compartilhar e depois em Copiar link.",
+    "breadcrumb": "Baixador de fotos e carrosséis",
+    "footerLabel": "Fotos e carrosséis (Insta)",
+    "howToHeading": "Como baixar fotos e carrosséis do Instagram",
+    "howToSteps": [
+      "Abra o post no Instagram, toque em Compartilhar e depois em Copiar link. Funciona com uma única foto e com um carrossel de vários itens.",
+      "Cole o link na caixa acima. Cada item do post aparece com seu próprio botão de download.",
+      "Toque em Baixar nos itens que quiser, ou em Baixar todos para salvar o carrossel inteiro: fotos em JPG e vídeos em MP4."
+    ],
+    "sections": [
+      {
+        "heading": "O que é um baixador de fotos e carrosséis do Instagram?",
+        "paragraphs": [
+          "É uma ferramenta que salva no seu aparelho as imagens de um post público do Instagram no tamanho original. Cole o link e ela busca os mesmos arquivos de imagem que o Instagram exibe, sem print, sem corte e sem nova compressão, e nenhuma marca d'água é adicionada.",
+          "Um carrossel é um post com até 20 itens que você desliza. O Instagram não tem botão para salvar um carrossel inteiro, e tirar print de cada item perde qualidade e corta as bordas. Aqui cada item aparece separado, então você salva uma imagem ou o post todo com um toque."
+        ]
+      },
+      {
+        "heading": "Como baixar todas as fotos de um carrossel do Instagram",
+        "paragraphs": [
+          "Copie o link do carrossel no Instagram (Compartilhar e depois Copiar link) e cole acima. O resultado mostra cada item em ordem, numerado, com seu botão de download, e embaixo um botão Baixar todos que salva todos os itens um após o outro.",
+          "Seu navegador pode perguntar se este site pode baixar vários arquivos de uma vez. Permita, e cada item chega aos seus downloads como um arquivo separado. Se precisar só de alguns, toque em Baixar apenas nesses."
+        ]
+      },
+      {
+        "heading": "Carrosséis mistos: fotos e vídeos no mesmo post",
+        "paragraphs": [
+          "Muitos carrosséis misturam imagens e vídeos curtos. Cada item é salvo no seu próprio formato: fotos como JPG em tamanho original e vídeos como MP4 com som, do jeito que o Instagram entrega. O cartão acima dos itens mostra quantas fotos e vídeos o post tem, e Baixar todos salva os dois tipos juntos."
+        ]
+      },
+      {
+        "heading": "Salve fotos do Instagram na galeria do iPhone ou Android",
+        "paragraphs": [
+          "No iPhone, o Safari salva os downloads no app Arquivos. Abra a seta de downloads na barra de endereço do Safari, toque na foto, toque em Compartilhar e escolha Salvar Imagem para levá-la às Fotos. No computador, os arquivos vão para a pasta Downloads de sempre.",
+          "No Android, as fotos vão para a pasta Downloads e normalmente aparecem na Galeria ou no Google Fotos em poucos segundos. Se alguma não aparecer logo, abra-a uma vez pelo app Arquivos e a Galeria vai encontrá-la."
+        ]
+      },
+      {
+        "heading": "Qualidade em tamanho original, nada adicionado",
+        "paragraphs": [
+          "Você recebe a maior versão de cada imagem que o Instagram guarda, normalmente com 1080 pixels de largura, no formato que o Instagram entrega, quase sempre JPG. O arquivo não é redimensionado, filtrado nem comprimido de novo, e nenhum logo ou marca d'água é adicionado. Uma foto enviada em baixa resolução continua assim: nenhum baixador consegue criar detalhes que nunca estiveram no original."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas sobre o baixador de fotos e carrosséis",
+    "faq": [
+      {
+        "q": "Posso baixar todas as fotos de um carrossel do Instagram de uma vez?",
+        "a": "Sim. Cole o link do carrossel e use Baixar todos: cada item é salvo um após o outro, fotos em JPG e vídeos em MP4. Na primeira vez, o navegador pode pedir para permitir vários downloads."
+      },
+      {
+        "q": "Funciona com carrosséis que misturam fotos e vídeos?",
+        "a": "Sim. Cada item mantém seu formato: fotos são baixadas como JPG em tamanho original e vídeos como MP4 com som. Cada item tem seu botão, então você também pode escolher só os que quiser."
+      },
+      {
+        "q": "Quantos itens um carrossel pode ter?",
+        "a": "O Instagram permite até 20 itens em um post, e todos aparecem aqui, na mesma ordem do Instagram."
+      },
+      {
+        "q": "Qual é a qualidade e o formato das fotos?",
+        "a": "A maior versão que o Instagram guarda daquela foto, normalmente com 1080 pixels de largura, em arquivo JPG. Nada é redimensionado ou comprimido de novo, e nenhuma marca d'água é adicionada."
+      },
+      {
+        "q": "Posso baixar fotos de uma conta privada?",
+        "a": "Não. Só posts públicos podem ser baixados. Contas privadas mostram os posts apenas para seguidores aprovados, e esta ferramenta nunca pede seu login do Instagram."
+      },
+      {
+        "q": "Posso baixar Stories, Destaques ou fotos de perfil do Instagram?",
+        "a": "Não. Esta ferramenta salva fotos e vídeos de posts e Reels. Stories, Destaques e fotos de perfil não são suportados."
+      },
+      {
+        "q": "É grátis? Preciso de um app?",
+        "a": "É grátis, sem conta e sem app para instalar. Funciona no navegador do iPhone, Android, Windows e Mac."
+      },
+      {
+        "q": "Posso repostar as fotos que baixo?",
+        "a": "Salvar uma foto para uso pessoal geralmente não tem problema. Repostar a foto de outra pessoa sem permissão pode violar direitos autorais e os termos do Instagram, então peça ao autor primeiro e sempre dê o crédito."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Extrair áudio",
     "toAudioBadge": "NOVO",

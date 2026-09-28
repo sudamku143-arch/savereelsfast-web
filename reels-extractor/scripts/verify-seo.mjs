@@ -296,8 +296,8 @@ async function main() {
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
   const locs = entries.map((e) => e.match(/<loc>([^<]*)<\/loc>/)?.[1]);
   const blogEntries = entries.filter((e) => /<loc>[^<]*\/blog(\/|<)/.test(e));
-  // Home + every platform page + the audio downloader in every language, and the translated legal pages.
-  const expectedUrls = (2 + Object.keys(SLUGS).length) * LOCALES.length + 5 * LEGAL_LOCALES.length;
+  // Home + every platform page + the audio and photo downloaders in every language, and the translated legal pages.
+  const expectedUrls = (3 + Object.keys(SLUGS).length) * LOCALES.length + 5 * LEGAL_LOCALES.length;
   check(entries.length - blogEntries.length === expectedUrls, `sitemap has ${entries.length - blogEntries.length} non-blog URLs (expected ${expectedUrls})`);
   check(blogEntries.length > 0, "sitemap lists no blog pages");
   // Only blog pages have a genuine "last changed" date; the others deliberately send none (see app/sitemap.ts).
@@ -328,12 +328,14 @@ async function main() {
     const isHome = rest === "" || rest === "/";
     const isPlatform = Object.values(SLUGS).includes(rest.replace(/^\//, ""));
     const isAudio = rest === "/audio-downloader";
+    const isPhoto = rest === "/instagram-photo-downloader";
     const isBlogIndex = rest === "/blog";
     const isPost = rest.startsWith("/blog/");
     const changefreq = entry.match(/<changefreq>([^<]*)</)?.[1];
     const priority = Number(entry.match(/<priority>([^<]*)</)?.[1]);
     if (isHome) check(changefreq === "daily" && priority === 1, `${loc}: home should be daily / 1.0 (got ${changefreq} / ${priority})`);
     else if (isPlatform) check(changefreq === "daily" && priority === 0.9, `${loc}: platform page should be daily / 0.9 (got ${changefreq} / ${priority})`);
+    else if (isPhoto) check(changefreq === "daily" && priority === 0.85, `${loc}: photo downloader should be daily / 0.85 (got ${changefreq} / ${priority})`);
     else if (isAudio) check(changefreq === "daily" && priority === 0.85, `${loc}: audio downloader should be daily / 0.85 (got ${changefreq} / ${priority})`);
     else if (isBlogIndex) check(changefreq === "weekly" && priority === 0.7, `${loc}: blog index should be weekly / 0.7 (got ${changefreq} / ${priority})`);
     else if (isPost) check(changefreq === "monthly" && priority === 0.6, `${loc}: blog post should be monthly / 0.6 (got ${changefreq} / ${priority})`);

@@ -84,6 +84,8 @@ export default function ExtractorClient({
   audioOnly = false,
   heroHeading,
   heroLead,
+  heroPlaceholder,
+  heroHint,
 }: {
   locale: Locale;
   heroDict: HeroDict;
@@ -109,6 +111,9 @@ export default function ExtractorClient({
    */
   heroHeading?: string;
   heroLead?: string;
+  /** Box placeholder and the hint under it, replacing the tab's own until a tab is chosen (like heroHeading). */
+  heroPlaceholder?: string;
+  heroHint?: string;
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -280,7 +285,7 @@ export default function ExtractorClient({
         <InputBox
           key={inputKey}
           dict={heroDict}
-          placeholder={active.placeholder}
+          placeholder={follows ? active.placeholder : (heroPlaceholder ?? active.placeholder)}
           defaultUrl={restoredUrl}
           onSubmit={handleSubmit}
           onDetectPlatform={setPlatform}
@@ -303,7 +308,7 @@ export default function ExtractorClient({
           ))}
         </ul>
         <p className="px-1 text-center text-xs leading-relaxed text-zinc-500">
-          {platformInfo[platform].copyHint}
+          {follows ? platformInfo[platform].copyHint : (heroHint ?? platformInfo[platform].copyHint)}
         </p>
       </div>
 

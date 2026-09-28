@@ -82,9 +82,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 13 home + 130 platform + 13 audio-downloader + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, locales.length + locales.length * ids.length + locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 191 + 1 + allBlogPosts + 1 + spanishBlogPosts, "191 site pages + the English and Spanish blog indexes + one entry per post");
+  it("adds up: 13 home + 130 platform + 13 audio + 13 photo downloader + 5 legal pages x every translated language", () => {
+    assert.equal(entries.length, locales.length + locales.length * ids.length + 2 * locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 204 + 1 + allBlogPosts + 1 + spanishBlogPosts, "204 site pages + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -129,6 +129,7 @@ describe("frequency and priority", () => {
     if (path === "" || path === "/") return "home";
     if (Object.values(PLATFORM_SLUGS).includes(path.slice(1))) return "platform";
     if (path === "/audio-downloader") return "audio";
+    if (path === "/instagram-photo-downloader") return "photo";
     if (/^\/blog(\/|$)/.test(path)) return "blog";
     return "legal";
   };
@@ -163,6 +164,15 @@ describe("frequency and priority", () => {
     }
     for (const locale of locales.filter((l) => l !== "en" && l !== "es")) {
       assert.equal(byUrl.has(`${SITE}/${locale}/blog`), false, `${locale} has no posts, so no blog page`);
+    }
+  });
+
+  it("photo & carousel downloader: daily, 0.85 - in every language", () => {
+    const pages = entries.filter((x) => rule(x.url) === "photo");
+    assert.equal(pages.length, locales.length);
+    for (const e of pages) {
+      assert.equal(e.changeFrequency, "daily", e.url);
+      assert.equal(e.priority, 0.85, e.url);
     }
   });
 

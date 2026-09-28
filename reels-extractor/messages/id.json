@@ -1077,6 +1077,92 @@
     ],
     "footerLabel": "Pengunduh Audio (Insta & YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Unduh Foto & Carousel Instagram - Gratis, Ukuran Penuh",
+    "metaDescription": "Unduh foto Instagram dan setiap slide carousel dalam ukuran penuh, gratis. Foto sebagai JPG, video sebagai MP4, satu per satu atau sekaligus. Tanpa login.",
+    "h1": "Pengunduh Foto & Carousel Instagram",
+    "lead": "Tempel tautan foto atau carousel Instagram publik dan simpan setiap slide dalam ukuran penuh: foto sebagai JPG, video sebagai MP4, satu per satu atau sekaligus. Tanpa login dan tanpa instal apa pun.",
+    "placeholder": "Tempel tautan foto atau carousel Instagram di sini…",
+    "copyHint": "Di aplikasi Instagram, buka postingan, ketuk Bagikan, lalu Salin tautan.",
+    "breadcrumb": "Pengunduh Foto & Carousel",
+    "footerLabel": "Foto & carousel (Insta)",
+    "howToHeading": "Cara mengunduh foto dan carousel Instagram",
+    "howToSteps": [
+      "Buka postingan di Instagram, ketuk Bagikan, lalu Salin tautan. Cara ini berlaku untuk satu foto maupun carousel berisi beberapa slide.",
+      "Tempel tautan di kotak di atas. Setiap slide postingan muncul dengan tombol unduhnya sendiri.",
+      "Ketuk Unduh pada slide yang Anda inginkan, atau Unduh semua untuk menyimpan seluruh carousel: foto sebagai JPG, video sebagai MP4."
+    ],
+    "sections": [
+      {
+        "heading": "Apa itu pengunduh foto & carousel Instagram?",
+        "paragraphs": [
+          "Ini adalah alat yang menyimpan gambar dari postingan Instagram publik ke perangkat Anda dalam ukuran aslinya. Tempel tautan postingan dan alat ini mengambil file gambar yang sama dengan yang ditampilkan Instagram, jadi tidak ada tangkapan layar, pemotongan, atau kompresi ulang, dan tidak ada watermark yang ditambahkan.",
+          "Carousel adalah postingan berisi hingga 20 slide yang digeser. Instagram tidak punya tombol untuk menyimpan satu carousel utuh, dan menangkap layar tiap slide menurunkan kualitas serta memotong tepinya. Di sini setiap slide ditampilkan terpisah, sehingga Anda bisa menyimpan satu gambar atau seluruh postingan dengan sekali ketuk."
+        ]
+      },
+      {
+        "heading": "Cara mengunduh semua foto dari carousel Instagram",
+        "paragraphs": [
+          "Salin tautan carousel dari Instagram (Bagikan, lalu Salin tautan) dan tempel di atas. Hasilnya menampilkan setiap slide secara berurutan, bernomor, dengan tombol unduhnya sendiri, dan di bawahnya tombol Unduh semua yang menyimpan semua slide satu per satu.",
+          "Browser Anda mungkin bertanya apakah situs ini boleh mengunduh beberapa file sekaligus. Izinkan, dan setiap slide masuk ke unduhan Anda sebagai file tersendiri. Jika hanya perlu beberapa, ketuk Unduh pada slide itu saja."
+        ]
+      },
+      {
+        "heading": "Carousel campuran: foto dan video dalam satu postingan",
+        "paragraphs": [
+          "Banyak carousel mencampur gambar dan video pendek. Setiap slide disimpan dalam formatnya sendiri: foto sebagai JPG ukuran penuh dan video sebagai MP4 dengan suara, persis seperti yang disediakan Instagram. Kartu di atas slide menunjukkan berapa foto dan video dalam postingan itu, dan Unduh semua menyimpan keduanya bersama-sama."
+        ]
+      },
+      {
+        "heading": "Simpan foto Instagram ke galeri iPhone atau Android",
+        "paragraphs": [
+          "Di iPhone, Safari menyimpan unduhan di aplikasi File. Buka panah unduhan di bilah alamat Safari, ketuk fotonya, ketuk Bagikan, lalu pilih Simpan Gambar untuk memasukkannya ke Foto. Di komputer, file masuk ke folder Download seperti biasa.",
+          "Di Android, foto masuk ke folder Download dan biasanya muncul di Galeri atau Google Foto dalam beberapa detik. Jika ada yang belum muncul, buka sekali dari aplikasi File dan Galeri akan menemukannya."
+        ]
+      },
+      {
+        "heading": "Kualitas ukuran penuh, tanpa tambahan apa pun",
+        "paragraphs": [
+          "Anda mendapatkan versi terbesar dari setiap gambar yang disimpan Instagram, biasanya lebar 1080 piksel, dalam format yang disediakan Instagram, hampir selalu JPG. File tidak diubah ukurannya, tidak difilter, dan tidak dikompresi ulang, serta tidak ada logo atau watermark yang ditambahkan. Foto yang diunggah dengan resolusi rendah tetap begitu: tidak ada pengunduh yang bisa menambah detail yang tidak pernah ada di file aslinya."
+        ]
+      }
+    ],
+    "faqHeading": "FAQ pengunduh foto & carousel",
+    "faq": [
+      {
+        "q": "Bisakah saya mengunduh semua foto dari carousel Instagram sekaligus?",
+        "a": "Bisa. Tempel tautan carousel dan gunakan Unduh semua: setiap slide disimpan satu per satu, foto sebagai JPG dan video sebagai MP4. Pertama kali, browser Anda mungkin meminta izin untuk beberapa unduhan."
+      },
+      {
+        "q": "Apakah bisa untuk carousel yang berisi foto dan video?",
+        "a": "Bisa. Setiap slide tetap dalam formatnya: foto diunduh sebagai JPG ukuran penuh dan video sebagai MP4 dengan suara. Setiap slide punya tombol sendiri, jadi Anda juga bisa memilih yang diinginkan saja."
+      },
+      {
+        "q": "Berapa banyak slide dalam satu carousel?",
+        "a": "Instagram mengizinkan hingga 20 slide dalam satu postingan, dan semuanya ditampilkan di sini, dengan urutan yang sama seperti di Instagram."
+      },
+      {
+        "q": "Bagaimana kualitas dan format fotonya?",
+        "a": "Versi terbesar yang disimpan Instagram untuk foto itu, biasanya lebar 1080 piksel, sebagai file JPG. Tidak ada yang diubah ukurannya atau dikompresi ulang, dan tidak ada watermark yang ditambahkan."
+      },
+      {
+        "q": "Bisakah saya mengunduh foto dari akun privat?",
+        "a": "Tidak. Hanya postingan publik yang bisa diunduh. Akun privat hanya menampilkan postingannya kepada pengikut yang disetujui, dan alat ini tidak pernah meminta login Instagram Anda."
+      },
+      {
+        "q": "Bisakah saya mengunduh Story, Sorotan, atau foto profil Instagram?",
+        "a": "Tidak. Alat ini menyimpan foto dan video dari postingan dan Reels. Story, Sorotan, dan foto profil tidak didukung."
+      },
+      {
+        "q": "Apakah gratis, dan perlu aplikasi?",
+        "a": "Gratis, tanpa akun dan tanpa aplikasi yang perlu diinstal. Berjalan di browser iPhone, Android, Windows, dan Mac."
+      },
+      {
+        "q": "Bolehkah saya memposting ulang foto yang saya unduh?",
+        "a": "Menyimpan foto untuk penggunaan pribadi umumnya tidak masalah. Memposting ulang foto orang lain tanpa izin bisa melanggar hak cipta dan ketentuan Instagram, jadi minta izin pembuatnya lebih dulu dan selalu cantumkan kredit."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Ekstrak Audio",
     "toAudioBadge": "BARU",

@@ -773,6 +773,92 @@
     ],
     "footerLabel": "Audio Downloader (Insta & YT)"
   },
+  "photoDownloader": {
+    "metaTitle": "Instagram Fotos & Karussells herunterladen - Gratis",
+    "metaDescription": "Instagram-Fotos und jede Folie eines Karussells in voller Größe herunterladen, kostenlos. Fotos als JPG, Videos als MP4, einzeln oder alle. Ohne Login.",
+    "h1": "Instagram Foto- & Karussell-Downloader",
+    "lead": "Füge den Link eines öffentlichen Instagram-Fotos oder -Karussells ein und speichere jede Folie in voller Größe: Fotos als JPG, Videos als MP4, einzeln oder alle auf einmal. Ohne Anmeldung, ohne Installation.",
+    "placeholder": "Link zum Instagram-Foto oder -Karussell hier einfügen…",
+    "copyHint": "Öffne den Beitrag in der Instagram-App, tippe auf Teilen und dann auf Link kopieren.",
+    "breadcrumb": "Foto- & Karussell-Downloader",
+    "footerLabel": "Fotos & Karussells (Insta)",
+    "howToHeading": "So lädst du Instagram-Fotos und -Karussells herunter",
+    "howToSteps": [
+      "Öffne den Beitrag in Instagram, tippe auf Teilen und dann auf Link kopieren. Das funktioniert für ein einzelnes Foto und für ein Karussell mit mehreren Folien.",
+      "Füge den Link oben ins Feld ein. Jede Folie des Beitrags erscheint mit eigenem Download-Button.",
+      "Tippe bei den gewünschten Folien auf Herunterladen oder auf „Alle herunterladen“, um das ganze Karussell zu speichern: Fotos als JPG, Videos als MP4."
+    ],
+    "sections": [
+      {
+        "heading": "Was ist ein Instagram Foto- & Karussell-Downloader?",
+        "paragraphs": [
+          "Ein Tool, das die Bilder eines öffentlichen Instagram-Beitrags in Originalgröße auf deinem Gerät speichert. Füge den Link ein, und es holt dieselben Bilddateien, die Instagram anzeigt: kein Screenshot, kein Zuschneiden, keine erneute Komprimierung und kein zusätzliches Wasserzeichen.",
+          "Ein Karussell ist ein Beitrag mit bis zu 20 Folien zum Durchwischen. Instagram hat keinen Button, um ein ganzes Karussell zu speichern, und ein Screenshot pro Folie kostet Qualität und schneidet die Ränder ab. Hier wird jede Folie einzeln aufgeführt, sodass du ein Bild oder den ganzen Beitrag mit einem Tipp speicherst."
+        ]
+      },
+      {
+        "heading": "So lädst du alle Fotos aus einem Instagram-Karussell herunter",
+        "paragraphs": [
+          "Kopiere den Link des Karussells in Instagram (Teilen, dann Link kopieren) und füge ihn oben ein. Das Ergebnis zeigt jede Folie der Reihe nach, nummeriert, mit eigenem Download-Button, und darunter „Alle herunterladen“, das alle Folien nacheinander speichert.",
+          "Dein Browser fragt eventuell, ob diese Seite mehrere Dateien herunterladen darf. Erlaube es, und jede Folie landet als eigene Datei in deinen Downloads. Brauchst du nur einige, tippe nur bei diesen auf Herunterladen."
+        ]
+      },
+      {
+        "heading": "Gemischte Karussells: Fotos und Videos in einem Beitrag",
+        "paragraphs": [
+          "Viele Karussells mischen Bilder und kurze Videos. Jede Folie wird in ihrem eigenen Format gespeichert: Fotos als JPG in voller Größe und Videos als MP4 mit Ton, genau so, wie Instagram sie ausliefert. Die Karte über den Folien zeigt, wie viele Fotos und Videos der Beitrag enthält, und „Alle herunterladen“ speichert beides zusammen."
+        ]
+      },
+      {
+        "heading": "Instagram-Fotos in der Galerie von iPhone oder Android speichern",
+        "paragraphs": [
+          "Auf dem iPhone speichert Safari Downloads in der Dateien-App. Öffne den Download-Pfeil in der Adressleiste von Safari, tippe auf das Foto, dann auf Teilen und wähle „Bild sichern“, um es in die Fotos-App zu legen. Am Computer landen die Dateien im üblichen Download-Ordner.",
+          "Auf Android kommen die Fotos in den Ordner „Downloads“ und erscheinen meist nach wenigen Sekunden in der Galerie oder in Google Fotos. Taucht eines nicht gleich auf, öffne es einmal über die Dateien-App, dann findet es die Galerie."
+        ]
+      },
+      {
+        "heading": "Volle Größe, nichts hinzugefügt",
+        "paragraphs": [
+          "Du bekommst die größte Version jedes Bildes, die Instagram speichert, meist 1080 Pixel breit, im Format, das Instagram ausliefert, fast immer JPG. Die Datei wird weder verkleinert noch gefiltert noch neu komprimiert, und es kommt kein Logo und kein Wasserzeichen hinzu. Ein Foto, das in niedriger Auflösung hochgeladen wurde, bleibt so: Kein Downloader kann Details hinzufügen, die im Original nie vorhanden waren."
+        ]
+      }
+    ],
+    "faqHeading": "FAQ zum Foto- & Karussell-Downloader",
+    "faq": [
+      {
+        "q": "Kann ich alle Fotos eines Instagram-Karussells auf einmal herunterladen?",
+        "a": "Ja. Füge den Link des Karussells ein und nutze „Alle herunterladen“: Jede Folie wird nacheinander gespeichert, Fotos als JPG und Videos als MP4. Beim ersten Mal fragt dein Browser eventuell, ob mehrere Downloads erlaubt sind."
+      },
+      {
+        "q": "Funktioniert es mit Karussells aus Fotos und Videos?",
+        "a": "Ja. Jede Folie behält ihr Format: Fotos werden als JPG in voller Größe heruntergeladen, Videos als MP4 mit Ton. Jede Folie hat einen eigenen Button, du kannst also auch nur die gewünschten auswählen."
+      },
+      {
+        "q": "Wie viele Folien kann ein Karussell haben?",
+        "a": "Instagram erlaubt bis zu 20 Folien pro Beitrag, und alle werden hier aufgeführt, in derselben Reihenfolge wie auf Instagram."
+      },
+      {
+        "q": "Welche Qualität und welches Format haben die Fotos?",
+        "a": "Die größte Version, die Instagram für dieses Foto speichert, meist 1080 Pixel breit, als JPG-Datei. Nichts wird verkleinert oder neu komprimiert, und es kommt kein Wasserzeichen hinzu."
+      },
+      {
+        "q": "Kann ich Fotos von einem privaten Konto herunterladen?",
+        "a": "Nein. Nur öffentliche Beiträge können heruntergeladen werden. Private Konten zeigen ihre Beiträge nur bestätigten Followern, und dieses Tool fragt nie nach deinem Instagram-Login."
+      },
+      {
+        "q": "Kann ich Instagram Stories, Highlights oder Profilbilder herunterladen?",
+        "a": "Nein. Dieses Tool speichert Fotos und Videos aus Beiträgen und Reels. Stories, Highlights und Profilbilder werden nicht unterstützt."
+      },
+      {
+        "q": "Ist es kostenlos und brauche ich eine App?",
+        "a": "Es ist kostenlos, ohne Konto und ohne App. Es läuft im Browser auf iPhone, Android, Windows und Mac."
+      },
+      {
+        "q": "Darf ich die heruntergeladenen Fotos erneut posten?",
+        "a": "Ein Foto für den privaten Gebrauch zu speichern ist in der Regel in Ordnung. Das Foto einer anderen Person ohne Erlaubnis erneut zu posten, kann gegen das Urheberrecht und die Nutzungsbedingungen von Instagram verstoßen. Frag zuerst die Urheber und nenne sie immer."
+      }
+    ]
+  },
   "modeSwitcher": {
     "toAudioLabel": "Audio extrahieren",
     "toAudioBadge": "NEU",
