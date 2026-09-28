@@ -96,6 +96,20 @@ const COPY: Record<Locale, Copy> = {
     instagram: "Téléchargeur Instagram",
     audio: "Téléchargeur audio",
   },
+  de: {
+    title: "Seite nicht gefunden",
+    body: "Die gesuchte Seite existiert nicht oder wurde möglicherweise verschoben.",
+    home: "Zur Startseite",
+    instagram: "Instagram Downloader",
+    audio: "Audio Downloader",
+  },
+  it: {
+    title: "Pagina non trovata",
+    body: "La pagina che cerchi non esiste o potrebbe essere stata spostata.",
+    home: "Vai alla home",
+    instagram: "Downloader di Instagram",
+    audio: "Downloader audio",
+  },
   ar: {
     title: "الصفحة غير موجودة",
     body: "الصفحة التي تبحث عنها غير موجودة، أو ربما تم نقلها.",

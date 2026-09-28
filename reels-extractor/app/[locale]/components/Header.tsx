@@ -27,6 +27,8 @@ const LOCALE_LABELS: Record<Locale, string> = {
   mr: "मराठी",
   id: "Bahasa Indonesia",
   fr: "Français",
+  de: "Deutsch",
+  it: "Italiano",
   ar: "العربية",
 };
 

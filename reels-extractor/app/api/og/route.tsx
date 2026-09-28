@@ -27,6 +27,8 @@ const HOME_HEADLINE: Record<string, string> = {
   pt: "Baixar Vídeo e Áudio",
   id: "Unduh Video & Audio",
   fr: "Télécharger Vidéo et Audio",
+  de: "Video & Audio herunterladen",
+  it: "Scarica Video e Audio",
   // Same font-glyph limitation as WORDING below: these locales fall back to the English card.
   bn: "Video & Audio Downloader",
   te: "Video & Audio Downloader",
@@ -48,6 +50,8 @@ const WORDING: Record<string, { headline: (name: string) => string; tagline: str
   ar: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
   id: { headline: (n) => `Unduh ${n}`, tagline: "Gratis · Tanpa login · HD jika tersedia" },
   fr: { headline: (n) => `Télécharger ${n}`, tagline: "Gratuit · Sans connexion · HD si disponible" },
+  de: { headline: (n) => `${n} herunterladen`, tagline: "Kostenlos · Ohne Login · HD wenn verfügbar" },
+  it: { headline: (n) => `Scarica ${n}`, tagline: "Gratis · Senza login · HD se disponibile" },
   hi: { headline: (n) => `${n} Download`, tagline: "Free · No login · HD when available" },
 };
 

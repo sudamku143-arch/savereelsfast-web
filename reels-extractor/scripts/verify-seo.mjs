@@ -13,7 +13,7 @@ import { readFileSync } from "node:fs";
 
 const BASE = (process.env.BASE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
 const SITE = "https://www.savereelsfast.com"; // canonical URLs always point at production
-const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"];
+const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "de", "it", "ar"];
 const source = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 // Legal pages are translated (and listed in the sitemap) only in these; the rest show English.
 // Read from the app's own config so this script can never drift from it again.
@@ -23,7 +23,7 @@ const LONGTAIL = Object.fromEntries(
   [...source("lib/landing.ts").match(/LONGTAIL_FAQ[^{]*\{([^}]*)\}/)[1].matchAll(/(\w+): (\[[^\]]*\])/g)].map(([, id, keys]) => [id, JSON.parse(keys)])
 );
 const RTL = ["ar"];
-const OG_LOCALE = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
+const OG_LOCALE = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", de: "de_DE", it: "it_IT", ar: "ar_AR" };
 const SLUGS = {
   instagram: "instagram-video-downloader", youtube: "youtube-video-downloader", facebook: "facebook-video-downloader",
   threads: "threads-video-downloader", x: "twitter-x-video-downloader", pinterest: "pinterest-video-downloader",
@@ -324,7 +324,7 @@ async function main() {
   }
   for (const entry of entries) {
     const loc = entry.match(/<loc>([^<]*)<\/loc>/)?.[1] ?? "";
-    const rest = loc.replace(SITE, "").replace(/^\/(es|pt|hi|bn|te|ta|mr|id|fr|ar)(?=\/|$)/, "");
+    const rest = loc.replace(SITE, "").replace(new RegExp(`^/(${LOCALES.filter((l) => l !== "en").join("|")})(?=/|$)`), "");
     const isHome = rest === "" || rest === "/";
     const isPlatform = Object.values(SLUGS).includes(rest.replace(/^\//, ""));
     const isAudio = rest === "/audio-downloader";

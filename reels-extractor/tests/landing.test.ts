@@ -16,7 +16,7 @@ import {
   platformFromSlug,
 } from "../lib/landing.ts";
 
-const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"] as const;
+const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "de", "it", "ar"] as const;
 const EXPECTED_IDS = ["instagram", "youtube", "facebook", "threads", "x", "pinterest", "tiktok", "reddit", "snapchat", "linkedin"];
 
 type Faq = { q: string; a: string };

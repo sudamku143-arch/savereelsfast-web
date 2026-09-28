@@ -9,7 +9,7 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { showSwitcher, switcherLocales, type BlogAvailability } from "../lib/switcher.ts";
 
-const ALL = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"] as const;
+const ALL = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "de", "it", "ar"] as const;
 const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 const englishOnly: BlogAvailability = { index: ["en"], posts: { "a-post": ["en"], "other-post": ["en"] } };

@@ -128,7 +128,7 @@ describe("Monetag Vignette: nothing loads before the visitor accepts", () => {
 
 describe("Monetag Vignette: what the visitor is told", () => {
   it("the banner names the advertising in every language", () => {
-    for (const locale of ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"]) {
+    for (const locale of ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "de", "it", "ar"]) {
       const { consent } = JSON.parse(source(`messages/${locale}.json`)) as { consent: { title: string; text: string } };
       assert.notEqual(consent.title, "Cookies and analytics", `${locale}: the title still covers analytics only`);
       if (locale !== "en") assert.notEqual(consent.text, JSON.parse(source("messages/en.json")).consent.text, `${locale} is translated`);

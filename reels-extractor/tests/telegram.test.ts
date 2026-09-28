@@ -10,7 +10,7 @@ import { describe, it } from "node:test";
 import { LANDING_PLATFORMS, LONGTAIL_FAQ, fillTemplate } from "../lib/landing.ts";
 import { TELEGRAM_BOT_URL, siteSchema } from "../lib/site.ts";
 
-const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "ar"] as const;
+const LOCALES = ["en", "es", "pt", "hi", "bn", "te", "ta", "mr", "id", "fr", "de", "it", "ar"] as const;
 const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const messages = (locale: string) => JSON.parse(source(`messages/${locale}.json`));
 

@@ -1,0 +1,746 @@
+{
+  "meta": {
+    "title": "Instagram Reels herunterladen – YouTube, TikTok & mehr",
+    "description": "Instagram Reels kostenlos in HD herunterladen: ohne Login, ohne App, ohne zusätzliches Wasserzeichen. Auch YouTube, TikTok, Facebook und mehr.",
+    "ogAlt": "Vorschau des Social-Media-Video-Downloaders",
+    "keywords": [
+      "Instagram Reels herunterladen",
+      "Instagram Reels Downloader",
+      "Instagram Reels in HD speichern",
+      "Instagram Reels ohne Wasserzeichen",
+      "Instagram Reels ohne Anmeldung herunterladen",
+      "Video Downloader",
+      "YouTube Video herunterladen",
+      "TikTok Downloader"
+    ],
+    "howToHeading": "Instagram Reels in 3 Schritten herunterladen",
+    "howToSteps": [
+      "Link kopieren: Öffne das Reel in Instagram, tippe auf Teilen und dann auf Link kopieren. Links von YouTube, TikTok und anderen unterstützten Apps funktionieren auch.",
+      "Füge ihn oben in das Feld ein – die Plattform wird automatisch erkannt.",
+      "Prüfe die Vorschau und tippe auf Herunterladen, um das Video (oder nur den Ton) auf deinem Gerät zu speichern."
+    ]
+  },
+  "nav": {
+    "language": "Sprache wählen",
+    "homeLabel": "SaveReelsFast Startseite",
+    "install": "App installieren",
+    "links": {
+      "platforms": "Plattformen",
+      "features": "Funktionen",
+      "howItWorks": "So funktioniert's",
+      "faq": "FAQ",
+      "blog": "Blog"
+    }
+  },
+  "hero": {
+    "badge": "100 % kostenlos · Ohne Anmeldung",
+    "trust": {
+      "noLogin": "Ohne Anmeldung",
+      "hd": "HD-Qualität",
+      "privacy": "Kostenlos & privat – wir speichern deine Videos nie"
+    },
+    "subtitle": "Füge unten den Link eines öffentlichen Instagram Reels ein und speichere es in Sekunden als HD-MP4 – auf iPhone, Android oder PC. Funktioniert auch mit YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn.",
+    "pasteButton": "Einfügen",
+    "downloadCta": "Video holen",
+    "loading": "Dein Video wird geladen…",
+    "errorGeneric": "Das Video konnte nicht geladen werden. Prüfe den Link und versuche es erneut.",
+    "errorInvalid": "Das sieht nicht nach einem unterstützten Videolink aus.",
+    "processing": "Dein Link wird verarbeitet…",
+    "working": "Wird verarbeitet…",
+    "steps": [
+      "Link wird geprüft…",
+      "Video wird gesucht…",
+      "Download wird vorbereitet…"
+    ],
+    "slow": "Einen Moment noch. Manche Videos brauchen etwas länger."
+  },
+  "platforms": {
+    "label": "Plattform wählen",
+    "instagram": {
+      "name": "Instagram",
+      "title": "Instagram Reels herunterladen: in HD, kostenlos",
+      "placeholder": "Instagram-Reel-Link hier einfügen…"
+    },
+    "youtube": {
+      "name": "YouTube",
+      "title": "YouTube Shorts & Videos in Sekunden herunterladen",
+      "placeholder": "YouTube-Video- oder Shorts-Link hier einfügen…"
+    },
+    "facebook": {
+      "name": "Facebook",
+      "title": "Facebook-Videos in Sekunden herunterladen",
+      "placeholder": "Facebook-Video- oder Reel-Link hier einfügen…"
+    },
+    "threads": {
+      "name": "Threads",
+      "title": "Threads-Videos in Sekunden herunterladen",
+      "placeholder": "Threads-Beitragslink hier einfügen…"
+    },
+    "x": {
+      "name": "X (Twitter)",
+      "title": "X (Twitter)-Videos in Sekunden herunterladen",
+      "placeholder": "X- oder Twitter-Beitragslink hier einfügen…"
+    },
+    "pinterest": {
+      "name": "Pinterest",
+      "title": "Pinterest-Videos in Sekunden herunterladen",
+      "placeholder": "Pinterest-Pin-Link hier einfügen…"
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "title": "TikTok-Videos in Sekunden herunterladen",
+      "placeholder": "TikTok-Videolink hier einfügen…"
+    },
+    "reddit": {
+      "name": "Reddit",
+      "title": "Reddit-Videos in Sekunden herunterladen",
+      "placeholder": "Reddit-Beitrags- oder v.redd.it-Link hier einfügen…"
+    },
+    "snapchat": {
+      "name": "Snapchat",
+      "title": "Snapchat-Spotlight-Videos in Sekunden herunterladen",
+      "placeholder": "Snapchat-Spotlight-Link hier einfügen…"
+    },
+    "linkedin": {
+      "name": "LinkedIn",
+      "title": "LinkedIn-Videos in Sekunden herunterladen",
+      "placeholder": "LinkedIn-Beitragslink hier einfügen…"
+    }
+  },
+  "landing": {
+    "common": {
+      "breadcrumbHome": "Startseite",
+      "downloaders": "Downloader",
+      "howToHeading": "So lädst du {noun} herunter",
+      "steps": [
+        "Kopiere den Link. {copyHint}",
+        "Füge ihn oben in das Feld ein. Der Tab {platform} wird automatisch ausgewählt und der Download startet, sobald du ihn einfügst.",
+        "Tippe auf „Video herunterladen“, um die MP4 auf deinem Gerät zu speichern."
+      ],
+      "featuresHeading": "Warum SaveReelsFast für {platform}",
+      "features": [
+        {
+          "title": "Kostenlos, ohne Konto",
+          "text": "Keine Registrierung, keine Anmeldung, nichts zu installieren. Es läuft in deinem Browser."
+        },
+        {
+          "title": "Funktioniert auf jedem Gerät",
+          "text": "iPhone, Android, Windows, Mac oder Linux: Mit einem Browser bist du startklar."
+        },
+        {
+          "title": "Qualität bleibt erhalten",
+          "text": "Du bekommst die Datei genau so, wie {platform} sie ausliefert – ohne erneute Komprimierung und ohne zusätzliches Branding von uns."
+        },
+        {
+          "title": "Zehn Plattformen an einem Ort",
+          "text": "Dasselbe Tool funktioniert mit Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn."
+        }
+      ],
+      "faqHeading": "FAQ zum {platform}-Downloader",
+      "sharedFaq": [
+        {
+          "q": "Ist dieser {platform}-Downloader kostenlos?",
+          "a": "Ja. SaveReelsFast ist kostenlos – ohne Abo, ohne Konto und ohne Limit, das an eine Anmeldung gebunden ist."
+        },
+        {
+          "q": "Muss ich mich bei {platform} anmelden?",
+          "a": "Nein. Du brauchst nur den Link zu einem öffentlichen Video. Wir fragen nie nach deinem {platform}-Benutzernamen oder Passwort."
+        },
+        {
+          "q": "Ist es legal, {platform}-Videos herunterzuladen?",
+          "a": "Ein Video für die private Offline-Nutzung zu speichern ist in der Regel in Ordnung. Fremde Inhalte ohne Erlaubnis erneut hochzuladen kann aber gegen das Urheberrecht und die Nutzungsbedingungen von {platform} verstoßen. Lade nur Inhalte herunter, die du speichern darfst, und nenne die Urheber."
+        }
+      ],
+      "otherHeading": "Downloader für jede Plattform",
+      "otherLead": "Wähle deine Plattform für eine passende Anleitung.",
+      "here": "Du bist hier",
+      "structuredDescription": "Kostenloser Online-Downloader für {noun}. Link einfügen und das Video als MP4 speichern – ohne Anmeldung und ohne App.",
+      "longtail": {
+        "reelsQuality": {
+          "q": "Wie lade ich Instagram Reels in 1080p ohne Wasserzeichen herunter?",
+          "a": "Füge den Link des Reels ein und tippe auf Herunterladen. Du bekommst die Videodatei, die Instagram selbst zur Wiedergabe ausliefert, in der höchsten Qualität, die Instagram für dieses Reel anbietet (bis zu 1080p, wenn das Reel in dieser Qualität hochgeladen wurde). Wir fügen kein eigenes Wasserzeichen hinzu und codieren oder skalieren nichts neu – ein Original in niedriger Auflösung bleibt also niedrig aufgelöst. Schritte: 1) Tippe beim Reel auf Teilen und dann auf Link kopieren. 2) Füge den Link oben ins Feld ein. 3) Tippe auf Video herunterladen und speichere die MP4."
+        },
+        "audio": {
+          "q": "Kann ich Audio/MP3 von {noun} herunterladen?",
+          "a": "Teilweise. Wenn {platform} für ein Video eine separate Tonspur bereitstellt, erscheint unter dem Ergebnis ein Button „Audio herunterladen“, der sie als Audiodatei (M4A oder WebM) speichert – genau so, wie {platform} sie ausliefert. Wir wandeln nicht in MP3 um, und manche Videos haben keine separate Tonspur; dann wird nur das Video angeboten. M4A spielt jeder moderne Musik- oder Videoplayer ab."
+        },
+        "snapchatNoApp": {
+          "q": "Wie speichere ich Snapchat-Spotlight-Videos ohne App?",
+          "a": "Alles läuft in deinem Browser, du musst also nichts installieren. Schritte: 1) Öffne das öffentliche Spotlight-Video, tippe auf Teilen und dann auf Link kopieren. 2) Füge den Link oben ins Feld ein. 3) Tippe auf Video herunterladen und speichere die MP4. Nur öffentliche Spotlight-Videos funktionieren; Stories und private Snaps werden nicht unterstützt."
+        },
+        "free": {
+          "q": "Ist das Herunterladen von {noun} online kostenlos?",
+          "a": "Ja. {noun} hier herunterzuladen kostet nichts und braucht weder Konto noch App. Die Seite wird durch Werbung finanziert. Nur öffentliche Videos funktionieren."
+        },
+        "cameraRoll": {
+          "q": "Wie speichere ich Instagram Reels auf dem iPhone ohne App in der Fotos-App?",
+          "a": "Auf dem iPhone: 1) Füge hier den Link des Reels ein und tippe auf Video herunterladen – der Download läuft in Safari, ohne App. 2) Öffne das Download-Symbol in der Safari-Leiste, tippe auf das Video, dann auf das Teilen-Symbol und wähle „Video sichern“, um es zu deinen Fotos hinzuzufügen."
+        }
+      }
+    },
+    "platforms": {
+      "instagram": {
+        "noun": "Instagram Reels und Videos",
+        "metaTitle": "Instagram Video Downloader – Reels & Posts in HD gratis",
+        "metaDescription": "Instagram-Videos aus Posts, Reels und IGTV als HD-MP4 herunterladen, dazu Reel-Audio als M4A. Kostenlos, ohne Login, auf iPhone, Android und PC.",
+        "h1": "Instagram Video Downloader: Posts & Reels in HD speichern",
+        "lead": "Füge den Link eines öffentlichen Instagram Reels, Video-Posts oder IGTV-Videos ein und speichere es in Sekunden als HD-MP4. Funktioniert auf iPhone, Android und Computer – ohne Anmeldung und ohne Installation.",
+        "copyHint": "Öffne das Reel in der Instagram-App, tippe auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Kann ich Instagram Reels von einem privaten Konto herunterladen?",
+            "a": "Nein. Nur öffentliche Beiträge können heruntergeladen werden. Private Konten zeigen ihre Inhalte nur bestätigten Followern, und dieses Tool fragt nie nach deinem Instagram-Login."
+          },
+          {
+            "q": "Welche Instagram-Links funktionieren?",
+            "a": "Reel-Links (instagram.com/reel/…), Video-Posts (/p/…), IGTV (/tv/…) und Instagram-Teilen-Links. Beiträge, die nur Fotos enthalten, haben kein Video zum Speichern."
+          },
+          {
+            "q": "Warum hat mein heruntergeladenes Instagram-Video keinen Ton?",
+            "a": "Manche Clips werden ohne Ton gepostet, und Instagram liefert Video und Audio manchmal als getrennte Dateien. Wenn nur eine Datei ohne Ton verfügbar ist, sagen wir dir das, und wenn eine separate Tonspur angeboten wird, kannst du sie mit dem Audio-Button speichern."
+          }
+        ],
+        "articles": [
+          {
+            "heading": "Was ist ein Instagram Reels Downloader?",
+            "paragraphs": [
+              "Ein Instagram Reels Downloader speichert ein öffentliches Reel als Videodatei, die du auf deinem Gerät behalten und ohne Internetverbindung ansehen kannst. Füge den Link des Reels ein, und das Tool holt dieselbe Videodatei, die Instagram selbst abspielt – nichts wird vom Bildschirm abgefilmt, also kommt kein Wasserzeichen hinzu und keine Qualität geht verloren.",
+              "Viele nutzen es, um ein Workout, ein Rezept oder ein Tutorial für später zu speichern, eine Kopie der eigenen Reels zu behalten, bevor ein Beitrag gelöscht wird, oder einen Clip offline im Flugzeug oder mit wenig Datenvolumen anzusehen. Dieser Instagram Reels Downloader braucht kein Konto, keine Browsererweiterung und keine App: Er funktioniert gleich auf Smartphone, Tablet oder Computer, und jeder Download stammt aus dem echten Reel, in der Qualität, die Instagram dafür bereitstellt."
+            ]
+          },
+          {
+            "heading": "Instagram Reels in der Fotos-App oder Galerie speichern",
+            "paragraphs": [
+              "Auf dem iPhone fügst du oben den Link des Reels ein und tippst auf Video herunterladen – der Download läuft in Safari, ohne App. Öffne das Download-Symbol in der Safari-Leiste, tippe auf das Video, dann auf das Teilen-Symbol und wähle „Video sichern“, um es direkt zu deinen Fotos hinzuzufügen.",
+              "Auf Android landet die Datei nach dem Tippen auf Herunterladen meist direkt in „Downloads“ oder in der Galerie, je nach Browser. In beiden Fällen ist auf deinem Gerät dieselbe Videodatei, die Instagram zur Wiedergabe ausliefert – keine Bildschirmaufnahme."
+            ]
+          },
+          {
+            "heading": "Kostenloser Instagram Audio- & Video-Downloader (ohne Anmeldung)",
+            "paragraphs": [
+              "SaveReelsFast ist kostenlos – ohne Konto, Registrierung oder App. Füge den Link eines öffentlichen Reels ein und lade das Video direkt im Browser herunter; es funktioniert gleich auf iPhone, Android oder Computer.",
+              "Hat ein Reel eine separate Tonspur, erscheint neben dem Video ein Button „Audio herunterladen“, mit dem du den Ton einzeln als M4A-Datei speicherst (kein MP3, nicht umgewandelt oder neu codiert). Praktisch für ein Voiceover, einen Songausschnitt oder einen Sound, den du wiederverwenden willst – denk daran, dass Musik und Audio weiterhin den Urhebern oder Rechteinhabern gehören."
+            ]
+          }
+        ]
+      },
+      "youtube": {
+        "noun": "YouTube Shorts und Videos",
+        "metaTitle": "YouTube Videos herunterladen – Shorts & MP4 kostenlos",
+        "metaDescription": "YouTube Shorts und Videos kostenlos als MP4 herunterladen. youtube.com- oder youtu.be-Link einfügen und mit Ton speichern. Ohne Login, ohne Software.",
+        "h1": "YouTube Shorts in Sekunden herunterladen",
+        "lead": "Füge einen YouTube-Shorts- oder Videolink (youtube.com oder youtu.be) ein und speichere ihn als MP4 mit Ton. Kostenlos, ohne Konto und in jedem Browser.",
+        "copyHint": "Tippe in der YouTube-App auf Teilen und dann auf Link kopieren. Am Computer kopierst du die Adresse aus dem Browser.",
+        "faq": [
+          {
+            "q": "Welche Qualität bekomme ich bei YouTube?",
+            "a": "Du bekommst eine einzelne MP4-Datei mit Ton. YouTube bietet solche fertigen Dateien normalerweise bis 360p an; höhere Auflösungen kommen als getrennte Video- und Audiostreams, die hier nicht zusammengeführt werden können. 360p ist daher derzeit die praktische Obergrenze."
+          },
+          {
+            "q": "Kann ich YouTube Shorts herunterladen?",
+            "a": "Ja. Füge den Shorts-Link (youtube.com/shorts/…) oder den Teilen-Link ein, und er wird wie jedes andere Video heruntergeladen."
+          },
+          {
+            "q": "Kann ich altersbeschränkte oder private YouTube-Videos herunterladen?",
+            "a": "Nein. Dafür ist ein angemeldetes YouTube-Konto nötig, das dieses Tool nie verwendet. Öffentliche Videos funktionieren; private, nur für Mitglieder freigegebene und altersbeschränkte nicht."
+          }
+        ],
+        "articles": [
+          {
+            "heading": "Was ist ein YouTube Video Downloader?",
+            "paragraphs": [
+              "Ein YouTube Video Downloader speichert einen öffentlichen YouTube Short oder ein normales Video als MP4-Datei, damit du es später ohne geöffnete App oder Internetverbindung ansehen kannst. Füge oben einen youtube.com- oder youtu.be-Link ein, und das Tool holt dieselbe Videodatei, die YouTube selbst abspielt – mit Ton.",
+              "Es funktioniert für YouTube Shorts und lange Videos: Kopiere den Link auf dem Handy über das Teilen-Menü der YouTube-App oder am Computer aus der Adresszeile, füge ihn hier ein und tippe auf Video herunterladen. Du brauchst weder Konto noch Browsererweiterung oder Software, und es funktioniert gleich auf iPhone, Android oder Computer."
+            ]
+          }
+        ]
+      },
+      "facebook": {
+        "noun": "Facebook-Videos und Reels",
+        "metaTitle": "Facebook Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Kostenloser Facebook Video Downloader. Link zu einem Facebook-Video, Reel oder fb.watch einfügen und als MP4 speichern. Ohne Login, ohne App.",
+        "h1": "Kostenloser Facebook Video Downloader",
+        "lead": "Füge den Link eines öffentlichen Facebook-Videos, Reels oder fb.watch ein und speichere es als MP4. Funktioniert auf Handy und Computer, ohne dass du dich irgendwo anmelden musst.",
+        "copyHint": "Tippe unter dem Video auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Welche Facebook-Links werden unterstützt?",
+            "a": "Videolinks (facebook.com/watch und /videos/), Reels (/reel/), Facebook-Teilen-Links und fb.watch-Kurzlinks. Fotos und Textbeiträge enthalten kein Video zum Herunterladen."
+          },
+          {
+            "q": "Kann ich Videos aus privaten Gruppen oder Beiträgen nur für Freunde herunterladen?",
+            "a": "Nein. Nur öffentliche Videos können abgerufen werden. Inhalte, die nur Freunden oder Gruppenmitgliedern angezeigt werden, erfordern einen Facebook-Login, den dieses Tool nicht verwendet."
+          },
+          {
+            "q": "Warum hat mein Facebook-Link nicht funktioniert?",
+            "a": "Das Video ist vermutlich nicht öffentlich, wurde gelöscht oder ist in manchen Regionen gesperrt. Prüfe, ob es sich in einem privaten Browserfenster ohne Anmeldung öffnen lässt; wenn ja, versuche es in einer Minute erneut."
+          }
+        ],
+        "articles": [
+          {
+            "heading": "Was ist ein Facebook Video Downloader?",
+            "paragraphs": [
+              "Ein Facebook Video Downloader speichert ein öffentliches Video, Reel oder einen Watch-Beitrag als MP4-Datei, damit du es behalten oder offline ansehen kannst. Füge einen facebook.com-Videolink, einen Reel-Link oder einen fb.watch-Kurzlink ein, und das Tool holt dieselbe Videodatei, die Facebook zur Wiedergabe ausliefert.",
+              "Nur öffentliche Beiträge funktionieren: Videos aus privaten Gruppen, Beiträge nur für Freunde und alles, wofür man angemeldet sein muss, sind nicht erreichbar, da SaveReelsFast sich nirgendwo in deinem Namen anmeldet. Auch du brauchst kein Konto, keine App und keine Browsererweiterung."
+            ]
+          }
+        ]
+      },
+      "threads": {
+        "noun": "Threads-Videos",
+        "metaTitle": "Threads Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Videos aus Threads-Beiträgen kostenlos als MP4 herunterladen. Link von threads.net oder threads.com einfügen. Ohne Login, ohne App.",
+        "h1": "Threads-Videos in Sekunden herunterladen",
+        "lead": "Füge den Link eines öffentlichen Threads-Beitrags mit Video ein und speichere es als MP4. Links von threads.net und threads.com funktionieren, und du musst nichts installieren.",
+        "copyHint": "Tippe beim Beitrag auf das Teilen-Symbol und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Funktionieren Links von threads.com und threads.net?",
+            "a": "Ja. Threads nutzt beide Domains, und Links von beiden werden akzeptiert, auch die Teilen-Links aus der App."
+          },
+          {
+            "q": "Kann ich Fotos von Threads herunterladen?",
+            "a": "Dieses Tool speichert Videos. Ein Beitrag mit nur Fotos oder Text enthält kein Video, daher gibt es nichts herunterzuladen."
+          },
+          {
+            "q": "Warum funktioniert mein Threads-Link nicht?",
+            "a": "Die Threads-Unterstützung ist neuer und hängt davon ab, was Threads für einen Beitrag öffentlich anzeigt. Beiträge von privaten Profilen oder ohne Video können nicht heruntergeladen werden; schlägt ein öffentliches Video fehl, versuche es später erneut."
+          }
+        ],
+        "articles": []
+      },
+      "x": {
+        "noun": "Twitter (X)-Videos",
+        "metaTitle": "Twitter (X) Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Twitter- und X-Videos kostenlos als MP4 herunterladen. Beitragslink von x.com oder twitter.com einfügen. Ohne Login, ohne App.",
+        "h1": "Twitter (X)-Videos in Sekunden herunterladen",
+        "lead": "Füge den Link eines öffentlichen Beitrags auf X (früher Twitter) ein und speichere das Video als MP4. Links von x.com und twitter.com funktionieren, und eine Anmeldung ist nicht nötig.",
+        "copyHint": "Tippe unter dem Beitrag auf das Teilen-Symbol und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Funktionieren Links von x.com und twitter.com?",
+            "a": "Ja. Twitter heißt jetzt X, und die alten twitter.com-Links führen weiterhin zu denselben Beiträgen, daher werden beide akzeptiert."
+          },
+          {
+            "q": "Kann ich GIFs von Twitter herunterladen?",
+            "a": "Twitter speichert GIFs als kurze MP4-Videos, daher werden GIF-Beiträge normalerweise als MP4-Datei heruntergeladen."
+          },
+          {
+            "q": "Was ist, wenn ein Beitrag mehrere Videos hat?",
+            "a": "Jedes Video wird einzeln mit eigenem Download-Button aufgeführt, und es gibt die Option „Alle herunterladen“."
+          }
+        ],
+        "articles": []
+      },
+      "pinterest": {
+        "noun": "Pinterest-Videos",
+        "metaTitle": "Pinterest Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Kostenloser Pinterest Video Downloader. Pin- oder pin.it-Link einfügen und das Video als MP4 speichern. Ohne Login, ohne App.",
+        "h1": "Pinterest-Videos in Sekunden herunterladen",
+        "lead": "Füge den Link eines Pinterest-Video-Pins ein und speichere ihn in Sekunden als MP4. Kurze pin.it-Links funktionieren auch, und du musst dich nie anmelden.",
+        "copyHint": "Öffne den Pin, tippe auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Funktioniert es mit pin.it-Kurzlinks?",
+            "a": "Ja. Wir folgen dem Kurzlink automatisch zum echten Pin, du kannst also einfügen, was dir die App gibt."
+          },
+          {
+            "q": "Kann ich Bild-Pins herunterladen?",
+            "a": "Nein. Dieses Tool ist für Video-Pins. Bild-Pins enthalten kein Video."
+          },
+          {
+            "q": "Funktionieren Länderversionen von Pinterest?",
+            "a": "Ja. Links von pinterest.com und regionalen Seiten wie pinterest.de oder pinterest.co.uk werden akzeptiert."
+          }
+        ],
+        "articles": []
+      },
+      "tiktok": {
+        "noun": "TikTok-Videos",
+        "metaTitle": "TikTok Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Kostenloser TikTok Video Downloader. TikTok- oder vm.tiktok.com-Link einfügen und das Video als MP4 speichern. Ohne Login, ohne App.",
+        "h1": "Kostenloser TikTok Video Downloader",
+        "lead": "Füge einen öffentlichen TikTok-Link ein und speichere das Video in Sekunden als MP4. Kurzlinks aus der TikTok-App funktionieren auch, und du brauchst kein Konto.",
+        "copyHint": "Tippe in TikTok auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Welche TikTok-Links funktionieren?",
+            "a": "Vollständige Links (tiktok.com/@nutzer/video/…) und die Kurzlinks aus der App (vm.tiktok.com und vt.tiktok.com), denen wir automatisch folgen."
+          },
+          {
+            "q": "Kann ich private TikToks oder TikToks nur für Freunde herunterladen?",
+            "a": "Nein. Nur öffentliche Videos können gespeichert werden. Private Videos erfordern einen TikTok-Login, nach dem dieses Tool nie fragt."
+          },
+          {
+            "q": "Warum schlägt ein TikTok-Link manchmal fehl?",
+            "a": "TikTok begrenzt automatisierte Anfragen, daher kann ein Link gelegentlich fehlschlagen, obwohl das Video öffentlich ist. Warte eine Minute und füge ihn erneut ein."
+          }
+        ],
+        "articles": [
+          {
+            "heading": "Was ist ein TikTok Video Downloader?",
+            "paragraphs": [
+              "Ein TikTok Video Downloader speichert ein öffentliches TikTok als MP4-Datei auf deinem Gerät, ohne dass du die TikTok-App öffnen musst. Füge den Link eines TikTok-Beitrags ein – eine vollständige tiktok.com/@nutzer/video/...-Adresse oder einen vm.tiktok.com- bzw. vt.tiktok.com-Kurzlink –, und das Tool holt dieselbe Videodatei, die TikTok zur Wiedergabe ausliefert.",
+              "Praktisch, um ein Video offline anzusehen, eine Kopie deiner eigenen TikToks zu behalten oder einen Clip für später aufzuheben – mit Nennung der Urheber, wenn du ihn weiterverwendest. Du brauchst kein Konto, keine App und keine Browsererweiterung; Link einfügen und auf Video herunterladen tippen."
+            ]
+          }
+        ]
+      },
+      "reddit": {
+        "noun": "Reddit-Videos",
+        "metaTitle": "Reddit Videos herunterladen – HD & kostenlos",
+        "metaDescription": "Reddit-Videos kostenlos herunterladen. Reddit-Beitrags- oder v.redd.it-Link einfügen und die MP4 sowie, falls vorhanden, die Tonspur einzeln speichern.",
+        "h1": "Kostenloser Reddit Video Downloader",
+        "lead": "Füge den Link zu einem Reddit-Videobeitrag oder einen v.redd.it-Link ein und speichere das Video als MP4. Kein Konto und keine App nötig – und wenn Reddit eine separate Tonspur anbietet, kannst du auch diese speichern.",
+        "copyHint": "Tippe beim Beitrag auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Warum hat mein Reddit-Video keinen Ton?",
+            "a": "Reddit speichert ein Video und seinen Ton als zwei getrennte Dateien, und dieses Tool kann sie nicht zusammenführen. Die heruntergeladene MP4 hat nur Bild; wenn Reddit die Tonspur anbietet, siehst du einen separaten Button „Audio herunterladen“, um auch sie zu speichern."
+          },
+          {
+            "q": "Funktionieren v.redd.it- und Teilen-Links?",
+            "a": "Ja. Beitragslinks (reddit.com/r/…/comments/…), Teilen-Links (…/s/…) und v.redd.it-Links werden alle akzeptiert."
+          },
+          {
+            "q": "Kann ich NSFW-Videos oder Videos aus privaten Subreddits herunterladen?",
+            "a": "Nein. Dafür ist ein angemeldetes Reddit-Konto nötig, das dieses Tool nicht verwendet. Öffentliche Beiträge funktionieren."
+          }
+        ],
+        "articles": []
+      },
+      "snapchat": {
+        "noun": "Snapchat-Spotlight-Videos",
+        "metaTitle": "Snapchat Spotlight herunterladen – HD & kostenlos",
+        "metaDescription": "Kostenloser Snapchat Spotlight Downloader. Öffentlichen Spotlight-Link einfügen und das Video als MP4 speichern. Ohne Login, ohne App.",
+        "h1": "Snapchat-Spotlight-Videos herunterladen",
+        "lead": "Füge den Link eines öffentlichen Snapchat-Spotlight-Videos ein und speichere es als MP4. Kurzlinks aus der Snapchat-App funktionieren auch, und du brauchst kein Konto.",
+        "copyHint": "Öffne das Spotlight-Video, tippe auf Teilen und dann auf Link kopieren.",
+        "faq": [
+          {
+            "q": "Welche Snapchat-Links werden unterstützt?",
+            "a": "Öffentliche Spotlight-Links (snapchat.com/spotlight/…) und die Kurzlinks aus der App (t.snapchat.com). Stories und private Snaps werden nicht unterstützt."
+          },
+          {
+            "q": "Kann ich die Snapchat-Story einer Person herunterladen?",
+            "a": "Nein. Stories sind keine öffentlichen Spotlight-Videos und nur für die Personen sichtbar, mit denen sie geteilt wurden. Dieses Tool funktioniert nur mit öffentlichen Spotlight-Beiträgen."
+          },
+          {
+            "q": "Kann ich private Snaps herunterladen?",
+            "a": "Nein. Private Snaps sind nur für ihre Empfänger sichtbar und über keinen öffentlichen Link erreichbar."
+          }
+        ],
+        "articles": []
+      },
+      "linkedin": {
+        "noun": "LinkedIn-Videos",
+        "metaTitle": "LinkedIn Videos herunterladen – öffentliche Posts gratis",
+        "metaDescription": "Kostenloser LinkedIn Video Downloader. Link eines öffentlichen LinkedIn-Beitrags einfügen und das Video als MP4 speichern. Ohne Login, ohne App.",
+        "h1": "Kostenloser LinkedIn Video Downloader",
+        "lead": "Füge den Link eines öffentlichen LinkedIn-Beitrags mit Video ein und speichere es als MP4. Kein Konto und keine App nötig.",
+        "copyHint": "Tippe beim Beitrag auf die drei Punkte und dann auf „Link zum Beitrag kopieren“.",
+        "faq": [
+          {
+            "q": "Welche LinkedIn-Links werden unterstützt?",
+            "a": "Links zu öffentlichen Beiträgen mit Video, etwa linkedin.com/posts/… und linkedin.com/feed/update/…. Profilseiten, Unternehmensseiten und der Feed selbst sind keine Videolinks."
+          },
+          {
+            "q": "Kann ich Videos aus privaten Beiträgen oder LinkedIn Learning herunterladen?",
+            "a": "Nein. Beiträge nur für Kontakte, private Gruppen und LinkedIn-Learning-Kurse erfordern eine Anmeldung, und dieses Tool meldet sich nirgendwo an. Nur öffentliche Beiträge funktionieren."
+          },
+          {
+            "q": "Welche Qualität bekomme ich?",
+            "a": "Das Video wird in der Qualität gespeichert, die LinkedIn für diesen Beitrag bereitstellt; sie hängt vom Upload ab. Das Tool skaliert oder codiert nichts neu."
+          }
+        ],
+        "articles": []
+      }
+    }
+  },
+  "preview": {
+    "title": "Dein Video ist bereit",
+    "audioTitle": "Dein Audio ist bereit",
+    "author": "Von",
+    "duration": "Dauer",
+    "downloadButton": "Video herunterladen (HD MP4)",
+    "newSearch": "Weiteres herunterladen",
+    "thumbnailAlt": "Reel-Vorschaubild",
+    "noAudio": "Ohne Ton heruntergeladen (Tonspur von der Plattform eingeschränkt)",
+    "downloadAudio": "Audio herunterladen ({format})",
+    "audioUnavailable": "Für diesen Link gibt es keine separate Audiodatei – der Ton ist im Video enthalten.",
+    "postItems": "{n} Videos in diesem Beitrag",
+    "itemTitle": "Video {n}",
+    "downloadItem": "Herunterladen",
+    "downloadItemAudio": "Nur Audio",
+    "downloadAll": "Alle herunterladen ({n})",
+    "downloadAllBusy": "Downloads werden gestartet…",
+    "downloadAllHint": "Dein Browser fragt eventuell, ob mehrere Downloads erlaubt sind."
+  },
+  "download": {
+    "preparing": "Download wird vorbereitet…",
+    "downloading": "Wird heruntergeladen… {progress}",
+    "saving": "Datei wird gespeichert…",
+    "saved": "Gespeichert",
+    "cancel": "Abbrechen",
+    "share": {
+      "heading": "Dieses Tool teilen",
+      "whatsapp": "WhatsApp",
+      "x": "X",
+      "copy": "Link kopieren",
+      "copied": "Link kopiert",
+      "text": "Ich habe gerade ein Video mit SaveReelsFast gespeichert: kostenlos, ohne Login, nichts zu installieren."
+    }
+  },
+  "errors": {
+    "LOGIN_REQUIRED": {
+      "title": "Privat oder Anmeldung nötig",
+      "message": "Dieser Beitrag ist privat oder erfordert eine Anmeldung bei {platform}. Versuche einen öffentlichen Link."
+    },
+    "UNSUPPORTED_POST": {
+      "title": "Kein Video gefunden",
+      "message": "Dieser Beitrag enthält nur Bilder oder Text. Nur Video- und Reel-Links werden unterstützt."
+    },
+    "STREAM_EXPIRED_OR_BLOCKED": {
+      "title": "Video gerade nicht abrufbar",
+      "message": "{platform} begrenzt Downloads im Moment. Bitte versuche es in einer Minute erneut. Wenn das weiter passiert, versuche einen anderen Link zum selben Video oder komm etwas später wieder."
+    },
+    "PLATFORM_TIMEOUT": {
+      "title": "{platform} antwortet nicht",
+      "message": "Wir konnten {platform} nicht rechtzeitig erreichen. Bitte versuche es gleich noch einmal."
+    },
+    "EXTRACTION_FAILED": {
+      "title": "Video nicht abrufbar",
+      "message": "Wir konnten dieses Video nicht abrufen. Es ist vielleicht privat, gelöscht oder regional gesperrt."
+    },
+    "INVALID_URL": {
+      "title": "Link nicht unterstützt",
+      "message": "Das sieht nicht nach einem unterstützten Videolink aus. Füge den Link zu einem Videobeitrag ein."
+    },
+    "NOT_CONFIGURED": {
+      "title": "Vorübergehend nicht verfügbar",
+      "message": "Downloads von {platform} sind gerade nicht verfügbar. Bitte versuche es später erneut."
+    },
+    "NETWORK": {
+      "title": "Verbindungsproblem",
+      "message": "Wir konnten unseren Server nicht erreichen. Prüfe deine Verbindung und versuche es erneut."
+    },
+    "actions": {
+      "retry": "Erneut versuchen",
+      "clear": "Leeren und neu starten",
+      "report": "Diesen Link melden",
+      "reportSubject": "Problem mit einem Link",
+      "reportBody": "Dieser Link hat auf SaveReelsFast nicht funktioniert:"
+    },
+    "SERVER_BUSY": {
+      "title": "Gerade etwas viel los",
+      "message": "Gerade laden viele Leute herunter. Bitte versuche es in ein paar Sekunden erneut."
+    },
+    "RATE_LIMITED": {
+      "title": "Etwas langsamer, bitte",
+      "message": "Du hast in kurzer Zeit viele Anfragen gestellt. Bitte warte eine Minute und versuche es erneut."
+    },
+    "FILE_TOO_LARGE": {
+      "title": "Dieses Video ist zu groß",
+      "message": "Dieses Video ist zu lang oder zu groß, um es hier herunterzuladen. Versuche ein kürzeres."
+    }
+  },
+  "pwa": {
+    "title": "SaveReelsFast App installieren",
+    "body": "Leg sie auf deinen Startbildschirm für Downloads mit einem Tipp – sogar aus anderen Apps.",
+    "install": "App installieren",
+    "dismiss": "Schließen",
+    "iosTitle": "SaveReelsFast zum Home-Bildschirm hinzufügen",
+    "iosStep1": "Tippe unten auf dem Bildschirm auf das Teilen-Symbol",
+    "iosStep2": "Scrolle nach unten und tippe auf „Zum Home-Bildschirm“",
+    "iosClose": "Verstanden"
+  },
+  "seo": {
+    "heading": "Der schnellste Weg, Social-Media-Videos zu speichern",
+    "paragraphs": [
+      "Die meisten sozialen Netzwerke bieten keine eingebaute Möglichkeit, das Video einer anderen Person auf deinem Gerät zu speichern. Unser Tool löst das mit einem Einfügen: Gib den Link von Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat oder LinkedIn ein, und wir holen die Videodatei, damit du eine saubere MP4 zum Offline-Ansehen bekommst.",
+      "Alles läuft in deinem Browser – nichts zu installieren, kein Konto anzulegen und keine persönlichen Daten nötig. Nur der öffentliche Link zum gewünschten Video. So ist es auf jedem Gerät sicher nutzbar, ob auf dem Handy zwischen zwei Vorlesungen oder am Desktop beim Schneiden einer Zusammenstellung.",
+      "Creator nutzen es, um ihre eigenen Inhalte zu archivieren, bevor sie aus dem Feed verschwinden, Marketer sammeln damit Werbe-Inspiration, und ganz normale Nutzer behalten eine Kopie eines Clips, den ihnen jemand geschickt hat, bevor er gelöscht wird. Egal warum, der Ablauf bleibt gleich: einfügen, Vorschau ansehen, herunterladen."
+    ],
+    "featuresHeading": "Warum SaveReelsFast",
+    "features": [
+      {
+        "title": "Kostenlos, ohne Konto",
+        "text": "Keine Registrierung, keine Anmeldung, nichts zu installieren. Es läuft in deinem Browser."
+      },
+      {
+        "title": "Funktioniert auf jedem Gerät",
+        "text": "iPhone, Android, Windows, Mac oder Linux: Mit einem Browser bist du startklar."
+      },
+      {
+        "title": "Originalqualität",
+        "text": "Du bekommst die Datei genau so, wie die Plattform sie ausliefert – ohne erneute Komprimierung und ohne zusätzliches Branding von uns."
+      },
+      {
+        "title": "Zehn Plattformen an einem Ort",
+        "text": "Dasselbe Tool funktioniert mit Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn."
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Häufig gestellte Fragen",
+    "items": [
+      {
+        "q": "Ist dieser Reels Downloader wirklich kostenlos?",
+        "a": "Ja. Kein Abo, keine Registrierung und kein zusätzliches Wasserzeichen. Du brauchst nur den Link zu einem öffentlichen Reel oder Video."
+      },
+      {
+        "q": "Kann ich Instagram Reels ohne Wasserzeichen herunterladen?",
+        "a": "Ja. Instagrams eigener Download-Button fügt, wo er angeboten wird, ein Wasserzeichen hinzu. Wir speichern die originale Videodatei, die Instagram abspielt, und fügen nie ein eigenes Branding hinzu."
+      },
+      {
+        "q": "Muss ich mich anmelden oder eine App installieren?",
+        "a": "Nein. Es läuft in deinem Browser auf iPhone, Android, Windows und Mac. Wir fragen auf keiner Plattform nach deinem Benutzernamen oder Passwort."
+      },
+      {
+        "q": "Wie speichere ich Instagram Reels in der Fotos-App meines iPhones?",
+        "a": "Füge hier den Reel-Link ein und tippe in Safari auf Herunterladen. Öffne dann die Safari-Downloads, tippe auf das Video, auf Teilen und wähle „Video sichern“, um es zu deinen Fotos hinzuzufügen."
+      },
+      {
+        "q": "Kann ich Reels von einem privaten Konto herunterladen?",
+        "a": "Nein. Nur öffentliche Videos können heruntergeladen werden. Private Konten zeigen ihre Inhalte nur bestätigten Followern, und wir fragen nie nach deinem Login, um das zu umgehen."
+      },
+      {
+        "q": "Ist es legal, Reels herunterzuladen?",
+        "a": "Das Herunterladen für die private Offline-Nutzung ist in der Regel in Ordnung, aber fremde Inhalte ohne Erlaubnis erneut hochzuladen kann gegen das Urheberrecht und die Nutzungsbedingungen von Instagram verstoßen. Nenne immer die ursprünglichen Urheber."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "Dieses Tool steht in keiner Verbindung zu Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap oder einer anderen Plattform und wird von diesen weder unterstützt noch gesponsert. Nutze es nur, um Inhalte herunterzuladen, die du speichern darfst.",
+    "rights": "Alle Rechte vorbehalten.",
+    "trust": "Für immer kostenlos • Kein Konto nötig • Funktioniert auf Desktop & Handy",
+    "links": {
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "dmca": "DMCA",
+      "disclaimer": "Haftungsausschluss",
+      "contact": "Kontakt",
+      "report": "Defekten Link melden",
+      "blog": "Blog"
+    },
+    "columns": {
+      "tools": "Unterstützte Tools",
+      "legal": "Rechtliches",
+      "company": "Unternehmen & Kontakt"
+    },
+    "reportSubject": "Meldung eines defekten Links"
+  },
+  "ad": {
+    "label": "Anzeige",
+    "close": "Anzeige schließen",
+    "collapse": "Anzeige einklappen",
+    "expand": "Anzeige zeigen"
+  },
+  "blog": {
+    "metaTitle": "SaveReelsFast Blog: Anleitungen und Tipps zu Social Video",
+    "metaDescription": "Praktische Anleitungen für Creator und Zuschauer: Videoideen, Formate, sicheres Herunterladen und Reichweite aufbauen.",
+    "heading": "Blog",
+    "lead": "Praktische Anleitungen zu Kurzvideos, Formaten, sicherem Herunterladen und dem Aufbau deiner Reichweite.",
+    "readMore": "Artikel lesen",
+    "allArticles": "Alle Artikel",
+    "minRead": "{n} Min. Lesezeit",
+    "published": "Veröffentlicht",
+    "updated": "Aktualisiert",
+    "ctaHeading": "Videos mit SaveReelsFast speichern",
+    "ctaText": "Öffentlichen Link einfügen und in Sekunden eine MP4 erhalten. Kein Konto, keine App.",
+    "ctaButton": "Zum Downloader",
+    "latestHeading": "Neueste Artikel",
+    "relatedHeading": "Ähnliche Artikel",
+    "toolsHeading": "Passende Downloader"
+  },
+  "consent": {
+    "title": "Cookies, Statistik und Werbung",
+    "text": "Wir nutzen Google Analytics, um zu sehen, welche Seiten hilfreich sind, und einen Werbepartner, dessen Anzeigen das Tool kostenlos halten. Beide setzen Cookies nur, wenn du zustimmst, und der Downloader funktioniert in beiden Fällen.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "privacy": "Datenschutzerklärung",
+    "settings": "Cookie-Einstellungen"
+  },
+  "telegram": {
+    "label": "Telegram Bot",
+    "fab": "Telegram-Bot nutzen",
+    "open": "Den SaveReelsFast Telegram-Bot öffnen",
+    "hide": "Diesen Button ausblenden"
+  },
+  "audioDownloader": {
+    "metaTitle": "Instagram & YouTube Audio Downloader – Reel-Ton gratis",
+    "metaDescription": "Kostenloser Audio Downloader für Instagram Reels und YouTube-Videos oder Shorts. Ton in Sekunden extrahieren, in Originalqualität, ohne Login, ohne App.",
+    "h1": "Instagram & YouTube Audio Downloader",
+    "lead": "Extrahiere hochwertigen Ton und Hintergrundmusik aus Instagram Reels, YouTube Shorts und ganzen Videos in Sekunden – ein schneller Audio Downloader ohne App, ohne Login und ohne verlustbehaftete MP3-Umwandlung.",
+    "breadcrumb": "Audio Downloader",
+    "sections": [
+      {
+        "heading": "Was ist ein Audio Downloader?",
+        "paragraphs": [
+          "Ein Audio Downloader speichert den Ton eines öffentlichen Videos – eines Instagram Reels, eines YouTube Shorts oder eines ganzen YouTube-Videos – als eigene Datei, getrennt vom Bild. So behältst du ein Voiceover, einen Songausschnitt oder einen Podcast-Clip ohne das Video. Füge hier den Link ein, und wenn die Plattform eine separate Tonspur bereitstellt, erscheint ein Button „Audio herunterladen“.",
+          "Praktisch, um den Soundtrack eines Reels später anzuhören, den Ton eines Vortrags oder Interviews zu speichern, dessen Bild du nicht brauchst, oder einen kurzen Dialog oder Soundeffekt wiederzuverwenden – mit Erlaubnis der Urheber, denn der Ton gehört weiterhin ihnen. Es funktioniert gleich auf Handy, Tablet oder Computer, in jedem modernen Browser."
+        ]
+      },
+      {
+        "heading": "Ton von Instagram & YouTube online extrahieren",
+        "paragraphs": [
+          "1) Kopiere den Link eines öffentlichen Instagram Reels, eines YouTube-Videos oder Shorts oder eines Beitrags von einer unserer 10 unterstützten Plattformen. 2) Füge ihn oben ins Feld ein und warte, bis die Vorschau lädt. 3) Wenn die Plattform eine separate Tonspur bereitstellt, tippe auf „Audio herunterladen“; die Datei wird direkt auf deinem Gerät gespeichert – ein schneller Audio Downloader ohne Installation.",
+          "Auf dem iPhone wird die Datei in Safari heruntergeladen; öffne das Download-Symbol in der Leiste und speichere sie über das Teilen-Symbol dort, wo du Audiodateien aufbewahrst. Auf Android oder am Computer landet sie im üblichen Download-Ordner. Du brauchst in keinem Schritt ein Konto, eine Browsererweiterung oder eine App."
+        ]
+      },
+      {
+        "heading": "Warum der Audio Downloader von SaveReelsFast?",
+        "paragraphs": [
+          "Er unterstützt Instagram- und YouTube-Audio im selben Feld – dazu Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn, sofern der jeweilige Beitrag eine separate Tonspur hat. Er ist kostenlos, ohne Konto, Registrierung oder App und ohne Software: Alles läuft in deinem Browser, gleich auf iPhone, Android oder Computer.",
+          "Du bekommst immer die eigene Audiodatei der Plattform, in der Qualität, die sie für diesen Beitrag bereitstellt – keine Neuaufnahme und keine erfundene Bitrate. Nur öffentliche Beiträge funktionieren: Private Konten und Inhalte hinter einem Login sind bewusst außer Reichweite (SaveReelsFast meldet sich nirgendwo in deinem Namen an)."
+        ]
+      },
+      {
+        "heading": "Audioqualität: Was du wirklich bekommst",
+        "paragraphs": [
+          "Die heruntergeladene Audiodatei ist genau das, was die Plattform für diesen Beitrag ausliefert, nicht mehr. Die Qualität hängt ganz davon ab, wie das Originalvideo hochgeladen wurde, schwankt also von Beitrag zu Beitrag, und SaveReelsFast skaliert, verstärkt oder verändert sie nicht. Es gibt keine Bitrate zur Auswahl, weil nichts neu codiert wird: Du bekommst dieselben Audiodaten, die der Player der Plattform nutzt, als Datei statt als Stream. Verspricht ein anderes Tool unabhängig von der Quelle eine feste Bitrate wie 320 kbps, ist das ein Warnsignal: Kein seriöser Downloader kann Qualität hinzufügen, die in der Originaldatei nie vorhanden war."
+        ]
+      }
+    ],
+    "faqHeading": "Häufig gestellte Fragen",
+    "faq": [
+      {
+        "q": "Kann ich Audio von Instagram Reels und YouTube-Videos herunterladen?",
+        "a": "Ja. Füge einen Link von einer der beiden Plattformen (oder von Facebook, TikTok und den anderen unterstützten) ein, und wenn der Beitrag eine separate Tonspur hat, erscheint ein Button „Audio herunterladen“."
+      },
+      {
+        "q": "Kann ich YouTube-Videos in MP3 umwandeln?",
+        "a": "Nicht ganz. SaveReelsFast wandelt Audio nicht in MP3 um und codiert es nicht neu; hat ein Video eine separate Tonspur, bekommst du sie im Originalformat, meist M4A (manchmal WebM/Opus). Sie spielt in jeder üblichen Musik- oder Video-App. Es ist nur keine echte .mp3-Datei, und das sagen wir lieber klar, statt eine Datei falsch zu benennen."
+      },
+      {
+        "q": "Behält der extrahierte Ton seine Originalqualität?",
+        "a": "Ja. Die Datei ist die eigene Tonspur der Plattform, genau so, wie sie für diesen Beitrag bereitgestellt wird – nichts wird neu aufgenommen, hochskaliert oder weiter komprimiert. Die Qualität hängt trotzdem davon ab, was die Plattform für genau diesen Upload ausliefert, und schwankt von Beitrag zu Beitrag."
+      },
+      {
+        "q": "Gibt es ein Limit, wie viel Audio ich herunterladen kann?",
+        "a": "Bei normaler Nutzung kein festes Limit. Sehr große Dateien oder viele Anfragen in kurzer Zeit können verlangsamt werden oder kurz warten müssen, damit der Dienst für alle schnell und fair bleibt."
+      },
+      {
+        "q": "Warum gibt es bei manchen Links keine Audio-Option?",
+        "a": "Der Button „Audio herunterladen“ erscheint nur, wenn die Plattform für genau diesen Beitrag einen separaten reinen Audiostream bereitstellt. Viele Videos werden als eine kombinierte Datei ohne separate Spur ausgeliefert; dann gibt es keine eigene Audiodatei – der Ton ist nur zusammen mit dem Video verfügbar."
+      },
+      {
+        "q": "Ist das kostenlos und muss ich mich anmelden?",
+        "a": "Ja, es ist kostenlos, ohne Konto, Registrierung oder App. Öffentlichen Link einfügen und herunterladen; vorher wird nichts von dir verlangt."
+      },
+      {
+        "q": "Kann ich Audio von einem privaten Konto oder Video herunterladen?",
+        "a": "Nein. Das funktioniert nur mit öffentlichen Beiträgen, da private Inhalte von jeder Plattform bewusst eingeschränkt werden und über einen geteilten Link nicht zugänglich sind."
+      }
+    ],
+    "footerLabel": "Audio Downloader (Insta & YT)"
+  },
+  "modeSwitcher": {
+    "toAudioLabel": "Audio extrahieren",
+    "toAudioBadge": "NEU",
+    "toAudioAria": "Zum Audio Downloader wechseln",
+    "toVideoLabel": "HD-Video herunterladen",
+    "toVideoBadge": "HD",
+    "toVideoAria": "Zum Video Downloader wechseln"
+  }
+}

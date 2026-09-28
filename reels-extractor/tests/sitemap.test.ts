@@ -52,8 +52,8 @@ describe("sitemap contents", () => {
     assert.equal(byUrl.size, entries.length);
   });
 
-  it("lists all 11 languages", () => {
-    assert.deepEqual([...locales].sort(), ["ar", "bn", "en", "es", "fr", "hi", "id", "mr", "pt", "ta", "te"]);
+  it("lists all 13 languages", () => {
+    assert.deepEqual([...locales].sort(), ["ar", "bn", "de", "en", "es", "fr", "hi", "id", "it", "mr", "pt", "ta", "te"]);
   });
 
   it("lists every platform page in every language, at the requested addresses", () => {
@@ -82,9 +82,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 11 home + 110 platform + 11 audio-downloader + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, 11 + 11 * ids.length + locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 167 + 1 + allBlogPosts + 1 + spanishBlogPosts, "167 site pages + the English and Spanish blog indexes + one entry per post");
+  it("adds up: 13 home + 130 platform + 13 audio-downloader + 5 legal pages x every translated language", () => {
+    assert.equal(entries.length, locales.length + locales.length * ids.length + locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 191 + 1 + allBlogPosts + 1 + spanishBlogPosts, "191 site pages + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -140,7 +140,7 @@ describe("frequency and priority", () => {
 
   it("platform pages: daily, 0.9 - in every language", () => {
     const pages = entries.filter((x) => rule(x.url) === "platform");
-    assert.equal(pages.length, 110);
+    assert.equal(pages.length, 130);
     for (const e of pages) {
       assert.equal(e.changeFrequency, "daily", e.url);
       assert.equal(e.priority, 0.9, e.url);
@@ -181,7 +181,7 @@ describe("frequency and priority", () => {
 });
 
 describe("alternate languages", () => {
-  it("every platform and home page lists all 11 languages plus x-default", () => {
+  it("every platform and home page lists all 13 languages plus x-default", () => {
     for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog)/.test(x.url))) {
       assert.deepEqual(Object.keys(e.alternates.languages).sort(), [...locales, "x-default"].sort(), e.url);
     }

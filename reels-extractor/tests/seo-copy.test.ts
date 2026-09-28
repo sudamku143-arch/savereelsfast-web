@@ -59,7 +59,7 @@ for (const locale of locales) {
       const verb: Record<string, RegExp> = {
         en: /Download/, es: /Descargar/, pt: /Baixar/, hi: /Download|डाउनलोड/, bn: /Download|ডাউনলোড/,
         te: /Download|డౌన్‌లోడ్/, ta: /Download|டவுன்லோடு/, mr: /Download|डाउनलोड/, id: /Download|Unduh/,
-        fr: /Télécharg/, ar: /تحميل|تنزيل/,
+        fr: /Télécharg/, de: /Herunterlad|herunterlad|Download/, it: /Scaric|Download/, ar: /تحميل|تنزيل/,
       };
       for (const [id, page] of Object.entries(m.landing.platforms)) {
         assert.match(page.metaTitle, verb[locale], `${id}: "${page.metaTitle}" lacks the download verb`);

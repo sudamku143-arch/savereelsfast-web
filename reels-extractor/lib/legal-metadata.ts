@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { locales, localePath, hasLegalTranslation, LEGAL_TRANSLATED, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", ar: "ar_AR" };
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", es: "es_ES", pt: "pt_BR", hi: "hi_IN", bn: "bn_IN", te: "te_IN", ta: "ta_IN", mr: "mr_IN", id: "id_ID", fr: "fr_FR", de: "de_DE", it: "it_IT", ar: "ar_AR" };
 const OG_IMAGE = `${SITE_URL}/api/og`;
 
 /** Share image for a platform's landing page (see app/api/og/route.tsx for the accepted keys). */

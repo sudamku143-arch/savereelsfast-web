@@ -42,7 +42,7 @@ const nextConfig = {
     // Platform pages used to live at /downloader/<name>. They now live at /<name>-video-downloader; every
     // old address (in every language) is redirected permanently, so old links and search results still work.
     // tests/sitemap.test.ts checks these tables against lib/landing.ts.
-    const LANGUAGES = "es|pt|hi|bn|te|ta|mr|id|fr|ar";
+    const LANGUAGES = "es|pt|hi|bn|te|ta|mr|id|fr|ar|de|it";
     const LEGACY = {
       instagram: "instagram-video-downloader",
       youtube: "youtube-video-downloader",

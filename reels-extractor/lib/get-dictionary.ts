@@ -15,6 +15,8 @@ const dictionaries: Record<Locale, () => Promise<Partial<Dictionary>>> = {
   mr: () => import("../messages/mr.json").then((m) => m.default),
   id: () => import("../messages/id.json").then((m) => m.default),
   fr: () => import("../messages/fr.json").then((m) => m.default),
+  de: () => import("../messages/de.json").then((m) => m.default),
+  it: () => import("../messages/it.json").then((m) => m.default),
   ar: () => import("../messages/ar.json").then((m) => m.default),
 };
 
