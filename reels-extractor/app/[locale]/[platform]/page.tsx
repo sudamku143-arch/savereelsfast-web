@@ -16,6 +16,7 @@ import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { buildPlatformInfo } from "@/lib/platform-info";
 import ExtractorClient from "../components/ExtractorClient";
+import FeatureGrid from "../components/FeatureGrid";
 import FaqAccordion from "../components/FaqAccordion";
 import AdBanner from "../components/AdBanner";
 import PlatformLinks from "../components/PlatformLinks";
@@ -149,7 +150,7 @@ export default async function PlatformLandingPage({ params }: Props) {
         </ol>
       </nav>
 
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-5xl">
         <ExtractorClient
           locale={locale}
           heroDict={dict.hero}
@@ -198,21 +199,10 @@ export default async function PlatformLandingPage({ params }: Props) {
         </ol>
       </section>
 
-      <section className="mt-16 w-full max-w-2xl">
-        <h2 className="mb-4 text-xl font-bold text-zinc-50">
-          {fillTemplate(common.featuresHeading, vars)}
-        </h2>
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {common.features.map((feature) => (
-            <li key={feature.title} className="glass rounded-2xl p-4">
-              <h3 className="text-sm font-semibold text-zinc-100">{feature.title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-zinc-400">
-                {fillTemplate(feature.text, vars)}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <FeatureGrid
+        heading={fillTemplate(common.featuresHeading, vars)}
+        features={common.features.map((feature) => ({ title: feature.title, text: fillTemplate(feature.text, vars) }))}
+      />
 
       <FaqAccordion heading={fillTemplate(common.faqHeading, vars)} items={faqItems} />
 

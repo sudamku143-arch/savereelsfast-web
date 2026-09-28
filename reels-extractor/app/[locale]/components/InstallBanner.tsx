@@ -59,7 +59,7 @@ export default function InstallBanner({ dict }: { dict: Dict }) {
           <button
             type="button"
             onClick={() => void install()}
-            className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg bg-brand-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-300"
+            className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg btn-primary px-3.5 py-1.5 text-xs font-semibold text-white shadow-glow outline-none transition focus-visible:ring-2 focus-visible:ring-brand-300"
           >
             <InstallIcon className="h-3.5 w-3.5" />
             {dict.install}

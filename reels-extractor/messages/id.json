@@ -23,10 +23,22 @@
   "nav": {
     "language": "Pilih bahasa",
     "homeLabel": "Beranda SaveReelsFast",
-    "install": "Pasang Aplikasi"
+    "install": "Pasang Aplikasi",
+    "links": {
+      "platforms": "Platform",
+      "features": "Fitur",
+      "howItWorks": "Cara kerja",
+      "faq": "FAQ",
+      "blog": "Blog"
+    }
   },
   "hero": {
     "badge": "100% Gratis · Tanpa Login",
+    "trust": {
+      "noLogin": "Tanpa login",
+      "hd": "Kualitas HD",
+      "privacy": "Gratis & privat — kami tidak pernah menyimpan videomu"
+    },
     "subtitle": "Tempel tautan video di bawah dan simpan MP4 HD ke perangkat Anda. Bisa untuk Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn.",
     "pasteButton": "Tempel",
     "downloadCta": "Ambil Video",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "Alat ini tidak berafiliasi dengan, didukung oleh, atau disponsori oleh Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap, atau platform lain mana pun. Gunakan hanya untuk mengunduh konten yang berhak Anda simpan.",
     "rights": "Hak cipta dilindungi.",
+    "trust": "Gratis selamanya • Tanpa akun • Bisa di desktop & ponsel",
     "links": {
       "privacy": "Kebijakan Privasi",
       "terms": "Ketentuan Layanan",

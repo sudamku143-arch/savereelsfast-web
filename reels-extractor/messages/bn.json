@@ -23,10 +23,22 @@
   "nav": {
     "language": "ভাষা বেছে নিন",
     "homeLabel": "SaveReelsFast হোম",
-    "install": "অ্যাপ ইনস্টল করুন"
+    "install": "অ্যাপ ইনস্টল করুন",
+    "links": {
+      "platforms": "প্ল্যাটফর্ম",
+      "features": "ফিচার",
+      "howItWorks": "কীভাবে কাজ করে",
+      "faq": "প্রশ্নোত্তর",
+      "blog": "ব্লগ"
+    }
   },
   "hero": {
     "badge": "১০০% বিনামূল্যে · লগইন লাগবে না",
+    "trust": {
+      "noLogin": "লগইন লাগবে না",
+      "hd": "HD কোয়ালিটি",
+      "privacy": "ফ্রি ও প্রাইভেট — আমরা আপনার ভিডিও সংরক্ষণ করি না"
+    },
     "subtitle": "নিচে ভিডিওর লিংক পেস্ট করুন এবং আপনার ডিভাইসে HD MP4 সেভ করুন। Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat ও LinkedIn-এ কাজ করে।",
     "pasteButton": "পেস্ট",
     "downloadCta": "ভিডিও আনুন",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "এই টুল Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap বা অন্য কোনো প্ল্যাটফর্মের সঙ্গে সংশ্লিষ্ট নয়, তাদের দ্বারা অনুমোদিত বা পৃষ্ঠপোষকতাপ্রাপ্তও নয়। শুধু সেই কনটেন্ট ডাউনলোডে ব্যবহার করুন যা সেভ করার অধিকার আপনার আছে।",
     "rights": "সর্বস্বত্ব সংরক্ষিত।",
+    "trust": "সবসময় ফ্রি • কোনো অ্যাকাউন্ট লাগবে না • ডেস্কটপ ও মোবাইলে চলে",
     "links": {
       "privacy": "গোপনীয়তা নীতি",
       "terms": "পরিষেবার শর্তাবলী",

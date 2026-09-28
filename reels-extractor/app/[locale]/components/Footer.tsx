@@ -9,6 +9,7 @@ import type { TelegramDict } from "./TelegramFab";
 type Dict = {
   disclaimer: string;
   rights: string;
+  trust: string;
   columns: { tools: string; legal: string; company: string };
   links: {
     privacy: string;
@@ -40,7 +41,7 @@ function Column({
           <li key={link.href}>
             <a
               href={link.href}
-              className="rounded text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="rounded text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400"
             >
               {link.label}
             </a>
@@ -101,8 +102,9 @@ export default function Footer({
   ];
 
   return (
-    <footer className="mt-8 border-t border-white/10 px-4 py-10">
-      <div className="mx-auto max-w-4xl">
+    <footer className="mt-8 border-t border-white/10 bg-ink/40 px-4 py-10 backdrop-blur-xl">
+      <div className="mx-auto max-w-5xl">
+        <p className="mb-10 text-center text-sm text-zinc-500">{dict.trust}</p>
         <nav
           aria-label="Footer"
           className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3"
@@ -115,7 +117,7 @@ export default function Footer({
                 <li key={link.href} className="break-inside-avoid">
                   <a
                     href={link.href}
-                    className="rounded text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
+                    className="rounded text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400"
                   >
                     {link.label}
                   </a>
@@ -131,7 +133,7 @@ export default function Footer({
               target="_blank"
               rel="noopener noreferrer"
               aria-label={telegram.open}
-              className="mt-2 inline-flex items-center gap-1.5 rounded text-sm text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="mt-2 inline-flex items-center gap-1.5 rounded text-sm text-zinc-400 outline-none transition hover:text-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400"
             >
               <TelegramIcon className="h-4 w-4 text-sky-400" />
               {telegram.label}

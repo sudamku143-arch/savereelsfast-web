@@ -23,25 +23,23 @@ export function InstallIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 /**
- * Header pill. Glassmorphism body inside a pink-to-violet gradient border, with a soft glow.
- * Renders nothing when installing isn't possible or the app is already installed.
+ * The header's call to action: the gradient pill. Renders nothing when installing isn't possible or the app is
+ * already installed.
  */
 export default function InstallButton({ label }: { label: string }) {
   const { canInstall, install } = useInstall();
   if (!canInstall) return null;
 
   return (
-    <span className="rounded-full bg-gradient-to-r from-brand-400 to-violet-500 p-px shadow-glow">
-      <button
-        type="button"
-        onClick={() => void install()}
-        aria-label={label}
-        className="flex items-center gap-1.5 rounded-full bg-zinc-950/90 px-3 py-1.5 text-sm font-semibold text-zinc-50 outline-none backdrop-blur-xl transition hover:bg-zinc-900 focus-visible:ring-2 focus-visible:ring-brand-300"
-      >
-        <InstallIcon className="h-4 w-4 text-brand-300" />
-        {/* Icon-only on very narrow phones so the header never wraps. */}
-        <span className="hidden min-[400px]:inline">{label}</span>
-      </button>
-    </span>
+    <button
+      type="button"
+      onClick={() => void install()}
+      aria-label={label}
+      className="btn-primary flex items-center whitespace-nowrap gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+    >
+      <InstallIcon className="h-4 w-4" />
+      {/* Icon-only on very narrow phones so the header never wraps. */}
+      <span className="hidden min-[400px]:inline">{label}</span>
+    </button>
   );
 }

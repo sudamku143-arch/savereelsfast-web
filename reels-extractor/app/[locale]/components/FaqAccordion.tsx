@@ -15,8 +15,8 @@ export default function FaqAccordion({
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="mt-16 w-full max-w-2xl">
-      <h2 className="mb-4 text-xl font-bold text-zinc-50">{heading}</h2>
+    <section id="faq" className="mt-16 w-full max-w-2xl scroll-mt-24">
+      <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-zinc-50">{heading}</h2>
       <div className="glass divide-y divide-white/10 rounded-2xl">
         {items.map((item, i) => {
           const open = openIndex === i;

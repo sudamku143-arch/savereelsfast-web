@@ -146,7 +146,7 @@ export default async function BlogPostPage({ params }: Props) {
         <p className="mt-2 text-sm leading-relaxed text-zinc-400">{blog.ctaText}</p>
         <a
           href={localePath(locale)}
-          className="mt-4 inline-block rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white outline-none transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300"
+          className="mt-4 inline-block rounded-xl btn-primary px-5 py-2.5 text-sm font-semibold text-white outline-none transition focus-visible:ring-2 focus-visible:ring-brand-300"
         >
           {blog.ctaButton}
         </a>

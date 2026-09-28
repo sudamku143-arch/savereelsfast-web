@@ -77,7 +77,7 @@ export default async function LocalePage({
 
   return (
     <main className="flex flex-col items-center px-4 pb-16 pt-12 sm:pt-20">
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-5xl">
         <ExtractorClient
           locale={locale}
           heroDict={dict.hero}
@@ -93,13 +93,13 @@ export default async function LocalePage({
 
       <InstallBanner dict={dict.pwa} />
 
-      <FeatureGrid heading={dict.seo.featuresHeading} features={dict.seo.features} />
+      <FeatureGrid id="features" heading={dict.seo.featuresHeading} features={dict.seo.features} />
 
       <SeoContent heading={dict.seo.heading} paragraphs={dict.seo.paragraphs} />
 
       {/* Same visible steps the HowTo JSON-LD below describes - never the other way around. */}
-      <section className="mt-16 w-full max-w-2xl">
-        <h2 className="mb-4 text-xl font-bold text-zinc-50">{dict.meta.howToHeading}</h2>
+      <section id="how-it-works" className="mt-16 w-full max-w-2xl scroll-mt-24">
+        <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-zinc-50">{dict.meta.howToHeading}</h2>
         <ol className="space-y-3">
           {dict.meta.howToSteps.map((step, index) => (
             <li

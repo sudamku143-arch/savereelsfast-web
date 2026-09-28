@@ -96,7 +96,7 @@ export default function IosInstallModal({ dict }: { dict: Dict }) {
             ref={closeRef}
             type="button"
             onClick={closeIosGuide}
-            className="mt-5 w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-300"
+            className="mt-5 w-full rounded-xl btn-primary px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition focus-visible:ring-2 focus-visible:ring-brand-300"
           >
             {dict.iosClose}
           </button>

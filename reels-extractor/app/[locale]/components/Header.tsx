@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { locales, defaultLocale, switchLocalePath, type Locale } from "@/lib/i18n-config";
+import { locales, defaultLocale, localePath, switchLocalePath, type Locale } from "@/lib/i18n-config";
 import { showSwitcher, switcherLocales, type BlogAvailability } from "@/lib/switcher";
 import { TELEGRAM_BOT_URL } from "@/lib/site";
 import InstallButton from "./InstallButton";
@@ -13,6 +13,7 @@ type Dict = {
   language: string;
   homeLabel: string;
   install: string;
+  links: { platforms: string; features: string; howItWorks: string; faq: string; blog: string };
 };
 
 const LOCALE_LABELS: Record<Locale, string> = {
@@ -45,8 +46,8 @@ function Logo() {
     >
       <defs>
         <linearGradient id="srf-logo-grad" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0" stopColor="#f2609a" />
-          <stop offset="1" stopColor="#813cff" />
+          <stop offset="0" stopColor="#ff6b9d" />
+          <stop offset="1" stopColor="#9448e8" />
         </linearGradient>
       </defs>
       <rect width="32" height="32" rx="9" fill="url(#srf-logo-grad)" />
@@ -63,6 +64,7 @@ export default function Header({
   locale,
   dict,
   blogAvailability,
+  hasBlog,
   telegram,
 }: {
   locale: Locale;
@@ -70,7 +72,18 @@ export default function Header({
   telegram: TelegramDict;
   /** Where the blog exists (it is not in every language), so the switcher never offers a 404. */
   blogAvailability: BlogAvailability;
+  /** Whether this language has a blog, so the Blog link never points at a 404. */
+  hasBlog: boolean;
 }) {
+  const home = localeHref(locale);
+  // Sections of the home page (ids set in [locale]/page.tsx). From any other page they lead back home.
+  const links = [
+    { href: `${home}#platforms`, label: dict.links.platforms },
+    { href: `${home}#features`, label: dict.links.features },
+    { href: `${home}#how-it-works`, label: dict.links.howItWorks },
+    { href: `${home}#faq`, label: dict.links.faq },
+    ...(hasBlog ? [{ href: localePath(locale, "/blog"), label: dict.links.blog }] : []),
+  ];
   const router = useRouter();
   const pathname = usePathname() ?? "/";
   const languageOptions = switcherLocales(pathname, locales, blogAvailability);
@@ -107,18 +120,33 @@ export default function Header({
   }
 
   return (
-    <header className="glass sticky top-0 z-50 border-x-0 border-t-0">
-      <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
+    // A floating glass pill: the header's own box is transparent padding, so the page shows around the bar.
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4">
+      <nav className="glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pl-3 pr-2 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.8)] sm:pl-4">
         <a
-          href={localeHref(locale)}
+          href={home}
           aria-label={dict.homeLabel}
-          className="flex items-center gap-2.5 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+          className="flex shrink-0 items-center gap-2.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
         >
           <Logo />
-          <span className="text-base font-bold tracking-tight text-zinc-50">
-            SaveReels<span className="text-brand-400">Fast</span>
+          <span className="font-display text-base font-bold tracking-tight text-zinc-50">
+            SaveReels<span className="text-gradient">Fast</span>
+            <span className="hidden text-zinc-500 sm:inline">.com</span>
           </span>
         </a>
+
+        <ul className="hidden items-center gap-5 xl:flex">
+          {links.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="whitespace-nowrap rounded-md text-sm font-medium text-zinc-400 outline-none transition hover:text-zinc-50 focus-visible:ring-2 focus-visible:ring-brand-400"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
 
         <div className="flex items-center gap-2">
         <a
@@ -127,11 +155,11 @@ export default function Header({
           rel="noopener noreferrer"
           aria-label={telegram.open}
           title={telegram.open}
-          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500"
+          className="flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm font-medium text-zinc-300 outline-none transition hover:bg-white/5 hover:text-zinc-50 focus-visible:ring-2 focus-visible:ring-brand-400"
         >
           <TelegramIcon className="h-4 w-4 text-sky-400" />
-          {/* The label is hidden on narrow phones, where the header has no room for it (the icon keeps its name). */}
-          <span className="hidden sm:inline">{telegram.label}</span>
+          {/* The label is hidden on narrow phones, and where the section links take the room (the icon keeps its name). */}
+          <span className="hidden sm:inline xl:hidden 2xl:inline">{telegram.label}</span>
         </a>
         <InstallButton label={dict.install} />
         {canSwitch && (
@@ -142,7 +170,7 @@ export default function Header({
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-label={dict.language}
-            className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500"
+            className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-400"
           >
             <svg
               width="16"
@@ -180,7 +208,7 @@ export default function Header({
             <ul
               role="listbox"
               aria-label={dict.language}
-              className="absolute right-0 mt-2 w-44 animate-fade-in-up overflow-hidden rounded-xl border border-white/10 bg-zinc-900/95 py-1 shadow-xl backdrop-blur-xl"
+              className="absolute right-0 mt-3 w-44 animate-fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-ink/90 py-1 shadow-xl backdrop-blur-xl"
             >
               {languageOptions.map((l) => (
                 <li key={l} role="option" aria-selected={l === locale}>

@@ -114,7 +114,7 @@ export default async function AudioDownloaderPage({ params }: Props) {
         </ol>
       </nav>
 
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-5xl">
         <ExtractorClient
           locale={locale}
           heroDict={dict.hero}

@@ -167,7 +167,7 @@ export default function AnalyticsConsent({ locale, dict }: { locale: Locale; dic
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {/* Equal size and weight: declining must be as easy as accepting. */}
-          <button type="button" onClick={() => answer("granted")} className={`${button} bg-brand-500 text-white hover:bg-brand-600`}>
+          <button type="button" onClick={() => answer("granted")} className={`${button} btn-primary text-white`}>
             {dict.accept}
           </button>
           <button type="button" onClick={() => answer("denied")} className={`${button} bg-white/10 text-zinc-100 hover:bg-white/20`}>

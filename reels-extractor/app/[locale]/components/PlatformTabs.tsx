@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import PlatformIcon from "./PlatformIcon";
 
@@ -36,16 +36,24 @@ export default function PlatformTabs({
     onSelect(id);
   }
 
+  // One swipeable row at every width (all ten platforms stay one tap away), fading out at both edges so it
+  // reads as "there's more this way". The active pill scrolls itself into view.
+  const activeRef = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [active]);
+
   return (
     <nav
       aria-label={label}
-      className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+      className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 py-2 [mask-image:linear-gradient(to_right,transparent,black_1.5rem,black_calc(100%-1.5rem),transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {PLATFORM_IDS.map((id) => {
         const isActive = id === active;
         return (
           <Link
             key={id}
+            ref={isActive ? activeRef : undefined}
             href={hrefs[id]}
             scroll={false}
             prefetch={isActive ? undefined : false}
@@ -53,16 +61,13 @@ export default function PlatformTabs({
             aria-label={names[id]}
             title={names[id]}
             onClick={(event) => handleClick(event, id)}
-            className={`flex shrink-0 snap-start items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium outline-none transition duration-200 focus-visible:ring-2 focus-visible:ring-brand-500 ${
+            className={`flex shrink-0 snap-center items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium outline-none transition duration-200 focus-visible:ring-2 focus-visible:ring-brand-400 ${
               isActive
-                ? "border-brand-500 bg-brand-500/15 text-white shadow-glow"
-                : "border-white/10 bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-100"
+                ? "btn-primary border-white/20"
+                : "border-white/10 bg-white/[0.03] text-zinc-400 backdrop-blur-xl hover:border-white/20 hover:bg-white/[0.06] hover:text-zinc-100"
             }`}
           >
-            <PlatformIcon
-              id={id}
-              className={`h-4 w-4 transition-colors ${isActive ? "text-brand-300" : ""}`}
-            />
+            <PlatformIcon id={id} className="h-4 w-4" />
             <span>{names[id]}</span>
           </Link>
         );

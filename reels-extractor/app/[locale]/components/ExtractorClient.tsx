@@ -25,6 +25,7 @@ import AdBanner, { type AdDict } from "./AdBanner";
 
 type HeroDict = {
   badge: string;
+  trust: { noLogin: string; hd: string; privacy: string };
   subtitle: string;
   pasteButton: string;
   downloadCta: string;
@@ -47,6 +48,26 @@ type PlatformsDict = { label: string } & Record<
 const EXTRACT_TIMEOUT_MS = 10_000;
 // YouTube lookups may legitimately take longer (see /api/extract), so the page waits longer for those only.
 const YOUTUBE_EXTRACT_TIMEOUT_MS = 25_000;
+// Platforms whose files aren't reliably HD (YouTube's fast route tops out at 360p, LinkedIn reports no
+// resolution), so the "HD quality" badge is left off for them rather than overpromise.
+const NO_HD_BADGE: PlatformId[] = ["youtube", "linkedin"];
+
+function TrustIcon({ kind }: { kind: "check" | "sparkles" | "lock" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-brand-300">
+      {kind === "check" && <path d="M20 6 9 17l-5-5" />}
+      {kind === "sparkles" && (
+        <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z" />
+      )}
+      {kind === "lock" && (
+        <>
+          <rect x="4" y="11" width="16" height="10" rx="2" />
+          <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 export default function ExtractorClient({
   locale,
@@ -235,19 +256,20 @@ export default function ExtractorClient({
 
   return (
     <div className="flex w-full flex-col items-center">
-      <span className="mb-4 rounded-full bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+      <span className="mb-6 flex animate-hero-in items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs font-semibold text-zinc-300 backdrop-blur-xl">
+        <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-brand-400 to-violet-400 shadow-glow" aria-hidden="true" />
         {heroDict.badge}
       </span>
-      <h1 className="max-w-2xl text-center text-3xl font-extrabold tracking-tight text-zinc-50 sm:text-5xl">
+      <h1 className="max-w-4xl animate-rise text-balance text-center font-display text-4xl font-bold leading-[1.05] tracking-tight text-zinc-50 sm:text-6xl lg:text-7xl">
         {follows ? platformInfo[platform].h1 : (heroHeading ?? active.title)}
       </h1>
-      <p className="mt-4 max-w-xl text-center text-sm text-zinc-400 sm:text-base">
+      <p className="mt-6 max-w-2xl animate-hero-in text-balance text-center text-base leading-relaxed text-zinc-400 [animation-delay:120ms] sm:text-lg">
         {follows ? platformInfo[platform].lead : (heroLead ?? heroDict.subtitle)}
       </p>
 
       <ModeSwitcher locale={locale} dict={modeSwitcherDict} />
 
-      <div className="mt-8 w-full max-w-xl space-y-3">
+      <div className="mt-8 w-full max-w-2xl animate-hero-in space-y-4 [animation-delay:200ms]">
         <PlatformTabs
           label={platformsDict.label}
           names={names}
@@ -265,6 +287,21 @@ export default function ExtractorClient({
           onDraftChange={setDraft}
           disabled={status === "loading"}
         />
+        <ul className="flex flex-wrap items-center justify-center gap-2">
+          {[
+            { kind: "check" as const, text: heroDict.trust.noLogin },
+            ...(NO_HD_BADGE.includes(platform) ? [] : [{ kind: "sparkles" as const, text: heroDict.trust.hd }]),
+            { kind: "lock" as const, text: heroDict.trust.privacy },
+          ].map((badge) => (
+            <li
+              key={badge.kind}
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-xl"
+            >
+              <TrustIcon kind={badge.kind} />
+              {badge.text}
+            </li>
+          ))}
+        </ul>
         <p className="px-1 text-center text-xs leading-relaxed text-zinc-500">
           {platformInfo[platform].copyHint}
         </p>

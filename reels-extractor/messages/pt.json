@@ -23,10 +23,22 @@
   "nav": {
     "language": "Selecionar idioma",
     "homeLabel": "Início do SaveReelsFast",
-    "install": "Instalar app"
+    "install": "Instalar app",
+    "links": {
+      "platforms": "Plataformas",
+      "features": "Recursos",
+      "howItWorks": "Como funciona",
+      "faq": "Perguntas",
+      "blog": "Blog"
+    }
   },
   "hero": {
     "badge": "100% Grátis · Sem Login",
+    "trust": {
+      "noLogin": "Sem login",
+      "hd": "Qualidade HD",
+      "privacy": "Grátis e privado: nunca guardamos seus vídeos"
+    },
     "subtitle": "Cole o link de um vídeo e salve um MP4 em HD no seu dispositivo. Funciona com Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn.",
     "pasteButton": "Colar",
     "downloadCta": "Obter Vídeo",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "Esta ferramenta não é afiliada, endossada nem patrocinada pelo Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap ou qualquer outra plataforma. Use-a apenas para baixar conteúdo que você tem o direito de salvar.",
     "rights": "Todos os direitos reservados.",
+    "trust": "Grátis para sempre • Sem conta • Funciona no computador e no celular",
     "links": {
       "privacy": "Política de Privacidade",
       "terms": "Termos de Serviço",

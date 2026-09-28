@@ -28,11 +28,11 @@ const RETRYABLE = ["SERVER_BUSY"];
 
 const STYLES: Record<Variant, string> = {
   primary:
-    "rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-brand-300",
+    "rounded-xl btn-primary px-4 py-2.5 text-sm font-semibold text-white shadow-glow hover:shadow-glow-lg focus-visible:ring-brand-300",
   secondary:
     "rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-zinc-100 hover:bg-white/10 focus-visible:ring-brand-500",
   compact:
-    "rounded-lg bg-brand-500 px-2 py-1.5 text-xs font-semibold text-white hover:bg-brand-400 focus-visible:ring-brand-300",
+    "rounded-lg btn-primary px-2 py-1.5 text-xs font-semibold text-white focus-visible:ring-brand-300",
   "compact-secondary":
     "rounded-lg border border-white/10 px-2 py-1 text-[11px] font-medium text-zinc-300 hover:bg-white/10 focus-visible:ring-brand-500",
 };

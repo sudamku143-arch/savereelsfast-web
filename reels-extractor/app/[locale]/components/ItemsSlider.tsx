@@ -184,7 +184,7 @@ export default function ItemsSlider({
             type="button"
             onClick={downloadAll}
             disabled={busy}
-            className="mt-2 w-full rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none"
+            className="mt-2 w-full rounded-xl btn-primary px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:shadow-none"
           >
             {busy ? dict.downloadAllBusy : fill(dict.downloadAll, { n: audioItems.length })}
           </button>

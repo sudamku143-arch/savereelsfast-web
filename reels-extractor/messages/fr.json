@@ -23,10 +23,22 @@
   "nav": {
     "language": "Choisir la langue",
     "homeLabel": "Accueil SaveReelsFast",
-    "install": "Installer l'appli"
+    "install": "Installer l'appli",
+    "links": {
+      "platforms": "Plateformes",
+      "features": "Fonctionnalités",
+      "howItWorks": "Comment ça marche",
+      "faq": "FAQ",
+      "blog": "Blog"
+    }
   },
   "hero": {
     "badge": "100 % gratuit · Sans connexion",
+    "trust": {
+      "noLogin": "Sans connexion",
+      "hd": "Qualité HD",
+      "privacy": "Gratuit et privé : nous ne stockons jamais vos vidéos"
+    },
     "subtitle": "Collez le lien d'une vidéo ci-dessous et enregistrez un MP4 HD sur votre appareil. Fonctionne avec Instagram, YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat et LinkedIn.",
     "pasteButton": "Coller",
     "downloadCta": "Obtenir la vidéo",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "Cet outil n'est ni affilié à Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap ou toute autre plateforme, ni approuvé ou parrainé par elles. Utilisez-le uniquement pour télécharger des contenus que vous avez le droit d'enregistrer.",
     "rights": "Tous droits réservés.",
+    "trust": "Gratuit pour toujours • Sans compte • Fonctionne sur ordinateur et mobile",
     "links": {
       "privacy": "Politique de confidentialité",
       "terms": "Conditions d'utilisation",

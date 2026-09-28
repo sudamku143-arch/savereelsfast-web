@@ -135,7 +135,7 @@ describe("nothing reaches Google before the visitor accepts", () => {
     assert.match(component, /data-consent-banner=""/);
     assert.match(component, /removeAttribute\("data-srf-consent"\);[^\n]*\n\s+setOpen\(true\);/, "reopening from the footer un-hides it");
     assert.match(source("app/globals.css"), /html\[data-srf-consent\] \[data-consent-banner\] \{\s+display: none;/);
-    assert.match(source("app/[locale]/layout.tsx"), /<html lang=\{locale\} dir=\{localeDir\(locale\)\} suppressHydrationWarning>/);
+    assert.match(source("app/[locale]/layout.tsx"), /<html lang=\{locale\} dir=\{localeDir\(locale\)\}[^>]* suppressHydrationWarning>/);
   });
 
   it("the site's layout renders the banner and the footer has a way to change the choice", () => {

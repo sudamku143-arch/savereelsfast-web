@@ -37,8 +37,8 @@ export default function PlatformLinks({
   audioLabel?: string;
 }) {
   return (
-    <nav aria-label={heading} className="mt-16 w-full max-w-2xl">
-      <h2 className="text-xl font-bold text-zinc-50">{heading}</h2>
+    <nav id="platforms" aria-label={heading} className="mt-16 w-full max-w-2xl scroll-mt-24">
+      <h2 className="font-display text-2xl font-bold tracking-tight text-zinc-50">{heading}</h2>
       <p className="mt-1 text-sm text-zinc-400">{lead}</p>
 
       <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">

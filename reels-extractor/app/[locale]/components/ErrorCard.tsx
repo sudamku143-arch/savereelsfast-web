@@ -114,7 +114,7 @@ export default function ErrorCard({
           <button
             type="button"
             onClick={onRetry}
-            className="flex-1 rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-300 sm:flex-none"
+            className="flex-1 rounded-xl btn-primary px-4 py-2.5 text-sm font-semibold text-white shadow-glow outline-none transition focus-visible:ring-2 focus-visible:ring-brand-300 sm:flex-none"
           >
             {dict.actions.retry}
           </button>

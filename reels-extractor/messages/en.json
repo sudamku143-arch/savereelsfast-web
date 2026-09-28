@@ -23,10 +23,22 @@
   "nav": {
     "language": "Select language",
     "homeLabel": "SaveReelsFast home",
-    "install": "Install App"
+    "install": "Install App",
+    "links": {
+      "platforms": "Platforms",
+      "features": "Features",
+      "howItWorks": "How it works",
+      "faq": "FAQ",
+      "blog": "Blog"
+    }
   },
   "hero": {
     "badge": "100% Free · No Login Required",
+    "trust": {
+      "noLogin": "No login required",
+      "hd": "HD quality",
+      "privacy": "Free & private — we never store your videos"
+    },
     "subtitle": "Paste a public Instagram Reel link below and save it as an HD MP4 in seconds, on iPhone, Android or PC. Also works with YouTube, Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat and LinkedIn.",
     "pasteButton": "Paste",
     "downloadCta": "Get Video",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "This tool is not affiliated with, endorsed by, or sponsored by Instagram, Meta, YouTube, Google, X, Pinterest, TikTok, Reddit, Snap or any other platform. Use it only to download content you have the right to save.",
     "rights": "All rights reserved.",
+    "trust": "Free forever • No account needed • Works on desktop & mobile",
     "links": {
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",

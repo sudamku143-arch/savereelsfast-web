@@ -103,26 +103,43 @@ export default function InputBox({
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="flex w-full flex-col gap-2 sm:flex-row">
-        <input
-          type="text"
-          inputMode="url"
-          autoComplete="off"
-          value={url}
-          onChange={handleChange}
-          onPaste={handleInputPaste}
-          placeholder={placeholder}
-          aria-label={placeholder}
-          aria-invalid={localError ? true : undefined}
-          disabled={disabled}
-          className="glass min-w-0 flex-1 rounded-xl px-4 py-3.5 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 disabled:opacity-60 sm:text-base"
-        />
+      {/* One glass bar holding the field and both buttons (stacked under it on phones). The pink glow
+          brightens while the field has focus. */}
+      <div className="flex w-full flex-col gap-2 rounded-3xl border border-brand-400/30 bg-white/[0.03] p-2 shadow-glow-input backdrop-blur-xl transition duration-300 focus-within:border-brand-400/60 focus-within:shadow-glow-input-focus sm:flex-row sm:items-center sm:rounded-full">
+        <label className="flex min-w-0 flex-1 items-center gap-3 px-3">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className="h-5 w-5 shrink-0 text-brand-300"
+          >
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <input
+            type="text"
+            inputMode="url"
+            autoComplete="off"
+            value={url}
+            onChange={handleChange}
+            onPaste={handleInputPaste}
+            placeholder={placeholder}
+            aria-label={placeholder}
+            aria-invalid={localError ? true : undefined}
+            disabled={disabled}
+            className="min-w-0 flex-1 bg-transparent py-3 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 disabled:opacity-60 sm:text-base"
+          />
+        </label>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={handlePaste}
             disabled={disabled}
-            className="glass flex-1 rounded-xl px-4 py-3.5 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-500 disabled:opacity-60 sm:flex-none"
+            className="flex-1 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-zinc-200 outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-60 sm:flex-none"
           >
             {dict.pasteButton}
           </button>
@@ -130,7 +147,7 @@ export default function InputBox({
             type="submit"
             disabled={disabled}
             aria-busy={disabled ? true : undefined}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-glow outline-none transition hover:bg-brand-400 hover:shadow-glow-lg focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-80 disabled:shadow-none sm:flex-none"
+            className="btn-primary flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-80 sm:flex-none"
           >
             {disabled && (
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4 shrink-0 motion-safe:animate-spin">

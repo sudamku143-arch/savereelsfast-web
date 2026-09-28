@@ -23,10 +23,22 @@
   "nav": {
     "language": "اختر اللغة",
     "homeLabel": "الصفحة الرئيسية لـ SaveReelsFast",
-    "install": "تثبيت التطبيق"
+    "install": "تثبيت التطبيق",
+    "links": {
+      "platforms": "المنصات",
+      "features": "المميزات",
+      "howItWorks": "طريقة العمل",
+      "faq": "الأسئلة الشائعة",
+      "blog": "المدونة"
+    }
   },
   "hero": {
     "badge": "مجاني 100% · بدون تسجيل دخول",
+    "trust": {
+      "noLogin": "بدون تسجيل دخول",
+      "hd": "جودة HD",
+      "privacy": "مجاني وخاص — لا نخزّن مقاطع الفيديو أبدًا"
+    },
     "subtitle": "الصق رابط الفيديو أدناه واحفظ ملف MP4 بجودة HD على جهازك. يعمل مع Instagram وYouTube وFacebook وThreads وX وPinterest وTikTok وReddit وSnapchat وLinkedIn.",
     "pasteButton": "لصق",
     "downloadCta": "احصل على الفيديو",
@@ -601,6 +613,7 @@
   "footer": {
     "disclaimer": "هذه الأداة غير تابعة لـ Instagram أو Meta أو YouTube أو Google أو X أو Pinterest أو TikTok أو Reddit أو Snap أو أي منصة أخرى، ولا تحظى بتأييدها أو رعايتها. استخدمها فقط لتنزيل المحتوى الذي يحق لك حفظه.",
     "rights": "جميع الحقوق محفوظة.",
+    "trust": "مجاني دائمًا • بدون حساب • يعمل على الكمبيوتر والجوال",
     "links": {
       "privacy": "سياسة الخصوصية",
       "terms": "شروط الخدمة",
