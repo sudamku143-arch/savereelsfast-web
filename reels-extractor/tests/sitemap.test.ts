@@ -117,7 +117,9 @@ describe("scheduled posts stay out of the sitemap until their day", () => {
     assert.ok(!urls("2026-09-21").includes(`${SITE}/blog/save-instagram-reels-offline`));
     assert.equal(urls("2026-09-22").length, 8);
     assert.ok(urls("2026-09-22").includes(`${SITE}/blog/save-instagram-reels-offline`));
-    assert.equal(urls("2026-09-27").length, allBlogPosts + spanishBlogPosts, "English posts, plus the Spanish posts (from 2026-09-25)");
+    assert.equal(urls("2026-09-27").length, allBlogPosts + spanishBlogPosts - 5, "before the five Instagram guides (28th and 29th)");
+    assert.ok(!urls("2026-09-28").includes(`${SITE}/blog/download-instagram-reel-audio`), "the audio guide waits for the 29th");
+    assert.equal(urls("2026-09-29").length, allBlogPosts + spanishBlogPosts, "English posts, plus the Spanish posts (from 2026-09-25)");
   });
 });
 

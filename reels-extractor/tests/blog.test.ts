@@ -55,6 +55,12 @@ const STARTERS = [
   "save-linkedin-videos",
   "linkedin-video-tips-for-creators",
   "tiktok-trends-and-saving-favorite-videos",
+  // Instagram guides (device how-tos, audio, troubleshooting, the built-in button)
+  "download-instagram-reels-on-iphone",
+  "download-instagram-reels-on-android",
+  "download-instagram-reel-audio",
+  "instagram-reel-not-downloading",
+  "instagram-download-button-vs-reels-downloader",
 ];
 
 describe("posts on disk", () => {
@@ -199,12 +205,13 @@ describe("posts and tool pages link to each other", () => {
       assert.deepEqual(ranks, [...ranks].sort(), `${tool}: ${ranks}`);
     }
     assert.equal(relatedPosts("en", "instagram")[0].tools[0], "instagram");
-    assert.ok(relatedPosts("en", "instagram").map((p) => p.slug).includes("top-10-instagram-reels-ideas-2026"));
+    // Instagram has more dedicated posts than the three slots, so all three are Instagram posts (the newest guides).
+    assert.ok(relatedPosts("en", "instagram").every((p) => p.tools[0] === "instagram"));
   });
 
   it("each platform's own posts are the ones the brief asked for", () => {
     const expected: Record<string, string[]> = {
-      instagram: ["save-instagram-reels-offline", "top-10-instagram-reels-ideas-2026"],
+      instagram: ["download-instagram-reel-audio", "download-instagram-reels-on-android"],
       youtube: ["save-youtube-shorts-offline", "youtube-shorts-vs-instagram-reels-for-creators"],
       facebook: ["save-facebook-videos-offline", "facebook-video-privacy-what-you-can-save"],
       threads: ["threads-vs-x-content-strategy", "save-threads-videos"],
@@ -278,8 +285,10 @@ describe("scheduled publishing", () => {
     assert.equal(onDay("2026-09-21", () => allPosts().length), 5, "the five posts dated 2026-09-21");
     assert.equal(onDay("2026-09-21", () => scheduledPosts().length), TOTAL + SPANISH - 5);
     assert.equal(onDay("2026-09-22", () => allPosts().length), 8, "three more on the 22nd");
-    assert.equal(onDay("2026-09-27", () => allPosts().length), TOTAL + SPANISH);
-    assert.equal(onDay("2026-09-27", () => scheduledPosts().length), 0);
+    assert.equal(onDay("2026-09-27", () => allPosts().length), TOTAL + SPANISH - 5, "the five Instagram guides wait for the 28th and 29th");
+    assert.equal(onDay("2026-09-28", () => allPosts().length), TOTAL + SPANISH - 2, "three Instagram guides on the 28th");
+    assert.equal(onDay("2026-09-29", () => allPosts().length), TOTAL + SPANISH);
+    assert.equal(onDay("2026-09-29", () => scheduledPosts().length), 0);
   });
 
   it("a waiting post is nowhere: not by slug, not in the languages list, not among the related articles", () => {
