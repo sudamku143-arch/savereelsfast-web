@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import socket
+import subprocess
 import tempfile
 import threading
 import time
@@ -1209,6 +1210,84 @@ class OpenStream:
         self.close()
 
 
+# Audio from a video that has no separate audio track (every YouTube video today, and posts whose sound is only
+# inside the MP4). The video is streamed into ffmpeg, which copies the existing AAC track out unchanged (no
+# re-encoding) and writes it as a fragmented M4A that can be sent while it is still being produced. The source is
+# opened exactly like a video download, so the proxy, Cobalt-first and every size and daily cap still apply to it.
+_FFMPEG_ARGS = ["-hide_banner", "-loglevel", "error", "-i", "pipe:0", "-vn", "-c:a", "copy",
+                "-f", "mp4", "-movflags", "frag_keyframe+empty_moov+default_base_moof", "pipe:1"]
+_ffmpeg_exe: list = []  # memo: [path or None]
+
+
+def _ffmpeg() -> str | None:
+    """The ffmpeg binary: the one bundled by imageio-ffmpeg (a pip install, so it works on Render), else PATH."""
+    if not _ffmpeg_exe:
+        path = None
+        try:
+            import imageio_ffmpeg
+
+            path = imageio_ffmpeg.get_ffmpeg_exe()
+        except Exception:  # noqa: BLE001 - not installed: try the system one
+            path = shutil.which("ffmpeg")
+        _ffmpeg_exe.append(path)
+    return _ffmpeg_exe[0]
+
+
+class _AudioReader:
+    """Reads ffmpeg's output; fails loudly (not with a silently short file) if the source broke off."""
+
+    def __init__(self, proc: subprocess.Popen, first: bytes, failed: threading.Event):
+        self._proc, self._pending, self._failed = proc, first, failed
+
+    def read(self, size: int) -> bytes:
+        if self._pending:
+            chunk, self._pending = self._pending, b""
+            return chunk
+        chunk = self._proc.stdout.read1(size)
+        if not chunk and self._failed.is_set():
+            raise StreamTooLarge("the video stream broke off while its audio was being extracted")
+        return chunk
+
+
+def _audio_from_video(source: OpenStream) -> OpenStream:
+    """Wrap an opened video stream so it yields that video's own audio track as M4A. Blocking until the first audio bytes."""
+    exe = _ffmpeg()
+    if not exe:
+        source.close()
+        raise ScraperError(errors.UNSUPPORTED_POST, "This video has no separate audio stream.")
+    proc = subprocess.Popen([exe, *_FFMPEG_ARGS], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    failed = threading.Event()
+
+    def pump() -> None:
+        try:
+            for chunk in source.chunks():  # counts proxy bytes and enforces the size caps, like a video download
+                proc.stdin.write(chunk)
+        except Exception:  # noqa: BLE001 - a cut-off source must not end as a short, "successful" file
+            failed.set()
+            proc.kill()
+        finally:
+            try:
+                proc.stdin.close()
+            except Exception:  # noqa: BLE001
+                pass
+
+    def stop() -> None:
+        if proc.poll() is None:
+            proc.kill()
+        proc.stdout.close()
+        proc.wait()
+        source.close()
+
+    threading.Thread(target=pump, daemon=True).start()
+    first = proc.stdout.read1(CHUNK_SIZE)
+    if not first:
+        stop()
+        if failed.is_set():
+            raise ScraperError(errors.STREAM_EXPIRED_OR_BLOCKED)
+        raise ScraperError(errors.UNSUPPORTED_POST, "This video has no sound to extract.")
+    return OpenStream(_AudioReader(proc, first, failed), None, [stop], "m4a")
+
+
 def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> OpenStream:
     """Open the best video (or audio-only) stream of an already-resolved post. Blocking."""
     entries = _entries(info)
@@ -1346,6 +1425,7 @@ async def download(
     id: str = Query("video", max_length=60),
     kind: str = Query("video", pattern="^(video|audio|image)$"),
     item: int = Query(0, ge=0, le=MAX_ITEMS),
+    extract: bool = Query(False, description="kind=audio only: take the sound out of the video itself (for videos with no separate audio track)"),
     x_scraper_key: str | None = Header(default=None),
 ) -> StreamingResponse:
     """Re-resolve the post from this server's IP and stream the best video (or its audio-only track)."""
@@ -1359,7 +1439,11 @@ async def download(
     if lease is None:
         raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        stream = await _open_stream(url, kind, item)
+        if kind == "audio" and extract:
+            video = await _open_stream(url, "video", item)
+            stream = await asyncio.to_thread(_audio_from_video, video)
+        else:
+            stream = await _open_stream(url, kind, item)
     except ScraperError as err:
         lease.release()
         raise _http_error(err)
@@ -1512,6 +1596,7 @@ async def stream(
     id: str = Query("video", max_length=60),
     kind: str = Query("video", pattern="^(video|audio|image)$"),
     ext: str = Query("m4a", pattern="^[a-z0-9]{2,4}$"),
+    extract: bool = Query(False, description="kind=audio only: `url` is a video; send the audio track out of it"),
     x_scraper_key: str | None = Header(default=None),
     range_header: str | None = Header(default=None, alias="range"),
 ) -> StreamingResponse:
@@ -1526,7 +1611,12 @@ async def stream(
     if lease is None:
         raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        opened = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, kind, range_header)
+        if kind == "audio" and extract:
+            video = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, "video", None)
+            opened = await asyncio.to_thread(_audio_from_video, video)
+            ext = "m4a"
+        else:
+            opened = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, kind, range_header)
     except ScraperError as err:
         lease.release()
         raise _http_error(err)
