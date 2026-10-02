@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { buildDownloadHref, downloadFilename } from "@/lib/download";
+import { buildAudioHref, buildDownloadHref, downloadFilename } from "@/lib/download";
 import type { ReelItem } from "./PreviewCard";
 import DownloadButton, { type DownloadDict } from "./DownloadButton";
 import type { ErrorsDict } from "./ErrorCard";
@@ -75,12 +75,10 @@ export default function ItemsSlider({
     photos === 0 ? dict.postItems : photos === items.length ? dict.postPhotos : dict.postMixed,
     { n: items.length }
   );
-  const audioHref = (item: ReelItem) =>
-    item.audioUrl
-      ? buildDownloadHref({ url: item.audioUrl, id: item.id, kind: "audio", ext: item.audioExt })
-      : null;
+  // Its own audio track, or the sound taken out of the slide's video; photos have none.
+  const audioHref = (item: ReelItem) => buildAudioHref(item);
 
-  // Not every item has a separate audio stream (see PreviewCard); on the audio page, skip the ones that don't.
+  // Photos have no sound; on the audio page, skip them.
   const audioItems = audioOnly ? items.filter((item) => audioHref(item)) : items;
 
   async function downloadAll() {

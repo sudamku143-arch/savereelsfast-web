@@ -53,7 +53,12 @@ const IMAGE_CONTENT_TYPES: Record<ImageExtension, string> = {
   png: "image/png",
 };
 
-type Media = { kind: "video" | "audio" | "image"; ext: string; contentType: string };
+/**
+ * `extract`: an audio download from a video that has no separate audio track (every YouTube video, and posts
+ * whose sound only lives inside the MP4). `url` is then the video; the scraper pipes it through ffmpeg and
+ * sends just its AAC track, as M4A. Only the scraper can do that, so the direct attempt is skipped.
+ */
+type Media = { kind: "video" | "audio" | "image"; ext: string; contentType: string; extract?: boolean };
 
 /** What the CDN may answer with for each kind of download (anything else is refused). */
 const ACCEPTED_TYPES: Record<Media["kind"], string[]> = {
@@ -251,7 +256,8 @@ function viaScraperStream(
     kind: media.kind,
     ext: media.ext,
   });
-  return fromScraper(`/stream?${params.toString()}`, filename, media, range);
+  if (media.extract) params.set("extract", "1");
+  return fromScraper(`/stream?${params.toString()}`, filename, media, media.extract ? null : range);
 }
 
 /**
@@ -260,11 +266,12 @@ function viaScraperStream(
  */
 function viaScraperResolve(sourceUrl: string, id: string | null, filename: string, media: Media) {
   const params = new URLSearchParams({ url: sourceUrl, id: id ?? "video", kind: media.kind });
+  if (media.extract) params.set("extract", "1");
   return fromScraper(`/download?${params.toString()}`, filename, media);
 }
 
 /**
- * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio|image&ext=m4a|jpg
+ * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio|image&ext=m4a|jpg[&extract=1]
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -298,18 +305,19 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get("id");
   const requestedExt = searchParams.get("ext");
   const requestedKind = searchParams.get("kind");
-  const audioExt = isAudioExtension(requestedExt) ? requestedExt : "m4a";
+  const extract = requestedKind === "audio" && searchParams.get("extract") === "1";
+  const audioExt = !extract && isAudioExtension(requestedExt) ? requestedExt : "m4a";
   const imageExt = isImageExtension(requestedExt) ? requestedExt : "jpg";
   const media: Media =
     requestedKind === "audio"
-      ? { kind: "audio", ext: audioExt, contentType: AUDIO_CONTENT_TYPES[audioExt] }
+      ? { kind: "audio", ext: audioExt, contentType: AUDIO_CONTENT_TYPES[audioExt], extract }
       : requestedKind === "image"
         ? { kind: "image", ext: imageExt, contentType: IMAGE_CONTENT_TYPES[imageExt] }
         : { kind: "video", ext: "mp4", contentType: "video/mp4" };
   const filename = safeFilename(id, media);
   const range = validRange(request.headers.get("range"));
 
-  if (!isIpBound(target)) {
+  if (!media.extract && !isIpBound(target)) {
     const direct = await tryDirect(target, filename, media, range);
     if (direct) return direct;
   }

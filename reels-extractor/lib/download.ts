@@ -31,6 +31,8 @@ export function buildDownloadHref(opts: {
   src?: string;
   kind?: DownloadKind;
   ext?: string;
+  /** Audio only: `url` is a video with no separate audio track; the server takes its sound out (as M4A). */
+  extract?: boolean;
 }): string {
   const params = new URLSearchParams({ url: opts.url, id: opts.id });
   if (opts.src) params.set("src", opts.src);
@@ -38,7 +40,23 @@ export function buildDownloadHref(opts: {
     params.set("kind", opts.kind);
     if (opts.ext) params.set("ext", opts.ext);
   }
+  if (opts.kind === "audio" && opts.extract) params.set("extract", "1");
   return `/api/download?${params.toString()}`;
+}
+
+/**
+ * The audio download for a video: its separate audio track when it has one (saved as-is), otherwise the sound
+ * taken out of the video itself (YouTube, and posts whose sound is only inside the MP4). Photos have none.
+ */
+export function buildAudioHref(
+  item: { id: string; videoUrl: string; audioUrl?: string; audioExt?: string; kind?: string },
+  src?: string
+): string | null {
+  if (item.audioUrl) {
+    return buildDownloadHref({ url: item.audioUrl, id: item.id, src, kind: "audio", ext: item.audioExt });
+  }
+  if (item.kind === "image" || !item.videoUrl) return null;
+  return buildDownloadHref({ url: item.videoUrl, id: item.id, src, kind: "audio", ext: "m4a", extract: true });
 }
 
 /** File name a download will be saved as (mirrors the server's Content-Disposition). */

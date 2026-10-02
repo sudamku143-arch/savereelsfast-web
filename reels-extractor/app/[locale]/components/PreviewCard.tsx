@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import type { PlatformId } from "@/lib/platforms";
 import type { Locale } from "@/lib/i18n-config";
-import { buildDownloadHref, downloadFilename, type ImageExtension } from "@/lib/download";
+import { buildAudioHref, buildDownloadHref, downloadFilename, type ImageExtension } from "@/lib/download";
 import PlatformIcon from "./PlatformIcon";
 import ItemsSlider, { type ItemsDict } from "./ItemsSlider";
 import DownloadButton, { type DownloadDict } from "./DownloadButton";
@@ -114,16 +114,9 @@ export default function PreviewCard({
     src: result.sourceUrl,
     ...(isPhoto ? { kind: "image" as const, ext: result.imageExt } : {}),
   });
-  const audioHref = result.audioUrl
-    ? buildDownloadHref({
-        url: result.audioUrl,
-        id: result.id,
-        src: result.sourceUrl,
-        kind: "audio",
-        ext: result.audioExt,
-      })
-    : null;
-  const audioFormat = (result.audioExt ?? "m4a").toUpperCase();
+  // Its own audio track when it has one, else the sound taken out of the video; a photo has none.
+  const audioHref = isPhoto ? null : buildAudioHref(result, result.sourceUrl);
+  const audioFormat = (result.audioUrl ? result.audioExt ?? "m4a" : "m4a").toUpperCase();
 
   const durationLabel =
     result.durationSeconds != null ? formatDuration(result.durationSeconds) : null;
