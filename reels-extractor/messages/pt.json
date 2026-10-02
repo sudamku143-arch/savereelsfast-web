@@ -316,6 +316,34 @@
               "Um baixador de vídeo do Facebook salva um vídeo público, Reel ou publicação do Watch como arquivo MP4, para você guardar ou assistir offline. Cole um link de vídeo do facebook.com, um link de Reel, ou um link encurtado do fb.watch, e a ferramenta busca o mesmo arquivo de vídeo que o Facebook fornece para reprodução.",
               "Só funciona com publicações públicas: vídeos compartilhados em grupos privados, publicações só para amigos e qualquer coisa que exija login para ver ficam fora de alcance, já que o SaveReelsFast não faz login em nada em seu nome. Também não é preciso conta, app nem extensão de navegador da sua parte."
             ]
+          },
+          {
+            "heading": "Como Baixar Vídeos do Facebook em HD",
+            "paragraphs": [
+              "Cole o link e o SaveReelsFast escolhe a versão mais alta do vídeo que o Facebook oferece com o som embutido, então o MP4 que você salva toca com áudio em qualquer lugar. Se o autor publicou em HD, essa é a versão HD, geralmente 720p; um envio antigo ou de baixa resolução fica na qualidade em que foi publicado, porque nada é aumentado artificialmente.",
+              "O arquivo é o próprio vídeo do Facebook, salvo sem alterações: nenhum logo ou marca d'água é adicionado e nada é comprimido de novo. O selo de qualidade na prévia mostra a resolução antes do download, para você saber o que vai receber."
+            ]
+          },
+          {
+            "heading": "Baixar Reels do Facebook e Vídeos do fb.watch",
+            "paragraphs": [
+              "Os Reels do Facebook são baixados do mesmo jeito que os vídeos comuns. No app, toque em Compartilhar em um Reel, escolha Copiar link e cole acima: funcionam links com /reel/, links facebook.com/share e links curtos do fb.watch que alguém te enviou.",
+              "Se um Reel toca em uma janela anônima do navegador sem login, ele pode ser baixado aqui. Se o Facebook pedir para entrar primeiro, ele não é público, e nenhum baixador consegue acessá-lo sem a sua conta."
+            ]
+          },
+          {
+            "heading": "Salvar Vídeos do Facebook no iPhone, Android e PC",
+            "paragraphs": [
+              "No iPhone ou iPad, toque em Baixar vídeo no Safari; o MP4 aparece na lista de Downloads do Safari. Abra, toque em Compartilhar e escolha Salvar Vídeo para guardá-lo no app Fotos. No Android, o arquivo vai para a pasta Downloads e aparece na galeria.",
+              "Em um PC com Windows ou em um Mac, o vídeo é salvo na sua pasta de Downloads de sempre e toca em qualquer player. Não há nada para instalar em nenhum aparelho: nem app, nem extensão de navegador, nem conta."
+            ]
+          },
+          {
+            "heading": "Vídeo do Facebook Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Primeiro confira se o vídeo é público: abra o link em uma janela anônima sem fazer login. Se o Facebook pedir para entrar, o vídeo é restrito a amigos ou a um grupo e não pode ser baixado aqui. Confira também se você copiou o link do próprio vídeo, e não o da página ou do perfil onde ele foi publicado.",
+              "Se o vídeo é público e mesmo assim falha, espere um minuto e tente de novo, porque o Facebook às vezes limita os pedidos por um tempo. Vídeos muito longos podem ser grandes demais para salvar pelo site, e um vídeo apagado ou bloqueado no seu país não vai carregar."
+            ]
           }
         ]
       },
@@ -502,7 +530,7 @@
     "thumbnailAlt": "Miniatura do Reel",
     "noAudio": "Baixado sem áudio (a plataforma restringe o fluxo de áudio)",
     "downloadAudio": "Baixar áudio ({format})",
-    "audioUnavailable": "Não há um arquivo de áudio separado disponível para este link — o som vem junto com o vídeo.",
+    "audioUnavailable": "Fotos não têm som, então não há áudio para baixar aqui.",
     "postItems": "{n} vídeos nesta publicação",
     "postPhotos": "{n} fotos neste post",
     "postMixed": "{n} fotos e vídeos neste post",
@@ -1010,8 +1038,8 @@
     "hide": "Ocultar este botão"
   },
   "audioDownloader": {
-    "metaTitle": "Baixador de Áudio do Instagram e YouTube Rápido",
-    "metaDescription": "Baixador de áudio grátis para Reels do Instagram e vídeos ou Shorts do YouTube. Extraia e baixe o som em segundos, qualidade original, sem login, sem app.",
+    "metaTitle": "Baixar Áudio do Reels e do YouTube em M4A Grátis",
+    "metaDescription": "Baixador de áudio grátis para Reels do Instagram, vídeos e Shorts do YouTube. Salve o som em M4A na qualidade original, em segundos. Sem login, sem app.",
     "h1": "Baixador de Áudio do Instagram e YouTube",
     "lead": "Extraia áudio de alta qualidade e música de fundo de Reels do Instagram, Shorts do YouTube e vídeos completos em segundos: um baixador de áudio rápido, sem app para instalar, sem login e sem conversão com perda para MP3.",
     "breadcrumb": "Baixador de Áudio",
@@ -1019,28 +1047,28 @@
       {
         "heading": "O que é um Baixador de Áudio?",
         "paragraphs": [
-          "Um baixador de áudio salva o som de um vídeo público, um Reel do Instagram, um Short do YouTube ou um vídeo completo do YouTube, como um arquivo próprio, separado do vídeo, para você guardar uma narração, um trecho de música ou um clipe estilo podcast sem a imagem. Cole o link aqui, e quando a plataforma tiver uma faixa de áudio separada, um botão Baixar áudio aparece para ele.",
+          "Um baixador de áudio salva o som de um vídeo público — um Reel do Instagram, um Short do YouTube ou um vídeo completo do YouTube — como um arquivo separado, sem a imagem, para você guardar uma narração, um trecho de música ou um clipe estilo podcast. Cole o link aqui e um botão Baixar áudio aparece para qualquer vídeo que tenha som.",
           "É útil para salvar a trilha sonora de um Reel e ouvir depois, extrair o áudio de uma palestra ou entrevista que você não precisa em vídeo, ou guardar um trecho de fala ou efeito sonoro que queira reaproveitar, com a permissão do criador, já que o áudio continua sendo dele. Funciona igual no celular, tablet ou computador, em qualquer navegador moderno."
         ]
       },
       {
         "heading": "Como Extrair Áudio do Instagram e YouTube Online",
         "paragraphs": [
-          "1) Copie o link de um Reel público do Instagram, um vídeo ou Short do YouTube, ou uma publicação de qualquer uma das nossas 10 plataformas compatíveis. 2) Cole na caixa acima e espere a prévia carregar. 3) Se a plataforma tiver uma faixa de áudio separada, toque em Baixar áudio; o arquivo salva direto no seu aparelho: um baixador de áudio rápido, sem nada para instalar.",
+          "1) Copie o link de um Reel público do Instagram, de um vídeo ou Short do YouTube, ou de uma publicação com vídeo de qualquer uma das nossas 10 plataformas. 2) Cole no campo acima e espere a prévia carregar. 3) Toque em Baixar áudio; o arquivo M4A é salvo direto no seu aparelho, sem instalar nada.",
           "No iPhone, o arquivo baixa dentro do Safari; abra o ícone de Downloads na barra e use o ícone de compartilhar para salvar onde você guarda arquivos de áudio. No Android ou computador, ele salva na sua pasta de Downloads de sempre. Nenhuma conta, extensão de navegador ou app é necessária em qualquer etapa."
         ]
       },
       {
         "heading": "Por Que Escolher o Baixador de Áudio do SaveReelsFast?",
         "paragraphs": [
-          "Ele aceita tanto baixar áudio do Instagram quanto do YouTube na mesma caixa, além de Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn, a que realmente tiver uma faixa de áudio separada para aquela publicação. É grátis, sem conta, sem cadastro e sem instalar nenhum app ou software: tudo funciona no seu navegador, igual no iPhone, Android ou computador.",
+          "Ele baixa áudio do Instagram e do YouTube no mesmo campo, além de Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat e LinkedIn, em qualquer publicação pública com vídeo que tenha som. É grátis, sem conta, cadastro ou instalação de app: tudo funciona no navegador, do mesmo jeito no iPhone, Android ou computador.",
           "O que você recebe é sempre o arquivo de áudio da própria plataforma, na qualidade que ela oferece para aquela publicação, não uma regravação nem um bitrate inventado. Só funciona com publicações públicas: contas privadas e conteúdo que exige login ficam fora de alcance, por design (o SaveReelsFast não faz login em nada em seu nome)."
         ]
       },
       {
         "heading": "Qualidade do Áudio: O Que Você Realmente Recebe",
         "paragraphs": [
-          "O arquivo de áudio que você baixa é exatamente o que a plataforma fornece para aquela publicação, nada mais. A qualidade depende totalmente de como o vídeo original foi enviado, então varia de publicação para publicação, e o SaveReelsFast não aumenta, melhora ou altera isso de nenhuma forma. Não há bitrate para escolher, porque nada é codificado: você recebe os mesmos dados de áudio que o player da própria plataforma usa, salvos como arquivo em vez de transmitidos. Se uma ferramenta em outro lugar promete um bitrate fixo como 320kbps não importa a origem, veja isso como um sinal de alerta: nenhum baixador legítimo consegue adicionar qualidade que nunca existiu no arquivo original."
+          "O áudio que você baixa é o som que a plataforma entrega para aquela publicação, nada mais. Quando a plataforma oferece o áudio como arquivo separado (a maioria dos Reels do Instagram), você recebe esse arquivo. Quando o som só existe dentro do vídeo (todo vídeo do YouTube), o SaveReelsFast copia a faixa de áudio do vídeo sem recodificar, então é o mesmo áudio AAC que o vídeo toca, salvo como arquivo M4A. A qualidade depende totalmente de como o original foi enviado, e nada é melhorado artificialmente. Não há bitrate para escolher, porque nada é codificado. Se outra ferramenta promete um bitrate fixo como 320kbps independentemente da fonte, desconfie: nenhum baixador legítimo consegue adicionar uma qualidade que nunca esteve no arquivo original."
         ]
       }
     ],
@@ -1048,11 +1076,11 @@
     "faq": [
       {
         "q": "Posso baixar áudio de Reels do Instagram e de vídeos do YouTube?",
-        "a": "Sim. Cole um link de qualquer um dos dois (ou do Facebook, TikTok e das outras plataformas compatíveis) e, quando aquela publicação tiver uma faixa de áudio separada, um botão Baixar áudio aparece."
+        "a": "Sim. Cole um link de qualquer um dos dois (ou do Facebook, TikTok e das outras plataformas compatíveis) e um botão Baixar áudio aparece para qualquer vídeo que tenha som."
       },
       {
         "q": "Posso converter vídeos do YouTube para MP3?",
-        "a": "Não exatamente. O SaveReelsFast não converte nem recodifica áudio para MP3; quando um vídeo tem uma faixa de áudio separada, você recebe essa faixa no formato original, geralmente M4A (às vezes WebM/Opus). Ela toca em qualquer player padrão. Só não é literalmente um arquivo .mp3, e preferimos dizer isso claramente a rotular um arquivo errado."
+        "a": "Não exatamente. O SaveReelsFast não converte nem recodifica o áudio para MP3. No YouTube você recebe a faixa de áudio AAC original do vídeo como arquivo M4A; nas outras plataformas, o arquivo de áudio que elas entregam, geralmente M4A (às vezes WebM/Opus). Ele toca em qualquer app de música ou vídeo. Só não é literalmente um arquivo .mp3, e preferimos dizer isso claramente a rotular um arquivo de forma errada."
       },
       {
         "q": "O áudio extraído mantém a qualidade original?",
@@ -1063,8 +1091,8 @@
         "a": "Não há limite fixo para uso normal. Um arquivo muito grande, ou muitos pedidos em pouco tempo, podem ser desacelerados ou pedir para você esperar um momento, para manter o serviço rápido e justo para todos."
       },
       {
-        "q": "Por que não há opção de áudio em alguns links?",
-        "a": "O botão Baixar áudio só aparece quando a plataforma oferece uma faixa de áudio separada para aquela publicação específica. Muitos vídeos são servidos como um único arquivo combinado, sem faixa separada para extrair, e nesse caso não há um arquivo de áudio separado para oferecer: o som só está disponível junto com o vídeo."
+        "q": "Por que algumas publicações não têm opção de áudio?",
+        "a": "Fotos não têm som, então uma publicação de foto ou um slide de foto em um carrossel não mostra o botão Baixar áudio. Um vídeo enviado sem som também não tem nada para salvar. Todos os outros vídeos públicos têm o botão: se a plataforma entrega o áudio como arquivo separado, você recebe esse arquivo, e se o som está só dentro do vídeo, nós o copiamos do vídeo para você."
       },
       {
         "q": "Isso é grátis e preciso fazer login?",

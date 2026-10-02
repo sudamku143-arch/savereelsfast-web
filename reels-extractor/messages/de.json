@@ -316,6 +316,34 @@
               "Ein Facebook Video Downloader speichert ein öffentliches Video, Reel oder einen Watch-Beitrag als MP4-Datei, damit du es behalten oder offline ansehen kannst. Füge einen facebook.com-Videolink, einen Reel-Link oder einen fb.watch-Kurzlink ein, und das Tool holt dieselbe Videodatei, die Facebook zur Wiedergabe ausliefert.",
               "Nur öffentliche Beiträge funktionieren: Videos aus privaten Gruppen, Beiträge nur für Freunde und alles, wofür man angemeldet sein muss, sind nicht erreichbar, da SaveReelsFast sich nirgendwo in deinem Namen anmeldet. Auch du brauchst kein Konto, keine App und keine Browsererweiterung."
             ]
+          },
+          {
+            "heading": "Facebook-Videos in HD herunterladen",
+            "paragraphs": [
+              "Füge den Link ein, und SaveReelsFast wählt die höchste Version des Videos, die Facebook mit eingebautem Ton anbietet – das gespeicherte MP4 spielt also überall mit Ton. Hat der Uploader in HD gepostet, ist das die HD-Version, meist 720p; ein älterer oder niedrig aufgelöster Upload bleibt in der Qualität, in der er gepostet wurde, denn nichts wird künstlich hochskaliert.",
+              "Die Datei ist Facebooks eigenes Video, unverändert gespeichert: Es wird kein Logo und kein Wasserzeichen hinzugefügt, und nichts wird neu komprimiert. Das Qualitäts-Badge in der Vorschau zeigt die Auflösung vor dem Download, damit du weißt, was du bekommst."
+            ]
+          },
+          {
+            "heading": "Facebook Reels und fb.watch-Videos herunterladen",
+            "paragraphs": [
+              "Facebook Reels lädst du genauso herunter wie normale Videos. Tippe in der App bei einem Reel auf Teilen, wähle Link kopieren und füge ihn oben ein: Links mit /reel/ funktionieren, ebenso facebook.com/share-Links und kurze fb.watch-Links, die dir jemand geschickt hat.",
+              "Spielt ein Reel in einem privaten Browserfenster ohne Anmeldung ab, kann es hier heruntergeladen werden. Verlangt Facebook zuerst eine Anmeldung, ist es nicht öffentlich, und kein Downloader kommt ohne dein Konto daran."
+            ]
+          },
+          {
+            "heading": "Facebook-Videos auf iPhone, Android und PC speichern",
+            "paragraphs": [
+              "Tippe auf dem iPhone oder iPad in Safari auf „Video herunterladen“; das MP4 erscheint in der Download-Liste von Safari. Öffne es, tippe auf Teilen und wähle „Video sichern“, um es in Fotos zu behalten. Unter Android landet die Datei im Download-Ordner und erscheint in deiner Galerie-App.",
+              "Auf einem Windows-PC oder Mac wird das Video in deinem üblichen Download-Ordner gespeichert und läuft in jedem Mediaplayer. Auf keinem Gerät musst du etwas installieren: keine App, keine Browser-Erweiterung, kein Konto."
+            ]
+          },
+          {
+            "heading": "Facebook-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Prüfe zuerst, ob das Video öffentlich ist: Öffne den Link in einem privaten oder Inkognito-Fenster, ohne dich anzumelden. Verlangt Facebook eine Anmeldung, ist das Video auf Freunde oder eine Gruppe beschränkt und kann hier nicht heruntergeladen werden. Achte auch darauf, dass du den Link des Videos selbst kopiert hast und nicht den der Seite oder des Profils, auf dem es gepostet wurde.",
+              "Ist das Video öffentlich und klappt es trotzdem nicht, warte eine Minute und versuche es erneut, denn Facebook begrenzt Anfragen manchmal für kurze Zeit. Sehr lange Videos können zu groß sein, um sie über die Seite zu speichern, und ein gelöschtes oder in deinem Land gesperrtes Video lädt gar nicht."
+            ]
           }
         ]
       },
@@ -502,7 +530,7 @@
     "thumbnailAlt": "Reel-Vorschaubild",
     "noAudio": "Ohne Ton heruntergeladen (Tonspur von der Plattform eingeschränkt)",
     "downloadAudio": "Audio herunterladen ({format})",
-    "audioUnavailable": "Für diesen Link gibt es keine separate Audiodatei – der Ton ist im Video enthalten.",
+    "audioUnavailable": "Fotos haben keinen Ton, daher gibt es hier kein Audio zum Herunterladen.",
     "postItems": "{n} Videos in diesem Beitrag",
     "postPhotos": "{n} Fotos in diesem Beitrag",
     "postMixed": "{n} Fotos und Videos in diesem Beitrag",
@@ -706,8 +734,8 @@
     "hide": "Diesen Button ausblenden"
   },
   "audioDownloader": {
-    "metaTitle": "Instagram & YouTube Audio Downloader – Reel-Ton gratis",
-    "metaDescription": "Kostenloser Audio Downloader für Instagram Reels und YouTube-Videos oder Shorts. Ton in Sekunden extrahieren, in Originalqualität, ohne Login, ohne App.",
+    "metaTitle": "Reel-Audio & YouTube zu M4A herunterladen, gratis",
+    "metaDescription": "Kostenloser Audio-Downloader für Instagram Reels, YouTube-Videos und Shorts. Speichere den Ton als M4A in Originalqualität, in Sekunden. Ohne Login, ohne App.",
     "h1": "Instagram & YouTube Audio Downloader",
     "lead": "Extrahiere hochwertigen Ton und Hintergrundmusik aus Instagram Reels, YouTube Shorts und ganzen Videos in Sekunden – ein schneller Audio Downloader ohne App, ohne Login und ohne verlustbehaftete MP3-Umwandlung.",
     "breadcrumb": "Audio Downloader",
@@ -715,28 +743,28 @@
       {
         "heading": "Was ist ein Audio Downloader?",
         "paragraphs": [
-          "Ein Audio Downloader speichert den Ton eines öffentlichen Videos – eines Instagram Reels, eines YouTube Shorts oder eines ganzen YouTube-Videos – als eigene Datei, getrennt vom Bild. So behältst du ein Voiceover, einen Songausschnitt oder einen Podcast-Clip ohne das Video. Füge hier den Link ein, und wenn die Plattform eine separate Tonspur bereitstellt, erscheint ein Button „Audio herunterladen“.",
+          "Ein Audio-Downloader speichert den Ton eines öffentlichen Videos — eines Instagram Reels, eines YouTube Shorts oder eines ganzen YouTube-Videos — als eigene Datei, ohne Bild, damit du ein Voiceover, einen Songausschnitt oder einen Podcast-Clip behalten kannst. Füge den Link hier ein, und für jedes Video mit Ton erscheint ein Button „Audio herunterladen“.",
           "Praktisch, um den Soundtrack eines Reels später anzuhören, den Ton eines Vortrags oder Interviews zu speichern, dessen Bild du nicht brauchst, oder einen kurzen Dialog oder Soundeffekt wiederzuverwenden – mit Erlaubnis der Urheber, denn der Ton gehört weiterhin ihnen. Es funktioniert gleich auf Handy, Tablet oder Computer, in jedem modernen Browser."
         ]
       },
       {
         "heading": "Ton von Instagram & YouTube online extrahieren",
         "paragraphs": [
-          "1) Kopiere den Link eines öffentlichen Instagram Reels, eines YouTube-Videos oder Shorts oder eines Beitrags von einer unserer 10 unterstützten Plattformen. 2) Füge ihn oben ins Feld ein und warte, bis die Vorschau lädt. 3) Wenn die Plattform eine separate Tonspur bereitstellt, tippe auf „Audio herunterladen“; die Datei wird direkt auf deinem Gerät gespeichert – ein schneller Audio Downloader ohne Installation.",
+          "1) Kopiere den Link eines öffentlichen Instagram Reels, eines YouTube-Videos oder Shorts oder eines Video-Beitrags von einer unserer 10 Plattformen. 2) Füge ihn oben ein und warte, bis die Vorschau lädt. 3) Tippe auf „Audio herunterladen“; die M4A-Datei wird direkt auf deinem Gerät gespeichert, ohne Installation.",
           "Auf dem iPhone wird die Datei in Safari heruntergeladen; öffne das Download-Symbol in der Leiste und speichere sie über das Teilen-Symbol dort, wo du Audiodateien aufbewahrst. Auf Android oder am Computer landet sie im üblichen Download-Ordner. Du brauchst in keinem Schritt ein Konto, eine Browsererweiterung oder eine App."
         ]
       },
       {
         "heading": "Warum der Audio Downloader von SaveReelsFast?",
         "paragraphs": [
-          "Er unterstützt Instagram- und YouTube-Audio im selben Feld – dazu Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn, sofern der jeweilige Beitrag eine separate Tonspur hat. Er ist kostenlos, ohne Konto, Registrierung oder App und ohne Software: Alles läuft in deinem Browser, gleich auf iPhone, Android oder Computer.",
+          "Instagram-Audio und YouTube-Audio lädst du über dasselbe Feld herunter, dazu Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat und LinkedIn, bei jedem öffentlichen Video-Beitrag mit Ton. Die Nutzung ist kostenlos, ohne Konto, Registrierung oder App-Installation: Alles läuft im Browser, auf iPhone, Android und Computer gleich.",
           "Du bekommst immer die eigene Audiodatei der Plattform, in der Qualität, die sie für diesen Beitrag bereitstellt – keine Neuaufnahme und keine erfundene Bitrate. Nur öffentliche Beiträge funktionieren: Private Konten und Inhalte hinter einem Login sind bewusst außer Reichweite (SaveReelsFast meldet sich nirgendwo in deinem Namen an)."
         ]
       },
       {
         "heading": "Audioqualität: Was du wirklich bekommst",
         "paragraphs": [
-          "Die heruntergeladene Audiodatei ist genau das, was die Plattform für diesen Beitrag ausliefert, nicht mehr. Die Qualität hängt ganz davon ab, wie das Originalvideo hochgeladen wurde, schwankt also von Beitrag zu Beitrag, und SaveReelsFast skaliert, verstärkt oder verändert sie nicht. Es gibt keine Bitrate zur Auswahl, weil nichts neu codiert wird: Du bekommst dieselben Audiodaten, die der Player der Plattform nutzt, als Datei statt als Stream. Verspricht ein anderes Tool unabhängig von der Quelle eine feste Bitrate wie 320 kbps, ist das ein Warnsignal: Kein seriöser Downloader kann Qualität hinzufügen, die in der Originaldatei nie vorhanden war."
+          "Das Audio, das du herunterlädst, ist der Ton, den die Plattform für diesen Beitrag ausliefert, nicht mehr. Bietet die Plattform den Ton als eigene Datei an (die meisten Instagram Reels), bekommst du genau diese Datei. Steckt der Ton nur im Video (bei jedem YouTube-Video), kopiert SaveReelsFast die Audiospur ohne Neukodierung aus dem Video heraus – es ist also dasselbe AAC-Audio, das das Video abspielt, gespeichert als M4A-Datei. Die Qualität hängt ganz davon ab, wie das Original hochgeladen wurde, und nichts wird künstlich verbessert. Eine Bitrate gibt es nicht zu wählen, weil nichts kodiert wird. Verspricht ein anderes Tool eine feste Bitrate wie 320kbps unabhängig von der Quelle, ist das ein Warnsignal: Kein seriöser Downloader kann Qualität hinzufügen, die nie in der Originaldatei war."
         ]
       }
     ],
@@ -744,11 +772,11 @@
     "faq": [
       {
         "q": "Kann ich Audio von Instagram Reels und YouTube-Videos herunterladen?",
-        "a": "Ja. Füge einen Link von einer der beiden Plattformen (oder von Facebook, TikTok und den anderen unterstützten) ein, und wenn der Beitrag eine separate Tonspur hat, erscheint ein Button „Audio herunterladen“."
+        "a": "Ja. Füge einen Link von einer der beiden Plattformen ein (oder von Facebook, TikTok und den anderen unterstützten Plattformen), und für jedes Video mit Ton erscheint ein Button „Audio herunterladen“."
       },
       {
         "q": "Kann ich YouTube-Videos in MP3 umwandeln?",
-        "a": "Nicht ganz. SaveReelsFast wandelt Audio nicht in MP3 um und codiert es nicht neu; hat ein Video eine separate Tonspur, bekommst du sie im Originalformat, meist M4A (manchmal WebM/Opus). Sie spielt in jeder üblichen Musik- oder Video-App. Es ist nur keine echte .mp3-Datei, und das sagen wir lieber klar, statt eine Datei falsch zu benennen."
+        "a": "Nicht ganz. SaveReelsFast wandelt Audio nicht in MP3 um und kodiert es nicht neu. Bei YouTube bekommst du die originale AAC-Audiospur des Videos als M4A-Datei; bei anderen Plattformen die Audiodatei, die sie ausliefern, meist M4A (manchmal WebM/Opus). Sie läuft in jeder gängigen Musik- oder Video-App. Es ist eben keine .mp3-Datei, und das sagen wir lieber offen, als eine Datei falsch zu benennen."
       },
       {
         "q": "Behält der extrahierte Ton seine Originalqualität?",
@@ -759,8 +787,8 @@
         "a": "Bei normaler Nutzung kein festes Limit. Sehr große Dateien oder viele Anfragen in kurzer Zeit können verlangsamt werden oder kurz warten müssen, damit der Dienst für alle schnell und fair bleibt."
       },
       {
-        "q": "Warum gibt es bei manchen Links keine Audio-Option?",
-        "a": "Der Button „Audio herunterladen“ erscheint nur, wenn die Plattform für genau diesen Beitrag einen separaten reinen Audiostream bereitstellt. Viele Videos werden als eine kombinierte Datei ohne separate Spur ausgeliefert; dann gibt es keine eigene Audiodatei – der Ton ist nur zusammen mit dem Video verfügbar."
+        "q": "Warum gibt es bei manchen Beiträgen keine Audio-Option?",
+        "a": "Fotos haben keinen Ton, deshalb zeigt ein Foto-Beitrag oder ein Foto-Slide in einem Karussell keinen Button „Audio herunterladen“. Ein Video, das ohne Ton hochgeladen wurde, hat ebenfalls nichts zum Speichern. Alle anderen öffentlichen Videos haben den Button: Liefert die Plattform den Ton als eigene Datei, bekommst du diese Datei, und steckt der Ton nur im Video, kopieren wir ihn für dich heraus."
       },
       {
         "q": "Ist das kostenlos und muss ich mich anmelden?",

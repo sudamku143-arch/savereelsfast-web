@@ -264,3 +264,16 @@ describe("YouTube never claims HD, in any language", () => {
     });
   }
 });
+
+describe("Facebook articles stay honest about quality, in every language", () => {
+  // The scraper saves the tallest MP4 Facebook serves with sound built in: HD (usually 720p) at best, never more.
+  for (const locale of LOCALES) {
+    it(locale, () => {
+      const fb = messages[locale].landing.platforms.facebook;
+      assert.ok(fb.articles.length >= 5, `${locale}: Facebook page lost its articles`);
+      const all = fb.articles.flatMap((a: { paragraphs: string[] }) => a.paragraphs).join(" ");
+      assert.doesNotMatch(all, /\b4[Kk]\b|1080|2[Kk]\b/, `${locale}: Facebook copy promises a resolution we don't deliver`);
+      assert.match(all, /720p/, `${locale}: the HD answer should say what HD means here`);
+    });
+  }
+});

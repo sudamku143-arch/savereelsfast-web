@@ -316,6 +316,34 @@
               "Pengunduh video Facebook menyimpan video publik, Reel, atau postingan Watch sebagai file MP4, agar Anda bisa menyimpannya atau menontonnya secara offline. Tempel tautan video facebook.com, tautan Reel, atau tautan pendek fb.watch, dan alat ini mengambil file video yang sama persis dengan yang disajikan Facebook untuk diputar.",
               "Hanya postingan publik yang berfungsi: video yang dibagikan di grup privat, postingan khusus teman, dan apa pun yang memerlukan login untuk dilihat tidak dapat diakses, karena SaveReelsFast tidak login ke mana pun atas nama Anda. Anda juga tidak perlu akun, aplikasi, atau ekstensi browser."
             ]
+          },
+          {
+            "heading": "Cara Download Video Facebook dalam HD",
+            "paragraphs": [
+              "Tempel tautannya dan SaveReelsFast memilih versi video tertinggi yang disediakan Facebook dengan suara di dalamnya, jadi MP4 yang kamu simpan bisa diputar dengan audio di mana saja. Jika pengunggah memostingnya dalam HD, itulah versi HD-nya, biasanya 720p; unggahan lama atau beresolusi rendah tetap di kualitas aslinya, karena tidak ada yang diperbesar secara buatan.",
+              "File-nya adalah video Facebook itu sendiri, disimpan tanpa diubah: tidak ada logo atau watermark yang ditambahkan, dan tidak ada kompresi ulang. Label kualitas di pratinjau menunjukkan resolusinya sebelum kamu mengunduh, jadi kamu tahu apa yang akan didapat."
+            ]
+          },
+          {
+            "heading": "Download Reels Facebook dan Video fb.watch",
+            "paragraphs": [
+              "Reels Facebook diunduh dengan cara yang sama seperti video biasa. Di aplikasi, ketuk Bagikan pada sebuah Reel, pilih Salin tautan, lalu tempel di atas: tautan dengan /reel/ bisa dipakai, begitu juga tautan facebook.com/share dan tautan pendek fb.watch yang dikirim seseorang kepadamu.",
+              "Jika sebuah Reel bisa diputar di jendela browser pribadi tanpa login, Reel itu bisa diunduh di sini. Jika Facebook memintamu login lebih dulu, berarti tidak publik, dan tidak ada pengunduh yang bisa menjangkaunya tanpa akunmu."
+            ]
+          },
+          {
+            "heading": "Simpan Video Facebook di iPhone, Android, dan PC",
+            "paragraphs": [
+              "Di iPhone atau iPad, ketuk Unduh Video di Safari; MP4 akan muncul di daftar Unduhan Safari. Buka, ketuk Bagikan, lalu pilih Simpan Video agar tersimpan di Foto. Di Android, file masuk ke folder Download dan muncul di aplikasi galeri.",
+              "Di PC Windows atau Mac, video tersimpan di folder Unduhan seperti biasa dan bisa diputar di pemutar media apa pun. Tidak ada yang perlu diinstal di perangkat mana pun: tanpa aplikasi, tanpa ekstensi browser, dan tanpa akun."
+            ]
+          },
+          {
+            "heading": "Video Facebook Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pertama, pastikan videonya publik: buka tautannya di jendela pribadi atau penyamaran tanpa login. Jika Facebook memintamu masuk, video itu dibatasi untuk teman atau grup dan tidak bisa diunduh di sini. Pastikan juga kamu menyalin tautan videonya sendiri, bukan tautan Halaman atau profil tempat video itu diposting.",
+              "Jika videonya publik tetapi masih gagal, tunggu sebentar lalu coba lagi, karena Facebook kadang membatasi permintaan untuk sementara. Video yang sangat panjang mungkin terlalu besar untuk disimpan lewat situs ini, dan video yang sudah dihapus atau diblokir di negaramu tidak akan bisa dimuat."
+            ]
           }
         ]
       },
@@ -502,7 +530,7 @@
     "thumbnailAlt": "Thumbnail Reel",
     "noAudio": "Diunduh tanpa suara (aliran audio dibatasi oleh platform)",
     "downloadAudio": "Unduh Audio ({format})",
-    "audioUnavailable": "File audio terpisah tidak tersedia untuk tautan ini — suaranya menyatu dengan videonya.",
+    "audioUnavailable": "Foto tidak punya suara, jadi tidak ada audio untuk diunduh di sini.",
     "postItems": "{n} video di postingan ini",
     "postPhotos": "{n} foto dalam postingan ini",
     "postMixed": "{n} foto dan video dalam postingan ini",
@@ -1010,8 +1038,8 @@
     "hide": "Sembunyikan tombol ini"
   },
   "audioDownloader": {
-    "metaTitle": "Pengunduh Audio Instagram & YouTube - Cepat, Gratis",
-    "metaDescription": "Pengunduh audio gratis untuk Reels Instagram dan video atau Shorts YouTube. Ambil suaranya dalam hitungan detik, kualitas asli, tanpa login, tanpa aplikasi.",
+    "metaTitle": "Download Audio Reels & YouTube ke M4A Gratis",
+    "metaDescription": "Pengunduh audio gratis untuk Reels Instagram, video dan Shorts YouTube. Simpan suaranya sebagai M4A dengan kualitas asli, dalam hitungan detik. Tanpa login.",
     "h1": "Pengunduh Audio Instagram & YouTube",
     "lead": "Ekstrak audio berkualitas tinggi dan musik latar dari Reels Instagram, Shorts YouTube, dan video lengkap dalam hitungan detik — pengunduh audio cepat, tanpa aplikasi untuk dipasang, tanpa login, dan tanpa konversi MP3 yang mengurangi kualitas.",
     "breadcrumb": "Pengunduh Audio",
@@ -1019,28 +1047,28 @@
       {
         "heading": "Apa Itu Pengunduh Audio?",
         "paragraphs": [
-          "Pengunduh audio menyimpan suara dari video publik — sebuah Reel Instagram, Short YouTube, atau video YouTube lengkap — sebagai file tersendiri, terpisah dari videonya, sehingga Anda bisa menyimpan voice-over, cuplikan lagu, atau klip mirip podcast tanpa gambarnya. Tempel tautannya di sini, dan saat platform menyediakan trek audio terpisah, tombol Unduh Audio muncul untuknya.",
+          "Pengunduh audio menyimpan suara dari video publik — Reel Instagram, Short YouTube, atau video YouTube penuh — sebagai file tersendiri tanpa gambar, sehingga kamu bisa menyimpan voiceover, potongan lagu, atau klip ala podcast. Tempel tautannya di sini, dan tombol Unduh Audio muncul untuk setiap video yang punya suara.",
           "Berguna untuk menyimpan soundtrack sebuah Reel agar bisa didengarkan nanti, mengambil audio dari sebuah ceramah atau wawancara yang videonya tidak Anda perlukan, atau menyimpan cuplikan dialog atau efek suara yang ingin digunakan kembali, dengan izin pembuatnya, karena audio itu tetap miliknya. Alat ini bekerja sama di ponsel, tablet, atau komputer, di browser modern mana pun."
         ]
       },
       {
         "heading": "Cara Mengekstrak Audio dari Instagram & YouTube Online",
         "paragraphs": [
-          "1) Salin tautan Reel Instagram publik, video atau Short YouTube, atau postingan dari salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau dimuat. 3) Jika platform menyediakan trek audio terpisah, ketuk Unduh Audio; file langsung tersimpan di perangkat Anda — pengunduh audio cepat, tanpa perlu memasang apa pun.",
+          "1) Salin tautan Reel Instagram publik, video atau Short YouTube, atau postingan video dari salah satu dari 10 platform yang kami dukung. 2) Tempel di kotak di atas dan tunggu pratinjau muncul. 3) Ketuk Unduh Audio; file M4A langsung tersimpan di perangkatmu, tanpa perlu menginstal apa pun.",
           "Di iPhone, file diunduh di dalam Safari; buka ikon Downloads di toolbar dan gunakan ikon bagikan untuk menyimpannya di tempat Anda biasa menyimpan file audio. Di Android atau komputer, file tersimpan di folder Downloads biasa. Tidak perlu akun, ekstensi browser, atau aplikasi apa pun di langkah mana pun."
         ]
       },
       {
         "heading": "Kenapa Memilih Pengunduh Audio SaveReelsFast?",
         "paragraphs": [
-          "Mendukung unduhan audio Instagram maupun YouTube dari kotak yang sama — juga Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn, tergantung mana yang benar-benar punya trek audio terpisah untuk postingan itu. Gratis digunakan, tanpa akun, pendaftaran, atau memasang aplikasi maupun software apa pun: semuanya berjalan di browser Anda, sama saja di iPhone, Android, atau komputer.",
+          "Kamu bisa mengunduh audio Instagram dan YouTube dari kotak yang sama, juga Facebook, Threads, X, Pinterest, TikTok, Reddit, Snapchat, dan LinkedIn, untuk setiap postingan video publik yang punya suara. Gratis, tanpa akun, pendaftaran, atau instalasi aplikasi: semuanya berjalan di browser, sama saja di iPhone, Android, maupun komputer.",
           "Yang Anda dapatkan selalu file audio asli dari platform, dengan kualitas apa pun yang disediakannya untuk postingan itu, bukan rekaman ulang atau bitrate karangan. Hanya postingan publik yang berfungsi: akun privat dan konten yang memerlukan login memang sengaja tidak bisa dijangkau (SaveReelsFast tidak login ke mana pun atas nama Anda)."
         ]
       },
       {
         "heading": "Kualitas Audio: Apa yang Sebenarnya Anda Dapatkan",
         "paragraphs": [
-          "File audio yang Anda unduh persis sama dengan yang disediakan platform untuk postingan itu, tidak lebih. Kualitasnya sepenuhnya bergantung pada bagaimana video aslinya diunggah, jadi berbeda-beda antar postingan, dan SaveReelsFast tidak meningkatkan, memperbaiki, atau mengubahnya dengan cara apa pun. Tidak ada bitrate untuk dipilih, karena tidak ada yang di-encode: Anda mendapatkan data audio yang sama persis dengan yang digunakan pemutar milik platform itu sendiri, disimpan sebagai file, bukan di-stream. Jika ada alat lain yang menjanjikan bitrate tetap seperti 320kbps apa pun sumbernya, anggap itu tanda peringatan: tidak ada pengunduh yang sah dapat menambahkan kualitas yang memang tidak pernah ada di file aslinya."
+          "Audio yang kamu unduh adalah suara yang disajikan platform untuk postingan itu, tidak lebih. Jika platform menyediakan audio sebagai file terpisah (kebanyakan Reels Instagram), kamu mendapatkan file itu. Jika suaranya hanya ada di dalam video (semua video YouTube), SaveReelsFast menyalin trek audionya dari video tanpa encoding ulang, jadi audionya sama persis dengan audio AAC yang diputar video, disimpan sebagai file M4A. Kualitasnya sepenuhnya bergantung pada cara video asli diunggah, dan tidak ada yang ditingkatkan secara buatan. Tidak ada bitrate yang perlu dipilih, karena tidak ada yang di-encode. Jika alat lain menjanjikan bitrate tetap seperti 320kbps apa pun sumbernya, anggap itu tanda bahaya: tidak ada pengunduh yang jujur bisa menambahkan kualitas yang tidak pernah ada di file aslinya."
         ]
       }
     ],
@@ -1048,11 +1076,11 @@
     "faq": [
       {
         "q": "Bisakah saya mengunduh audio dari Reels Instagram maupun video YouTube?",
-        "a": "Ya. Tempel tautan dari salah satunya (atau dari Facebook, TikTok, dan platform lain yang didukung), dan saat postingan itu punya trek audio terpisah, tombol Unduh Audio muncul."
+        "a": "Ya. Tempel tautan dari salah satunya (atau dari Facebook, TikTok, dan platform lain yang didukung), dan tombol Unduh Audio muncul untuk setiap video yang punya suara."
       },
       {
         "q": "Bisakah saya mengonversi video YouTube ke MP3?",
-        "a": "Tidak persis begitu. SaveReelsFast tidak mengonversi atau meng-encode ulang audio ke MP3; saat video memiliki trek audio terpisah, Anda mendapat trek itu dalam format aslinya, biasanya M4A (kadang WebM/Opus). File ini bisa diputar di aplikasi standar mana pun. Hanya saja secara harfiah bukan file .mp3, dan kami lebih memilih mengatakannya dengan jelas."
+        "a": "Tidak persis. SaveReelsFast tidak mengonversi atau meng-encode ulang audio menjadi MP3. Untuk YouTube kamu mendapatkan trek audio AAC asli dari video sebagai file M4A; untuk platform lain, file audio yang mereka sajikan, biasanya M4A (kadang WebM/Opus). File ini bisa diputar di aplikasi musik atau video apa pun. Hanya saja bukan file .mp3, dan kami lebih memilih mengatakannya terus terang daripada memberi label yang salah."
       },
       {
         "q": "Apakah audio yang diekstrak mempertahankan kualitas aslinya?",
@@ -1063,8 +1091,8 @@
         "a": "Tidak ada batas tetap untuk penggunaan normal. File yang sangat besar, atau banyak permintaan dalam waktu singkat, mungkin diperlambat atau diminta menunggu sebentar, agar layanan tetap cepat dan adil untuk semua orang."
       },
       {
-        "q": "Kenapa tidak ada opsi audio untuk beberapa tautan?",
-        "a": "Tombol Unduh Audio hanya muncul saat platform menyediakan stream audio-saja terpisah untuk postingan spesifik itu. Banyak video disajikan sebagai satu file gabungan tanpa trek terpisah untuk diambil, dan dalam kasus itu tidak ada file audio terpisah yang bisa ditawarkan — suaranya hanya tersedia menyatu dengan videonya."
+        "q": "Kenapa beberapa postingan tidak punya opsi audio?",
+        "a": "Foto tidak punya suara, jadi postingan foto atau slide foto dalam carousel tidak menampilkan tombol Unduh Audio. Video yang diunggah tanpa suara juga tidak punya apa pun untuk disimpan. Semua video publik lainnya punya tombol itu: jika platform menyajikan audio sebagai file terpisah, kamu mendapatkan file itu, dan jika suaranya hanya ada di dalam video, kami menyalinnya dari video untukmu."
       },
       {
         "q": "Apakah ini gratis, dan perlukah saya login?",

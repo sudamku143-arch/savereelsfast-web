@@ -258,3 +258,15 @@ describe("social share previews (og:image)", () => {
     assert.match(og, /Cache-Control.*immutable/);
   });
 });
+
+describe("the audio page says what YouTube audio is now: the video's own track, as M4A", () => {
+  for (const locale of locales) {
+    it(locale, () => {
+      const d = messages(locale);
+      assert.match(d.metaTitle + d.metaDescription, /M4A/, `${locale}: title/description should name the real format`);
+      assert.match(d.faq[1].a, /AAC/, `${locale}: the MP3 answer should say YouTube gives its AAC track`);
+      assert.match(d.faq[1].a, /M4A/);
+      assert.doesNotMatch(d.faq[4].a, /^A Download Audio button only appears/, `${locale}: old "separate track only" answer`);
+    });
+  }
+});
