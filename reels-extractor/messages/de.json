@@ -368,7 +368,29 @@
             "a": "Die Threads-Unterstützung ist neuer und hängt davon ab, was Threads für einen Beitrag öffentlich anzeigt. Beiträge von privaten Profilen oder ohne Video können nicht heruntergeladen werden; schlägt ein öffentliches Video fehl, versuche es später erneut."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Threads-Videos herunterladen",
+            "paragraphs": [
+              "Öffne den Threads-Beitrag, tippe auf das Teilen-Symbol und wähle „Link kopieren“. Füge den Link oben ein, warte kurz auf die Vorschau und tippe auf „Video herunterladen“, um das MP4 zu speichern. Links von threads.net und threads.com funktionieren, auch die Teilen-Links aus der App.",
+              "Du brauchst kein Threads- oder Instagram-Konto und musst nichts installieren. Das Tool liest nur, was Threads für den Beitrag öffentlich anzeigt, und funktioniert daher in jedem Browser auf Smartphone, Tablet oder Computer gleich."
+            ]
+          },
+          {
+            "heading": "Threads-Videos auf iPhone, Android und PC speichern",
+            "paragraphs": [
+              "Auf dem iPhone oder iPad wird das MP4 in Safari heruntergeladen: Öffne die Download-Liste von Safari, tippe auf das Video, dann auf Teilen und „Video sichern“, um es in Fotos zu behalten. Unter Android landet die Datei im Download-Ordner und erscheint in der Galerie-App.",
+              "Auf einem Windows-PC oder Mac landet das Video im üblichen Download-Ordner und läuft in jedem Mediaplayer. Die Datei ist das Video, das Threads zur Wiedergabe ausliefert, gespeichert ohne hinzugefügtes Wasserzeichen oder Logo."
+            ]
+          },
+          {
+            "heading": "Threads-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Prüfe, ob der Beitrag wirklich ein Video enthält: Beiträge mit nur Fotos oder Text haben nichts zum Herunterladen. Prüfe dann, ob er öffentlich ist, indem du den Link ohne Anmeldung in einem privaten Fenster öffnest; Beiträge privater Profile sind nicht erreichbar.",
+              "Schlägt ein öffentlicher Video-Beitrag trotzdem fehl, warte eine Minute und versuche es erneut, denn Threads begrenzt Anfragen manchmal kurzzeitig. Kopiere den Link des Beitrags selbst, nicht den des Profils, von dem er stammt."
+            ]
+          }
+        ]
       },
       "x": {
         "noun": "Twitter (X)-Videos",
@@ -391,7 +413,29 @@
             "a": "Jedes Video wird einzeln mit eigenem Download-Button aufgeführt, und es gibt die Option „Alle herunterladen“."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Twitter-Videos (X) herunterladen",
+            "paragraphs": [
+              "Tippe unter dem Beitrag auf X auf das Teilen-Symbol und wähle „Link kopieren“. Füge ihn oben ein, warte auf die Vorschau und tippe auf „Video herunterladen“, um das MP4 zu speichern. Links von x.com und die alten twitter.com-Links funktionieren, da sie zu denselben Beiträgen führen.",
+              "Du brauchst kein X-Konto, keine App und keine Browser-Erweiterung. Das Tool holt die Videodatei, die X selbst für den Beitrag ausliefert, in der Qualität, die X anbietet, und speichert sie unverändert."
+            ]
+          },
+          {
+            "heading": "Twitter-GIFs und Beiträge mit mehreren Videos",
+            "paragraphs": [
+              "X speichert GIFs als kurze MP4-Videos, deshalb wird ein GIF-Beitrag normalerweise als MP4-Datei heruntergeladen, die wie ein Clip in Schleife abspielt. Wer eine echte .gif-Datei möchte, muss sie danach selbst umwandeln.",
+              "Enthält ein Beitrag mehr als ein Video, wird jedes einzeln mit eigenem Herunterladen-Button angezeigt, und „Alle herunterladen“ speichert sie nacheinander. Dein Browser fragt eventuell, ob mehrere Downloads erlaubt sind."
+            ]
+          },
+          {
+            "heading": "Twitter-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Prüfe, ob der Beitrag öffentlich ist: Öffne ihn ohne Anmeldung in einem privaten Fenster. Beiträge geschützter Konten und alles, was sich erst nach dem Login öffnet, können hier nicht heruntergeladen werden, da sich SaveReelsFast nicht bei X anmeldet.",
+              "Achte darauf, dass du den Link des Beitrags mit dem Video kopiert hast, nicht den einer Antwort oder des Profils. Schlägt ein öffentlicher Beitrag trotzdem fehl, warte eine Minute und versuche es erneut; X begrenzt Anfragen manchmal kurzzeitig."
+            ]
+          }
+        ]
       },
       "pinterest": {
         "noun": "Pinterest-Videos",
@@ -414,7 +458,29 @@
             "a": "Ja. Links von pinterest.com und regionalen Seiten wie pinterest.de oder pinterest.co.uk werden akzeptiert."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Pinterest-Videos herunterladen",
+            "paragraphs": [
+              "Öffne den Video-Pin, tippe auf Teilen und wähle „Link kopieren“, dann füge ihn oben ein. Sobald die Vorschau geladen ist, tippe auf „Video herunterladen“, um das MP4 zu speichern. Kurze pin.it-Links aus der App funktionieren auch: Sie werden automatisch bis zum echten Pin verfolgt.",
+              "Links von pinterest.com und regionalen Seiten wie pinterest.de oder pinterest.at werden akzeptiert. Du brauchst kein Pinterest-Konto, keine App und keine Erweiterung, und das Video wird genau so gespeichert, wie Pinterest es ausliefert."
+            ]
+          },
+          {
+            "heading": "Video-Pins und Bild-Pins",
+            "paragraphs": [
+              "Dieses Tool speichert Video-Pins. Ein Bild-Pin enthält kein Video, daher gibt es beim Einfügen nichts herunterzuladen; dasselbe gilt für den Link einer Pinnwand oder eines Profils, das eine Sammlung von Pins ist und kein einzelnes Video.",
+              "Ein Video-Pin behält die Qualität, in der der Ersteller ihn hochgeladen hat, ohne Hochskalierung oder neue Komprimierung. Verweist ein Pin auf ein Video auf einer anderen Seite wie YouTube, füge besser den Link dieser Seite ein."
+            ]
+          },
+          {
+            "heading": "Pinterest-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Prüfe zuerst, ob der Pin wirklich als Video abspielt und ob du den Link des Pins selbst kopiert hast, nicht den einer Pinnwand. Pins aus geheimen Pinnwänden oder von Konten, die eine Anmeldung verlangen, sind nicht erreichbar.",
+              "Ist es ein öffentlicher Video-Pin und klappt es trotzdem nicht, warte eine Minute und versuche es erneut. Auf dem iPhone erscheint das MP4 in der Download-Liste von Safari (Teilen und „Video sichern“ legt es in Fotos ab); unter Android und am Computer landet es im Download-Ordner."
+            ]
+          }
+        ]
       },
       "tiktok": {
         "noun": "TikTok-Videos",
@@ -468,7 +534,29 @@
             "a": "Nein. Dafür ist ein angemeldetes Reddit-Konto nötig, das dieses Tool nicht verwendet. Öffentliche Beiträge funktionieren."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Reddit-Videos herunterladen",
+            "paragraphs": [
+              "Tippe beim Reddit-Beitrag auf Teilen, wähle „Link kopieren“ und füge ihn oben ein. Beitragslinks (reddit.com/r/…/comments/…), Teilen-Links (…/s/…) und v.redd.it-Links funktionieren. Sobald die Vorschau geladen ist, tippe auf „Video herunterladen“, um das MP4 zu speichern.",
+              "Du brauchst kein Reddit-Konto und keine App, und es funktioniert auf Smartphone, Tablet und Computer gleich. Das Video ist die Datei, die Reddit selbst für den Beitrag hostet, unverändert in der Qualität gespeichert, die Reddit liefert."
+            ]
+          },
+          {
+            "heading": "Warum Reddit-Videos ohne Ton heruntergeladen werden",
+            "paragraphs": [
+              "Reddit speichert Bild und Ton eines Videos als zwei getrennte Dateien. Das heruntergeladene MP4 ist die Bildspur und läuft daher stumm; das ist kein Fehler des Downloads, sondern die Art, wie Reddit Videos hostet.",
+              "Bietet Reddit den Ton an, erscheint neben dem Video ein eigener Button „Audio herunterladen“, damit du auch die Tonspur speichern kannst. Brauchst du eine Datei mit beidem, lege beide in einen Videoeditor und exportiere sie zusammen."
+            ]
+          },
+          {
+            "heading": "Reddit-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Prüfe, ob der Beitrag öffentlich ist: NSFW-Beiträge und Videos aus privaten Subreddits brauchen ein angemeldetes Reddit-Konto, das dieses Tool nicht verwendet. Gelöschte Beiträge und entfernte Videos lassen sich ebenfalls nicht abrufen.",
+              "Verlinkt der Beitrag nur ein Video auf einer anderen Seite wie YouTube, füge den Link dieser Seite statt des Reddit-Links ein. Schlägt ein öffentliches Reddit-Video trotzdem fehl, warte eine Minute und versuche es erneut."
+            ]
+          }
+        ]
       },
       "snapchat": {
         "noun": "Snapchat-Spotlight-Videos",
@@ -491,7 +579,29 @@
             "a": "Nein. Private Snaps sind nur für ihre Empfänger sichtbar und über keinen öffentlichen Link erreichbar."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Snapchat-Spotlight-Videos herunterladen",
+            "paragraphs": [
+              "Öffne das Spotlight-Video in Snapchat, tippe auf Teilen und wähle „Link kopieren“, dann füge ihn oben ein. Vollständige Links (snapchat.com/spotlight/…) und die kurzen t.snapchat.com-Links aus der App werden akzeptiert. Tippe auf „Video herunterladen“, sobald die Vorschau geladen ist.",
+              "Du brauchst kein Snapchat-Konto, keine App und keine Erweiterung. Das MP4 ist das Video, das Snapchat für diesen Spotlight-Beitrag öffentlich ausliefert, so gespeichert, wie es ist."
+            ]
+          },
+          {
+            "heading": "Spotlight-Videos, Storys und Snaps",
+            "paragraphs": [
+              "Spotlight ist Snapchats öffentlicher Video-Feed, und diese Videos lassen sich hier speichern. Storys werden mit einem ausgewählten Publikum geteilt und private Snaps nur mit ihren Empfängern; sie sind über einen öffentlichen Link nicht erreichbar und werden von diesem Tool nicht unterstützt.",
+              "Spotlight-Creator bleiben Eigentümer ihrer Videos. Nutze Downloads zum eigenen Ansehen, oder frage den Creator, bevor du einen Clip anderswo erneut postest oder verwendest."
+            ]
+          },
+          {
+            "heading": "Snapchat-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Achte darauf, dass der Link zu einem Spotlight-Video führt, nicht zu einem Profil, einer Story oder einem Chat. Öffne ihn in einem privaten Fenster: Spielt er ohne Anmeldung ab, ist er öffentlich; verlangt Snapchat eine Anmeldung, kann er hier nicht heruntergeladen werden.",
+              "Schlägt ein öffentlicher Spotlight-Link trotzdem fehl, warte eine Minute und versuche es erneut. Auf dem iPhone erscheint das MP4 in der Download-Liste von Safari (Teilen und „Video sichern“ legt es in Fotos ab); unter Android und am Computer landet es im Download-Ordner."
+            ]
+          }
+        ]
       },
       "linkedin": {
         "noun": "LinkedIn-Videos",
@@ -514,7 +624,29 @@
             "a": "Das Video wird in der Qualität gespeichert, die LinkedIn für diesen Beitrag bereitstellt; sie hängt vom Upload ab. Das Tool skaliert oder codiert nichts neu."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "LinkedIn-Videos herunterladen",
+            "paragraphs": [
+              "Tippe beim LinkedIn-Beitrag auf die drei Punkte, wähle „Link zum Beitrag kopieren“ und füge ihn oben ein. Links wie linkedin.com/posts/… und linkedin.com/feed/update/… funktionieren. Sobald die Vorschau geladen ist, tippe auf „Video herunterladen“, um das MP4 zu speichern.",
+              "Du brauchst kein LinkedIn-Konto und keine App. Das Video wird in der Qualität gespeichert, die LinkedIn für den Beitrag liefert und die vom Upload abhängt; nichts wird hochskaliert oder neu kodiert."
+            ]
+          },
+          {
+            "heading": "Welche LinkedIn-Videos sich speichern lassen",
+            "paragraphs": [
+              "Öffentliche Beiträge mit Video lassen sich speichern, egal ob sie von einer Person oder einer Unternehmensseite stammen. Beiträge nur für Kontakte, Videos in privaten Gruppen und LinkedIn-Learning-Kurse verlangen eine Anmeldung, und dieses Tool meldet sich nirgends an.",
+              "Ein Profil, eine Unternehmensseite oder der Feed selbst sind keine Videolinks: Öffne den einzelnen Beitrag mit dem Video und kopiere dessen Link. Solche Videos sind oft beruflich, prüfe also, ob du einen Clip weiterverwenden darfst, bevor du ihn teilst."
+            ]
+          },
+          {
+            "heading": "LinkedIn-Video lässt sich nicht herunterladen? Schnelle Lösungen",
+            "paragraphs": [
+              "Öffne den Beitragslink ohne Anmeldung in einem privaten Fenster. Verlangt LinkedIn eine Anmeldung, ist der Beitrag nicht öffentlich und kann hier nicht heruntergeladen werden. Prüfe auch, ob der Beitrag wirklich ein Video enthält und nicht nur ein Bild oder ein Dokument.",
+              "Schlägt ein öffentlicher Video-Beitrag trotzdem fehl, warte eine Minute und versuche es erneut. Auf dem iPhone erscheint das MP4 in der Download-Liste von Safari (Teilen und „Video sichern“ legt es in Fotos ab); unter Android und am Computer landet es im Download-Ordner."
+            ]
+          }
+        ]
       }
     }
   },

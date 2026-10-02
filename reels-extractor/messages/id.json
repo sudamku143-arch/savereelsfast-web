@@ -368,7 +368,29 @@
             "a": "Dukungan Threads lebih baru dan bergantung pada apa yang Threads tampilkan secara publik untuk sebuah postingan. Postingan dari profil pribadi, atau tanpa video, tidak bisa diunduh; jika video publik gagal, coba lagi nanti."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video Threads",
+            "paragraphs": [
+              "Buka postingan Threads, ketuk ikon Bagikan, lalu pilih Salin tautan. Tempel tautannya di kotak di atas, tunggu pratinjau muncul, lalu ketuk Unduh Video untuk menyimpan MP4-nya. Tautan dari threads.net maupun threads.com bisa dipakai, termasuk tautan berbagi dari aplikasi.",
+              "Kamu tidak perlu akun Threads atau Instagram, dan tidak ada yang perlu diinstal. Alat ini hanya membaca apa yang ditampilkan Threads secara publik untuk postingan itu, jadi cara kerjanya sama di browser mana pun di ponsel, tablet, atau komputer."
+            ]
+          },
+          {
+            "heading": "Simpan Video Threads di iPhone, Android, dan PC",
+            "paragraphs": [
+              "Di iPhone atau iPad, MP4 diunduh di dalam Safari: buka daftar Unduhan Safari, ketuk videonya, lalu Bagikan dan Simpan Video agar tersimpan di Foto. Di Android, file masuk ke folder Download dan muncul di aplikasi galeri.",
+              "Di PC Windows atau Mac, video masuk ke folder Unduhan seperti biasa dan bisa diputar di pemutar media apa pun. File-nya adalah video yang disajikan Threads untuk diputar, disimpan tanpa tambahan watermark atau logo."
+            ]
+          },
+          {
+            "heading": "Video Threads Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pastikan postingannya benar-benar berisi video: postingan yang hanya berisi foto atau teks tidak punya apa pun untuk diunduh. Lalu cek apakah postingan itu publik dengan membuka tautannya di jendela pribadi tanpa login; postingan dari profil privat tidak bisa dijangkau.",
+              "Jika postingan video publik masih gagal, tunggu sebentar lalu coba lagi, karena Threads kadang membatasi permintaan untuk sementara. Salin tautan postingannya sendiri, bukan tautan profil yang mempostingnya."
+            ]
+          }
+        ]
       },
       "x": {
         "noun": "video Twitter (X)",
@@ -391,7 +413,29 @@
             "a": "Setiap video ditampilkan terpisah dengan tombol Unduh masing-masing, dan ada juga opsi Unduh semua."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video Twitter (X)",
+            "paragraphs": [
+              "Di bawah postingan di X, ketuk ikon Bagikan lalu pilih Salin tautan. Tempel di kotak di atas, tunggu pratinjau, lalu ketuk Unduh Video untuk menyimpan MP4-nya. Tautan x.com dan tautan lama twitter.com sama-sama bisa, karena mengarah ke postingan yang sama.",
+              "Tidak perlu akun X, aplikasi, atau ekstensi browser. Alat ini mengambil file video yang disajikan X sendiri untuk postingan itu, dengan kualitas yang disediakan X, dan menyimpannya tanpa diubah."
+            ]
+          },
+          {
+            "heading": "GIF Twitter dan Postingan dengan Beberapa Video",
+            "paragraphs": [
+              "X menyimpan GIF sebagai video MP4 pendek, jadi postingan GIF biasanya terunduh sebagai file MP4 yang diputar seperti klip berulang. Jika kamu ingin file .gif sungguhan, kamu perlu mengonversinya sendiri setelahnya.",
+              "Jika sebuah postingan berisi lebih dari satu video, masing-masing ditampilkan terpisah dengan tombol Unduh sendiri, dan opsi Unduh semua menyimpannya satu per satu. Browser-mu mungkin meminta izin untuk beberapa unduhan sekaligus."
+            ]
+          },
+          {
+            "heading": "Video Twitter Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pastikan postingannya publik: buka di jendela pribadi tanpa login. Postingan dari akun yang dilindungi, dan apa pun yang hanya terbuka setelah login, tidak bisa diunduh di sini, karena SaveReelsFast tidak login ke X.",
+              "Pastikan kamu menyalin tautan postingan yang berisi video, bukan tautan balasan atau profil. Jika postingan publik masih gagal, tunggu sebentar lalu coba lagi; X kadang membatasi permintaan untuk sementara."
+            ]
+          }
+        ]
       },
       "pinterest": {
         "noun": "video Pinterest",
@@ -414,7 +458,29 @@
             "a": "Ya. Tautan dari pinterest.com dan situs regional seperti pinterest.co.uk atau pinterest.fr diterima."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video Pinterest",
+            "paragraphs": [
+              "Buka pin video, ketuk Bagikan, pilih Salin tautan, lalu tempel di kotak di atas. Setelah pratinjau muncul, ketuk Unduh Video untuk menyimpan MP4-nya. Tautan pendek pin.it dari aplikasi juga bisa: tautan itu diikuti otomatis sampai ke pin aslinya.",
+              "Tautan dari pinterest.com dan situs regional seperti id.pinterest.com diterima. Tidak perlu akun Pinterest, aplikasi, atau ekstensi, dan videonya disimpan persis seperti yang disajikan Pinterest."
+            ]
+          },
+          {
+            "heading": "Pin Video dan Pin Gambar",
+            "paragraphs": [
+              "Alat ini menyimpan pin video. Pin gambar tidak berisi video, jadi menempelkannya tidak menghasilkan apa pun untuk diunduh; begitu juga tautan papan atau profil, yang merupakan kumpulan pin, bukan satu video.",
+              "Pin video tetap dalam kualitas saat diunggah pembuatnya, tanpa diperbesar atau dikompres ulang. Jika pin mengarah ke video di situs lain, seperti YouTube, tempel tautan situs itu saja."
+            ]
+          },
+          {
+            "heading": "Video Pinterest Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pertama, pastikan pin itu benar-benar diputar sebagai video dan kamu menyalin tautan pin-nya sendiri, bukan papan. Pin dari papan rahasia atau akun yang mewajibkan login tidak bisa dijangkau.",
+              "Jika itu pin video publik dan masih gagal, tunggu sebentar lalu coba lagi. Di iPhone, MP4 muncul di daftar Unduhan Safari (Bagikan lalu Simpan Video memasukkannya ke Foto); di Android dan komputer, file masuk ke folder Unduhan."
+            ]
+          }
+        ]
       },
       "tiktok": {
         "noun": "video TikTok",
@@ -468,7 +534,29 @@
             "a": "Tidak. Video seperti itu memerlukan akun Reddit yang sudah login, yang tidak dipakai alat ini. Postingan publik bisa."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video Reddit",
+            "paragraphs": [
+              "Di postingan Reddit, ketuk Bagikan, pilih Salin tautan, lalu tempel di kotak di atas. Tautan postingan (reddit.com/r/…/comments/…), tautan berbagi (…/s/…), dan tautan v.redd.it semuanya bisa. Setelah pratinjau muncul, ketuk Unduh Video untuk menyimpan MP4-nya.",
+              "Tidak perlu akun Reddit atau aplikasi, dan cara kerjanya sama di ponsel, tablet, atau komputer. Videonya adalah file yang di-hosting Reddit sendiri untuk postingan itu, disimpan tanpa diubah dengan kualitas yang disediakan Reddit."
+            ]
+          },
+          {
+            "heading": "Kenapa Video Reddit Terunduh Tanpa Suara",
+            "paragraphs": [
+              "Reddit menyimpan gambar dan suara sebuah video sebagai dua file terpisah. MP4 yang kamu unduh adalah trek gambarnya, jadi diputar tanpa suara; ini bukan kesalahan unduhan, memang begitu cara Reddit menyimpan video.",
+              "Jika Reddit menyediakan suaranya, tombol Unduh Audio terpisah muncul di samping video, sehingga kamu bisa menyimpan trek audionya juga. Jika butuh satu file berisi keduanya, masukkan keduanya ke editor video apa pun lalu ekspor bersama."
+            ]
+          },
+          {
+            "heading": "Video Reddit Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pastikan postingannya publik: postingan NSFW dan video di subreddit privat membutuhkan akun Reddit yang sudah login, yang tidak dipakai alat ini. Postingan yang dihapus dan video yang diturunkan juga tidak bisa diambil.",
+              "Jika postingan hanya menautkan video di situs lain, seperti YouTube, tempel tautan situs itu, bukan tautan Reddit. Jika video Reddit publik masih gagal, tunggu sebentar lalu coba lagi."
+            ]
+          }
+        ]
       },
       "snapchat": {
         "noun": "video Snapchat Spotlight",
@@ -491,7 +579,29 @@
             "a": "Tidak. Snap pribadi hanya terlihat oleh penerimanya dan tidak bisa dijangkau lewat tautan publik."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video Snapchat Spotlight",
+            "paragraphs": [
+              "Buka video Spotlight di Snapchat, ketuk Bagikan, pilih Salin tautan, lalu tempel di kotak di atas. Tautan lengkap (snapchat.com/spotlight/…) dan tautan pendek t.snapchat.com dari aplikasi sama-sama diterima. Ketuk Unduh Video setelah pratinjau muncul.",
+              "Kamu tidak perlu akun Snapchat, aplikasi, atau ekstensi. MP4-nya adalah video yang disajikan Snapchat secara publik untuk postingan Spotlight itu, disimpan apa adanya."
+            ]
+          },
+          {
+            "heading": "Video Spotlight vs Story dan Snap",
+            "paragraphs": [
+              "Spotlight adalah feed video publik Snapchat, dan video-videonya bisa disimpan di sini. Story dibagikan ke audiens pilihan dan snap pribadi hanya ke penerimanya, jadi tidak bisa dijangkau lewat tautan publik, dan alat ini tidak mendukungnya.",
+              "Kreator Spotlight tetap memiliki video mereka. Gunakan unduhan untuk ditonton sendiri, atau minta izin kreatornya sebelum memposting ulang atau memakai klip di tempat lain."
+            ]
+          },
+          {
+            "heading": "Video Snapchat Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Pastikan tautannya adalah video Spotlight, bukan profil, Story, atau obrolan. Buka di jendela pribadi: jika bisa diputar tanpa login, berarti publik; jika Snapchat memintamu masuk, video itu tidak bisa diunduh di sini.",
+              "Jika tautan Spotlight publik masih gagal, tunggu sebentar lalu coba lagi. Di iPhone, MP4 muncul di daftar Unduhan Safari (Bagikan lalu Simpan Video memasukkannya ke Foto); di Android dan komputer, file masuk ke folder Unduhan."
+            ]
+          }
+        ]
       },
       "linkedin": {
         "noun": "video LinkedIn",
@@ -514,7 +624,29 @@
             "a": "Video disimpan dalam kualitas yang disediakan LinkedIn untuk postingan itu, yang berbeda-beda tergantung unggahan. Alat ini tidak memperbesar atau mengodekan ulang videonya."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Cara Download Video LinkedIn",
+            "paragraphs": [
+              "Di postingan LinkedIn, ketuk tiga titik dan pilih Salin tautan ke postingan, lalu tempel di kotak di atas. Tautan seperti linkedin.com/posts/… dan linkedin.com/feed/update/… sama-sama bisa. Setelah pratinjau muncul, ketuk Unduh Video untuk menyimpan MP4-nya.",
+              "Tidak perlu akun LinkedIn atau aplikasi. Videonya disimpan dengan kualitas yang disediakan LinkedIn untuk postingan itu, yang bergantung pada cara video diunggah; tidak ada yang diperbesar atau di-encode ulang."
+            ]
+          },
+          {
+            "heading": "Video LinkedIn Mana yang Bisa Disimpan",
+            "paragraphs": [
+              "Postingan publik berisi video bisa disimpan, baik dari perorangan maupun halaman perusahaan. Postingan yang hanya terlihat oleh koneksi, video di grup privat, dan kursus LinkedIn Learning memerlukan login, dan alat ini tidak login ke mana pun.",
+              "Profil, halaman perusahaan, atau feed itu sendiri bukan tautan video: buka postingan tunggal yang berisi video lalu salin tautannya. Video seperti ini sering terkait pekerjaan, jadi pastikan kamu boleh memakai ulang klipnya sebelum membagikannya."
+            ]
+          },
+          {
+            "heading": "Video LinkedIn Tidak Bisa Diunduh? Solusi Cepat",
+            "paragraphs": [
+              "Buka tautan postingan di jendela pribadi tanpa login. Jika LinkedIn memintamu masuk untuk melihatnya, postingan itu tidak publik dan tidak bisa diunduh di sini. Pastikan juga postingannya benar-benar berisi video, bukan hanya gambar atau dokumen.",
+              "Jika postingan video publik masih gagal, tunggu sebentar lalu coba lagi. Di iPhone, MP4 muncul di daftar Unduhan Safari (Bagikan lalu Simpan Video memasukkannya ke Foto); di Android dan komputer, file masuk ke folder Unduhan."
+            ]
+          }
+        ]
       }
     }
   },

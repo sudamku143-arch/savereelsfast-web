@@ -368,7 +368,29 @@
             "a": "O suporte ao Threads é mais recente e depende do que o Threads mostra publicamente de cada publicação. Publicações de perfis privados ou sem vídeo não podem ser baixadas; se um vídeo público falhar, tente mais tarde."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do Threads",
+            "paragraphs": [
+              "Abra a publicação no Threads, toque no ícone Compartilhar e escolha Copiar link. Cole o link no campo acima, espere a prévia e toque em Baixar vídeo para salvar o MP4. Links de threads.net e de threads.com funcionam, inclusive os links de compartilhamento criados pelo app.",
+              "Você não precisa de conta no Threads nem no Instagram, e não há nada para instalar. A ferramenta lê só o que o Threads mostra publicamente para aquela publicação, então funciona igual em qualquer navegador no celular, tablet ou computador."
+            ]
+          },
+          {
+            "heading": "Salvar Vídeos do Threads no iPhone, Android e PC",
+            "paragraphs": [
+              "No iPhone ou iPad, o MP4 é baixado dentro do Safari: abra a lista de Downloads do Safari, toque no vídeo e depois em Compartilhar e Salvar Vídeo para guardá-lo no app Fotos. No Android, o arquivo vai para a pasta Downloads e aparece na galeria.",
+              "Em um PC com Windows ou em um Mac, o vídeo vai para a sua pasta de Downloads de sempre e toca em qualquer player. O arquivo é o vídeo que o Threads entrega para reprodução, salvo sem marca d'água nem logo."
+            ]
+          },
+          {
+            "heading": "Vídeo do Threads Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Confira se a publicação tem mesmo um vídeo: publicações só com fotos ou texto não têm nada para baixar. Depois verifique se ela é pública abrindo o link em uma janela anônima sem login; publicações de perfis privados não podem ser acessadas.",
+              "Se uma publicação pública com vídeo continuar falhando, espere um minuto e tente de novo, porque o Threads às vezes limita os pedidos por um tempo. Copie o link da própria publicação, e não o do perfil de onde ela foi postada."
+            ]
+          }
+        ]
       },
       "x": {
         "noun": "vídeos do Twitter (X)",
@@ -391,7 +413,29 @@
             "a": "Cada vídeo aparece separadamente com seu próprio botão de download, e há uma opção para baixar todos."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do Twitter (X)",
+            "paragraphs": [
+              "Embaixo da publicação no X, toque no ícone Compartilhar e escolha Copiar link. Cole no campo acima, espere a prévia e toque em Baixar vídeo para salvar o MP4. Links do x.com e os antigos do twitter.com funcionam, porque levam às mesmas publicações.",
+              "Não é preciso conta no X, app nem extensão de navegador. A ferramenta busca o arquivo de vídeo que o próprio X entrega para aquela publicação, na qualidade que o X oferece, e salva sem alterações."
+            ]
+          },
+          {
+            "heading": "GIFs do Twitter e Publicações com Vários Vídeos",
+            "paragraphs": [
+              "O X guarda GIFs como vídeos MP4 curtos, então uma publicação com GIF normalmente é baixada como arquivo MP4 que toca como um clipe em loop. Se você quiser um arquivo .gif de verdade, precisará convertê-lo depois.",
+              "Quando uma publicação tem mais de um vídeo, cada um aparece separado com seu próprio botão Baixar, e a opção Baixar tudo salva um depois do outro. Seu navegador pode pedir permissão para vários downloads de uma vez."
+            ]
+          },
+          {
+            "heading": "Vídeo do Twitter Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Confira se a publicação é pública: abra em uma janela anônima sem fazer login. Publicações de contas protegidas, e tudo que só abre depois de entrar, não podem ser baixadas aqui, já que o SaveReelsFast não faz login no X.",
+              "Verifique se você copiou o link da publicação com o vídeo, e não de uma resposta ou do perfil. Se uma publicação pública continuar falhando, espere um minuto e tente de novo; o X às vezes limita os pedidos por um tempo."
+            ]
+          }
+        ]
       },
       "pinterest": {
         "noun": "vídeos do Pinterest",
@@ -414,7 +458,29 @@
             "a": "Sim. Links do pinterest.com e de sites regionais, como pinterest.com.br ou pinterest.pt, são aceitos."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do Pinterest",
+            "paragraphs": [
+              "Abra o pin de vídeo, toque em Compartilhar e escolha Copiar link, depois cole no campo acima. Quando a prévia carregar, toque em Baixar vídeo para salvar o MP4. Links curtos pin.it do app também funcionam: eles são seguidos até o pin real automaticamente.",
+              "Links de pinterest.com e de sites regionais como br.pinterest.com ou pinterest.pt são aceitos. Não precisa de conta no Pinterest, app nem extensão, e o vídeo é salvo exatamente como o Pinterest entrega."
+            ]
+          },
+          {
+            "heading": "Pins de Vídeo e Pins de Imagem",
+            "paragraphs": [
+              "Esta ferramenta salva pins de vídeo. Um pin de imagem não tem vídeo, então colar um deles não dá nada para baixar; o mesmo vale para o link de uma pasta ou de um perfil, que é uma coleção de pins e não um único vídeo.",
+              "Um pin de vídeo mantém a qualidade em que o criador enviou, e nada é aumentado nem comprimido de novo. Se um pin leva a um vídeo em outro site, como o YouTube, cole o link desse site."
+            ]
+          },
+          {
+            "heading": "Vídeo do Pinterest Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Primeiro confira se o pin toca mesmo como vídeo e se você copiou o link do próprio pin, e não de uma pasta. Pins de pastas secretas ou de contas que exigem login não podem ser acessados.",
+              "Se for um pin de vídeo público e ainda assim falhar, espere um minuto e tente de novo. No iPhone o MP4 aparece na lista de Downloads do Safari (Compartilhar e depois Salvar Vídeo coloca no app Fotos); no Android e no computador vai para a pasta Downloads."
+            ]
+          }
+        ]
       },
       "tiktok": {
         "noun": "vídeos do TikTok",
@@ -468,7 +534,29 @@
             "a": "Não. Eles exigem uma conta do Reddit com login, que esta ferramenta não usa. Publicações públicas funcionam."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do Reddit",
+            "paragraphs": [
+              "Na publicação do Reddit, toque em Compartilhar e escolha Copiar link, depois cole no campo acima. Funcionam links de publicações (reddit.com/r/…/comments/…), links de compartilhamento (…/s/…) e links v.redd.it. Quando a prévia carregar, toque em Baixar vídeo para salvar o MP4.",
+              "Não precisa de conta no Reddit nem de app, e funciona igual no celular, tablet ou computador. O vídeo é o arquivo que o próprio Reddit hospeda para aquela publicação, salvo sem alterações na qualidade que o Reddit oferece."
+            ]
+          },
+          {
+            "heading": "Por Que os Vídeos do Reddit Baixam Sem Som",
+            "paragraphs": [
+              "O Reddit guarda a imagem e o som de um vídeo como dois arquivos separados. O MP4 que você baixa é a faixa de imagem, então ele toca sem som; não é um erro do download, é assim que o Reddit hospeda vídeos.",
+              "Quando o Reddit oferece o som, aparece um botão Baixar áudio separado ao lado do vídeo, para você salvar a faixa de áudio também. Se precisar de um único arquivo com os dois, coloque ambos em qualquer editor de vídeo e exporte juntos."
+            ]
+          },
+          {
+            "heading": "Vídeo do Reddit Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Confira se a publicação é pública: publicações NSFW e vídeos de subreddits privados exigem uma conta do Reddit logada, que esta ferramenta não usa. Publicações apagadas e vídeos removidos também não podem ser obtidos.",
+              "Se a publicação só leva a um vídeo em outro site, como o YouTube, cole o link desse site em vez do link do Reddit. Se um vídeo público do Reddit continuar falhando, espere um minuto e tente de novo."
+            ]
+          }
+        ]
       },
       "snapchat": {
         "noun": "vídeos do Snapchat Spotlight",
@@ -491,7 +579,29 @@
             "a": "Não. Snaps privados só são vistos pelos destinatários e não podem ser acessados por um link público."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do Snapchat Spotlight",
+            "paragraphs": [
+              "Abra o vídeo do Spotlight no Snapchat, toque em Compartilhar e escolha Copiar link, depois cole no campo acima. Links completos (snapchat.com/spotlight/…) e os links curtos t.snapchat.com criados pelo app são aceitos. Toque em Baixar vídeo quando a prévia carregar.",
+              "Você não precisa de conta no Snapchat, nem de app ou extensão. O MP4 é o vídeo que o Snapchat entrega publicamente para aquela publicação do Spotlight, salvo do jeito que é."
+            ]
+          },
+          {
+            "heading": "Vídeos do Spotlight, Stories e Snaps",
+            "paragraphs": [
+              "O Spotlight é o feed público de vídeos do Snapchat, e esses vídeos podem ser salvos aqui. Stories são compartilhados com um público escolhido e snaps privados só com quem os recebe, então não podem ser acessados por um link público, e esta ferramenta não os suporta.",
+              "Os criadores do Spotlight continuam donos dos seus vídeos. Use os downloads para assistir você mesmo, ou peça permissão ao criador antes de repostar ou reutilizar um clipe em outro lugar."
+            ]
+          },
+          {
+            "heading": "Vídeo do Snapchat Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Confira se o link é de um vídeo do Spotlight, e não de um perfil, um Story ou uma conversa. Abra em uma janela anônima: se tocar sem login, é público; se o Snapchat pedir para entrar, não pode ser baixado aqui.",
+              "Se um link público do Spotlight continuar falhando, espere um minuto e tente de novo. No iPhone o MP4 aparece na lista de Downloads do Safari (Compartilhar e depois Salvar Vídeo coloca no app Fotos); no Android e no computador vai para a pasta Downloads."
+            ]
+          }
+        ]
       },
       "linkedin": {
         "noun": "vídeos do LinkedIn",
@@ -514,7 +624,29 @@
             "a": "O vídeo é salvo na qualidade que o LinkedIn oferece para aquela publicação, que varia conforme o envio. A ferramenta não amplia nem recodifica o vídeo."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Como Baixar Vídeos do LinkedIn",
+            "paragraphs": [
+              "Na publicação do LinkedIn, toque nos três pontos e escolha Copiar link da publicação, depois cole no campo acima. Links como linkedin.com/posts/… e linkedin.com/feed/update/… funcionam. Quando a prévia carregar, toque em Baixar vídeo para salvar o MP4.",
+              "Não precisa de conta no LinkedIn nem de app. O vídeo é salvo na qualidade que o LinkedIn oferece para aquela publicação, que depende de como foi enviado; nada é aumentado nem recodificado."
+            ]
+          },
+          {
+            "heading": "Quais Vídeos do LinkedIn Podem Ser Salvos",
+            "paragraphs": [
+              "Publicações públicas com vídeo podem ser salvas, sejam de pessoas ou de páginas de empresa. Publicações visíveis só para conexões, vídeos em grupos privados e cursos do LinkedIn Learning exigem login, e esta ferramenta não faz login em nada.",
+              "Um perfil, uma página de empresa ou o próprio feed não são links de vídeo: abra a publicação específica que tem o vídeo e copie o link dela. Esses vídeos costumam ser de trabalho, então confira se você pode reutilizar um clipe antes de compartilhar."
+            ]
+          },
+          {
+            "heading": "Vídeo do LinkedIn Não Baixa? Soluções Rápidas",
+            "paragraphs": [
+              "Abra o link da publicação em uma janela anônima sem fazer login. Se o LinkedIn pedir para entrar para ver, a publicação não é pública e não pode ser baixada aqui. Confira também se a publicação tem mesmo um vídeo, e não só uma imagem ou um documento.",
+              "Se uma publicação pública com vídeo continuar falhando, espere um minuto e tente de novo. No iPhone o MP4 aparece na lista de Downloads do Safari (Compartilhar e depois Salvar Vídeo coloca no app Fotos); no Android e no computador vai para a pasta Downloads."
+            ]
+          }
+        ]
       }
     }
   },

@@ -277,3 +277,18 @@ describe("Facebook articles stay honest about quality, in every language", () =>
     });
   }
 });
+
+describe("no platform page is thin, in any language", () => {
+  // Search Console listed the 100-word platform pages as "Crawled/Discovered - currently not indexed".
+  for (const locale of LOCALES) {
+    it(locale, () => {
+      for (const id of EXPECTED_IDS) {
+        const articles = messages[locale].landing.platforms[id].articles as { heading: string; paragraphs: string[] }[];
+        const ownArticles = id === "youtube" || id === "tiktok" ? 1 : 3; // the two still to deepen
+        assert.ok(articles.length >= ownArticles, `${locale}/${id}: only ${articles.length} articles`);
+        assert.equal(new Set(articles.map((a) => a.heading)).size, articles.length, `${locale}/${id}: duplicate heading`);
+        for (const a of articles) for (const p of a.paragraphs) assert.ok(p.trim().length > 60, `${locale}/${id}: thin paragraph`);
+      }
+    });
+  }
+});

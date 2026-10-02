@@ -368,7 +368,29 @@
             "a": "La prise en charge de Threads est plus récente et dépend de ce que Threads affiche publiquement pour une publication. Celles des profils privés, ou sans vidéo, ne peuvent pas être téléchargées ; si une vidéo publique échoue, réessayez plus tard."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos Threads",
+            "paragraphs": [
+              "Ouvrez la publication Threads, appuyez sur l'icône Partager et choisissez Copier le lien. Collez le lien dans le champ ci-dessus, attendez l'aperçu, puis appuyez sur Télécharger la vidéo pour enregistrer le MP4. Les liens threads.net et threads.com fonctionnent, y compris les liens de partage créés par l'application.",
+              "Aucun compte Threads ou Instagram n'est nécessaire, et il n'y a rien à installer. L'outil lit seulement ce que Threads affiche publiquement pour cette publication, donc il fonctionne de la même façon dans n'importe quel navigateur, sur téléphone, tablette ou ordinateur."
+            ]
+          },
+          {
+            "heading": "Enregistrer des Vidéos Threads sur iPhone, Android et PC",
+            "paragraphs": [
+              "Sur iPhone ou iPad, le MP4 se télécharge dans Safari : ouvrez la liste des téléchargements de Safari, touchez la vidéo, puis Partager et Enregistrer la vidéo pour la garder dans Photos. Sur Android, le fichier va dans le dossier Téléchargements et apparaît dans votre galerie.",
+              "Sur un PC Windows ou un Mac, la vidéo arrive dans votre dossier Téléchargements habituel et se lit dans n'importe quel lecteur. Le fichier est la vidéo que Threads fournit pour la lecture, enregistrée sans filigrane ni logo ajouté."
+            ]
+          },
+          {
+            "heading": "La Vidéo Threads ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Vérifiez que la publication contient vraiment une vidéo : celles qui n'ont que des photos ou du texte n'ont rien à télécharger. Vérifiez ensuite qu'elle est publique en ouvrant le lien dans une fenêtre privée sans vous connecter ; les publications de profils privés sont inaccessibles.",
+              "Si une publication vidéo publique échoue encore, attendez une minute et réessayez, car Threads limite parfois les requêtes pendant un moment. Copiez le lien de la publication elle-même, et non celui du profil qui l'a publiée."
+            ]
+          }
+        ]
       },
       "x": {
         "noun": "les vidéos Twitter (X)",
@@ -391,7 +413,29 @@
             "a": "Chaque vidéo est listée séparément avec son propre bouton Télécharger, et il existe aussi une option Tout télécharger."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos Twitter (X)",
+            "paragraphs": [
+              "Sous la publication sur X, appuyez sur l'icône Partager et choisissez Copier le lien. Collez-le dans le champ ci-dessus, attendez l'aperçu et appuyez sur Télécharger la vidéo pour enregistrer le MP4. Les liens x.com et les anciens liens twitter.com fonctionnent, car ils mènent aux mêmes publications.",
+              "Aucun compte X, aucune application ni extension de navigateur n'est nécessaire. L'outil récupère le fichier vidéo que X fournit lui-même pour cette publication, dans la qualité proposée par X, et l'enregistre sans le modifier."
+            ]
+          },
+          {
+            "heading": "GIF Twitter et Publications avec Plusieurs Vidéos",
+            "paragraphs": [
+              "X stocke les GIF sous forme de courtes vidéos MP4 : une publication GIF se télécharge donc normalement en fichier MP4 qui se lit comme un clip en boucle. Pour obtenir un vrai fichier .gif, il faudra le convertir vous-même ensuite.",
+              "Quand une publication contient plusieurs vidéos, chacune apparaît séparément avec son propre bouton Télécharger, et l'option Tout télécharger les enregistre l'une après l'autre. Votre navigateur peut vous demander d'autoriser plusieurs téléchargements."
+            ]
+          },
+          {
+            "heading": "La Vidéo Twitter ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Vérifiez que la publication est publique : ouvrez-la dans une fenêtre privée sans vous connecter. Les publications de comptes protégés, et tout ce qui ne s'ouvre qu'après connexion, ne peuvent pas être téléchargés ici, car SaveReelsFast ne se connecte pas à X.",
+              "Assurez-vous d'avoir copié le lien de la publication qui contient la vidéo, et non celui d'une réponse ou du profil. Si une publication publique échoue encore, attendez une minute et réessayez ; X limite parfois les requêtes pendant un moment."
+            ]
+          }
+        ]
       },
       "pinterest": {
         "noun": "les vidéos Pinterest",
@@ -414,7 +458,29 @@
             "a": "Oui. Les liens de pinterest.com et des sites régionaux comme pinterest.fr ou pinterest.co.uk sont acceptés."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos Pinterest",
+            "paragraphs": [
+              "Ouvrez l'épingle vidéo, appuyez sur Partager et choisissez Copier le lien, puis collez-le dans le champ ci-dessus. Une fois l'aperçu chargé, appuyez sur Télécharger la vidéo pour enregistrer le MP4. Les liens courts pin.it de l'application fonctionnent aussi : ils sont suivis automatiquement jusqu'à la vraie épingle.",
+              "Les liens de pinterest.com et des sites régionaux comme pinterest.fr ou pinterest.ca sont acceptés. Aucun compte Pinterest, aucune application ni extension n'est nécessaire, et la vidéo est enregistrée exactement comme Pinterest la fournit."
+            ]
+          },
+          {
+            "heading": "Épingles Vidéo et Épingles Image",
+            "paragraphs": [
+              "Cet outil enregistre les épingles vidéo. Une épingle image ne contient pas de vidéo, donc la coller ne donne rien à télécharger ; c'est pareil pour le lien d'un tableau ou d'un profil, qui est une collection d'épingles et non une seule vidéo.",
+              "Une épingle vidéo garde la qualité dans laquelle son créateur l'a mise en ligne, sans agrandissement ni recompression. Si une épingle renvoie vers une vidéo sur un autre site, comme YouTube, collez plutôt le lien de ce site."
+            ]
+          },
+          {
+            "heading": "La Vidéo Pinterest ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Vérifiez d'abord que l'épingle se lit vraiment comme une vidéo et que vous avez copié le lien de l'épingle elle-même, et non d'un tableau. Les épingles de tableaux secrets ou de comptes qui exigent une connexion sont inaccessibles.",
+              "S'il s'agit d'une épingle vidéo publique qui échoue encore, attendez une minute et réessayez. Sur iPhone, le MP4 apparaît dans la liste des téléchargements de Safari (Partager puis Enregistrer la vidéo le place dans Photos) ; sur Android et sur ordinateur, il va dans le dossier Téléchargements."
+            ]
+          }
+        ]
       },
       "tiktok": {
         "noun": "les vidéos TikTok",
@@ -468,7 +534,29 @@
             "a": "Non. Elles exigent un compte Reddit connecté, que cet outil n'utilise pas. Les publications publiques fonctionnent."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos Reddit",
+            "paragraphs": [
+              "Sur la publication Reddit, appuyez sur Partager et choisissez Copier le lien, puis collez-le dans le champ ci-dessus. Les liens de publications (reddit.com/r/…/comments/…), les liens de partage (…/s/…) et les liens v.redd.it fonctionnent. Une fois l'aperçu chargé, appuyez sur Télécharger la vidéo pour enregistrer le MP4.",
+              "Aucun compte Reddit ni application n'est nécessaire, et cela fonctionne de la même façon sur téléphone, tablette ou ordinateur. La vidéo est le fichier hébergé par Reddit pour cette publication, enregistré sans modification dans la qualité fournie par Reddit."
+            ]
+          },
+          {
+            "heading": "Pourquoi les Vidéos Reddit se Téléchargent sans Son",
+            "paragraphs": [
+              "Reddit stocke l'image et le son d'une vidéo dans deux fichiers séparés. Le MP4 téléchargé est la piste image, il se lit donc sans son ; ce n'est pas un défaut du téléchargement, c'est la façon dont Reddit héberge les vidéos.",
+              "Quand Reddit propose le son, un bouton Télécharger l'audio séparé apparaît à côté de la vidéo pour enregistrer aussi la piste audio. Pour obtenir un seul fichier avec les deux, placez-les dans n'importe quel logiciel de montage et exportez-les ensemble."
+            ]
+          },
+          {
+            "heading": "La Vidéo Reddit ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Vérifiez que la publication est publique : les publications NSFW et les vidéos de subreddits privés exigent un compte Reddit connecté, que cet outil n'utilise pas. Les publications supprimées et les vidéos retirées ne peuvent pas non plus être récupérées.",
+              "Si la publication renvoie seulement vers une vidéo sur un autre site, comme YouTube, collez le lien de ce site plutôt que celui de Reddit. Si une vidéo Reddit publique échoue encore, attendez une minute et réessayez."
+            ]
+          }
+        ]
       },
       "snapchat": {
         "noun": "les vidéos Snapchat Spotlight",
@@ -491,7 +579,29 @@
             "a": "Non. Les snaps privés ne sont visibles que par leurs destinataires et on ne peut pas y accéder par un lien public."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos Snapchat Spotlight",
+            "paragraphs": [
+              "Ouvrez la vidéo Spotlight dans Snapchat, appuyez sur Partager et choisissez Copier le lien, puis collez-le dans le champ ci-dessus. Les liens complets (snapchat.com/spotlight/…) et les liens courts t.snapchat.com créés par l'application sont acceptés. Appuyez sur Télécharger la vidéo une fois l'aperçu chargé.",
+              "Aucun compte Snapchat n'est nécessaire, ni application ni extension. Le MP4 est la vidéo que Snapchat diffuse publiquement pour cette publication Spotlight, enregistrée telle quelle."
+            ]
+          },
+          {
+            "heading": "Vidéos Spotlight, Stories et Snaps",
+            "paragraphs": [
+              "Spotlight est le fil vidéo public de Snapchat, et ces vidéos peuvent être enregistrées ici. Les Stories sont partagées avec un public choisi et les snaps privés uniquement avec leurs destinataires : elles sont inaccessibles via un lien public, et cet outil ne les prend pas en charge.",
+              "Les créateurs Spotlight restent propriétaires de leurs vidéos. Gardez les téléchargements pour un visionnage personnel, ou demandez au créateur avant de republier ou réutiliser un extrait ailleurs."
+            ]
+          },
+          {
+            "heading": "La Vidéo Snapchat ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Vérifiez que le lien est celui d'une vidéo Spotlight, et non d'un profil, d'une Story ou d'une discussion. Ouvrez-le dans une fenêtre privée : s'il se lit sans connexion, il est public ; si Snapchat vous demande de vous connecter, il ne peut pas être téléchargé ici.",
+              "Si un lien Spotlight public échoue encore, attendez une minute et réessayez. Sur iPhone, le MP4 apparaît dans la liste des téléchargements de Safari (Partager puis Enregistrer la vidéo le place dans Photos) ; sur Android et sur ordinateur, il va dans le dossier Téléchargements."
+            ]
+          }
+        ]
       },
       "linkedin": {
         "noun": "les vidéos LinkedIn",
@@ -514,7 +624,29 @@
             "a": "La vidéo est enregistrée dans la qualité que LinkedIn propose pour cette publication, qui varie selon l'envoi. L'outil ne l'agrandit ni ne la réencode."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "Comment Télécharger des Vidéos LinkedIn",
+            "paragraphs": [
+              "Sur la publication LinkedIn, appuyez sur les trois points et choisissez Copier le lien vers le post, puis collez-le dans le champ ci-dessus. Les liens linkedin.com/posts/… et linkedin.com/feed/update/… fonctionnent. Une fois l'aperçu chargé, appuyez sur Télécharger la vidéo pour enregistrer le MP4.",
+              "Aucun compte LinkedIn ni application n'est nécessaire. La vidéo est enregistrée dans la qualité que LinkedIn fournit pour cette publication, qui dépend de sa mise en ligne ; rien n'est agrandi ni réencodé."
+            ]
+          },
+          {
+            "heading": "Quelles Vidéos LinkedIn Peut-on Enregistrer",
+            "paragraphs": [
+              "Les publications publiques avec vidéo peuvent être enregistrées, qu'elles viennent d'une personne ou d'une page entreprise. Les publications visibles uniquement par les relations, les vidéos de groupes privés et les cours LinkedIn Learning exigent une connexion, et cet outil ne se connecte à rien.",
+              "Un profil, une page entreprise ou le fil lui-même ne sont pas des liens vidéo : ouvrez la publication précise qui contient la vidéo et copiez son lien. Ces vidéos sont souvent professionnelles, vérifiez donc que vous pouvez réutiliser un extrait avant de le partager."
+            ]
+          },
+          {
+            "heading": "La Vidéo LinkedIn ne se Télécharge pas ? Solutions Rapides",
+            "paragraphs": [
+              "Ouvrez le lien de la publication dans une fenêtre privée sans vous connecter. Si LinkedIn vous demande de vous connecter pour la voir, la publication n'est pas publique et ne peut pas être téléchargée ici. Vérifiez aussi qu'elle contient vraiment une vidéo, et pas seulement une image ou un document.",
+              "Si une publication vidéo publique échoue encore, attendez une minute et réessayez. Sur iPhone, le MP4 apparaît dans la liste des téléchargements de Safari (Partager puis Enregistrer la vidéo le place dans Photos) ; sur Android et sur ordinateur, il va dans le dossier Téléchargements."
+            ]
+          }
+        ]
       }
     }
   },

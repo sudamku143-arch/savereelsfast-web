@@ -368,7 +368,29 @@
             "a": "Threads support is newer and depends on what Threads publicly shows for a post. Posts from private profiles, or without a video, can't be downloaded; if a public video fails, try again later."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download Threads Videos",
+            "paragraphs": [
+              "Open the Threads post, tap the Share icon and choose Copy link. Paste the link into the box above and wait a moment for the preview, then tap Download Video to save the MP4. Links from threads.net and threads.com both work, including the share links the app creates.",
+              "You don't need a Threads or Instagram account, and there's nothing to install. The tool reads only what Threads shows publicly for that post, so it works the same in any browser on a phone, tablet or computer."
+            ]
+          },
+          {
+            "heading": "Save Threads Videos on iPhone, Android and PC",
+            "paragraphs": [
+              "On iPhone or iPad, the MP4 downloads inside Safari: open Safari's Downloads list, tap the video, then Share and Save Video to keep it in Photos. On Android, the file goes to your Downloads folder and appears in your gallery app.",
+              "On a Windows PC or a Mac, the video lands in your usual Downloads folder and plays in any media player. The file is the video Threads serves for playback, saved without any watermark or logo added."
+            ]
+          },
+          {
+            "heading": "Threads Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Make sure the post really contains a video: posts with only photos or text have nothing to download. Then check that it's public by opening the link in a private browser window without logging in; posts from private profiles can't be reached.",
+              "If a public video post still fails, wait a minute and try again, since Threads sometimes limits requests for a short while. Copy the link of the post itself, not of the profile it was posted from."
+            ]
+          }
+        ]
       },
       "x": {
         "noun": "Twitter (X) videos",
@@ -391,7 +413,29 @@
             "a": "Each video is listed separately with its own Download button, and there's a Download all option."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download Twitter (X) Videos",
+            "paragraphs": [
+              "Under the post on X, tap the Share icon and choose Copy link. Paste it into the box above, wait for the preview, and tap Download Video to save the MP4. Links from x.com and from the old twitter.com both work, since they point to the same posts.",
+              "No X account, app or browser extension is needed. The tool fetches the video file X itself serves for that post, at the quality X provides for it, and saves it unchanged."
+            ]
+          },
+          {
+            "heading": "Twitter GIFs and Posts with Several Videos",
+            "paragraphs": [
+              "X stores GIFs as short MP4 videos, so a GIF post normally downloads as an MP4 file that plays like a looping clip. If you want a real .gif file, you would need to convert it yourself afterwards.",
+              "When a post contains more than one video, each one is listed separately with its own Download button, and a Download all option saves them one after another. Your browser may ask you to allow several downloads at once."
+            ]
+          },
+          {
+            "heading": "Twitter Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Check that the post is public: open it in a private browser window without logging in. Posts from protected accounts, and anything that only opens after you sign in, can't be downloaded here, since SaveReelsFast doesn't log in to X.",
+              "Make sure you copied the link of the post with the video, not of a reply or the profile. If a public post still fails, wait a minute and try again; X sometimes limits requests for a short while."
+            ]
+          }
+        ]
       },
       "pinterest": {
         "noun": "Pinterest videos",
@@ -414,7 +458,29 @@
             "a": "Yes. Links from pinterest.com and regional sites such as pinterest.co.uk or pinterest.fr are accepted."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download Pinterest Videos",
+            "paragraphs": [
+              "Open the video pin, tap Share and choose Copy link, then paste it into the box above. After the preview loads, tap Download Video to save the MP4. Short pin.it links from the app work too: they are followed to the real pin automatically.",
+              "Links from pinterest.com and regional sites such as pinterest.co.uk or pinterest.fr are accepted. No Pinterest account, app or extension is needed, and the video is saved exactly as Pinterest serves it."
+            ]
+          },
+          {
+            "heading": "Video Pins vs Image Pins",
+            "paragraphs": [
+              "This tool saves video pins. An image pin contains no video, so pasting one gives nothing to download; the same goes for a board or profile link, which is a collection of pins rather than a single video.",
+              "A video pin keeps the quality the creator uploaded, and nothing is upscaled or re-compressed. If a pin links out to a video on another site, such as YouTube, paste that site's link instead."
+            ]
+          },
+          {
+            "heading": "Pinterest Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "First check that the pin really plays as a video and that you copied the pin's own link, not a board. Pins from secret boards or accounts that require a login can't be reached.",
+              "If it's a public video pin and still fails, wait a minute and try again. On iPhone the MP4 appears in Safari's Downloads list (Share, then Save Video puts it in Photos); on Android and computers it goes to your Downloads folder."
+            ]
+          }
+        ]
       },
       "tiktok": {
         "noun": "TikTok videos",
@@ -468,7 +534,29 @@
             "a": "No. Those require a logged-in Reddit account, which this tool doesn't use. Public posts work."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download Reddit Videos",
+            "paragraphs": [
+              "On the Reddit post, tap Share and choose Copy link, then paste it into the box above. Post links (reddit.com/r/…/comments/…), share links (…/s/…) and v.redd.it links all work. When the preview loads, tap Download Video to save the MP4.",
+              "No Reddit account or app is needed, and it works the same on a phone, tablet or computer. The video is the file Reddit itself hosts for that post, saved unchanged at the quality Reddit provides."
+            ]
+          },
+          {
+            "heading": "Why Reddit Videos Download Without Sound",
+            "paragraphs": [
+              "Reddit stores a video's picture and its sound as two separate files. The MP4 you download is the picture track, so it plays silently; this isn't a fault in the download, it's how Reddit hosts video.",
+              "When Reddit offers the sound, a separate Download Audio button appears next to the video, so you can save the audio track too. If you need one file with both, put the two into any video editor and export them together."
+            ]
+          },
+          {
+            "heading": "Reddit Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Check that the post is public: NSFW posts and videos in private subreddits need a logged-in Reddit account, which this tool doesn't use. Deleted posts and removed videos can't be fetched either.",
+              "If the post only links to a video on another site, such as YouTube, paste that site's link instead of the Reddit one. If a public Reddit video still fails, wait a minute and try again."
+            ]
+          }
+        ]
       },
       "snapchat": {
         "noun": "Snapchat Spotlight videos",
@@ -491,7 +579,29 @@
             "a": "No. Private snaps are only visible to their recipients and can't be reached through a public link."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download Snapchat Spotlight Videos",
+            "paragraphs": [
+              "Open the Spotlight video in Snapchat, tap Share and choose Copy link, then paste it into the box above. Both full links (snapchat.com/spotlight/…) and the short t.snapchat.com links the app creates are accepted. Tap Download Video once the preview loads.",
+              "You don't need a Snapchat account, and there's no app or extension to install. The MP4 is the video Snapchat serves publicly for that Spotlight post, saved as it is."
+            ]
+          },
+          {
+            "heading": "Spotlight Videos vs Stories and Snaps",
+            "paragraphs": [
+              "Spotlight is Snapchat's public video feed, and those videos can be saved here. Stories are shared with a chosen audience and private snaps only with their recipients, so they can't be reached through a public link, and this tool doesn't support them.",
+              "Spotlight creators still own their videos. Keep downloads for personal viewing, or ask the creator before you repost or reuse a clip anywhere else."
+            ]
+          },
+          {
+            "heading": "Snapchat Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Make sure the link is a Spotlight video, not a profile, a Story or a chat. Open it in a private browser window: if it plays without logging in, it's public; if Snapchat asks you to sign in, it can't be downloaded here.",
+              "If a public Spotlight link still fails, wait a minute and try again. On iPhone the MP4 appears in Safari's Downloads list (Share, then Save Video puts it in Photos); on Android and computers it goes to your Downloads folder."
+            ]
+          }
+        ]
       },
       "linkedin": {
         "noun": "LinkedIn videos",
@@ -514,7 +624,29 @@
             "a": "The video is saved in the quality LinkedIn provides for that post, which varies by upload. The tool doesn't upscale or re-encode it."
           }
         ],
-        "articles": []
+        "articles": [
+          {
+            "heading": "How to Download LinkedIn Videos",
+            "paragraphs": [
+              "On the LinkedIn post, tap the three dots and choose Copy link to post, then paste it into the box above. Links like linkedin.com/posts/… and linkedin.com/feed/update/… both work. When the preview loads, tap Download Video to save the MP4.",
+              "No LinkedIn account or app is needed. The video is saved in the quality LinkedIn provides for that post, which depends on how it was uploaded; nothing is upscaled or re-encoded."
+            ]
+          },
+          {
+            "heading": "Which LinkedIn Videos Can Be Saved",
+            "paragraphs": [
+              "Public posts with a video can be saved, whether they come from a person or a company page. Posts visible only to connections, videos in private groups and LinkedIn Learning courses need a login, and this tool doesn't sign in to anything.",
+              "A profile page, a company page or the feed itself isn't a video link: open the single post that contains the video and copy its link. Videos are often used for work, so check that you're allowed to reuse a clip before sharing it."
+            ]
+          },
+          {
+            "heading": "LinkedIn Video Not Downloading? Quick Fixes",
+            "paragraphs": [
+              "Open the post link in a private browser window without logging in. If LinkedIn asks you to sign in to see it, the post isn't public and can't be downloaded here. Also check that the post really contains a video and not just an image or a document.",
+              "If a public video post still fails, wait a minute and try again. On iPhone the MP4 appears in Safari's Downloads list (Share, then Save Video puts it in Photos); on Android and computers it goes to your Downloads folder."
+            ]
+          }
+        ]
       }
     }
   },
