@@ -76,11 +76,24 @@ describe("the extract route uses the budget", () => {
     assert.ok(25_000 - budget >= 1200, `only ${25_000 - budget} ms of margin under Vercel's 25 s hard limit`);
   });
 
-  it("only YouTube lookups use the longer limits", () => {
+  it("Instagram gets room for a stalled direct attempt plus a proxied retry, each hop outlasting the one behind", () => {
+    const scraper = 9_000 + 750; // the scraper's Instagram budget plus its grace (scraper/main.py)
+    const scraperWait = num(route, "INSTAGRAM_SCRAPER_TIMEOUT_MS");
+    const budget = num(route, "INSTAGRAM_LOOKUP_BUDGET_MS");
+    const page = num(client, "INSTAGRAM_EXTRACT_TIMEOUT_MS");
+    assert.ok(scraperWait > scraper, `site waits ${scraperWait} ms for a scraper that may take ${scraper} ms`);
+    assert.ok(budget > scraperWait, "the lookup budget must outlast the scraper wait");
+    assert.ok(page > budget, `the page (${page} ms) must outlast the site (${budget} ms)`);
+    assert.ok(page <= 15_000, "still no long hang");
+  });
+
+  it("only YouTube and Instagram lookups use the longer limits", () => {
     assert.match(route, /const youtube = platform === "youtube";/);
-    assert.match(route, /youtube \? YOUTUBE_LOOKUP_BUDGET_MS : LOOKUP_BUDGET_MS/);
-    assert.match(route, /youtube \? YOUTUBE_SCRAPER_TIMEOUT_MS : SCRAPER_TIMEOUT_MS/);
-    assert.match(client, /parseSupportedUrl\(url\)\?\.platform === "youtube" \? YOUTUBE_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS/);
+    assert.match(route, /youtube \? YOUTUBE_LOOKUP_BUDGET_MS : instagram \? INSTAGRAM_LOOKUP_BUDGET_MS : LOOKUP_BUDGET_MS/);
+    assert.match(route, /youtube \? YOUTUBE_SCRAPER_TIMEOUT_MS : instagram \? INSTAGRAM_SCRAPER_TIMEOUT_MS : SCRAPER_TIMEOUT_MS/);
+    assert.match(client, /if \(platform === "youtube"\) return YOUTUBE_EXTRACT_TIMEOUT_MS;/);
+    assert.match(client, /platform === "instagram" \? INSTAGRAM_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS/);
+    assert.match(client, /pageWaitMs\(parseSupportedUrl\(url\)\?\.platform\)/);
   });
 
   it("a built-in strategy waits 5 s at most, not 8", () => {

@@ -48,6 +48,14 @@ type PlatformsDict = { label: string } & Record<
 const EXTRACT_TIMEOUT_MS = 10_000;
 // YouTube lookups may legitimately take longer (see /api/extract), so the page waits longer for those only.
 const YOUTUBE_EXTRACT_TIMEOUT_MS = 25_000;
+// Instagram lookups may need a second, proxied attempt when Instagram stalls the scraper's IP (see /api/extract).
+const INSTAGRAM_EXTRACT_TIMEOUT_MS = 13_500;
+
+/** How long the page waits for a lookup of this platform before showing the timeout message. */
+function pageWaitMs(platform: string | undefined): number {
+  if (platform === "youtube") return YOUTUBE_EXTRACT_TIMEOUT_MS;
+  return platform === "instagram" ? INSTAGRAM_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS;
+}
 // Platforms whose files aren't reliably HD (YouTube's fast route tops out at 360p, LinkedIn reports no
 // resolution), so the "HD quality" badge is left off for them rather than overpromise.
 const NO_HD_BADGE: PlatformId[] = ["youtube", "linkedin"];
@@ -183,7 +191,7 @@ export default function ExtractorClient({
     const timer = setTimeout(() => {
       timedOut = true;
       controller.abort();
-    }, parseSupportedUrl(url)?.platform === "youtube" ? YOUTUBE_EXTRACT_TIMEOUT_MS : EXTRACT_TIMEOUT_MS);
+    }, pageWaitMs(parseSupportedUrl(url)?.platform));
 
     try {
       // GET, so identical lookups can be cached by the CDN (see /api/extract).
