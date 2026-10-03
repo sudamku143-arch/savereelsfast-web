@@ -119,10 +119,10 @@ const FETCH_TIMEOUT_MS = 4000; // a built-in strategy fetching one Instagram pag
 const YOUTUBE_LOOKUP_BUDGET_MS = 23500;
 const YOUTUBE_SCRAPER_TIMEOUT_MS = 23000;
 // Instagram: Instagram often stalls the scraper's IP instead of refusing it, so the scraper makes a short direct
-// attempt and then one through its residential proxy (scraper/main.py, _instagram_lookup: 9 s in all). The site
+// attempt and then one through its residential proxy (scraper/main.py, _instagram_lookup: 11 s in all). The site
 // waits for both, and keeps a little time for its own built-in strategies after that.
-const INSTAGRAM_LOOKUP_BUDGET_MS = 12000;
-const INSTAGRAM_SCRAPER_TIMEOUT_MS = 10500;
+const INSTAGRAM_LOOKUP_BUDGET_MS = 14000;
+const INSTAGRAM_SCRAPER_TIMEOUT_MS = 12500;
 const lookupBudget = new AsyncLocalStorage<{ deadline: number; scraperMs: number }>();
 
 /** How long the scraper may be waited for in this lookup (longer for YouTube). */

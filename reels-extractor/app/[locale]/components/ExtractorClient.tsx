@@ -49,7 +49,7 @@ const EXTRACT_TIMEOUT_MS = 10_000;
 // YouTube lookups may legitimately take longer (see /api/extract), so the page waits longer for those only.
 const YOUTUBE_EXTRACT_TIMEOUT_MS = 25_000;
 // Instagram lookups may need a second, proxied attempt when Instagram stalls the scraper's IP (see /api/extract).
-const INSTAGRAM_EXTRACT_TIMEOUT_MS = 13_500;
+const INSTAGRAM_EXTRACT_TIMEOUT_MS = 15_500;
 
 /** How long the page waits for a lookup of this platform before showing the timeout message. */
 function pageWaitMs(platform: string | undefined): number {

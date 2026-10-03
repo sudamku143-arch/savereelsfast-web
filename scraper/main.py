@@ -167,10 +167,11 @@ YOUTUBE_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
 
 # Instagram gets room for two attempts: a short direct one, then one through the residential proxy (see
 # _instagram_lookup). From Render's IP, Instagram often doesn't refuse a lookup, it just never answers, so the
-# whole budget went on one stalled request. 9 s plus the grace below still ends before the website stops
-# waiting for the scraper (INSTAGRAM_SCRAPER_TIMEOUT_MS, 10.5 s, in app/api/extract/route.ts).
+# whole budget went on one stalled request. A proxied lookup measured 6.5-8.5 s, with a tail past 9 s, hence
+# 11 s. Plus the grace below it still ends before the website stops waiting for the scraper
+# (INSTAGRAM_SCRAPER_TIMEOUT_MS, 12.5 s, in app/api/extract/route.ts).
 INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
-    os.environ.get("INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS"), default=9.0, low=4.0, high=10.0
+    os.environ.get("INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS"), default=11.0, low=4.0, high=12.0
 )
 
 

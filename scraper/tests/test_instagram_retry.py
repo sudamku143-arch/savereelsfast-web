@@ -168,8 +168,8 @@ class InstagramRetryTests(EndpointBase):
         budget = self.main._extraction_budget(IG)
         self.assertEqual(budget, self.main.INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS)
         self.assertGreater(budget, self.main.EXTRACTION_TIMEOUT_SECONDS)
-        # The website waits 10.5 s for an Instagram lookup (INSTAGRAM_SCRAPER_TIMEOUT_MS): budget + grace must end first.
-        self.assertLess(budget + self.main.DEADLINE_GRACE_SECONDS, 10.5)
+        # The website waits 12.5 s for an Instagram lookup (INSTAGRAM_SCRAPER_TIMEOUT_MS): budget + grace must end first.
+        self.assertLess(budget + self.main.DEADLINE_GRACE_SECONDS, 12.5)
         # and leaves a stalled direct attempt plus a whole retry room to run
         self.assertGreaterEqual(budget - self.main.INSTAGRAM_DIRECT_SOCKET_TIMEOUT, self.main.INSTAGRAM_RETRY_MIN_SECONDS + 3)
 

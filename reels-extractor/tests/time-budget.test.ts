@@ -77,14 +77,14 @@ describe("the extract route uses the budget", () => {
   });
 
   it("Instagram gets room for a stalled direct attempt plus a proxied retry, each hop outlasting the one behind", () => {
-    const scraper = 9_000 + 750; // the scraper's Instagram budget plus its grace (scraper/main.py)
+    const scraper = 11_000 + 750; // the scraper's Instagram budget plus its grace (scraper/main.py)
     const scraperWait = num(route, "INSTAGRAM_SCRAPER_TIMEOUT_MS");
     const budget = num(route, "INSTAGRAM_LOOKUP_BUDGET_MS");
     const page = num(client, "INSTAGRAM_EXTRACT_TIMEOUT_MS");
     assert.ok(scraperWait > scraper, `site waits ${scraperWait} ms for a scraper that may take ${scraper} ms`);
     assert.ok(budget > scraperWait, "the lookup budget must outlast the scraper wait");
     assert.ok(page > budget, `the page (${page} ms) must outlast the site (${budget} ms)`);
-    assert.ok(page <= 15_000, "still no long hang");
+    assert.ok(page <= 16_000, "still no long hang");
   });
 
   it("only YouTube and Instagram lookups use the longer limits", () => {
