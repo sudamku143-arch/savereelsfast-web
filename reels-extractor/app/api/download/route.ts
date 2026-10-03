@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BROWSER_UA, isAllowedMediaUrl, isCobaltUrl, refererFor } from "@/lib/instagram";
 import { parseSupportedUrl } from "@/lib/platforms";
 import type { ErrorCode } from "@/lib/errors";
-import { isAudioExtension, isImageExtension, type ImageExtension } from "@/lib/download";
+import { isAudioExtension, isImageExtension, isIpBoundHost, type ImageExtension } from "@/lib/download";
 import { checkRateLimit, clientIp, type RateLimitStore } from "@/lib/rate-limit";
 
 // Edge runtime streams the body straight through, so large videos are not
@@ -28,12 +28,10 @@ const limiterStore: RateLimitStore = new Map();
 // production, it still cost full proxy bandwidth on every real request (confirmed on the DataImpulse
 // dashboard) - Google evidently treats Vercel's IP ranges differently, so the extra attempt only added
 // latency with no bandwidth benefit. Left as a note so this isn't tried again without new evidence.
-const IP_BOUND_HOSTS = ["googlevideo.com"];
-
+// (The list itself, IP_BOUND_HOSTS, lives in lib/download.ts: the result card's player uses it too.)
 function isIpBound(target: string): boolean {
-  const host = new URL(target).hostname.toLowerCase();
   // A Cobalt link is not bound to an IP, but it is fetched by the scraper only, never straight from this site.
-  return isCobaltUrl(target) || IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  return isCobaltUrl(target) || isIpBoundHost(target);
 }
 
 const AUDIO_CONTENT_TYPES: Record<string, string> = {

@@ -4,12 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import type { PlatformId } from "@/lib/platforms";
 import type { Locale } from "@/lib/i18n-config";
-import { buildAudioHref, buildDownloadHref, downloadFilename, type ImageExtension } from "@/lib/download";
+import { buildAudioHref, buildDownloadHref, downloadFilename, isIpBoundHost, type ImageExtension } from "@/lib/download";
 import PlatformIcon from "./PlatformIcon";
 import ItemsSlider, { type ItemsDict } from "./ItemsSlider";
 import DownloadButton, { type DownloadDict } from "./DownloadButton";
 import type { ErrorsDict } from "./ErrorCard";
 import ShareTool from "./ShareTool";
+import VideoPreview from "./VideoPreview";
 
 /** Instagram photos come in the same shape as videos: `videoUrl` holds the picture and `kind` is "image". */
 type ImageFields = { kind?: "image"; imageExt?: ImageExtension };
@@ -59,6 +60,9 @@ export type PreviewDict = ItemsDict & {
 };
 
 const PLACEHOLDER_TITLE = /^(Video|Post) by [\w.]+$/;
+
+// Platforms whose videos are vertical, reels-style: the player gets a 9:16 frame for them, 16:9 otherwise.
+const VERTICAL_PLATFORMS: PlatformId[] = ["instagram", "tiktok", "snapchat"];
 
 function formatDuration(totalSeconds: number): string {
   const rounded = Math.round(totalSeconds);
@@ -123,6 +127,11 @@ export default function PreviewCard({
   // yt-dlp names a post with no caption "Video by <user>" / "Post by <user>": that is a placeholder, not a caption.
   const caption = result.title && !PLACEHOLDER_TITLE.test(result.title.trim()) ? snippet(result.title) : null;
 
+  // An inline player for a single video. Not on the audio page (its 3-dots menu would offer the video file
+  // there), and not for links bound to the scraper's IP (YouTube): the browser can't play those itself, and
+  // streaming them through the site would pull every play through the paid proxy. Those keep the thumbnail.
+  const showPlayer = !isCarousel && !isPhoto && !audioOnly && Boolean(result.videoUrl) && !isIpBoundHost(result.videoUrl);
+
   return (
     <div className="glass mt-6 w-full max-w-md animate-fade-in-up rounded-2xl p-4 shadow-glow">
       <div className="mb-3 flex items-center justify-between gap-2">
@@ -143,8 +152,20 @@ export default function PreviewCard({
         </div>
       </div>
 
+      {showPlayer && (
+        <div className="mb-3">
+          <VideoPreview
+            src={result.videoUrl}
+            fallbackSrc={videoHref}
+            poster={result.thumbnailUrl}
+            label={caption ?? dict.thumbnailAlt}
+            vertical={VERTICAL_PLATFORMS.includes(platform)}
+          />
+        </div>
+      )}
+
       <div className="flex gap-4">
-        {!isCarousel && (
+        {!isCarousel && !showPlayer && (
           <div
             className={`relative w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-800 sm:w-28 ${isPhoto ? "aspect-[4/5]" : "aspect-[9/16]"}`}
           >

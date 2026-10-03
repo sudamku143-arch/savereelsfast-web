@@ -17,6 +17,22 @@ export function isImageExtension(value: unknown): value is ImageExtension {
 export type DownloadKind = "video" | "audio" | "image";
 
 /**
+ * CDNs whose links only work from the IP that resolved them (the scraper's, often through the paid proxy).
+ * A browser can't fetch them itself: /api/download streams them through the scraper, and the result card
+ * shows no inline player for them (playing one would pull the whole video through the proxy).
+ */
+export const IP_BOUND_HOSTS = ["googlevideo.com"];
+
+export function isIpBoundHost(raw: string): boolean {
+  try {
+    const host = new URL(raw).hostname.toLowerCase();
+    return IP_BOUND_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Same-origin download link. Cross-origin CDN links ignore the `download`
  * attribute, so everything is proxied through /api/download, which sends
  * `Content-Disposition: attachment`.
