@@ -31,16 +31,22 @@ class InstagramRetryTests(EndpointBase):
             patcher = mock.patch.object(self.main, name, value)
             patcher.start()
             self.addCleanup(patcher.stop)
-        self.main._instagram_usage.update(day="", proxiedToday=0, proxied=0, retries=0, recovered=0, skippedNoTime=0)
+        self.main._instagram_usage.update(day="", proxiedToday=0, proxied=0, retries=0, recovered=0, skippedNoTime=0,
+                                          directSkipped=0, stalls=0)
+        self.main._instagram_direct_blocked_until[0] = 0.0
         self.calls = []
+        self.socket_timeouts = []
 
     def lookup(self, answers, proxy=None, url=IG):
         """Run /extract with _extract_info answering `answers` in turn (an exception is raised, a dict returned)."""
         from yt_dlp.utils import DownloadError
 
-        def fake(u, youtube_route=0, use_proxy=False):
+        def fake(u, youtube_route=0, use_proxy=False, socket_timeout=None):
             self.calls.append(use_proxy)
+            self.socket_timeouts.append(socket_timeout)
             answer = answers[len(self.calls) - 1]
+            if isinstance(answer, BaseException):
+                raise answer
             if isinstance(answer, str):
                 raise DownloadError(answer)
             return answer
@@ -112,12 +118,60 @@ class InstagramRetryTests(EndpointBase):
         self.lookup([RATE_LIMIT], url="https://www.tiktok.com/@a/video/7212345678901234567")
         self.assertEqual(len(self.calls), 1)
 
+    def test_a_stalled_lookup_is_retried_through_the_proxy_without_an_extra_pause(self):
+        # What Render's IP gets now: not a refusal, just no answer.
+        with mock.patch.object(self.main, "INSTAGRAM_RETRY_PAUSE_SECONDS", 30.0),              mock.patch.object(self.main.time, "sleep") as sleep:
+            response = self.lookup([TimeoutError("timed out"), {"id": "r", "formats": [video()]}],
+                                   proxy="http://u:p@proxy.example:8000")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.calls, [False, True])
+        sleep.assert_called_once_with(0.0)  # the stall was the wait
+        self.assertEqual(self.main._instagram_usage["stalls"], 1)
+
+    def test_the_direct_attempt_gives_up_quickly_and_the_retry_gets_the_normal_timeout(self):
+        self.lookup([TimeoutError("timed out"), {"id": "r", "formats": [video()]}], proxy="http://u:p@proxy.example:8000")
+        self.assertEqual(self.socket_timeouts, [self.main.INSTAGRAM_DIRECT_SOCKET_TIMEOUT, None])
+        self.assertLess(self.main.INSTAGRAM_DIRECT_SOCKET_TIMEOUT, self.main.YDL_OPTS["socket_timeout"])
+
+    def test_after_a_block_the_next_lookups_go_straight_to_the_proxy(self):
+        proxy = "http://u:p@proxy.example:8000"
+        self.lookup([TimeoutError("timed out"), {"id": "a", "formats": [video("a")]}], proxy=proxy)
+        self.reset_caches()
+        self.calls = []
+        response = self.lookup([{"id": "b", "formats": [video("b")]}], proxy=proxy, url="https://www.instagram.com/reel/Other123/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.calls, [True], "no visitor waits out a direct request that won't be answered")
+        self.assertEqual(self.main._instagram_usage["directSkipped"], 1)
+
+    def test_without_a_proxy_every_lookup_still_tries_direct(self):
+        self.lookup([TimeoutError("timed out"), TimeoutError("timed out")])
+        self.reset_caches()
+        self.calls = []
+        self.lookup([{"id": "b", "formats": [video("b")]}], url="https://www.instagram.com/reel/Other123/")
+        self.assertEqual(self.calls, [False])
+
+    def test_once_the_proxy_allowance_is_used_up_direct_is_tried_again(self):
+        proxy = "http://u:p@proxy.example:8000"
+        with mock.patch.object(self.main, "INSTAGRAM_PROXY_DAILY_LOOKUPS", 1):
+            self.lookup([TimeoutError("timed out"), {"id": "a", "formats": [video("a")]}], proxy=proxy)
+            self.reset_caches()
+            self.calls = []
+            self.lookup([{"id": "b", "formats": [video("b")]}], proxy=proxy, url="https://www.instagram.com/reel/Other123/")
+        self.assertEqual(self.calls, [False])
+
+    def test_a_second_lookup_of_the_same_reel_comes_from_the_cache(self):
+        self.lookup([{"id": "r", "formats": [video()]}])
+        self.lookup([AssertionError("Instagram must not be asked again")])
+        self.assertEqual(len(self.calls), 1)
+
     def test_instagram_has_room_for_the_retry_but_still_answers_before_the_site_gives_up(self):
         budget = self.main._extraction_budget(IG)
         self.assertEqual(budget, self.main.INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS)
         self.assertGreater(budget, self.main.EXTRACTION_TIMEOUT_SECONDS)
-        # The website waits 7 s for the scraper (SCRAPER_TIMEOUT_MS): budget + grace must end before that.
-        self.assertLess(budget + self.main.DEADLINE_GRACE_SECONDS, 7.0)
+        # The website waits 10.5 s for an Instagram lookup (INSTAGRAM_SCRAPER_TIMEOUT_MS): budget + grace must end first.
+        self.assertLess(budget + self.main.DEADLINE_GRACE_SECONDS, 10.5)
+        # and leaves a stalled direct attempt plus a whole retry room to run
+        self.assertGreaterEqual(budget - self.main.INSTAGRAM_DIRECT_SOCKET_TIMEOUT, self.main.INSTAGRAM_RETRY_MIN_SECONDS + 3)
 
     def test_stats_report_the_retries(self):
         self.lookup([RATE_LIMIT, {"id": "r", "formats": [video()]}])

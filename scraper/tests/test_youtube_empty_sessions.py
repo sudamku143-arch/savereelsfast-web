@@ -52,7 +52,7 @@ class Base(unittest.TestCase):
     def stub(self, *answers):
         calls = []
 
-        def fake(url, route=0):
+        def fake(url, route=0, **_options):
             calls.append(route)
             answer = answers[min(len(calls), len(answers)) - 1]
             if isinstance(answer, Exception):

@@ -165,11 +165,12 @@ YOUTUBE_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
 )
 
 
-# Instagram gets one extra second over the default, so a lookup that was rate-limited can wait a moment and try
-# once more (see _instagram_lookup). Same 2-6 s band; 6 s plus the grace below still ends before the website
-# stops waiting for the scraper (SCRAPER_TIMEOUT_MS, 7 s, in app/api/extract/route.ts).
+# Instagram gets room for two attempts: a short direct one, then one through the residential proxy (see
+# _instagram_lookup). From Render's IP, Instagram often doesn't refuse a lookup, it just never answers, so the
+# whole budget went on one stalled request. 9 s plus the grace below still ends before the website stops
+# waiting for the scraper (INSTAGRAM_SCRAPER_TIMEOUT_MS, 10.5 s, in app/api/extract/route.ts).
 INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS = _extraction_timeout(
-    os.environ.get("INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS"), default=6.0
+    os.environ.get("INSTAGRAM_EXTRACTION_TIMEOUT_SECONDS"), default=9.0, low=4.0, high=10.0
 )
 
 
@@ -688,7 +689,9 @@ def stats(x_scraper_key: str | None = Header(default=None)) -> dict:
     }
 
 
-def _extract_info(url: str, youtube_route: int = 0, use_proxy: bool = False) -> dict | None:
+def _extract_info(
+    url: str, youtube_route: int = 0, use_proxy: bool = False, socket_timeout: float | None = None
+) -> dict | None:
     """
     Threads has no yt-dlp extractor, so it uses our own; everything else uses yt-dlp.
 
@@ -713,6 +716,8 @@ def _extract_info(url: str, youtube_route: int = 0, use_proxy: bool = False) -> 
                 (YOUTUBE_PROXY_SOCKET_TIMEOUT, YOUTUBE_PROXY_RETRIES) if YTDLP_PROXY else (YOUTUBE_SOCKET_TIMEOUT, YOUTUBE_RETRIES)
             )
             options.update(socket_timeout=socket_timeout, retries=retries, extractor_retries=retries)
+        elif socket_timeout is not None:
+            options["socket_timeout"] = socket_timeout
         if trace is not None:
             trace.append({"route": youtube_route, "clients": (options.get("extractor_args") or {}).get("youtube", {}).get("player_client"), "cookies": bool(cookiefile)})
         try:
@@ -770,10 +775,19 @@ def _has_download(info: dict) -> bool:
 # through a paid proxy would cost far more than the occasional blocked one. Media files never use it: an
 # Instagram CDN link isn't tied to the IP that resolved it, so the download still goes straight to the CDN.
 INSTAGRAM_RETRY_PAUSE_SECONDS = _env_number("INSTAGRAM_RETRY_PAUSE_SECONDS", 2.0)
+# The direct attempt gives up on a silent connection after this long instead of the usual 4 s: a stall from
+# Instagram means the IP is being throttled, and the proxied retry needs the rest of the budget.
+INSTAGRAM_DIRECT_SOCKET_TIMEOUT = _env_number("INSTAGRAM_DIRECT_SOCKET_TIMEOUT", 2.5)
+# After Instagram blocks or stalls a direct lookup, the next ones skip the direct attempt and go straight
+# through the proxy for this long, instead of each visitor first waiting out a request that won't be answered.
+INSTAGRAM_DIRECT_COOLDOWN_SECONDS = _env_number("INSTAGRAM_DIRECT_COOLDOWN_SECONDS", 600.0)
+_instagram_direct_blocked_until = [0.0]  # monotonic time
 INSTAGRAM_RETRY_MIN_SECONDS = 2.5  # the retry only starts if at least this much of the lookup budget is left after the pause
 # Proxied Instagram retries per UTC day (0 = never use the proxy for Instagram). 100 x ~1.4 MB ~= 140 MB a day at most.
 INSTAGRAM_PROXY_DAILY_LOOKUPS = int(_env_number("INSTAGRAM_PROXY_DAILY_LOOKUPS", 100))
-_instagram_usage = {"day": "", "proxiedToday": 0, "proxied": 0, "retries": 0, "recovered": 0, "skippedNoTime": 0}
+_instagram_usage = {"day": "", "proxiedToday": 0, "proxied": 0, "retries": 0, "recovered": 0, "skippedNoTime": 0,
+                    "directSkipped": 0, "stalls": 0}
+_INSTAGRAM_RETRY_ON = {errors.STREAM_EXPIRED_OR_BLOCKED, errors.PLATFORM_TIMEOUT}
 
 
 def _instagram_blocked(info: dict) -> bool:
@@ -781,6 +795,15 @@ def _instagram_blocked(info: dict) -> bool:
     if _describe_items(slim_info(info), images=True):
         return False
     return _no_video_error(info).code == errors.STREAM_EXPIRED_OR_BLOCKED
+
+
+def _instagram_proxy_available() -> bool:
+    """Whether a proxied lookup could be made right now (a proxy is set and today's allowance isn't used up)."""
+    if not YTDLP_PROXY or INSTAGRAM_PROXY_DAILY_LOOKUPS <= 0:
+        return False
+    with _proxy_lock:
+        used = _instagram_usage["proxiedToday"] if _instagram_usage["day"] == _utc_day() else 0
+    return used < INSTAGRAM_PROXY_DAILY_LOOKUPS
 
 
 def _instagram_proxy_allowed() -> bool:
@@ -802,38 +825,65 @@ def _instagram_proxy_allowed() -> bool:
 
 def _instagram_lookup(url: str) -> dict | None:
     """
-    An Instagram lookup that, when rate-limited, waits INSTAGRAM_RETRY_PAUSE_SECONDS and tries once more
-    (through the proxy when allowed). Anything else (private, deleted, no media) is answered at once, and the
-    retry only happens if it still fits in this lookup's time budget. Raises like _extract_info.
-    """
-    try:
-        found = _extract_info(url)
-    except ScraperError as err:
-        failure = err
-    except Exception as exc:  # noqa: BLE001 - classified like every other lookup failure
-        failure = _failure_from_exception(exc)
-    else:
-        if not found or not _instagram_blocked(found):
-            return found
-        failure = _no_video_error(found)
-    if failure.code != errors.STREAM_EXPIRED_OR_BLOCKED:
-        raise failure
+    An Instagram lookup that survives Instagram throttling Render's IP, which shows up two ways: a quick
+    "rate-limit reached" answer, or (more often lately) no answer at all.
 
-    deadline = _deadline.get()
-    left = (deadline - time.monotonic()) if deadline is not None else INSTAGRAM_RETRY_PAUSE_SECONDS + INSTAGRAM_RETRY_MIN_SECONDS
-    pause = min(INSTAGRAM_RETRY_PAUSE_SECONDS, left - INSTAGRAM_RETRY_MIN_SECONDS)
-    if pause < 0:
+    1. Direct, with a short socket timeout, unless a direct lookup was blocked or stalled in the last
+       INSTAGRAM_DIRECT_COOLDOWN_SECONDS and the proxy can be used instead.
+    2. On a block or a stall: once more, through the residential proxy when allowed (else direct again).
+       After a quick block it first pauses INSTAGRAM_RETRY_PAUSE_SECONDS; after a stall the wait already
+       happened, so it goes straight on. The retry only starts if INSTAGRAM_RETRY_MIN_SECONDS are left.
+    Anything else (private, deleted, no media) is answered at once. Raises like _extract_info.
+    """
+    skip_direct = time.monotonic() < _instagram_direct_blocked_until[0] and _instagram_proxy_available()
+    if skip_direct:
         with _proxy_lock:
-            _instagram_usage["skippedNoTime"] += 1
-        raise failure
-    time.sleep(pause)
+            _instagram_usage["directSkipped"] += 1
+    else:
+        started = time.monotonic()
+        try:
+            found = _extract_info(url, socket_timeout=INSTAGRAM_DIRECT_SOCKET_TIMEOUT)
+        except ScraperError as err:
+            failure = err
+        except Exception as exc:  # noqa: BLE001 - classified like every other lookup failure
+            failure = _failure_from_exception(exc)
+        else:
+            if not found or not _instagram_blocked(found):
+                return found
+            failure = _no_video_error(found)
+        if failure.code not in _INSTAGRAM_RETRY_ON:
+            raise failure
+        _instagram_direct_blocked_until[0] = time.monotonic() + INSTAGRAM_DIRECT_COOLDOWN_SECONDS
+        stalled = failure.code == errors.PLATFORM_TIMEOUT
+        with _proxy_lock:
+            _instagram_usage["stalls"] += int(stalled)
+        how = "via proxy" if _instagram_proxy_available() else "direct"
+        print(f"[instagram] direct lookup {'stalled' if stalled else 'blocked'} after "
+              f"{time.monotonic() - started:.1f}s; retrying {how}", flush=True)
+
+        deadline = _deadline.get()
+        left = (deadline - time.monotonic()) if deadline is not None else INSTAGRAM_RETRY_PAUSE_SECONDS + INSTAGRAM_RETRY_MIN_SECONDS
+        pause = 0.0 if stalled else min(INSTAGRAM_RETRY_PAUSE_SECONDS, left - INSTAGRAM_RETRY_MIN_SECONDS)
+        if pause < 0 or left - pause < INSTAGRAM_RETRY_MIN_SECONDS:
+            with _proxy_lock:
+                _instagram_usage["skippedNoTime"] += 1
+            raise failure
+        time.sleep(pause)
+
     use_proxy = _instagram_proxy_allowed()
     with _proxy_lock:
-        _instagram_usage["retries"] += 1
-    found = _extract_info(url, use_proxy=use_proxy)
+        _instagram_usage["retries"] += int(not skip_direct)
+    how = "proxied" if use_proxy else "direct"
+    started = time.monotonic()
+    try:
+        found = _extract_info(url, use_proxy=use_proxy)
+    except Exception:
+        print(f"[instagram] {how} lookup failed after {time.monotonic() - started:.1f}s", flush=True)
+        raise
     if found and not _instagram_blocked(found):
         with _proxy_lock:
             _instagram_usage["recovered"] += 1
+        print(f"[instagram] {how} lookup ok in {time.monotonic() - started:.1f}s", flush=True)
     return found
 
 
@@ -1746,6 +1796,9 @@ def _proxy_stats() -> dict:
                 "proxiedToday": _instagram_usage["proxiedToday"] if _instagram_usage["day"] == _utc_day() else 0,
                 "dailyProxyLookups": INSTAGRAM_PROXY_DAILY_LOOKUPS or None,
                 "skippedNoTime": _instagram_usage["skippedNoTime"],
+                "stalls": _instagram_usage["stalls"],
+                "directSkipped": _instagram_usage["directSkipped"],
+                "directBlockedForSeconds": max(0, round(_instagram_direct_blocked_until[0] - time.monotonic())),
             },
         }
 
