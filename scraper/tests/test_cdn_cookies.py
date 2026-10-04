@@ -52,5 +52,38 @@ class CookieTests(EndpointBase):
         self.assertEqual(sent.get("Referer"), "https://www.tiktok.com/")
 
 
+class SameSessionTests(EndpointBase):
+    """TikTok: the file is opened by the very session that looked the post up (its cookie jar, its client)."""
+
+    def test_tiktok_downloads_use_the_lookup_session(self):
+        info = {"id": "t", "formats": [{"format_id": "h264", "url": "https://v16-webapp-prime.tiktok.com/video/x", "ext": "mp4",
+                                        "height": 1024, "width": 576, "vcodec": "h264", "acodec": "aac", "protocol": "https",
+                                        "http_headers": {"Referer": "https://www.tiktok.com/"}}]}
+        instances = {"extract": [], "open": []}
+
+        class FakeResponse(io.BytesIO):
+            headers = {"Content-Length": "3"}
+
+        def fake_extract(self_ydl, url, download=False):
+            instances["extract"].append(id(self_ydl))
+            return info
+
+        def fake_urlopen(self_ydl, request):
+            instances["open"].append(id(self_ydl))
+            return FakeResponse(b"abc")
+
+        with mock.patch.object(self.main.yt_dlp.YoutubeDL, "extract_info", fake_extract),              mock.patch.object(self.main.yt_dlp.YoutubeDL, "urlopen", fake_urlopen):
+            response = self.client.get("/download", params={"url": "https://www.tiktok.com/@u/video/7206382937372134662", "id": "tt"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"abc")
+        self.assertEqual(len(set(instances["extract"])), 1)
+        self.assertEqual(set(instances["open"]), set(instances["extract"]), "the file must come from the lookup's own session")
+
+    def test_other_platforms_keep_the_cached_route(self):
+        with mock.patch.object(self.main, "_open_with_lookup_session") as same_session,              mock.patch.object(self.main, "_acquire_info", side_effect=self.main.ScraperError("UNSUPPORTED_POST")):
+            self.client.get("/download", params={"url": "https://x.com/u/status/719944021058060289", "id": "x"})
+        same_session.assert_not_called()
+
+
 if __name__ == "__main__":
     unittest.main()

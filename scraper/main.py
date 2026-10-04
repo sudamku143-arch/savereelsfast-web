@@ -35,6 +35,7 @@ from diagnose import cookie_summary, interpret, probe_network, probe_proxy, prox
 from memory import rss_mb
 from telegram_bot import MAX_UPLOAD_BYTES, TEMP_PREFIX, BotUserError, Media, TelegramBot, delete_quietly, valid_token
 from urls import (
+    is_tiktok_host,
     BROWSER_UA,
     expand_redirects,
     UnsupportedUrl,
@@ -1509,6 +1510,50 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
         raise _failure_from_exception(exc)
 
 
+def _open_with_lookup_session(page_url: str, kind: str, item: int) -> OpenStream:
+    """
+    Look the post up and open its file with the SAME yt-dlp session, the way yt-dlp's own downloader does.
+
+    TikTok's CDN answers 403 unless the file request carries the session the page lookup established (its
+    tt_chain_token and challenge cookies, set inside yt-dlp's cookie jar) and comes from a browser-like
+    client. A cached lookup opened later by a fresh session lacks both. Blocking. Raises ScraperError.
+    """
+    ydl = yt_dlp.YoutubeDL({**_ydl_options(), "logger": _MessageCollector()})
+    try:
+        info = ydl.extract_info(page_url, download=False)
+        if not info:
+            raise ScraperError(errors.UNSUPPORTED_POST)
+        entries = _entries(info)
+        entry = entries[item] if 0 <= item < len(entries) else entries[0]
+        fmt = _pick_audio(entry) if kind == "audio" else _pick_format(entry)[0]
+        if not fmt:
+            raise _no_video_error(info) if kind != "audio" else ScraperError(errors.UNSUPPORTED_POST, "This video has no separate audio stream.")
+        if not _media_url_allowed(fmt["url"]):
+            raise ScraperError(errors.UNSUPPORTED_POST, "That video is hosted somewhere we don't download from.")
+        headers = dict(fmt.get("http_headers") or {})
+        response = None
+        try:  # a browser-like TLS fingerprint where curl_cffi is installed, as the page lookup itself used
+            from yt_dlp.networking.impersonate import ImpersonateTarget
+
+            target = ImpersonateTarget()
+            if ydl._impersonate_target_available(target):
+                response = ydl.urlopen(yt_dlp.networking.Request(fmt["url"], headers=headers, extensions={"impersonate": target}))
+        except ScraperError:
+            raise
+        except Exception:  # noqa: BLE001 - impersonation unavailable or refused: try a plain request
+            response = None
+        if response is None:
+            response = ydl.urlopen(yt_dlp.networking.Request(fmt["url"], headers=headers))
+        length = response.headers.get("Content-Length")
+        return OpenStream(response, int(length) if length else None, [response.close, ydl.close], fmt.get("ext"))
+    except ScraperError:
+        ydl.close()
+        raise
+    except Exception as exc:  # noqa: BLE001 - always a coded error
+        ydl.close()
+        raise _failure_from_exception(exc)
+
+
 async def _open_stream(page_url: str, kind: str = "video", item: int = 0) -> OpenStream:
     """
     Re-resolve the post from THIS server's IP and open the best video (or
@@ -1522,6 +1567,8 @@ async def _open_stream(page_url: str, kind: str = "video", item: int = 0) -> Ope
     to be dead, it is refreshed once and the stream is opened again.
     Raises ScraperError.
     """
+    if kind != "image" and is_tiktok_host(urlparse(page_url).hostname or ""):
+        return await asyncio.to_thread(_open_with_lookup_session, page_url, kind, item)
     for attempt in (0, 1):
         # The refresh attempt also switches YouTube to its other route: the first one just failed.
         resolved, info, cached = await _acquire_info(page_url, fresh=attempt == 1, first_route=attempt)
