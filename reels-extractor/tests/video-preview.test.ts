@@ -51,7 +51,7 @@ describe("when the CDN link won't play", () => {
 
   it("never replaces or hides the download buttons", () => {
     const playerAt = card.indexOf("<VideoPreview");
-    const buttonsAt = card.indexOf("<DownloadButton");
+    const buttonsAt = card.indexOf("<DownloadButton", card.indexOf("{isCarousel ? ("));
     assert.ok(playerAt > 0 && buttonsAt > playerAt, "player above, buttons below");
     // The buttons don't depend on the player at all.
     const buttons = card.slice(card.indexOf("{isCarousel ? ("));
@@ -63,9 +63,9 @@ describe("where the player appears", () => {
   it("only for a single video, never on the audio page, never for IP-bound links", () => {
     assert.match(
       card,
-      /const showPlayer = !isCarousel && !isPhoto && !audioOnly && Boolean\(result\.videoUrl\) && !isIpBoundHost\(result\.videoUrl\);/
+      /const showPlayer =\s+focus !== "cover" && !isCarousel && !isPhoto && !audioOnly && Boolean\(result\.videoUrl\) && !isIpBoundHost\(result\.videoUrl\);/
     );
-    assert.match(card, /\{!isCarousel && !showPlayer && \(/, "the small thumbnail stays wherever there is no player");
+    assert.match(card, /\{!isCarousel && !showPlayer && focus !== "cover" && \(/, "the small thumbnail stays wherever there is no player");
   });
 
   it("YouTube's links are bound to the scraper's IP, so they get no inline player", () => {

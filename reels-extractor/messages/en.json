@@ -672,7 +672,13 @@
     "downloadItemAudio": "Audio only",
     "downloadAll": "Download all ({n})",
     "downloadAllBusy": "Starting downloads…",
-    "downloadAllHint": "Your browser may ask you to allow multiple downloads."
+    "downloadAllHint": "Your browser may ask you to allow multiple downloads.",
+    "captionHeading": "Caption",
+    "copyCaption": "Copy caption",
+    "copyHashtags": "Copy hashtags ({n})",
+    "copied": "Copied",
+    "copyFailed": "Couldn't copy, select the text instead",
+    "downloadCover": "Cover image ({format})"
   },
   "download": {
     "preparing": "Preparing your download…",
@@ -1330,5 +1336,151 @@
     "toVideoLabel": "Download HD Video",
     "toVideoBadge": "HD",
     "toVideoAria": "Switch to the video downloader"
+  },
+  "captionCopier": {
+    "metaTitle": "Instagram Caption & Hashtag Copier - Copy in 1 Click",
+    "metaDescription": "Copy the full caption or just the hashtags of any public Instagram Reel or post in one click. Emojis and line breaks kept. Free, no login, no app.",
+    "h1": "Instagram Caption & Hashtag Copier",
+    "lead": "Paste a Reel or post link and copy its whole caption, or only its hashtags, in one tap. Works for TikTok, YouTube and X posts too.",
+    "placeholder": "Paste an Instagram Reel or post link…",
+    "copyHint": "In Instagram, tap the share icon or the three dots, then Copy link.",
+    "breadcrumb": "Caption & Hashtag Copier",
+    "footerLabel": "Caption Copier",
+    "howToHeading": "How to Copy an Instagram Caption and Hashtags",
+    "howToSteps": [
+      "Open the Reel or post in Instagram, tap the share icon (or the three dots) and choose Copy link.",
+      "Paste the link in the box above and wait a moment for the preview.",
+      "Tap Copy caption for the whole text, or Copy hashtags for just the tags, then paste them wherever you need them."
+    ],
+    "sections": [
+      {
+        "heading": "What the Caption Copier Does",
+        "paragraphs": [
+          "Instagram doesn't let you select and copy a caption in its app, which is a nuisance when you want to save a recipe, quote a line, or reuse your own text. This tool reads the caption Instagram shows publicly for the post and puts it in a box, with buttons that copy it to your clipboard.",
+          "You get the text as written: emojis, line breaks, mentions and hashtags included, up to Instagram's 2,200-character limit. Nothing is rewritten or translated, and the video download buttons stay available on the same card if you want the Reel as well."
+        ]
+      },
+      {
+        "heading": "Copy Only the Hashtags",
+        "paragraphs": [
+          "Copy hashtags picks every tag out of the caption, removes duplicates and gives them to you on one line, separated by spaces, ready to paste into a note or a draft. Tags in any language and script are recognised, such as #travel, #café or #मुंबई.",
+          "It is a quick way to see which hashtags a post used. Reusing them on your own posts is up to you, but copying a whole set word for word rarely helps: pick the ones that really describe your content."
+        ]
+      },
+      {
+        "heading": "Works Beyond Instagram",
+        "paragraphs": [
+          "The same box takes links from TikTok, YouTube, X, Facebook and the other supported platforms. Where the platform shows a text with the post, such as a TikTok caption, a tweet or a YouTube description, you can copy it the same way.",
+          "If a post has no caption at all, there is nothing to copy and the copy buttons don't appear. Photo posts and carousels work too, since the caption belongs to the post rather than to a single slide."
+        ]
+      },
+      {
+        "heading": "Respect the Writer",
+        "paragraphs": [
+          "A caption is someone's writing. Copying it to keep for yourself, to translate it, or to quote it with credit is fine; publishing it as your own isn't. When you reuse a line, mention the account it came from.",
+          "Only public posts can be read, because SaveReelsFast never logs in to any account. Nothing you paste is stored, and the caption only ever goes to your own clipboard."
+        ]
+      }
+    ],
+    "faqHeading": "Frequently Asked Questions",
+    "faq": [
+      {
+        "q": "Is the Instagram caption copier free?",
+        "a": "Yes. It's free, with no account, sign-up or app to install. Paste a public link and copy."
+      },
+      {
+        "q": "Does it keep emojis and line breaks?",
+        "a": "Yes. The caption is copied exactly as Instagram shows it publicly, with emojis, line breaks, mentions and hashtags, up to 2,200 characters."
+      },
+      {
+        "q": "Can I copy only the hashtags?",
+        "a": "Yes. Copy hashtags collects every tag in the caption, without duplicates, on one line. The button only appears when the caption has hashtags."
+      },
+      {
+        "q": "Why don't I see a copy button?",
+        "a": "The post has no caption, or the platform doesn't show one publicly for it. Private posts and accounts can't be read at all."
+      },
+      {
+        "q": "Does it work on iPhone and Android?",
+        "a": "Yes, in any modern browser. If your browser blocks clipboard access, the copy button says so; select the text in the caption box and copy it by hand."
+      },
+      {
+        "q": "Can I copy captions from private accounts?",
+        "a": "No. Only public posts work, since the tool never signs in to Instagram or any other platform."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Video Thumbnail Downloader - YouTube, Reels & TikTok",
+    "metaDescription": "Download the cover image of a YouTube video, Instagram Reel or TikTok in the size the platform provides. Free, no login, no app, nothing added.",
+    "h1": "Video Thumbnail Downloader",
+    "lead": "Paste a video link and save its cover image, the thumbnail the platform shows, as a JPG or WebP file. YouTube, Instagram, TikTok and more.",
+    "placeholder": "Paste a YouTube, Reel or TikTok link…",
+    "copyHint": "Copy the video's link from the Share button, then paste it here.",
+    "breadcrumb": "Thumbnail Downloader",
+    "footerLabel": "Thumbnail Downloader",
+    "howToHeading": "How to Download a Video Thumbnail",
+    "howToSteps": [
+      "Copy the link of a public YouTube video or Short, Instagram Reel, TikTok, or a video from another supported platform.",
+      "Paste it in the box above. The card shows the video's cover image in large size.",
+      "Tap Cover image to save the picture. It downloads as the file the platform serves, usually JPG or WebP."
+    ],
+    "sections": [
+      {
+        "heading": "What Is a Video Thumbnail?",
+        "paragraphs": [
+          "A thumbnail, or cover image, is the still picture a platform shows before a video plays: the image in YouTube search results, the cover of a Reel in a profile grid, the first frame of a TikTok. Creators often design it with care, which makes it useful for reference, a mood board, or a link preview of your own video.",
+          "This tool shows the thumbnail the platform publishes for the video and lets you save it as a picture, without screenshots, cropping or lost quality."
+        ]
+      },
+      {
+        "heading": "Which Size Do You Get?",
+        "paragraphs": [
+          "You get the largest cover the platform offers for that video, untouched. For most YouTube videos that is the full-width image the video page uses (often 1280x720); older or smaller uploads may only have a smaller one. Instagram and TikTok covers come in the size the app shows them.",
+          "Nothing is upscaled, compressed again or watermarked. The file keeps the platform's own format, usually JPG, sometimes WebP, which every modern phone and computer opens."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok and More",
+        "paragraphs": [
+          "The same box takes links from YouTube (videos and Shorts), Instagram, TikTok, Facebook, X, Pinterest and the other supported platforms. A YouTube lookup can take a few seconds longer than the others, so give it a moment.",
+          "Want the video too? The same card keeps the video and audio download buttons, so you can save the clip and its cover in one visit. For Instagram photo posts, use the photo downloader instead: there the picture itself is the download."
+        ]
+      },
+      {
+        "heading": "Using Thumbnails Fairly",
+        "paragraphs": [
+          "A thumbnail is part of the creator's work. Saving one for personal reference or to talk about the video is common; using it to promote your own content, or as if you made it, needs the creator's permission.",
+          "Only public videos can be looked up, since SaveReelsFast never logs in to any account. Nothing you paste is stored."
+        ]
+      }
+    ],
+    "faqHeading": "Frequently Asked Questions",
+    "faq": [
+      {
+        "q": "Is the thumbnail downloader free?",
+        "a": "Yes. It's free, with no account, sign-up, app or browser extension."
+      },
+      {
+        "q": "Can I download YouTube thumbnails in HD?",
+        "a": "You get the largest thumbnail YouTube offers for that video, which for most videos is the full-width 1280x720 image. If YouTube only has a smaller one, that is what you get: nothing is upscaled."
+      },
+      {
+        "q": "Does it work for Instagram Reels and TikTok?",
+        "a": "Yes. Paste the Reel or TikTok link and the card shows its cover image with a download button."
+      },
+      {
+        "q": "What format is the image?",
+        "a": "The format the platform serves, usually JPG and sometimes WebP. Both open in any modern photo app or browser."
+      },
+      {
+        "q": "Is a watermark added?",
+        "a": "No. The image is saved exactly as the platform provides it."
+      },
+      {
+        "q": "Can I get the thumbnail of a private video?",
+        "a": "No. Only public videos work, because the tool never signs in to any platform."
+      }
+    ]
   }
 }

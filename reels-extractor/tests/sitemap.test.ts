@@ -82,9 +82,9 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 13 home + 130 platform + 13 audio + 13 photo downloader + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, locales.length + locales.length * ids.length + 2 * locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 204 + 1 + allBlogPosts + 1 + spanishBlogPosts, "204 site pages + the English and Spanish blog indexes + one entry per post");
+  it("adds up: 13 home + 130 platform + 13 audio + 13 photo + 26 feature pages + 5 legal pages x every translated language", () => {
+    assert.equal(entries.length, locales.length + locales.length * ids.length + 4 * locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 230 + 1 + allBlogPosts + 1 + spanishBlogPosts, "230 site pages + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -130,6 +130,7 @@ describe("frequency and priority", () => {
     if (Object.values(PLATFORM_SLUGS).includes(path.slice(1))) return "platform";
     if (path === "/audio-downloader") return "audio";
     if (path === "/instagram-photo-downloader") return "photo";
+    if (path === "/instagram-caption-copier" || path === "/video-thumbnail-downloader") return "feature";
     if (/^\/blog(\/|$)/.test(path)) return "blog";
     return "legal";
   };
@@ -182,6 +183,15 @@ describe("frequency and priority", () => {
     for (const e of pages) {
       assert.equal(e.changeFrequency, "daily", e.url);
       assert.equal(e.priority, 0.85, e.url);
+    }
+  });
+
+  it("feature pages (caption copier, thumbnail downloader): weekly, 0.8 - in every language", () => {
+    const pages = entries.filter((x) => rule(x.url) === "feature");
+    assert.equal(pages.length, 2 * locales.length);
+    for (const e of pages) {
+      assert.equal(e.changeFrequency, "weekly", e.url);
+      assert.equal(e.priority, 0.8, e.url);
     }
   });
 

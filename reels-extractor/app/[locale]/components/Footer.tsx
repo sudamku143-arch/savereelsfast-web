@@ -66,6 +66,7 @@ export default function Footer({
   telegram,
   audioDownloaderLabel,
   photoDownloaderLabel,
+  toolLinks = [],
 }: {
   locale: Locale;
   dict: Dict;
@@ -79,6 +80,8 @@ export default function Footer({
   audioDownloaderLabel: string;
   /** Short label for the Instagram photo & carousel downloader link. */
   photoDownloaderLabel: string;
+  /** The feature pages (caption copier, thumbnail downloader...). */
+  toolLinks?: { path: string; label: string }[];
 }) {
   const tools = [
     ...LANDING_PLATFORMS.map((id) => ({
@@ -87,6 +90,7 @@ export default function Footer({
     })),
     { href: localePath(locale, PHOTO_DOWNLOADER_PATH), label: photoDownloaderLabel },
     { href: localePath(locale, "/audio-downloader"), label: audioDownloaderLabel },
+    ...toolLinks.map((tool) => ({ href: localePath(locale, tool.path), label: tool.label })),
   ];
 
   const legal = [

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { toolPageLinks } from "@/lib/landing";
 import type { ReactNode } from "react";
 import localFont from "next/font/local";
 import "../globals.css";
@@ -128,7 +129,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <InstallProvider>
           <Header locale={locale} dict={dict.nav} blogAvailability={blogAvailability()} hasBlog={localesWithPosts().includes(locale)} telegram={dict.telegram} />
           {children}
-          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} telegram={dict.telegram} audioDownloaderLabel={dict.audioDownloader.footerLabel} photoDownloaderLabel={dict.photoDownloader.footerLabel} />
+          <Footer locale={locale} dict={dict.footer} platformNames={platformNames} hasBlog={localesWithPosts().includes(locale)} cookieLabel={analyticsId() || monetagConfig() ? dict.consent.settings : undefined} telegram={dict.telegram} audioDownloaderLabel={dict.audioDownloader.footerLabel} photoDownloaderLabel={dict.photoDownloader.footerLabel} toolLinks={toolPageLinks(dict)} />
           <AnalyticsConsent locale={locale} dict={dict.consent} />
           <IosInstallModal dict={dict.pwa} />
           <TelegramFab dict={dict.telegram} />

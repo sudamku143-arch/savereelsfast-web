@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { toolPageLinks } from "@/lib/landing";
 import { notFound } from "next/navigation";
 import { locales, isLocale, defaultLocale, localePath, type Locale } from "@/lib/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
@@ -210,6 +211,7 @@ export default async function PlatformLandingPage({ params }: Props) {
       <RelatedPosts locale={locale} platform={id} dict={dict.blog} />
 
       <PlatformLinks
+        toolLinks={toolPageLinks(dict)}
         locale={locale}
         names={names}
         heading={common.otherHeading}

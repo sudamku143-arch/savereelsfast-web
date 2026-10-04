@@ -11,6 +11,8 @@ import DownloadButton, { type DownloadDict } from "./DownloadButton";
 import type { ErrorsDict } from "./ErrorCard";
 import ShareTool from "./ShareTool";
 import VideoPreview from "./VideoPreview";
+import CaptionTools, { type CaptionDict } from "./CaptionTools";
+import { imageExtOf } from "@/lib/caption";
 
 /** Instagram photos come in the same shape as videos: `videoUrl` holds the picture and `kind` is "image". */
 type ImageFields = { kind?: "image"; imageExt?: ImageExtension };
@@ -34,6 +36,8 @@ export type ReelResult = ImageFields & {
   videoUrl: string;
   thumbnailUrl: string;
   title: string | null;
+  /** The whole caption, hashtags included (the card itself shows `title`, a short form). */
+  caption?: string | null;
   author: string | null;
   durationSeconds: number | null;
   quality?: string;
@@ -44,7 +48,9 @@ export type ReelResult = ImageFields & {
   items?: ReelItem[];
 };
 
-export type PreviewDict = ItemsDict & {
+export type PreviewDict = ItemsDict & CaptionDict & {
+  /** "Cover image ({format})": the post's thumbnail, saved as a picture. */
+  downloadCover: string;
   title: string;
   /** Card heading on /audio-downloader, once a result is ready. */
   audioTitle: string;
@@ -63,6 +69,12 @@ const PLACEHOLDER_TITLE = /^(Video|Post) by [\w.]+$/;
 
 // Platforms whose videos are vertical, reels-style: the player gets a 9:16 frame for them, 16:9 otherwise.
 const VERTICAL_PLATFORMS: PlatformId[] = ["instagram", "tiktok", "snapchat"];
+
+/**
+ * Which tool a page puts first. "caption" (the caption copier page): the whole caption in a box, with its
+ * copy buttons. "cover" (the thumbnail page): the cover image shown large, with its download first.
+ */
+export type CardFocus = "caption" | "cover";
 
 function formatDuration(totalSeconds: number): string {
   const rounded = Math.round(totalSeconds);
@@ -89,6 +101,7 @@ export default function PreviewCard({
   platform,
   platformName,
   audioOnly = false,
+  focus,
   onReset,
 }: {
   locale: Locale;
@@ -100,6 +113,7 @@ export default function PreviewCard({
   platformName: string;
   /** True on /audio-downloader: only ever offer the separate audio track, never the video file. */
   audioOnly?: boolean;
+  focus?: CardFocus;
   onReset: () => void;
 }) {
   // The share row appears only after the visitor has actually saved something.
@@ -130,7 +144,29 @@ export default function PreviewCard({
   // An inline player for a single video. Not on the audio page (its 3-dots menu would offer the video file
   // there), and not for links bound to the scraper's IP (YouTube): the browser can't play those itself, and
   // streaming them through the site would pull every play through the paid proxy. Those keep the thumbnail.
-  const showPlayer = !isCarousel && !isPhoto && !audioOnly && Boolean(result.videoUrl) && !isIpBoundHost(result.videoUrl);
+  const showPlayer =
+    focus !== "cover" && !isCarousel && !isPhoto && !audioOnly && Boolean(result.videoUrl) && !isIpBoundHost(result.videoUrl);
+
+  // The whole caption for the copy buttons; the short `title` when that's all a source gave.
+  const fullCaption = result.caption?.trim() || caption;
+  // The post's cover picture, for a video (a photo already downloads as itself).
+  const coverExt = result.thumbnailUrl ? imageExtOf(result.thumbnailUrl) : "jpg";
+  const coverHref =
+    result.thumbnailUrl && !isPhoto && !audioOnly
+      ? buildDownloadHref({ url: result.thumbnailUrl, id: `${result.id}-cover`, kind: "image", ext: coverExt })
+      : null;
+  const coverButton = coverHref ? (
+    <DownloadButton
+      href={coverHref}
+      filename={downloadFilename(`${result.id}-cover`, "image", coverExt)}
+      label={dict.downloadCover.replaceAll("{format}", coverExt.toUpperCase())}
+      variant={focus === "cover" ? "primary" : "compact-secondary"}
+      dict={downloadDict}
+      errorsDict={errorsDict}
+      platformName={platformName}
+      onSaved={() => setDownloaded(true)}
+    />
+  ) : null;
 
   return (
     <div className="glass mt-6 w-full max-w-md animate-fade-in-up rounded-2xl p-4 shadow-glow">
@@ -152,6 +188,18 @@ export default function PreviewCard({
         </div>
       </div>
 
+      {focus === "cover" && coverHref && (
+        <div className="mb-3">
+          {/* eslint-disable-next-line @next/next/no-img-element -- the platform's own cover, shown as-is */}
+          <img
+            src={result.thumbnailUrl}
+            alt={caption ?? dict.thumbnailAlt}
+            className="mx-auto block max-h-[60vh] w-full rounded-xl bg-black object-contain"
+          />
+          <div className="mt-3">{coverButton}</div>
+        </div>
+      )}
+
       {showPlayer && (
         <div className="mb-3">
           <VideoPreview
@@ -165,7 +213,7 @@ export default function PreviewCard({
       )}
 
       <div className="flex gap-4">
-        {!isCarousel && !showPlayer && (
+        {!isCarousel && !showPlayer && focus !== "cover" && (
           <div
             className={`relative w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-800 sm:w-28 ${isPhoto ? "aspect-[4/5]" : "aspect-[9/16]"}`}
           >
@@ -198,9 +246,13 @@ export default function PreviewCard({
               <span className="font-medium">@{result.author}</span>
             </p>
           )}
-          {caption && <p className="text-zinc-400">{caption}</p>}
+          {caption && focus !== "caption" && <p className="text-zinc-400">{caption}</p>}
         </div>
       </div>
+
+      {fullCaption && !audioOnly && (
+        <CaptionTools caption={fullCaption} dict={dict} expanded={focus === "caption"} />
+      )}
 
       {isCarousel ? (
         <ItemsSlider
@@ -274,6 +326,9 @@ export default function PreviewCard({
           )}
         </>
       )}
+
+      {/* The cover's download, unless the cover page already shows it first. */}
+      {coverButton && focus !== "cover" && <div className="mt-3">{coverButton}</div>}
 
       {downloaded && <ShareTool locale={locale} dict={downloadDict.share} />}
 

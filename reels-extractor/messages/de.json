@@ -672,7 +672,13 @@
     "downloadItemAudio": "Nur Audio",
     "downloadAll": "Alle herunterladen ({n})",
     "downloadAllBusy": "Downloads werden gestartet…",
-    "downloadAllHint": "Dein Browser fragt eventuell, ob mehrere Downloads erlaubt sind."
+    "downloadAllHint": "Dein Browser fragt eventuell, ob mehrere Downloads erlaubt sind.",
+    "captionHeading": "Bildunterschrift",
+    "copyCaption": "Caption kopieren",
+    "copyHashtags": "Hashtags kopieren ({n})",
+    "copied": "Kopiert",
+    "copyFailed": "Kopieren fehlgeschlagen, markiere den Text",
+    "downloadCover": "Titelbild ({format})"
   },
   "download": {
     "preparing": "Download wird vorbereitet…",
@@ -1026,5 +1032,151 @@
     "toVideoLabel": "HD-Video herunterladen",
     "toVideoBadge": "HD",
     "toVideoAria": "Zum Video Downloader wechseln"
+  },
+  "captionCopier": {
+    "metaTitle": "Instagram Caption & Hashtags kopieren mit 1 Klick",
+    "metaDescription": "Kopiere die ganze Caption oder nur die Hashtags jedes öffentlichen Instagram Reels oder Beitrags. Emojis und Zeilenumbrüche bleiben. Kostenlos, ohne Login.",
+    "h1": "Instagram Caption & Hashtags kopieren",
+    "lead": "Füge den Link eines Reels oder Beitrags ein und kopiere die ganze Caption oder nur die Hashtags mit einem Tipp. Klappt auch bei TikTok, YouTube und X.",
+    "placeholder": "Link eines Instagram Reels oder Beitrags einfügen…",
+    "copyHint": "Tippe in Instagram auf das Teilen-Symbol oder die drei Punkte und dann auf „Link kopieren“.",
+    "breadcrumb": "Caption & Hashtags kopieren",
+    "footerLabel": "Caption kopieren",
+    "howToHeading": "So kopierst du Caption und Hashtags eines Instagram-Beitrags",
+    "howToSteps": [
+      "Öffne das Reel oder den Beitrag in Instagram, tippe auf das Teilen-Symbol (oder die drei Punkte) und wähle „Link kopieren“.",
+      "Füge den Link oben ein und warte kurz auf die Vorschau.",
+      "Tippe auf „Caption kopieren“ für den ganzen Text oder auf „Hashtags kopieren“ nur für die Tags, und füge sie ein, wo du sie brauchst."
+    ],
+    "sections": [
+      {
+        "heading": "Was dieses Tool macht",
+        "paragraphs": [
+          "Instagram lässt dich eine Caption in der App nicht markieren und kopieren, was nervt, wenn du ein Rezept speichern, einen Satz zitieren oder deinen eigenen Text wiederverwenden willst. Dieses Tool liest die Caption, die Instagram für den Beitrag öffentlich anzeigt, und zeigt sie in einem Feld, mit Buttons, die sie in die Zwischenablage kopieren.",
+          "Du bekommst den Text so, wie er geschrieben wurde: mit Emojis, Zeilenumbrüchen, Erwähnungen und Hashtags, bis zu Instagrams Limit von 2.200 Zeichen. Nichts wird umgeschrieben oder übersetzt, und die Download-Buttons für das Video bleiben auf derselben Karte, falls du das Reel auch willst."
+        ]
+      },
+      {
+        "heading": "Nur die Hashtags kopieren",
+        "paragraphs": [
+          "„Hashtags kopieren“ sammelt alle Tags aus der Caption, entfernt Doppelte und gibt sie dir in einer Zeile, durch Leerzeichen getrennt, bereit für eine Notiz oder einen Entwurf. Tags in jeder Sprache und Schrift werden erkannt, etwa #reisen, #café oder #मुंबई.",
+          "So siehst du schnell, welche Hashtags ein Beitrag benutzt hat. Ob du sie für eigene Beiträge nutzt, entscheidest du; ein komplettes Set Wort für Wort zu übernehmen hilft aber selten: Wähle die, die deinen Inhalt wirklich beschreiben."
+        ]
+      },
+      {
+        "heading": "Nicht nur für Instagram",
+        "paragraphs": [
+          "Dasselbe Feld nimmt Links von TikTok, YouTube, X, Facebook und den anderen unterstützten Plattformen. Wo die Plattform einen Text zum Beitrag zeigt, etwa eine TikTok-Caption, einen Post auf X oder eine YouTube-Beschreibung, kannst du ihn genauso kopieren.",
+          "Hat ein Beitrag keine Caption, gibt es nichts zu kopieren, und die Buttons erscheinen nicht. Foto-Beiträge und Karussells funktionieren auch, denn die Caption gehört zum Beitrag, nicht zu einem einzelnen Slide."
+        ]
+      },
+      {
+        "heading": "Respekt vor dem Autor",
+        "paragraphs": [
+          "Eine Caption ist der Text von jemandem. Sie zu kopieren, um sie zu behalten, zu übersetzen oder mit Quellenangabe zu zitieren, ist in Ordnung; sie als eigenen Text zu veröffentlichen nicht. Wenn du einen Satz übernimmst, nenne das Konto, von dem er stammt.",
+          "Nur öffentliche Beiträge lassen sich lesen, denn SaveReelsFast meldet sich nie bei einem Konto an. Nichts, was du einfügst, wird gespeichert, und die Caption landet nur in deiner eigenen Zwischenablage."
+        ]
+      }
+    ],
+    "faqHeading": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Ist das Kopieren von Instagram-Captions kostenlos?",
+        "a": "Ja. Kostenlos, ohne Konto, Registrierung oder App. Öffentlichen Link einfügen und kopieren."
+      },
+      {
+        "q": "Bleiben Emojis und Zeilenumbrüche erhalten?",
+        "a": "Ja. Die Caption wird genau so kopiert, wie Instagram sie öffentlich zeigt, mit Emojis, Zeilenumbrüchen, Erwähnungen und Hashtags, bis zu 2.200 Zeichen."
+      },
+      {
+        "q": "Kann ich nur die Hashtags kopieren?",
+        "a": "Ja. „Hashtags kopieren“ sammelt alle Tags der Caption ohne Doppelte in einer Zeile. Der Button erscheint nur, wenn die Caption Hashtags enthält."
+      },
+      {
+        "q": "Warum sehe ich keinen Kopieren-Button?",
+        "a": "Der Beitrag hat keine Caption, oder die Plattform zeigt sie nicht öffentlich. Private Beiträge und Konten lassen sich gar nicht lesen."
+      },
+      {
+        "q": "Funktioniert es auf iPhone und Android?",
+        "a": "Ja, in jedem aktuellen Browser. Blockiert dein Browser die Zwischenablage, sagt der Button das; markiere dann den Text im Feld und kopiere ihn von Hand."
+      },
+      {
+        "q": "Kann ich Captions privater Konten kopieren?",
+        "a": "Nein. Nur öffentliche Beiträge funktionieren, da sich das Tool nie bei Instagram oder einer anderen Plattform anmeldet."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Video-Thumbnail herunterladen - YouTube, Reels, TikTok",
+    "metaDescription": "Lade das Titelbild eines YouTube-Videos, Instagram Reels oder TikToks in der Größe herunter, die die Plattform liefert. Kostenlos, ohne Login, ohne App.",
+    "h1": "Video-Thumbnail herunterladen",
+    "lead": "Füge einen Videolink ein und speichere sein Titelbild, das Thumbnail der Plattform, als JPG- oder WebP-Datei. YouTube, Instagram, TikTok und mehr.",
+    "placeholder": "YouTube-, Reel- oder TikTok-Link einfügen…",
+    "copyHint": "Kopiere den Link des Videos über den Teilen-Button und füge ihn hier ein.",
+    "breadcrumb": "Thumbnail herunterladen",
+    "footerLabel": "Thumbnail herunterladen",
+    "howToHeading": "So lädst du das Thumbnail eines Videos herunter",
+    "howToSteps": [
+      "Kopiere den Link eines öffentlichen YouTube-Videos oder Shorts, eines Instagram Reels, eines TikToks oder eines Videos einer anderen unterstützten Plattform.",
+      "Füge ihn oben ein. Die Karte zeigt das Titelbild des Videos groß an.",
+      "Tippe auf „Titelbild“, um es zu speichern. Es wird als die Datei heruntergeladen, die die Plattform liefert, meist JPG oder WebP."
+    ],
+    "sections": [
+      {
+        "heading": "Was ist ein Video-Thumbnail?",
+        "paragraphs": [
+          "Ein Thumbnail oder Titelbild ist das Standbild, das eine Plattform vor dem Abspielen zeigt: das Bild in den YouTube-Suchergebnissen, das Cover eines Reels im Profilraster, das erste Bild eines TikToks. Creator gestalten es oft sorgfältig, deshalb ist es nützlich als Referenz, für ein Moodboard oder als Vorschau deines eigenen Videos.",
+          "Dieses Tool zeigt das Thumbnail, das die Plattform für das Video veröffentlicht, und lässt dich es als Bild speichern, ohne Screenshot, Zuschneiden oder Qualitätsverlust."
+        ]
+      },
+      {
+        "heading": "Welche Größe bekommst du?",
+        "paragraphs": [
+          "Du bekommst das größte Titelbild, das die Plattform für dieses Video anbietet, unverändert. Bei den meisten YouTube-Videos ist das das Bild in voller Breite, das die Videoseite nutzt (oft 1280x720); ältere oder kleinere Uploads haben manchmal nur ein kleineres. Titelbilder von Instagram und TikTok kommen in der Größe, in der die App sie zeigt.",
+          "Nichts wird hochskaliert, neu komprimiert oder mit Wasserzeichen versehen. Die Datei behält das Format der Plattform, meist JPG, manchmal WebP, das jedes aktuelle Smartphone und jeder Computer öffnet."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok und mehr",
+        "paragraphs": [
+          "Dasselbe Feld nimmt Links von YouTube (Videos und Shorts), Instagram, TikTok, Facebook, X, Pinterest und den anderen unterstützten Plattformen. Eine YouTube-Abfrage kann ein paar Sekunden länger dauern als die anderen, also hab einen Moment Geduld.",
+          "Willst du auch das Video? Dieselbe Karte behält die Buttons für Video- und Audio-Download, so speicherst du Clip und Titelbild in einem Durchgang. Für Instagram-Foto-Beiträge nimm lieber den Foto-Downloader: Dort ist das Bild selbst der Download."
+        ]
+      },
+      {
+        "heading": "Thumbnails fair nutzen",
+        "paragraphs": [
+          "Ein Thumbnail ist Teil der Arbeit des Creators. Es als persönliche Referenz oder zum Besprechen des Videos zu speichern ist üblich; es für eigene Inhalte zu verwenden oder so, als hättest du es gemacht, braucht die Erlaubnis des Creators.",
+          "Nur öffentliche Videos lassen sich abrufen, denn SaveReelsFast meldet sich nie bei einem Konto an. Nichts, was du einfügst, wird gespeichert."
+        ]
+      }
+    ],
+    "faqHeading": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Ist der Thumbnail-Download kostenlos?",
+        "a": "Ja. Kostenlos, ohne Konto, Registrierung, App oder Browser-Erweiterung."
+      },
+      {
+        "q": "Kann ich YouTube-Thumbnails in HD herunterladen?",
+        "a": "Du bekommst das größte Thumbnail, das YouTube für das Video anbietet, bei den meisten Videos das 1280x720-Bild. Hat YouTube nur ein kleineres, bekommst du das: Nichts wird hochskaliert."
+      },
+      {
+        "q": "Funktioniert es bei Instagram Reels und TikTok?",
+        "a": "Ja. Füge den Reel- oder TikTok-Link ein, und die Karte zeigt das Titelbild mit einem Download-Button."
+      },
+      {
+        "q": "In welchem Format ist das Bild?",
+        "a": "Im Format, das die Plattform liefert, meist JPG, manchmal WebP. Beide öffnen sich in jeder Foto-App und jedem aktuellen Browser."
+      },
+      {
+        "q": "Wird ein Wasserzeichen hinzugefügt?",
+        "a": "Nein. Das Bild wird genau so gespeichert, wie die Plattform es liefert."
+      },
+      {
+        "q": "Bekomme ich das Thumbnail eines privaten Videos?",
+        "a": "Nein. Nur öffentliche Videos funktionieren, weil sich das Tool nie bei einer Plattform anmeldet."
+      }
+    ]
   }
 }

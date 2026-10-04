@@ -672,7 +672,13 @@
     "downloadItemAudio": "Solo audio",
     "downloadAll": "Scarica tutto ({n})",
     "downloadAllBusy": "Avvio dei download…",
-    "downloadAllHint": "Il browser potrebbe chiederti di consentire più download."
+    "downloadAllHint": "Il browser potrebbe chiederti di consentire più download.",
+    "captionHeading": "Didascalia",
+    "copyCaption": "Copia didascalia",
+    "copyHashtags": "Copia hashtag ({n})",
+    "copied": "Copiato",
+    "copyFailed": "Copia non riuscita, seleziona il testo",
+    "downloadCover": "Immagine di copertina ({format})"
   },
   "download": {
     "preparing": "Preparazione del download…",
@@ -1026,5 +1032,151 @@
     "toVideoLabel": "Scarica video HD",
     "toVideoBadge": "HD",
     "toVideoAria": "Passa al downloader video"
+  },
+  "captionCopier": {
+    "metaTitle": "Copia Didascalia e Hashtag di Instagram in 1 Clic",
+    "metaDescription": "Copia l'intera didascalia o solo gli hashtag di qualsiasi Reel o post pubblico di Instagram. Emoji e a capo inclusi. Gratis, senza login, senza app.",
+    "h1": "Copia Didascalia e Hashtag di Instagram",
+    "lead": "Incolla il link di un Reel o di un post e copia tutta la didascalia, o solo gli hashtag, con un tocco. Funziona anche con TikTok, YouTube e X.",
+    "placeholder": "Incolla il link di un Reel o post di Instagram…",
+    "copyHint": "In Instagram tocca l'icona di condivisione o i tre puntini, poi Copia link.",
+    "breadcrumb": "Copia Didascalia e Hashtag",
+    "footerLabel": "Copia Didascalia",
+    "howToHeading": "Come Copiare Didascalia e Hashtag di un Post Instagram",
+    "howToSteps": [
+      "Apri il Reel o il post in Instagram, tocca l'icona di condivisione (o i tre puntini) e scegli Copia link.",
+      "Incolla il link nel campo qui sopra e attendi un attimo l'anteprima.",
+      "Tocca Copia didascalia per tutto il testo, o Copia hashtag solo per i tag, e incollali dove ti servono."
+    ],
+    "sections": [
+      {
+        "heading": "Cosa Fa Questo Strumento",
+        "paragraphs": [
+          "Instagram non permette di selezionare e copiare una didascalia nella sua app, il che è scomodo quando vuoi salvare una ricetta, citare una frase o riutilizzare il tuo testo. Questo strumento legge la didascalia che Instagram mostra pubblicamente per il post e la mette in un riquadro, con pulsanti che la copiano negli appunti.",
+          "Ricevi il testo così com'è stato scritto: emoji, a capo, menzioni e hashtag compresi, fino al limite di 2.200 caratteri di Instagram. Nulla viene riscritto o tradotto, e i pulsanti per scaricare il video restano sulla stessa scheda se vuoi anche il Reel."
+        ]
+      },
+      {
+        "heading": "Copia Solo gli Hashtag",
+        "paragraphs": [
+          "Copia hashtag raccoglie tutti i tag della didascalia, toglie i doppioni e te li dà su una sola riga, separati da spazi, pronti da incollare in una nota o una bozza. Riconosce i tag in qualsiasi lingua e alfabeto, come #viaggi, #café o #मुंबई.",
+          "È un modo rapido per vedere quali hashtag ha usato un post. Riutilizzarli nei tuoi post è una tua scelta, ma copiare un intero set parola per parola aiuta di rado: scegli quelli che descrivono davvero i tuoi contenuti."
+        ]
+      },
+      {
+        "heading": "Non Solo Instagram",
+        "paragraphs": [
+          "Lo stesso campo accetta link di TikTok, YouTube, X, Facebook e delle altre piattaforme supportate. Quando la piattaforma mostra un testo con il post, come una didascalia di TikTok, un post su X o la descrizione di un video YouTube, puoi copiarlo allo stesso modo.",
+          "Se un post non ha didascalia non c'è niente da copiare e i pulsanti non compaiono. Funzionano anche i post con foto e i caroselli, perché la didascalia appartiene al post e non a una singola slide."
+        ]
+      },
+      {
+        "heading": "Rispetta Chi Scrive",
+        "paragraphs": [
+          "Una didascalia è il testo di qualcuno. Copiarla per tenerla, tradurla o citarla con i crediti va bene; pubblicarla come tua no. Quando riprendi una frase, menziona l'account da cui viene.",
+          "Si possono leggere solo i post pubblici, perché SaveReelsFast non accede mai a nessun account. Niente di ciò che incolli viene salvato, e la didascalia va solo nei tuoi appunti."
+        ]
+      }
+    ],
+    "faqHeading": "Domande Frequenti",
+    "faq": [
+      {
+        "q": "Copiare le didascalie di Instagram è gratis?",
+        "a": "Sì. È gratis, senza account, registrazione o app da installare. Incolla un link pubblico e copia."
+      },
+      {
+        "q": "Emoji e a capo vengono mantenuti?",
+        "a": "Sì. La didascalia viene copiata esattamente come Instagram la mostra pubblicamente, con emoji, a capo, menzioni e hashtag, fino a 2.200 caratteri."
+      },
+      {
+        "q": "Posso copiare solo gli hashtag?",
+        "a": "Sì. Copia hashtag raccoglie tutti i tag della didascalia, senza doppioni, su una riga. Il pulsante compare solo se la didascalia contiene hashtag."
+      },
+      {
+        "q": "Perché non vedo il pulsante per copiare?",
+        "a": "Il post non ha una didascalia, oppure la piattaforma non la mostra pubblicamente. I post e gli account privati non si possono leggere."
+      },
+      {
+        "q": "Funziona su iPhone e Android?",
+        "a": "Sì, in qualsiasi browser moderno. Se il browser blocca gli appunti, il pulsante lo segnala; seleziona il testo nel riquadro e copialo a mano."
+      },
+      {
+        "q": "Posso copiare didascalie da account privati?",
+        "a": "No. Funzionano solo i post pubblici, perché lo strumento non accede mai a Instagram né ad altre piattaforme."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Scarica Miniature dei Video - YouTube, Reels e TikTok",
+    "metaDescription": "Scarica l'immagine di copertina di un video YouTube, di un Reel di Instagram o di un TikTok nella dimensione fornita dalla piattaforma. Gratis, senza login.",
+    "h1": "Scarica la Miniatura di un Video",
+    "lead": "Incolla il link di un video e salva la sua immagine di copertina, la miniatura mostrata dalla piattaforma, come file JPG o WebP. YouTube, Instagram, TikTok e altri.",
+    "placeholder": "Incolla un link di YouTube, Reel o TikTok…",
+    "copyHint": "Copia il link del video dal pulsante Condividi e incollalo qui.",
+    "breadcrumb": "Scarica Miniature",
+    "footerLabel": "Scarica Miniature",
+    "howToHeading": "Come Scaricare la Miniatura di un Video",
+    "howToSteps": [
+      "Copia il link di un video o Short pubblico di YouTube, di un Reel di Instagram, di un TikTok o di un video di un'altra piattaforma supportata.",
+      "Incollalo nel campo qui sopra. La scheda mostra l'immagine di copertina del video in grande.",
+      "Tocca Immagine di copertina per salvarla. Viene scaricata come il file fornito dalla piattaforma, di solito JPG o WebP."
+    ],
+    "sections": [
+      {
+        "heading": "Cos'è la Miniatura di un Video?",
+        "paragraphs": [
+          "La miniatura, o immagine di copertina, è l'immagine fissa che una piattaforma mostra prima che parta un video: quella nei risultati di ricerca di YouTube, la copertina di un Reel nella griglia di un profilo, il primo fotogramma di un TikTok. I creator spesso la curano, per questo è utile come riferimento, per una moodboard o per l'anteprima di un tuo video.",
+          "Questo strumento mostra la miniatura che la piattaforma pubblica per il video e ti permette di salvarla come immagine, senza screenshot, ritagli o perdita di qualità."
+        ]
+      },
+      {
+        "heading": "Che Dimensione Ottieni?",
+        "paragraphs": [
+          "Ottieni la copertina più grande che la piattaforma offre per quel video, senza modifiche. Per la maggior parte dei video YouTube è l'immagine a tutta larghezza usata dalla pagina del video (spesso 1280x720); i video più vecchi o piccoli possono averne solo una più piccola. Le copertine di Instagram e TikTok arrivano nella dimensione in cui le mostra l'app.",
+          "Nulla viene ingrandito, ricompresso o marchiato. Il file mantiene il formato della piattaforma, di solito JPG e a volte WebP, che qualsiasi telefono o computer moderno apre."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok e Altro",
+        "paragraphs": [
+          "Lo stesso campo accetta link di YouTube (video e Shorts), Instagram, TikTok, Facebook, X, Pinterest e delle altre piattaforme supportate. Una ricerca su YouTube può richiedere qualche secondo in più delle altre, quindi attendi un momento.",
+          "Vuoi anche il video? La stessa scheda mantiene i pulsanti per scaricare video e audio, così salvi la clip e la sua copertina in una sola visita. Per i post con foto di Instagram usa piuttosto il downloader di foto: lì è la foto stessa il download."
+        ]
+      },
+      {
+        "heading": "Usare le Miniature Correttamente",
+        "paragraphs": [
+          "Una miniatura fa parte del lavoro del creator. Salvarla come riferimento personale o per parlare del video è comune; usarla per promuovere i tuoi contenuti, o come se l'avessi fatta tu, richiede il permesso del creator.",
+          "Si possono cercare solo video pubblici, perché SaveReelsFast non accede mai a nessun account. Niente di ciò che incolli viene salvato."
+        ]
+      }
+    ],
+    "faqHeading": "Domande Frequenti",
+    "faq": [
+      {
+        "q": "Scaricare le miniature è gratis?",
+        "a": "Sì. È gratis, senza account, registrazione, app o estensione del browser."
+      },
+      {
+        "q": "Posso scaricare le miniature di YouTube in HD?",
+        "a": "Ottieni la miniatura più grande che YouTube offre per quel video, che per la maggior parte dei video è l'immagine 1280x720. Se YouTube ne ha solo una più piccola, ricevi quella: nulla viene ingrandito."
+      },
+      {
+        "q": "Funziona con i Reels di Instagram e TikTok?",
+        "a": "Sì. Incolla il link del Reel o del TikTok e la scheda mostra la sua immagine di copertina con un pulsante per scaricarla."
+      },
+      {
+        "q": "In che formato è l'immagine?",
+        "a": "Nel formato fornito dalla piattaforma, di solito JPG e a volte WebP. Entrambi si aprono in qualsiasi app di foto o browser moderno."
+      },
+      {
+        "q": "Viene aggiunta una filigrana?",
+        "a": "No. L'immagine viene salvata esattamente come la fornisce la piattaforma."
+      },
+      {
+        "q": "Posso ottenere la miniatura di un video privato?",
+        "a": "No. Funzionano solo i video pubblici, perché lo strumento non accede mai a nessuna piattaforma."
+      }
+    ]
   }
 }

@@ -1,4 +1,5 @@
 import { isLocale, defaultLocale, localePath, type Locale } from "@/lib/i18n-config";
+import { toolPageLinks } from "@/lib/landing";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
 import { getDictionary } from "@/lib/get-dictionary";
@@ -116,6 +117,7 @@ export default async function LocalePage({
       </section>
 
       <PlatformLinks
+        toolLinks={toolPageLinks(dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}

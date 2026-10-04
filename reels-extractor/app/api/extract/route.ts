@@ -87,6 +87,8 @@ export type ReelData = ImageFields & {
   videoUrl: string;
   thumbnailUrl: string;
   title: string | null;
+  /** The whole caption, hashtags included (up to Instagram's 2,200 characters), for the copy buttons. */
+  caption?: string | null;
   author: string | null;
   durationSeconds: number | null;
   formats?: ReelFormat[]; // best first; UI falls back to videoUrl when absent
@@ -476,6 +478,7 @@ type ScraperResponse = {
   imageExt?: string | null;
   id?: string | null;
   title?: string | null;
+  caption?: string | null;
   author?: string | null;
   thumbnail?: string | null;
   duration?: number | null;
@@ -661,6 +664,7 @@ async function extractFromScraperOnce(
     videoUrl,
     thumbnailUrl: toSafeMediaUrl(json.thumbnail) ?? "",
     title: truncate(typeof json.title === "string" ? json.title : null),
+    caption: truncate(typeof json.caption === "string" ? json.caption : null, CAPTION_MAX_CHARS),
     author: typeof json.author === "string" ? json.author : null,
     durationSeconds: image ? null : typeof json.duration === "number" ? json.duration : null,
     ...(image
@@ -734,11 +738,15 @@ function parseMediaJson(tree: unknown, shortcode: string): ReelData | null {
     videoUrl,
     thumbnailUrl: thumbnail ?? "",
     title: truncate(typeof captionText === "string" ? captionText : null),
+    caption: truncate(typeof captionText === "string" ? captionText : null, CAPTION_MAX_CHARS),
     author: typeof username === "string" ? username : null,
     durationSeconds: typeof seconds === "number" ? seconds : null,
     ...(formats.length > 0 ? { formats } : {}),
   };
 }
+
+// Instagram's own caption limit: the copy buttons get the whole thing, the card shows a short form (`title`).
+const CAPTION_MAX_CHARS = 2200;
 
 function truncate(text: string | null, max = 300): string | null {
   if (!text) return null;
@@ -784,6 +792,7 @@ async function extractFromEmbed(shortcode: string): Promise<ReelData | null> {
     videoUrl,
     thumbnailUrl: toSafeMediaUrl(rawThumb) ?? "",
     title: truncate(caption),
+    caption: truncate(caption, CAPTION_MAX_CHARS),
     author: null,
     durationSeconds: null,
   };

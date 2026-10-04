@@ -672,7 +672,13 @@
     "downloadItemAudio": "Audio seul",
     "downloadAll": "Tout télécharger ({n})",
     "downloadAllBusy": "Démarrage des téléchargements…",
-    "downloadAllHint": "Votre navigateur peut vous demander d'autoriser plusieurs téléchargements."
+    "downloadAllHint": "Votre navigateur peut vous demander d'autoriser plusieurs téléchargements.",
+    "captionHeading": "Légende",
+    "copyCaption": "Copier la légende",
+    "copyHashtags": "Copier les hashtags ({n})",
+    "copied": "Copié",
+    "copyFailed": "Copie impossible, sélectionnez le texte",
+    "downloadCover": "Image de couverture ({format})"
   },
   "download": {
     "preparing": "Préparation de votre téléchargement…",
@@ -1330,5 +1336,151 @@
     "toVideoLabel": "Télécharger la vidéo HD",
     "toVideoBadge": "HD",
     "toVideoAria": "Passer au téléchargeur vidéo"
+  },
+  "captionCopier": {
+    "metaTitle": "Copier Légende et Hashtags Instagram en 1 Clic",
+    "metaDescription": "Copiez la légende complète ou seulement les hashtags de n'importe quel Reel ou post Instagram public. Emojis et retours à la ligne gardés. Gratuit.",
+    "h1": "Copier la Légende et les Hashtags Instagram",
+    "lead": "Collez le lien d'un Reel ou d'un post et copiez toute sa légende, ou seulement ses hashtags, en un geste. Marche aussi avec TikTok, YouTube et X.",
+    "placeholder": "Collez le lien d'un Reel ou d'un post Instagram…",
+    "copyHint": "Dans Instagram, touchez l'icône de partage ou les trois points, puis Copier le lien.",
+    "breadcrumb": "Copier Légende et Hashtags",
+    "footerLabel": "Copier une Légende",
+    "howToHeading": "Comment Copier la Légende et les Hashtags d'un Post Instagram",
+    "howToSteps": [
+      "Ouvrez le Reel ou le post dans Instagram, touchez l'icône de partage (ou les trois points) et choisissez Copier le lien.",
+      "Collez le lien dans le champ ci-dessus et attendez un instant l'aperçu.",
+      "Touchez Copier la légende pour tout le texte, ou Copier les hashtags pour les tags seuls, puis collez-les où vous voulez."
+    ],
+    "sections": [
+      {
+        "heading": "Ce Que Fait Cet Outil",
+        "paragraphs": [
+          "Instagram ne permet pas de sélectionner et copier une légende dans son application, ce qui est gênant pour garder une recette, citer une phrase ou réutiliser votre propre texte. Cet outil lit la légende qu'Instagram affiche publiquement pour le post et la place dans un cadre, avec des boutons qui la copient dans le presse-papiers.",
+          "Vous obtenez le texte tel qu'il a été écrit : emojis, retours à la ligne, mentions et hashtags compris, jusqu'à la limite de 2 200 caractères d'Instagram. Rien n'est réécrit ni traduit, et les boutons de téléchargement de la vidéo restent sur la même carte si vous voulez aussi le Reel."
+        ]
+      },
+      {
+        "heading": "Copier Seulement les Hashtags",
+        "paragraphs": [
+          "Copier les hashtags récupère tous les tags de la légende, retire les doublons et vous les donne sur une seule ligne, séparés par des espaces, prêts à coller dans une note ou un brouillon. Les tags de toutes les langues et écritures sont reconnus, comme #voyage, #café ou #मुंबई.",
+          "C'est un moyen rapide de voir quels hashtags un post a utilisés. Les réutiliser sur vos propres posts vous regarde, mais copier un ensemble entier mot pour mot aide rarement : choisissez ceux qui décrivent vraiment votre contenu."
+        ]
+      },
+      {
+        "heading": "Au-delà d'Instagram",
+        "paragraphs": [
+          "Le même champ accepte les liens TikTok, YouTube, X, Facebook et des autres plateformes prises en charge. Quand la plateforme affiche un texte avec la publication, comme une légende TikTok, un post X ou la description d'une vidéo YouTube, vous pouvez le copier de la même façon.",
+          "Si une publication n'a pas de légende, il n'y a rien à copier et les boutons n'apparaissent pas. Les posts photo et les carrousels marchent aussi, car la légende appartient au post et non à une seule diapositive."
+        ]
+      },
+      {
+        "heading": "Respecter l'Auteur",
+        "paragraphs": [
+          "Une légende est le texte de quelqu'un. La copier pour la garder, la traduire ou la citer en mentionnant son auteur, c'est bien ; la publier comme la vôtre, non. Quand vous reprenez une phrase, mentionnez le compte d'où elle vient.",
+          "Seuls les posts publics peuvent être lus, car SaveReelsFast ne se connecte jamais à aucun compte. Rien de ce que vous collez n'est conservé, et la légende ne va que dans votre propre presse-papiers."
+        ]
+      }
+    ],
+    "faqHeading": "Questions Fréquentes",
+    "faq": [
+      {
+        "q": "Copier les légendes Instagram est-il gratuit ?",
+        "a": "Oui. C'est gratuit, sans compte, inscription ni application à installer. Collez un lien public et copiez."
+      },
+      {
+        "q": "Les emojis et les retours à la ligne sont-ils conservés ?",
+        "a": "Oui. La légende est copiée exactement comme Instagram l'affiche publiquement, avec emojis, retours à la ligne, mentions et hashtags, jusqu'à 2 200 caractères."
+      },
+      {
+        "q": "Puis-je copier seulement les hashtags ?",
+        "a": "Oui. Copier les hashtags rassemble tous les tags de la légende, sans doublons, sur une ligne. Le bouton n'apparaît que si la légende contient des hashtags."
+      },
+      {
+        "q": "Pourquoi n'y a-t-il pas de bouton de copie ?",
+        "a": "La publication n'a pas de légende, ou la plateforme ne l'affiche pas publiquement. Les posts et comptes privés ne peuvent pas être lus."
+      },
+      {
+        "q": "Ça marche sur iPhone et Android ?",
+        "a": "Oui, dans n'importe quel navigateur récent. Si votre navigateur bloque le presse-papiers, le bouton l'indique ; sélectionnez le texte du cadre et copiez-le à la main."
+      },
+      {
+        "q": "Puis-je copier les légendes de comptes privés ?",
+        "a": "Non. Seuls les posts publics fonctionnent, car l'outil ne se connecte jamais à Instagram ni à aucune autre plateforme."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Télécharger Miniature Vidéo - YouTube, Reels, TikTok",
+    "metaDescription": "Téléchargez l'image de couverture d'une vidéo YouTube, d'un Reel Instagram ou d'un TikTok, dans la taille fournie par la plateforme. Gratuit, sans compte.",
+    "h1": "Télécharger la Miniature d'une Vidéo",
+    "lead": "Collez le lien d'une vidéo et enregistrez son image de couverture, la miniature affichée par la plateforme, en JPG ou WebP. YouTube, Instagram, TikTok et plus.",
+    "placeholder": "Collez un lien YouTube, Reel ou TikTok…",
+    "copyHint": "Copiez le lien de la vidéo avec le bouton Partager, puis collez-le ici.",
+    "breadcrumb": "Télécharger une Miniature",
+    "footerLabel": "Télécharger une Miniature",
+    "howToHeading": "Comment Télécharger la Miniature d'une Vidéo",
+    "howToSteps": [
+      "Copiez le lien d'une vidéo ou d'un Short YouTube public, d'un Reel Instagram, d'un TikTok ou d'une vidéo d'une autre plateforme prise en charge.",
+      "Collez-le dans le champ ci-dessus. La carte affiche l'image de couverture de la vidéo en grand.",
+      "Touchez Image de couverture pour l'enregistrer. Elle se télécharge dans le fichier fourni par la plateforme, en général JPG ou WebP."
+    ],
+    "sections": [
+      {
+        "heading": "Qu'est-ce que la Miniature d'une Vidéo ?",
+        "paragraphs": [
+          "La miniature, ou image de couverture, est l'image fixe qu'une plateforme affiche avant la lecture : celle des résultats de recherche YouTube, la couverture d'un Reel dans la grille d'un profil, la première image d'un TikTok. Les créateurs la soignent souvent, ce qui la rend utile comme référence, pour un tableau d'inspiration ou pour l'aperçu de votre propre vidéo.",
+          "Cet outil affiche la miniature que la plateforme publie pour la vidéo et vous permet de l'enregistrer comme image, sans capture d'écran, recadrage ni perte de qualité."
+        ]
+      },
+      {
+        "heading": "Quelle Taille Obtenez-Vous ?",
+        "paragraphs": [
+          "Vous obtenez la plus grande couverture que la plateforme propose pour cette vidéo, sans retouche. Pour la plupart des vidéos YouTube, c'est l'image pleine largeur utilisée par la page de la vidéo (souvent 1280x720) ; les vidéos anciennes ou plus petites n'en ont parfois qu'une plus petite. Les couvertures Instagram et TikTok arrivent dans la taille affichée par l'application.",
+          "Rien n'est agrandi, recompressé ni filigrané. Le fichier garde le format de la plateforme, en général JPG, parfois WebP, que tout téléphone ou ordinateur récent ouvre."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok et Plus",
+        "paragraphs": [
+          "Le même champ accepte les liens YouTube (vidéos et Shorts), Instagram, TikTok, Facebook, X, Pinterest et des autres plateformes prises en charge. Une recherche YouTube peut prendre quelques secondes de plus que les autres, patientez un instant.",
+          "Vous voulez aussi la vidéo ? La même carte garde les boutons de téléchargement vidéo et audio, pour enregistrer le clip et sa couverture en une seule visite. Pour les posts photo Instagram, utilisez plutôt le téléchargeur de photos : là, l'image elle-même est le téléchargement."
+        ]
+      },
+      {
+        "heading": "Utiliser les Miniatures Correctement",
+        "paragraphs": [
+          "Une miniature fait partie du travail du créateur. L'enregistrer comme référence personnelle ou pour parler de la vidéo est courant ; l'utiliser pour promouvoir votre propre contenu, ou comme si vous l'aviez faite, demande l'accord du créateur.",
+          "Seules les vidéos publiques peuvent être recherchées, car SaveReelsFast ne se connecte jamais à aucun compte. Rien de ce que vous collez n'est conservé."
+        ]
+      }
+    ],
+    "faqHeading": "Questions Fréquentes",
+    "faq": [
+      {
+        "q": "Le téléchargement de miniatures est-il gratuit ?",
+        "a": "Oui. C'est gratuit, sans compte, inscription, application ni extension de navigateur."
+      },
+      {
+        "q": "Puis-je télécharger les miniatures YouTube en HD ?",
+        "a": "Vous obtenez la plus grande miniature que YouTube propose pour cette vidéo, c'est-à-dire l'image 1280x720 pour la plupart des vidéos. Si YouTube n'en a qu'une plus petite, c'est celle-là : rien n'est agrandi."
+      },
+      {
+        "q": "Ça marche pour les Reels Instagram et TikTok ?",
+        "a": "Oui. Collez le lien du Reel ou du TikTok et la carte affiche son image de couverture avec un bouton de téléchargement."
+      },
+      {
+        "q": "Dans quel format est l'image ?",
+        "a": "Dans le format fourni par la plateforme, en général JPG et parfois WebP. Les deux s'ouvrent dans toute application photo ou navigateur récent."
+      },
+      {
+        "q": "Un filigrane est-il ajouté ?",
+        "a": "Non. L'image est enregistrée exactement telle que la plateforme la fournit."
+      },
+      {
+        "q": "Puis-je obtenir la miniature d'une vidéo privée ?",
+        "a": "Non. Seules les vidéos publiques fonctionnent, car l'outil ne se connecte jamais à aucune plateforme."
+      }
+    ]
   }
 }

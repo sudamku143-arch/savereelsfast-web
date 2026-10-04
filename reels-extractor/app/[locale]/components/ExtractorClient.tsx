@@ -18,7 +18,7 @@ import InputBox from "./InputBox";
 import ModeSwitcher, { type ModeSwitcherDict } from "./ModeSwitcher";
 import PlatformTabs from "./PlatformTabs";
 import SkeletonLoader from "./SkeletonLoader";
-import PreviewCard, { type PreviewDict, type ReelResult } from "./PreviewCard";
+import PreviewCard, { type CardFocus, type PreviewDict, type ReelResult } from "./PreviewCard";
 import ErrorCard, { type ErrorsDict, type UiErrorCode } from "./ErrorCard";
 import type { DownloadDict } from "./DownloadButton";
 import AdBanner, { type AdDict } from "./AdBanner";
@@ -90,6 +90,7 @@ export default function ExtractorClient({
   initialPlatform = "instagram",
   landing = false,
   audioOnly = false,
+  cardFocus,
   heroHeading,
   heroLead,
   heroPlaceholder,
@@ -112,6 +113,8 @@ export default function ExtractorClient({
   landing?: boolean;
   /** True on /audio-downloader: the result card only ever offers the separate audio track, never the video file. */
   audioOnly?: boolean;
+  /** The tool a page puts first on the result card (the caption copier and thumbnail pages). */
+  cardFocus?: CardFocus;
   /**
    * Replaces the default heading/intro (the active tab's own title/subtitle) until the visitor picks a tab,
    * for a page whose own topic isn't any single platform (e.g. the audio downloader, which works with all of
@@ -348,6 +351,7 @@ export default function ExtractorClient({
               platform={result.platform ?? platform}
               platformName={platformsDict[result.platform ?? platform].name}
               audioOnly={audioOnly}
+              focus={cardFocus}
               onReset={handleReset}
             />
             {/* Slot 2: directly below the download result. */}

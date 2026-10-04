@@ -1,42 +1,33 @@
-import type { Metadata } from "next";
-import { toolPageLinks } from "@/lib/landing";
-import { isLocale, defaultLocale, localePath, locales, type Locale } from "@/lib/i18n-config";
+import { localePath, type Locale } from "@/lib/i18n-config";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
-import { getDictionary } from "@/lib/get-dictionary";
-import { landingPath, PHOTO_DOWNLOADER_PATH } from "@/lib/landing";
-import { pageMetadata, platformOgImage } from "@/lib/legal-metadata";
+import { landingPath, toolPageLinks } from "@/lib/landing";
 import { buildPlatformInfo } from "@/lib/platform-info";
-import ExtractorClient from "../components/ExtractorClient";
-import FaqAccordion from "../components/FaqAccordion";
-import AdBanner from "../components/AdBanner";
-import PlatformLinks from "../components/PlatformLinks";
+import type { getDictionary } from "@/lib/get-dictionary";
+import ExtractorClient from "./ExtractorClient";
+import FaqAccordion from "./FaqAccordion";
+import AdBanner from "./AdBanner";
+import PlatformLinks from "./PlatformLinks";
+import type { CardFocus } from "./PreviewCard";
 
-type Props = { params: { locale: string } };
+type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
 
-function resolveLocale(value: string): Locale {
-  return isLocale(value) ? value : defaultLocale;
-}
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
-
-// Pure static HTML, served from Vercel's Edge Network. See the home page for why this is declared
-// explicitly rather than left implicit.
-export const dynamic = "force-static";
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const locale = resolveLocale(params.locale);
-  const { photoDownloader } = await getDictionary(locale);
-  return pageMetadata(
-    locale,
-    PHOTO_DOWNLOADER_PATH,
-    photoDownloader.metaTitle,
-    photoDownloader.metaDescription,
-    platformOgImage("instagram", locale)
-  );
-}
+/** What every feature page's text has: the hero, a 3-step how-to, guide sections and an FAQ. */
+export type ToolPageContent = {
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  lead: string;
+  placeholder: string;
+  copyHint: string;
+  breadcrumb: string;
+  footerLabel: string;
+  howToHeading: string;
+  howToSteps: string[];
+  sections: { heading: string; paragraphs: string[] }[];
+  faqHeading: string;
+  faq: { q: string; a: string }[];
+};
 
 /** JSON in a <script> must not be able to close the tag. */
 function jsonLd(data: unknown): string {
@@ -44,20 +35,27 @@ function jsonLd(data: unknown): string {
 }
 
 /**
- * Instagram photos and carousels (photo, video or mixed slides). The tool is the same one as everywhere else,
- * opened on the Instagram tab; what this page adds is the guide for people who search for photos and
- * carousels rather than Reels.
+ * A feature page (caption copier, thumbnail downloader...): the same tool as everywhere else with the page's
+ * own tool first on the result card, then a real guide below it (how-to, sections, FAQ), so the page stands
+ * on its own for the people who search for that one thing.
  */
-export default async function PhotoDownloaderPage({ params }: Props) {
-  const locale = resolveLocale(params.locale);
-  const dict = await getDictionary(locale);
-  const { photoDownloader } = dict;
-
-  const names = Object.fromEntries(
-    PLATFORM_IDS.map((id) => [id, dict.platforms[id].name])
-  ) as Record<PlatformId, string>;
-
-  const pageUrl = `${SITE_URL}${localePath(locale, PHOTO_DOWNLOADER_PATH)}`;
+export default function ToolLandingPage({
+  locale,
+  dict,
+  content,
+  path,
+  initialPlatform,
+  cardFocus,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  content: ToolPageContent;
+  path: string;
+  initialPlatform: PlatformId;
+  cardFocus?: CardFocus;
+}) {
+  const names = Object.fromEntries(PLATFORM_IDS.map((id) => [id, dict.platforms[id].name])) as Record<PlatformId, string>;
+  const pageUrl = `${SITE_URL}${localePath(locale, path)}`;
   const homeUrl = `${SITE_URL}${localePath(locale)}`;
 
   const structuredData = {
@@ -66,10 +64,10 @@ export default async function PhotoDownloaderPage({ params }: Props) {
       {
         "@type": "WebApplication",
         "@id": `${pageUrl}#app`,
-        name: `${photoDownloader.h1} — ${SITE_NAME}`,
-        alternateName: photoDownloader.metaTitle,
+        name: `${content.h1} — ${SITE_NAME}`,
+        alternateName: content.metaTitle,
         url: pageUrl,
-        description: photoDownloader.metaDescription,
+        description: content.metaDescription,
         applicationCategory: "MultimediaApplication",
         operatingSystem: "All",
         browserRequirements: "Requires JavaScript",
@@ -83,14 +81,14 @@ export default async function PhotoDownloaderPage({ params }: Props) {
         "@type": "HowTo",
         "@id": `${pageUrl}#howto`,
         inLanguage: locale,
-        name: photoDownloader.howToHeading,
-        step: photoDownloader.howToSteps.map((text, index) => ({ "@type": "HowToStep", position: index + 1, text })),
+        name: content.howToHeading,
+        step: content.howToSteps.map((text, index) => ({ "@type": "HowToStep", position: index + 1, text })),
       },
       {
         "@type": "FAQPage",
         "@id": `${pageUrl}#faq`,
         inLanguage: locale,
-        mainEntity: photoDownloader.faq.map((item) => ({
+        mainEntity: content.faq.map((item) => ({
           "@type": "Question",
           name: item.q,
           acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -101,7 +99,7 @@ export default async function PhotoDownloaderPage({ params }: Props) {
         itemListElement: [
           { "@type": "ListItem", position: 1, name: dict.landing.common.breadcrumbHome, item: homeUrl },
           // The last item is the current page: Google's breadcrumb guidelines say to omit its URL.
-          { "@type": "ListItem", position: 2, name: photoDownloader.breadcrumb },
+          { "@type": "ListItem", position: 2, name: content.breadcrumb },
         ],
       },
     ],
@@ -121,7 +119,7 @@ export default async function PhotoDownloaderPage({ params }: Props) {
           </li>
           <li aria-hidden="true">/</li>
           <li aria-current="page" className="text-zinc-300">
-            {photoDownloader.breadcrumb}
+            {content.breadcrumb}
           </li>
         </ol>
       </nav>
@@ -137,23 +135,21 @@ export default async function PhotoDownloaderPage({ params }: Props) {
           adDict={dict.ad}
           modeSwitcherDict={dict.modeSwitcher}
           platformInfo={buildPlatformInfo(dict.landing.platforms, (pid) => localePath(locale, landingPath(pid)))}
-          initialPlatform="instagram"
-          heroHeading={photoDownloader.h1}
-          heroLead={photoDownloader.lead}
-          heroPlaceholder={photoDownloader.placeholder}
-          heroHint={photoDownloader.copyHint}
+          initialPlatform={initialPlatform}
+          heroHeading={content.h1}
+          heroLead={content.lead}
+          heroPlaceholder={content.placeholder}
+          heroHint={content.copyHint}
+          cardFocus={cardFocus}
         />
       </div>
 
       {/* The same steps the HowTo data above describes. */}
       <section id="how-it-works" className="mt-16 w-full max-w-2xl scroll-mt-24">
-        <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-zinc-50">{photoDownloader.howToHeading}</h2>
+        <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-zinc-50">{content.howToHeading}</h2>
         <ol className="space-y-3">
-          {photoDownloader.howToSteps.map((step, index) => (
-            <li
-              key={index}
-              className="glass flex gap-3 rounded-2xl p-4 text-sm leading-relaxed text-zinc-300 sm:text-base"
-            >
+          {content.howToSteps.map((step, index) => (
+            <li key={index} className="glass flex gap-3 rounded-2xl p-4 text-sm leading-relaxed text-zinc-300 sm:text-base">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-sm font-bold text-brand-300">
                 {index + 1}
               </span>
@@ -163,7 +159,7 @@ export default async function PhotoDownloaderPage({ params }: Props) {
         </ol>
       </section>
 
-      {photoDownloader.sections.map((section) => (
+      {content.sections.map((section) => (
         <section key={section.heading} className="mt-16 w-full max-w-2xl">
           <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-zinc-50">{section.heading}</h2>
           <div className="space-y-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
@@ -174,15 +170,16 @@ export default async function PhotoDownloaderPage({ params }: Props) {
         </section>
       ))}
 
-      <FaqAccordion heading={photoDownloader.faqHeading} items={photoDownloader.faq} />
+      <FaqAccordion heading={content.faqHeading} items={content.faq} />
 
       <PlatformLinks
-        toolLinks={toolPageLinks(dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}
         lead={dict.landing.common.otherLead}
         audioLabel={dict.audioDownloader.breadcrumb}
+        photoLabel={dict.photoDownloader.breadcrumb}
+        toolLinks={toolPageLinks(dict).filter((tool) => tool.path !== path)}
       />
 
       {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}

@@ -34,6 +34,14 @@ function PhotosIcon() {
   );
 }
 
+function ToolIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden="true">
+      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
+    </svg>
+  );
+}
+
 export default function PlatformLinks({
   locale,
   names,
@@ -43,6 +51,7 @@ export default function PlatformLinks({
   currentLabel,
   audioLabel,
   photoLabel,
+  toolLinks = [],
 }: {
   locale: Locale;
   names: Record<PlatformId, string>;
@@ -58,6 +67,8 @@ export default function PlatformLinks({
   audioLabel?: string;
   /** Label of the Instagram photo & carousel downloader link (left out on that page itself). */
   photoLabel?: string;
+  /** The feature pages (caption copier, thumbnail downloader...), minus the current one. */
+  toolLinks?: { path: string; label: string }[];
 }) {
   return (
     <nav id="platforms" aria-label={heading} className="mt-16 w-full max-w-2xl scroll-mt-24">
@@ -99,6 +110,17 @@ export default function PlatformLinks({
             </a>
           </li>
         )}
+        {toolLinks.map((tool) => (
+          <li key={tool.path}>
+            <a
+              href={localePath(locale, tool.path)}
+              className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm font-medium text-zinc-300 outline-none transition hover:bg-white/10 hover:text-zinc-50 focus-visible:ring-2 focus-visible:ring-brand-500"
+            >
+              <ToolIcon />
+              <span className="truncate">{tool.label}</span>
+            </a>
+          </li>
+        ))}
         {audioLabel && (
           <li>
             <a

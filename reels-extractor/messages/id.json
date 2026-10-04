@@ -672,7 +672,13 @@
     "downloadItemAudio": "Audio saja",
     "downloadAll": "Unduh semua ({n})",
     "downloadAllBusy": "Memulai unduhan…",
-    "downloadAllHint": "Browser Anda mungkin meminta izin untuk beberapa unduhan sekaligus."
+    "downloadAllHint": "Browser Anda mungkin meminta izin untuk beberapa unduhan sekaligus.",
+    "captionHeading": "Keterangan",
+    "copyCaption": "Salin keterangan",
+    "copyHashtags": "Salin hashtag ({n})",
+    "copied": "Tersalin",
+    "copyFailed": "Gagal menyalin, pilih teksnya",
+    "downloadCover": "Gambar sampul ({format})"
   },
   "download": {
     "preparing": "Menyiapkan unduhan Anda…",
@@ -1330,5 +1336,151 @@
     "toVideoLabel": "Unduh Video HD",
     "toVideoBadge": "HD",
     "toVideoAria": "Beralih ke pengunduh video"
+  },
+  "captionCopier": {
+    "metaTitle": "Salin Keterangan & Hashtag Instagram dengan 1 Klik",
+    "metaDescription": "Salin seluruh keterangan atau hanya hashtag dari Reels atau postingan Instagram publik mana pun. Emoji dan baris baru tetap ada. Gratis, tanpa login.",
+    "h1": "Salin Keterangan & Hashtag Instagram",
+    "lead": "Tempel tautan Reel atau postingan, lalu salin seluruh keterangannya, atau hanya hashtag-nya, dengan sekali ketuk. Bisa juga untuk TikTok, YouTube, dan X.",
+    "placeholder": "Tempel tautan Reel atau postingan Instagram…",
+    "copyHint": "Di Instagram, ketuk ikon bagikan atau tiga titik, lalu Salin tautan.",
+    "breadcrumb": "Salin Keterangan & Hashtag",
+    "footerLabel": "Salin Keterangan",
+    "howToHeading": "Cara Menyalin Keterangan dan Hashtag Instagram",
+    "howToSteps": [
+      "Buka Reel atau postingan di Instagram, ketuk ikon bagikan (atau tiga titik), lalu pilih Salin tautan.",
+      "Tempel tautannya di kotak di atas dan tunggu sebentar sampai pratinjau muncul.",
+      "Ketuk Salin keterangan untuk seluruh teks, atau Salin hashtag untuk tag-nya saja, lalu tempel di mana pun kamu perlukan."
+    ],
+    "sections": [
+      {
+        "heading": "Apa yang Dilakukan Alat Ini",
+        "paragraphs": [
+          "Instagram tidak mengizinkan kamu memilih dan menyalin keterangan di aplikasinya, padahal sering perlu saat ingin menyimpan resep, mengutip kalimat, atau memakai ulang teksmu sendiri. Alat ini membaca keterangan yang ditampilkan Instagram secara publik untuk postingan itu dan menaruhnya di sebuah kotak, dengan tombol untuk menyalinnya ke papan klip.",
+          "Kamu mendapatkan teks persis seperti ditulis: dengan emoji, baris baru, mention, dan hashtag, sampai batas 2.200 karakter Instagram. Tidak ada yang ditulis ulang atau diterjemahkan, dan tombol unduh video tetap ada di kartu yang sama kalau kamu juga ingin Reel-nya."
+        ]
+      },
+      {
+        "heading": "Salin Hashtag Saja",
+        "paragraphs": [
+          "Salin hashtag mengambil semua tag dari keterangan, membuang yang dobel, dan memberikannya dalam satu baris yang dipisahkan spasi, siap ditempel ke catatan atau draf. Tag dalam bahasa dan aksara apa pun dikenali, seperti #jalanjalan, #café, atau #मुंबई.",
+          "Ini cara cepat untuk melihat hashtag apa saja yang dipakai sebuah postingan. Memakainya lagi di postinganmu terserah kamu, tetapi menyalin satu set utuh kata per kata jarang membantu: pilih yang benar-benar menggambarkan kontenmu."
+        ]
+      },
+      {
+        "heading": "Tidak Hanya Instagram",
+        "paragraphs": [
+          "Kotak yang sama menerima tautan dari TikTok, YouTube, X, Facebook, dan platform lain yang didukung. Jika platform menampilkan teks bersama postingan, seperti keterangan TikTok, postingan X, atau deskripsi video YouTube, kamu bisa menyalinnya dengan cara yang sama.",
+          "Jika sebuah postingan tidak punya keterangan, tidak ada yang bisa disalin dan tombolnya tidak muncul. Postingan foto dan carousel juga bisa, karena keterangan milik postingan, bukan milik satu slide."
+        ]
+      },
+      {
+        "heading": "Hargai Penulisnya",
+        "paragraphs": [
+          "Keterangan adalah tulisan seseorang. Menyalinnya untuk disimpan, diterjemahkan, atau dikutip dengan menyebut sumbernya boleh saja; menerbitkannya sebagai tulisanmu sendiri tidak. Saat memakai ulang sebuah kalimat, sebutkan akun asalnya.",
+          "Hanya postingan publik yang bisa dibaca, karena SaveReelsFast tidak pernah login ke akun mana pun. Tidak ada yang kamu tempel yang disimpan, dan keterangannya hanya masuk ke papan klipmu sendiri."
+        ]
+      }
+    ],
+    "faqHeading": "Pertanyaan Umum",
+    "faq": [
+      {
+        "q": "Apakah menyalin keterangan Instagram gratis?",
+        "a": "Ya. Gratis, tanpa akun, pendaftaran, atau aplikasi. Tempel tautan publik lalu salin."
+      },
+      {
+        "q": "Apakah emoji dan baris baru tetap ada?",
+        "a": "Ya. Keterangan disalin persis seperti yang ditampilkan Instagram secara publik, dengan emoji, baris baru, mention, dan hashtag, sampai 2.200 karakter."
+      },
+      {
+        "q": "Bisakah saya menyalin hashtag saja?",
+        "a": "Ya. Salin hashtag mengumpulkan semua tag dari keterangan, tanpa yang dobel, dalam satu baris. Tombolnya hanya muncul jika keterangan berisi hashtag."
+      },
+      {
+        "q": "Kenapa tidak ada tombol salin?",
+        "a": "Postingan itu tidak punya keterangan, atau platform tidak menampilkannya secara publik. Postingan dan akun privat sama sekali tidak bisa dibaca."
+      },
+      {
+        "q": "Apakah bisa di iPhone dan Android?",
+        "a": "Ya, di browser modern mana pun. Jika browser memblokir papan klip, tombolnya akan memberi tahu; pilih teks di kotak keterangan dan salin secara manual."
+      },
+      {
+        "q": "Bisakah saya menyalin keterangan dari akun privat?",
+        "a": "Tidak. Hanya postingan publik yang bisa, karena alat ini tidak pernah login ke Instagram atau platform lain."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Download Thumbnail Video - YouTube, Reels & TikTok",
+    "metaDescription": "Unduh gambar sampul video YouTube, Reel Instagram, atau TikTok dalam ukuran yang disediakan platform. Gratis, tanpa login, tanpa aplikasi.",
+    "h1": "Download Thumbnail Video",
+    "lead": "Tempel tautan video lalu simpan gambar sampulnya, thumbnail yang ditampilkan platform, sebagai file JPG atau WebP. YouTube, Instagram, TikTok, dan lainnya.",
+    "placeholder": "Tempel tautan YouTube, Reel, atau TikTok…",
+    "copyHint": "Salin tautan video dari tombol Bagikan, lalu tempel di sini.",
+    "breadcrumb": "Download Thumbnail",
+    "footerLabel": "Download Thumbnail",
+    "howToHeading": "Cara Download Thumbnail Video",
+    "howToSteps": [
+      "Salin tautan video atau Short YouTube publik, Reel Instagram, TikTok, atau video dari platform lain yang didukung.",
+      "Tempel di kotak di atas. Kartu akan menampilkan gambar sampul video dalam ukuran besar.",
+      "Ketuk Gambar sampul untuk menyimpannya. Gambar diunduh sebagai file yang disajikan platform, biasanya JPG atau WebP."
+    ],
+    "sections": [
+      {
+        "heading": "Apa Itu Thumbnail Video?",
+        "paragraphs": [
+          "Thumbnail, atau gambar sampul, adalah gambar diam yang ditampilkan platform sebelum video diputar: gambar di hasil pencarian YouTube, sampul Reel di grid profil, frame pertama sebuah TikTok. Kreator sering mendesainnya dengan serius, sehingga berguna sebagai referensi, untuk moodboard, atau sebagai pratinjau video milikmu sendiri.",
+          "Alat ini menampilkan thumbnail yang dipublikasikan platform untuk video itu dan membiarkanmu menyimpannya sebagai gambar, tanpa tangkapan layar, memotong, atau kehilangan kualitas."
+        ]
+      },
+      {
+        "heading": "Ukuran Berapa yang Kamu Dapat?",
+        "paragraphs": [
+          "Kamu mendapatkan sampul terbesar yang disediakan platform untuk video itu, tanpa diubah. Untuk sebagian besar video YouTube, itu gambar selebar penuh yang dipakai halaman video (sering 1280x720); unggahan lama atau kecil mungkin hanya punya yang lebih kecil. Sampul Instagram dan TikTok datang dalam ukuran seperti yang ditampilkan aplikasinya.",
+          "Tidak ada yang diperbesar, dikompres ulang, atau diberi watermark. File tetap dalam format platform, biasanya JPG dan kadang WebP, yang bisa dibuka di ponsel atau komputer modern mana pun."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok, dan Lainnya",
+        "paragraphs": [
+          "Kotak yang sama menerima tautan YouTube (video dan Shorts), Instagram, TikTok, Facebook, X, Pinterest, dan platform lain yang didukung. Pencarian YouTube bisa memakan beberapa detik lebih lama dari yang lain, jadi tunggu sebentar.",
+          "Ingin videonya juga? Kartu yang sama tetap punya tombol unduh video dan audio, jadi kamu bisa menyimpan klip dan sampulnya sekaligus. Untuk postingan foto Instagram, gunakan pengunduh foto: di sana fotonya sendiri yang diunduh."
+        ]
+      },
+      {
+        "heading": "Menggunakan Thumbnail dengan Adil",
+        "paragraphs": [
+          "Thumbnail adalah bagian dari karya kreator. Menyimpannya untuk referensi pribadi atau untuk membahas videonya itu wajar; memakainya untuk mempromosikan kontenmu sendiri, atau seolah-olah kamu yang membuatnya, butuh izin kreatornya.",
+          "Hanya video publik yang bisa dicari, karena SaveReelsFast tidak pernah login ke akun mana pun. Tidak ada yang kamu tempel yang disimpan."
+        ]
+      }
+    ],
+    "faqHeading": "Pertanyaan Umum",
+    "faq": [
+      {
+        "q": "Apakah download thumbnail gratis?",
+        "a": "Ya. Gratis, tanpa akun, pendaftaran, aplikasi, atau ekstensi browser."
+      },
+      {
+        "q": "Bisakah saya download thumbnail YouTube dalam HD?",
+        "a": "Kamu mendapatkan thumbnail terbesar yang disediakan YouTube untuk video itu, yang untuk sebagian besar video adalah gambar 1280x720. Jika YouTube hanya punya yang lebih kecil, itulah yang kamu dapat: tidak ada yang diperbesar."
+      },
+      {
+        "q": "Apakah bisa untuk Reels Instagram dan TikTok?",
+        "a": "Ya. Tempel tautan Reel atau TikTok dan kartu akan menampilkan gambar sampulnya beserta tombol unduh."
+      },
+      {
+        "q": "Gambarnya dalam format apa?",
+        "a": "Format yang disajikan platform, biasanya JPG dan kadang WebP. Keduanya bisa dibuka di aplikasi foto atau browser modern mana pun."
+      },
+      {
+        "q": "Apakah ditambahkan watermark?",
+        "a": "Tidak. Gambar disimpan persis seperti yang disediakan platform."
+      },
+      {
+        "q": "Bisakah saya mengambil thumbnail video privat?",
+        "a": "Tidak. Hanya video publik yang bisa, karena alat ini tidak pernah login ke platform mana pun."
+      }
+    ]
   }
 }

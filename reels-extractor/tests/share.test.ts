@@ -89,7 +89,7 @@ describe("the share row on the page", () => {
   it("appears only after a download has been saved, never before", () => {
     assert.match(card, /const \[downloaded, setDownloaded\] = useState\(false\);/);
     assert.match(card, /\{downloaded && <ShareTool locale=\{locale\} dict=\{downloadDict\.share\} \/>\}/);
-    assert.equal(card.split("onSaved={() => setDownloaded(true)}").length - 1, 2, "the video and the audio button");
+    assert.equal(card.split("onSaved={() => setDownloaded(true)}").length - 1, 3, "the video, audio and cover-image buttons");
     assert.match(card, /onDownloaded=\{\(\) => setDownloaded\(true\)\}/, "and a carousel's downloads");
   });
 

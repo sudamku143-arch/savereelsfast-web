@@ -672,7 +672,13 @@
     "downloadItemAudio": "Só áudio",
     "downloadAll": "Baixar tudo ({n})",
     "downloadAllBusy": "Iniciando downloads…",
-    "downloadAllHint": "Seu navegador pode pedir permissão para vários downloads."
+    "downloadAllHint": "Seu navegador pode pedir permissão para vários downloads.",
+    "captionHeading": "Legenda",
+    "copyCaption": "Copiar legenda",
+    "copyHashtags": "Copiar hashtags ({n})",
+    "copied": "Copiado",
+    "copyFailed": "Não deu para copiar, selecione o texto",
+    "downloadCover": "Imagem de capa ({format})"
   },
   "download": {
     "preparing": "Preparando o download…",
@@ -1330,5 +1336,151 @@
     "toVideoLabel": "Baixar vídeo em HD",
     "toVideoBadge": "HD",
     "toVideoAria": "Mudar para o baixador de vídeo"
+  },
+  "captionCopier": {
+    "metaTitle": "Copiar Legenda e Hashtags do Instagram em 1 Clique",
+    "metaDescription": "Copie a legenda completa ou só as hashtags de qualquer Reel ou publicação pública do Instagram. Com emojis e quebras de linha. Grátis, sem login.",
+    "h1": "Copiar Legenda e Hashtags do Instagram",
+    "lead": "Cole o link de um Reel ou publicação e copie toda a legenda, ou só as hashtags, com um toque. Funciona também com TikTok, YouTube e X.",
+    "placeholder": "Cole o link de um Reel ou publicação do Instagram…",
+    "copyHint": "No Instagram, toque no ícone de compartilhar ou nos três pontos e depois em Copiar link.",
+    "breadcrumb": "Copiar Legenda e Hashtags",
+    "footerLabel": "Copiar Legenda",
+    "howToHeading": "Como Copiar a Legenda e as Hashtags do Instagram",
+    "howToSteps": [
+      "Abra o Reel ou a publicação no Instagram, toque no ícone de compartilhar (ou nos três pontos) e escolha Copiar link.",
+      "Cole o link no campo acima e espere um instante pela prévia.",
+      "Toque em Copiar legenda para o texto todo, ou Copiar hashtags só para as tags, e cole onde precisar."
+    ],
+    "sections": [
+      {
+        "heading": "O Que Esta Ferramenta Faz",
+        "paragraphs": [
+          "O Instagram não deixa selecionar e copiar a legenda no app, o que atrapalha quando você quer guardar uma receita, citar uma frase ou reutilizar o seu próprio texto. Esta ferramenta lê a legenda que o Instagram mostra publicamente para a publicação e a coloca em uma caixa, com botões que copiam para a área de transferência.",
+          "Você recebe o texto como foi escrito: com emojis, quebras de linha, menções e hashtags, até o limite de 2.200 caracteres do Instagram. Nada é reescrito nem traduzido, e os botões de baixar o vídeo continuam no mesmo cartão se você quiser o Reel também."
+        ]
+      },
+      {
+        "heading": "Copie Só as Hashtags",
+        "paragraphs": [
+          "Copiar hashtags pega todas as tags da legenda, remove as repetidas e entrega em uma única linha, separadas por espaços, prontas para colar em uma nota ou rascunho. Tags em qualquer idioma e alfabeto são reconhecidas, como #viagem, #café ou #मुंबई.",
+          "É um jeito rápido de ver quais hashtags uma publicação usou. Reutilizá-las nas suas publicações é escolha sua, mas copiar um conjunto inteiro palavra por palavra raramente ajuda: escolha as que realmente descrevem o seu conteúdo."
+        ]
+      },
+      {
+        "heading": "Funciona Além do Instagram",
+        "paragraphs": [
+          "O mesmo campo aceita links do TikTok, YouTube, X, Facebook e das outras plataformas compatíveis. Quando a plataforma mostra um texto com a publicação, como uma legenda do TikTok, um post do X ou a descrição de um vídeo do YouTube, dá para copiar do mesmo jeito.",
+          "Se uma publicação não tem legenda, não há nada para copiar e os botões não aparecem. Publicações de fotos e carrosséis também funcionam, porque a legenda pertence à publicação e não a um único slide."
+        ]
+      },
+      {
+        "heading": "Respeite Quem Escreveu",
+        "paragraphs": [
+          "Uma legenda é o texto de alguém. Copiá-la para guardar, traduzir ou citar dando o crédito tudo bem; publicá-la como sua, não. Quando reutilizar uma frase, mencione a conta de onde ela veio.",
+          "Só publicações públicas podem ser lidas, porque o SaveReelsFast nunca faz login em nenhuma conta. Nada do que você cola é guardado, e a legenda só vai para a sua própria área de transferência."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas Frequentes",
+    "faq": [
+      {
+        "q": "Copiar legendas do Instagram é grátis?",
+        "a": "Sim. É grátis, sem conta, cadastro ou app para instalar. Cole um link público e copie."
+      },
+      {
+        "q": "Os emojis e as quebras de linha são mantidos?",
+        "a": "Sim. A legenda é copiada exatamente como o Instagram mostra publicamente, com emojis, quebras de linha, menções e hashtags, até 2.200 caracteres."
+      },
+      {
+        "q": "Posso copiar só as hashtags?",
+        "a": "Sim. Copiar hashtags junta todas as tags da legenda, sem repetições, em uma linha. O botão só aparece quando a legenda tem hashtags."
+      },
+      {
+        "q": "Por que não vejo um botão de copiar?",
+        "a": "A publicação não tem legenda, ou a plataforma não a mostra publicamente. Publicações e contas privadas não podem ser lidas."
+      },
+      {
+        "q": "Funciona no iPhone e no Android?",
+        "a": "Sim, em qualquer navegador moderno. Se o navegador bloquear a área de transferência, o botão avisa; selecione o texto da caixa e copie manualmente."
+      },
+      {
+        "q": "Posso copiar legendas de contas privadas?",
+        "a": "Não. Só publicações públicas funcionam, já que a ferramenta nunca faz login no Instagram nem em outra plataforma."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Baixar Thumbnail de Vídeo - YouTube, Reels e TikTok",
+    "metaDescription": "Baixe a imagem de capa de um vídeo do YouTube, Reel do Instagram ou TikTok no tamanho que a plataforma oferece. Grátis, sem login, sem app.",
+    "h1": "Baixar Thumbnail de Vídeo",
+    "lead": "Cole o link de um vídeo e salve a imagem de capa, a thumbnail que a plataforma mostra, como arquivo JPG ou WebP. YouTube, Instagram, TikTok e mais.",
+    "placeholder": "Cole um link do YouTube, Reel ou TikTok…",
+    "copyHint": "Copie o link do vídeo pelo botão Compartilhar e cole aqui.",
+    "breadcrumb": "Baixar Thumbnail",
+    "footerLabel": "Baixar Thumbnail",
+    "howToHeading": "Como Baixar a Thumbnail de um Vídeo",
+    "howToSteps": [
+      "Copie o link de um vídeo ou Short público do YouTube, um Reel do Instagram, um TikTok ou um vídeo de outra plataforma compatível.",
+      "Cole no campo acima. O cartão mostra a imagem de capa do vídeo em tamanho grande.",
+      "Toque em Imagem de capa para salvar. Ela é baixada como o arquivo que a plataforma entrega, geralmente JPG ou WebP."
+    ],
+    "sections": [
+      {
+        "heading": "O Que É a Thumbnail de um Vídeo?",
+        "paragraphs": [
+          "A thumbnail, ou imagem de capa, é a imagem parada que a plataforma mostra antes do vídeo tocar: a dos resultados de busca do YouTube, a capa de um Reel na grade do perfil, o primeiro quadro de um TikTok. Os criadores costumam caprichar nela, por isso é útil como referência, para um mural de inspiração ou para a prévia do seu próprio vídeo.",
+          "Esta ferramenta mostra a thumbnail que a plataforma publica para o vídeo e permite salvá-la como imagem, sem print, recorte ou perda de qualidade."
+        ]
+      },
+      {
+        "heading": "Qual Tamanho Você Recebe?",
+        "paragraphs": [
+          "Você recebe a maior capa que a plataforma oferece para aquele vídeo, intacta. Na maioria dos vídeos do YouTube é a imagem em largura total que a página do vídeo usa (muitas vezes 1280x720); vídeos antigos ou pequenos podem ter só uma menor. As capas do Instagram e do TikTok vêm no tamanho em que o app as mostra.",
+          "Nada é aumentado, comprimido de novo ou marcado com marca d'água. O arquivo mantém o formato da plataforma, geralmente JPG e às vezes WebP, que qualquer celular ou computador moderno abre."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok e Mais",
+        "paragraphs": [
+          "O mesmo campo aceita links do YouTube (vídeos e Shorts), Instagram, TikTok, Facebook, X, Pinterest e das outras plataformas compatíveis. Uma busca no YouTube pode levar alguns segundos a mais que as outras, então aguarde um pouco.",
+          "Quer o vídeo também? O mesmo cartão mantém os botões de baixar vídeo e áudio, então dá para salvar o clipe e a capa na mesma visita. Para publicações de fotos do Instagram, use o baixador de fotos: lá a própria imagem é o download."
+        ]
+      },
+      {
+        "heading": "Usando Thumbnails com Respeito",
+        "paragraphs": [
+          "A thumbnail faz parte do trabalho do criador. Salvá-la para referência pessoal ou para falar do vídeo é comum; usá-la para promover o seu próprio conteúdo, ou como se você a tivesse feito, exige a permissão do criador.",
+          "Só vídeos públicos podem ser buscados, porque o SaveReelsFast nunca faz login em nenhuma conta. Nada do que você cola é guardado."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas Frequentes",
+    "faq": [
+      {
+        "q": "Baixar thumbnails é grátis?",
+        "a": "Sim. É grátis, sem conta, cadastro, app ou extensão de navegador."
+      },
+      {
+        "q": "Posso baixar thumbnails do YouTube em HD?",
+        "a": "Você recebe a maior thumbnail que o YouTube oferece para o vídeo, que na maioria dos casos é a imagem de 1280x720. Se o YouTube só tiver uma menor, é essa que vem: nada é aumentado."
+      },
+      {
+        "q": "Funciona com Reels do Instagram e TikTok?",
+        "a": "Sim. Cole o link do Reel ou do TikTok e o cartão mostra a imagem de capa com um botão de download."
+      },
+      {
+        "q": "Em que formato vem a imagem?",
+        "a": "No formato que a plataforma entrega, geralmente JPG e às vezes WebP. Os dois abrem em qualquer app de fotos ou navegador moderno."
+      },
+      {
+        "q": "É adicionada marca d'água?",
+        "a": "Não. A imagem é salva exatamente como a plataforma a entrega."
+      },
+      {
+        "q": "Posso pegar a thumbnail de um vídeo privado?",
+        "a": "Não. Só vídeos públicos funcionam, porque a ferramenta nunca faz login em nenhuma plataforma."
+      }
+    ]
   }
 }

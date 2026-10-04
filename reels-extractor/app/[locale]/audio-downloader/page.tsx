@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { toolPageLinks } from "@/lib/landing";
 import { isLocale, defaultLocale, localePath, locales, type Locale } from "@/lib/i18n-config";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { PLATFORM_IDS, type PlatformId } from "@/lib/platforms";
@@ -147,6 +148,7 @@ export default async function AudioDownloaderPage({ params }: Props) {
       <FaqAccordion heading={audioDownloader.faqHeading} items={audioDownloader.faq} />
 
       <PlatformLinks
+        toolLinks={toolPageLinks(dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}

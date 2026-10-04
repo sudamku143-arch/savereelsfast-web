@@ -672,7 +672,13 @@
     "downloadItemAudio": "Solo audio",
     "downloadAll": "Descargar todo ({n})",
     "downloadAllBusy": "Iniciando descargas…",
-    "downloadAllHint": "Tu navegador puede pedirte que permitas varias descargas."
+    "downloadAllHint": "Tu navegador puede pedirte que permitas varias descargas.",
+    "captionHeading": "Descripción",
+    "copyCaption": "Copiar descripción",
+    "copyHashtags": "Copiar hashtags ({n})",
+    "copied": "Copiado",
+    "copyFailed": "No se pudo copiar, selecciona el texto",
+    "downloadCover": "Imagen de portada ({format})"
   },
   "download": {
     "preparing": "Preparando la descarga…",
@@ -1330,5 +1336,151 @@
     "toVideoLabel": "Descargar video HD",
     "toVideoBadge": "HD",
     "toVideoAria": "Cambiar al descargador de video"
+  },
+  "captionCopier": {
+    "metaTitle": "Copiar Descripción y Hashtags de Instagram en 1 Clic",
+    "metaDescription": "Copia la descripción completa o solo los hashtags de cualquier Reel o publicación pública de Instagram. Con emojis y saltos de línea. Gratis, sin registro.",
+    "h1": "Copiar Descripción y Hashtags de Instagram",
+    "lead": "Pega el enlace de un Reel o publicación y copia toda su descripción, o solo sus hashtags, con un toque. También funciona con TikTok, YouTube y X.",
+    "placeholder": "Pega el enlace de un Reel o publicación de Instagram…",
+    "copyHint": "En Instagram, toca el icono de compartir o los tres puntos y luego Copiar enlace.",
+    "breadcrumb": "Copiar Descripción y Hashtags",
+    "footerLabel": "Copiar Descripción",
+    "howToHeading": "Cómo Copiar la Descripción y los Hashtags de Instagram",
+    "howToSteps": [
+      "Abre el Reel o la publicación en Instagram, toca el icono de compartir (o los tres puntos) y elige Copiar enlace.",
+      "Pega el enlace en el cuadro de arriba y espera un momento a la vista previa.",
+      "Toca Copiar descripción para todo el texto, o Copiar hashtags solo para las etiquetas, y pégalos donde los necesites."
+    ],
+    "sections": [
+      {
+        "heading": "Qué Hace Esta Herramienta",
+        "paragraphs": [
+          "Instagram no deja seleccionar ni copiar la descripción dentro de su app, algo molesto cuando quieres guardar una receta, citar una frase o reutilizar tu propio texto. Esta herramienta lee la descripción que Instagram muestra públicamente para la publicación y la pone en un cuadro, con botones que la copian al portapapeles.",
+          "Recibes el texto tal como se escribió: con emojis, saltos de línea, menciones y hashtags, hasta el límite de 2.200 caracteres de Instagram. No se reescribe ni se traduce nada, y los botones para descargar el video siguen en la misma tarjeta si también quieres el Reel."
+        ]
+      },
+      {
+        "heading": "Copia Solo los Hashtags",
+        "paragraphs": [
+          "Copiar hashtags toma todas las etiquetas de la descripción, quita los duplicados y te las da en una sola línea, separadas por espacios, listas para pegar en una nota o un borrador. Reconoce etiquetas en cualquier idioma y alfabeto, como #viajes, #café o #मुंबई.",
+          "Es una forma rápida de ver qué hashtags usó una publicación. Reutilizarlos en tus propias publicaciones es decisión tuya, pero copiar un conjunto entero palabra por palabra rara vez ayuda: elige los que de verdad describen tu contenido."
+        ]
+      },
+      {
+        "heading": "Funciona Más Allá de Instagram",
+        "paragraphs": [
+          "El mismo cuadro acepta enlaces de TikTok, YouTube, X, Facebook y las demás plataformas compatibles. Cuando la plataforma muestra un texto con la publicación, como una descripción de TikTok, un tuit o la descripción de un video de YouTube, puedes copiarlo igual.",
+          "Si una publicación no tiene descripción, no hay nada que copiar y los botones no aparecen. Las publicaciones de fotos y los carruseles también funcionan, porque la descripción pertenece a la publicación y no a una sola diapositiva."
+        ]
+      },
+      {
+        "heading": "Respeta a Quien Escribe",
+        "paragraphs": [
+          "Una descripción es el texto de alguien. Copiarla para guardarla, traducirla o citarla mencionando a su autor está bien; publicarla como propia no. Cuando reutilices una frase, menciona la cuenta de la que salió.",
+          "Solo se pueden leer publicaciones públicas, porque SaveReelsFast nunca inicia sesión en ninguna cuenta. Nada de lo que pegas se guarda, y la descripción solo va a tu propio portapapeles."
+        ]
+      }
+    ],
+    "faqHeading": "Preguntas Frecuentes",
+    "faq": [
+      {
+        "q": "¿Es gratis copiar descripciones de Instagram?",
+        "a": "Sí. Es gratis, sin cuenta, registro ni app que instalar. Pega un enlace público y copia."
+      },
+      {
+        "q": "¿Mantiene los emojis y los saltos de línea?",
+        "a": "Sí. La descripción se copia tal como Instagram la muestra públicamente, con emojis, saltos de línea, menciones y hashtags, hasta 2.200 caracteres."
+      },
+      {
+        "q": "¿Puedo copiar solo los hashtags?",
+        "a": "Sí. Copiar hashtags reúne todas las etiquetas de la descripción, sin duplicados, en una sola línea. El botón solo aparece cuando la descripción tiene hashtags."
+      },
+      {
+        "q": "¿Por qué no veo un botón de copiar?",
+        "a": "La publicación no tiene descripción, o la plataforma no la muestra públicamente. Las publicaciones y cuentas privadas no se pueden leer."
+      },
+      {
+        "q": "¿Funciona en iPhone y Android?",
+        "a": "Sí, en cualquier navegador moderno. Si tu navegador bloquea el portapapeles, el botón lo indica; selecciona el texto del cuadro y cópialo a mano."
+      },
+      {
+        "q": "¿Puedo copiar descripciones de cuentas privadas?",
+        "a": "No. Solo funcionan las publicaciones públicas, ya que la herramienta nunca inicia sesión en Instagram ni en ninguna otra plataforma."
+      }
+    ]
+  },
+  "thumbnailDownloader": {
+    "metaTitle": "Descargar Miniaturas de Videos - YouTube, Reels, TikTok",
+    "metaDescription": "Descarga la imagen de portada de un video de YouTube, un Reel de Instagram o un TikTok en el tamaño que ofrece la plataforma. Gratis, sin registro ni app.",
+    "h1": "Descargar Miniaturas de Videos",
+    "lead": "Pega el enlace de un video y guarda su imagen de portada, la miniatura que muestra la plataforma, como archivo JPG o WebP. YouTube, Instagram, TikTok y más.",
+    "placeholder": "Pega un enlace de YouTube, Reel o TikTok…",
+    "copyHint": "Copia el enlace del video desde el botón Compartir y pégalo aquí.",
+    "breadcrumb": "Descargar Miniaturas",
+    "footerLabel": "Descargar Miniaturas",
+    "howToHeading": "Cómo Descargar la Miniatura de un Video",
+    "howToSteps": [
+      "Copia el enlace de un video o Short público de YouTube, un Reel de Instagram, un TikTok o un video de otra plataforma compatible.",
+      "Pégalo en el cuadro de arriba. La tarjeta muestra la imagen de portada del video en grande.",
+      "Toca Imagen de portada para guardarla. Se descarga como el archivo que sirve la plataforma, normalmente JPG o WebP."
+    ],
+    "sections": [
+      {
+        "heading": "¿Qué Es la Miniatura de un Video?",
+        "paragraphs": [
+          "La miniatura, o imagen de portada, es la imagen fija que muestra una plataforma antes de que se reproduzca un video: la de los resultados de búsqueda de YouTube, la portada de un Reel en la cuadrícula de un perfil, el primer fotograma de un TikTok. Los creadores suelen diseñarla con cuidado, por eso es útil como referencia, para un tablero de inspiración o para la vista previa de tu propio video.",
+          "Esta herramienta muestra la miniatura que la plataforma publica para el video y te permite guardarla como imagen, sin capturas de pantalla, recortes ni pérdida de calidad."
+        ]
+      },
+      {
+        "heading": "¿Qué Tamaño Obtienes?",
+        "paragraphs": [
+          "Obtienes la portada más grande que la plataforma ofrece para ese video, sin tocar. En la mayoría de los videos de YouTube es la imagen a ancho completo que usa la página del video (a menudo 1280x720); los videos antiguos o pequeños pueden tener solo una más pequeña. Las portadas de Instagram y TikTok llegan en el tamaño en que las muestra la app.",
+          "Nada se amplía, se vuelve a comprimir ni lleva marca de agua. El archivo conserva el formato de la plataforma, normalmente JPG y a veces WebP, que cualquier teléfono o computadora moderna abre."
+        ]
+      },
+      {
+        "heading": "YouTube, Reels, TikTok y Más",
+        "paragraphs": [
+          "El mismo cuadro acepta enlaces de YouTube (videos y Shorts), Instagram, TikTok, Facebook, X, Pinterest y las demás plataformas compatibles. Una búsqueda en YouTube puede tardar unos segundos más que las otras, así que dale un momento.",
+          "¿También quieres el video? La misma tarjeta mantiene los botones para descargar el video y el audio, así que puedes guardar el clip y su portada en una sola visita. Para publicaciones de fotos de Instagram, usa el descargador de fotos: ahí la propia imagen es la descarga."
+        ]
+      },
+      {
+        "heading": "Usar Miniaturas con Respeto",
+        "paragraphs": [
+          "Una miniatura forma parte del trabajo del creador. Guardarla como referencia personal o para hablar del video es habitual; usarla para promocionar tu propio contenido, o como si la hubieras hecho tú, requiere el permiso del creador.",
+          "Solo se pueden buscar videos públicos, porque SaveReelsFast nunca inicia sesión en ninguna cuenta. Nada de lo que pegas se guarda."
+        ]
+      }
+    ],
+    "faqHeading": "Preguntas Frecuentes",
+    "faq": [
+      {
+        "q": "¿Es gratis descargar miniaturas?",
+        "a": "Sí. Es gratis, sin cuenta, registro, app ni extensión del navegador."
+      },
+      {
+        "q": "¿Puedo descargar miniaturas de YouTube en HD?",
+        "a": "Obtienes la miniatura más grande que YouTube ofrece para ese video, que en la mayoría de los casos es la imagen de 1280x720. Si YouTube solo tiene una más pequeña, recibes esa: nada se amplía."
+      },
+      {
+        "q": "¿Funciona con Reels de Instagram y TikTok?",
+        "a": "Sí. Pega el enlace del Reel o del TikTok y la tarjeta muestra su imagen de portada con un botón de descarga."
+      },
+      {
+        "q": "¿En qué formato está la imagen?",
+        "a": "En el formato que sirve la plataforma, normalmente JPG y a veces WebP. Ambos se abren en cualquier app de fotos o navegador moderno."
+      },
+      {
+        "q": "¿Se añade una marca de agua?",
+        "a": "No. La imagen se guarda tal como la ofrece la plataforma."
+      },
+      {
+        "q": "¿Puedo obtener la miniatura de un video privado?",
+        "a": "No. Solo funcionan los videos públicos, porque la herramienta nunca inicia sesión en ninguna plataforma."
+      }
+    ]
   }
 }

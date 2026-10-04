@@ -107,3 +107,18 @@ export const LONGTAIL_FAQ: Record<PlatformId, LongtailKey[]> = {
 
 /** Instagram photos and carousels: one guide page for both (the tool itself handles every Instagram post). */
 export const PHOTO_DOWNLOADER_PATH = "/instagram-photo-downloader";
+
+/** Feature pages: one tool each, with its own guide (see components/ToolLandingPage.tsx). */
+export const CAPTION_COPIER_PATH = "/instagram-caption-copier";
+export const THUMBNAIL_DOWNLOADER_PATH = "/video-thumbnail-downloader";
+
+/** The feature pages with their short names, for the footer and the "other tools" list. */
+export function toolPageLinks(dict: {
+  captionCopier: { breadcrumb: string };
+  thumbnailDownloader: { breadcrumb: string };
+}): { path: string; label: string }[] {
+  return [
+    { path: CAPTION_COPIER_PATH, label: dict.captionCopier.breadcrumb },
+    { path: THUMBNAIL_DOWNLOADER_PATH, label: dict.thumbnailDownloader.breadcrumb },
+  ];
+}
