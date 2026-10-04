@@ -170,11 +170,13 @@ class SlotPool:
 _INFO_KEYS = (
     "id", "title", "description", "uploader", "channel", "thumbnail", "duration",
     "url", "ext", "acodec", "vcodec", "protocol", "height", "width", "tbr", "abr",
-    "http_headers", "_type", "_messages", "_via",
+    "http_headers", "cookies", "_type", "_messages", "_via",
 )
 _FORMAT_KEYS = (
     "format_id", "url", "ext", "protocol", "vcodec", "acodec", "height", "width", "tbr", "abr", "http_headers",
     "filesize", "filesize_approx",
+    # The cookies the CDN wants with the file (TikTok's tt_chain_token: without it the video link answers 403).
+    "cookies",
 )
 
 

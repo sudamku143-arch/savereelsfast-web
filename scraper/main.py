@@ -768,6 +768,8 @@ def _failure_from_exception(exc: Exception) -> ScraperError:
         return ScraperError(errors.PLATFORM_TIMEOUT)
     text = redact_secrets(str(exc).replace("ERROR: ", "").strip(), YTDLP_PROXY)
     code = classify_failure(text)
+    # The platform's own words: without them a log line only says "502", and a deleted video looks like a block.
+    print(f"[lookup failed] {code}: {text[:240]}", flush=True)
     if code == errors.EXTRACTION_FAILED and isinstance(exc, (DownloadError, ExtractorError)):
         return ScraperError(code, f"{errors.MESSAGES[code]} ({text[:160]})")
     return ScraperError(code)
@@ -1411,6 +1413,24 @@ def _clip_from_stream(source: OpenStream, kind: str, start: float | None, end: f
     return _ffmpeg_from_stream(source, args, "mp4", ScraperError(errors.UNSUPPORTED_POST, "This part of the video is empty."))
 
 
+_COOKIE_ATTRIBUTES = {"domain", "path", "expires", "max-age", "samesite", "secure", "httponly", "priority", "partitioned"}
+
+
+def _cookie_header(cookies: str | None) -> str | None:
+    """
+    A Cookie header from yt-dlp's per-format `cookies` field, which lists each cookie with its attributes
+    ("tt_chain_token=abc; Domain=.tiktok.com; Path=/; Secure; Expires=..."): keep the name=value pairs only.
+    """
+    if not isinstance(cookies, str) or not cookies.strip():
+        return None
+    pairs = []
+    for part in cookies.split(";"):
+        name, sep, value = part.strip().partition("=")
+        if sep and name and name.lower() not in _COOKIE_ATTRIBUTES:
+            pairs.append(f"{name}={value}")
+    return "; ".join(pairs) or None
+
+
 def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> OpenStream:
     """Open the best video (or audio-only) stream of an already-resolved post. Blocking."""
     entries = _entries(info)
@@ -1463,6 +1483,10 @@ def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> O
             _proxy_check_budget()
         ydl = yt_dlp.YoutubeDL(_ydl_options(use_proxy=via_proxy))
         headers = dict(fmt.get("http_headers") or {})
+        # This is a fresh YoutubeDL with an empty cookie jar: send the cookies the lookup got for this file.
+        cookie = _cookie_header(fmt.get("cookies"))
+        if cookie and not any(k.lower() == "cookie" for k in headers):
+            headers["Cookie"] = cookie
         if via_proxy:
             _refuse_if_too_large_for_proxy(fmt.get("filesize") or fmt.get("filesize_approx"))
         response = ydl.urlopen(yt_dlp.networking.Request(media_url, headers=headers))
