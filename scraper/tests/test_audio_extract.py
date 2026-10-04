@@ -19,17 +19,17 @@ sys.path.insert(0, str(ROOT))
 from test_errors import EndpointBase  # noqa: E402
 
 
-def make_mp4(with_sound: bool) -> bytes:
-    """A 2-second H.264 MP4, with or without an AAC track, made by the same ffmpeg the scraper uses."""
+def make_mp4(with_sound: bool, seconds: int = 2) -> bytes:
+    """A short H.264 MP4 (a keyframe every second, like a real reel), with or without an AAC track, made by the same ffmpeg the scraper uses."""
     import main
 
     exe = main._ffmpeg()
-    inputs = ["-f", "lavfi", "-i", "color=c=black:s=64x64:d=2"]
+    inputs = ["-f", "lavfi", "-i", f"color=c=black:s=64x64:d={seconds}"]
     if with_sound:
-        inputs += ["-f", "lavfi", "-i", "sine=frequency=440:duration=2", "-c:a", "aac"]
+        inputs += ["-f", "lavfi", "-i", f"sine=frequency=440:duration={seconds}", "-c:a", "aac"]
     with tempfile.TemporaryDirectory() as folder:
         out = Path(folder) / "v.mp4"  # a real file: +faststart (moov first, like YouTube's files) needs to seek
-        args = [exe, "-hide_banner", "-loglevel", "error", *inputs, "-c:v", "libx264", "-pix_fmt", "yuv420p",
+        args = [exe, "-hide_banner", "-loglevel", "error", *inputs, "-c:v", "libx264", "-g", "25", "-pix_fmt", "yuv420p",
                 "-shortest", "-movflags", "+faststart", str(out)]
         subprocess.run(args, capture_output=True, check=True)
         return out.read_bytes()

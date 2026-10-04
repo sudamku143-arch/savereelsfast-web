@@ -1315,19 +1315,26 @@ class _AudioReader:
         return chunk
 
 
-def _audio_from_video(source: OpenStream) -> OpenStream:
-    """Wrap an opened video stream so it yields that video's own audio track as M4A. Blocking until the first audio bytes."""
+def _ffmpeg_from_stream(source: OpenStream, args: list[str], ext: str, nothing_out: ScraperError) -> OpenStream:
+    """
+    Pipe an opened stream through ffmpeg (reading pipe:0, writing pipe:1) and return its output as a stream.
+    Blocking until the first output bytes. `nothing_out` is raised if ffmpeg produces nothing.
+    """
     exe = _ffmpeg()
     if not exe:
         source.close()
-        raise ScraperError(errors.UNSUPPORTED_POST, "This video has no separate audio stream.")
-    proc = subprocess.Popen([exe, *_FFMPEG_ARGS], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        raise nothing_out
+    proc = subprocess.Popen([exe, "-hide_banner", "-loglevel", "error", *args],
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     failed = threading.Event()
 
     def pump() -> None:
         try:
             for chunk in source.chunks():  # counts proxy bytes and enforces the size caps, like a video download
-                proc.stdin.write(chunk)
+                try:
+                    proc.stdin.write(chunk)
+                except (BrokenPipeError, OSError):
+                    return  # ffmpeg stopped reading: it has all it needs (a clip ends before the video does)
         except Exception:  # noqa: BLE001 - a cut-off source must not end as a short, "successful" file
             failed.set()
             proc.kill()
@@ -1350,8 +1357,58 @@ def _audio_from_video(source: OpenStream) -> OpenStream:
         stop()
         if failed.is_set():
             raise ScraperError(errors.STREAM_EXPIRED_OR_BLOCKED)
-        raise ScraperError(errors.UNSUPPORTED_POST, "This video has no sound to extract.")
-    return OpenStream(_AudioReader(proc, first, failed), None, [stop], "m4a")
+        raise nothing_out
+    return OpenStream(_AudioReader(proc, first, failed), None, [stop], ext)
+
+
+def _audio_from_video(source: OpenStream) -> OpenStream:
+    """Wrap an opened video stream so it yields that video's own audio track as M4A. Blocking until the first audio bytes."""
+    return _ffmpeg_from_stream(source, _FFMPEG_ARGS, "m4a", ScraperError(errors.UNSUPPORTED_POST, "This video has no sound to extract."))
+
+
+# Clips: a part of a video (start-end) as MP4, as M4A audio, or as a GIF. MP4 and M4A are cut without
+# re-encoding (instant). A video cut lands on the keyframe at or before `start`, so it may begin early: by up to
+# 5 s on Instagram, whose Reels have a keyframe every 5 s (an exact cut would mean re-encoding, far too slow on
+# Render's CPU). Audio cuts are exact. A GIF has to be encoded, which Render's small CPU does slowly, so it is kept small:
+# measured locally, 6 s at 360 px / 10 fps took 0.6 s (the palette-optimised kind: 7.7 s and 3x the size).
+GIF_MAX_SECONDS = _env_number("GIF_MAX_SECONDS", 8.0)
+GIF_WIDTH = int(_env_number("GIF_WIDTH", 360))
+GIF_FPS = int(_env_number("GIF_FPS", 10))
+GIF_SLOTS = SlotPool(int(_env_number("GIF_MAX_CONCURRENT", 1)), max_age=120)  # one at a time: it is CPU-bound
+CLIP_MIN_SECONDS = 0.5
+_FRAGMENTED_MP4 = ["-f", "mp4", "-movflags", "frag_keyframe+empty_moov+default_base_moof", "pipe:1"]
+
+
+def _clip_window(kind: str, start: float | None, end: float | None) -> tuple[float, float | None]:
+    """(start, duration) of the requested part, or (0, None) for the whole file. Raises ScraperError on nonsense."""
+    begin = float(start or 0.0)
+    if end is not None and end - begin < CLIP_MIN_SECONDS:
+        raise ScraperError(errors.INVALID_URL, "The end of the clip must come after its start.")
+    duration = None if end is None else end - begin
+    if kind == "gif":
+        duration = min(duration or GIF_MAX_SECONDS, GIF_MAX_SECONDS)
+    return begin, duration
+
+
+def _is_clip(kind: str, start: float | None, end: float | None) -> bool:
+    return kind == "gif" or start is not None or end is not None
+
+
+def _clip_from_stream(source: OpenStream, kind: str, start: float | None, end: float | None) -> OpenStream:
+    """Cut [start, end] out of an opened stream: MP4 (kind video), M4A (kind audio) or a small GIF. Blocking."""
+    begin, duration = _clip_window(kind, start, end)
+    seek = ["-ss", f"{begin:.3f}"] if begin > 0 else []
+    length = ["-t", f"{duration:.3f}"] if duration else []
+    if kind == "gif":
+        args = [*seek, *length, "-i", "pipe:0",
+                "-vf", f"fps={GIF_FPS},scale={GIF_WIDTH}:-2:flags=bilinear", "-loop", "0", "-f", "gif", "pipe:1"]
+        return _ffmpeg_from_stream(source, args, "gif", ScraperError(errors.UNSUPPORTED_POST, "Couldn't make a GIF from this part of the video."))
+    if kind == "audio":
+        # Seek after -i: audio has no keyframes, so the cut lands exactly on `start` (measured: 6.01 s for 6 s).
+        args = ["-i", "pipe:0", *seek, *length, "-vn", "-c:a", "copy", *_FRAGMENTED_MP4]
+        return _ffmpeg_from_stream(source, args, "m4a", ScraperError(errors.UNSUPPORTED_POST, "This part of the video has no sound."))
+    args = [*seek, "-i", "pipe:0", *length, "-c", "copy", *_FRAGMENTED_MP4]
+    return _ffmpeg_from_stream(source, args, "mp4", ScraperError(errors.UNSUPPORTED_POST, "This part of the video is empty."))
 
 
 def _open_stream_from_info(resolved: str, info: dict, kind: str, item: int) -> OpenStream:
@@ -1463,6 +1520,8 @@ def _attachment_response(
     elif kind == "image":
         ext = ext if ext in IMAGE_TYPES else "jpg"
         media_type = IMAGE_TYPES[ext]
+    elif kind == "gif":
+        ext, media_type = "gif", "image/gif"
     else:
         ext, media_type = "mp4", "video/mp4"
     headers = {
@@ -1489,9 +1548,11 @@ def _attachment_response(
 async def download(
     url: str = Query(..., description="The post URL (not a CDN URL); it is re-resolved here"),
     id: str = Query("video", max_length=60),
-    kind: str = Query("video", pattern="^(video|audio|image)$"),
+    kind: str = Query("video", pattern="^(video|audio|image|gif)$"),
     item: int = Query(0, ge=0, le=MAX_ITEMS),
     extract: bool = Query(False, description="kind=audio only: take the sound out of the video itself (for videos with no separate audio track)"),
+    start: float | None = Query(None, ge=0, le=36000, description="Clip: start, in seconds"),
+    end: float | None = Query(None, gt=0, le=36000, description="Clip: end, in seconds"),
     x_scraper_key: str | None = Header(default=None),
 ) -> StreamingResponse:
     """Re-resolve the post from this server's IP and stream the best video (or its audio-only track)."""
@@ -1501,22 +1562,41 @@ async def download(
     except ScraperError as err:
         raise _http_error(err)
 
+    clip = _is_clip(kind, start, end)
+    try:
+        if clip:
+            _clip_window(kind, start, end)  # refuse a nonsense window before any work
+    except ScraperError as err:
+        raise _http_error(err)
     lease = STREAM_SLOTS.acquire()
     if lease is None:
         raise _http_error(ScraperError(errors.SERVER_BUSY))
+    gif_lease = GIF_SLOTS.acquire() if kind == "gif" else None
+    if kind == "gif" and gif_lease is None:
+        lease.release()
+        raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        if kind == "audio" and extract:
+        if clip:
+            source = await _open_stream(url, "audio" if kind == "audio" and not extract else "video", item)
+            stream = await asyncio.to_thread(_clip_from_stream, source, kind, start, end)
+        elif kind == "audio" and extract:
             video = await _open_stream(url, "video", item)
             stream = await asyncio.to_thread(_audio_from_video, video)
         else:
             stream = await _open_stream(url, kind, item)
     except ScraperError as err:
         lease.release()
+        if gif_lease:
+            gif_lease.release()
         raise _http_error(err)
     except BaseException:
         lease.release()
+        if gif_lease:
+            gif_lease.release()
         raise
     stream.add_closer(lease.release)
+    if gif_lease:
+        stream.add_closer(gif_lease.release)
 
     # Audio (and photo) downloads are named after the container of the stream actually served.
     return _attachment_response(stream, id, kind, stream.ext)
@@ -1660,9 +1740,11 @@ async def stream(
     url: str = Query(..., description="Video URL on a platform CDN, as returned by /extract"),
     referer: str | None = Query(None, description="Page the video came from (optional)"),
     id: str = Query("video", max_length=60),
-    kind: str = Query("video", pattern="^(video|audio|image)$"),
+    kind: str = Query("video", pattern="^(video|audio|image|gif)$"),
     ext: str = Query("m4a", pattern="^[a-z0-9]{2,4}$"),
     extract: bool = Query(False, description="kind=audio only: `url` is a video; send the audio track out of it"),
+    start: float | None = Query(None, ge=0, le=36000, description="Clip: start, in seconds"),
+    end: float | None = Query(None, gt=0, le=36000, description="Clip: end, in seconds"),
     x_scraper_key: str | None = Header(default=None),
     range_header: str | None = Header(default=None, alias="range"),
 ) -> StreamingResponse:
@@ -1673,11 +1755,26 @@ async def stream(
     except ScraperError as err:
         raise _http_error(err)
 
+    clip = _is_clip(kind, start, end)
+    try:
+        if clip:
+            _clip_window(kind, start, end)  # refuse a nonsense window before any work
+    except ScraperError as err:
+        raise _http_error(err)
     lease = STREAM_SLOTS.acquire()
     if lease is None:
         raise _http_error(ScraperError(errors.SERVER_BUSY))
+    gif_lease = GIF_SLOTS.acquire() if kind == "gif" else None
+    if kind == "gif" and gif_lease is None:
+        lease.release()
+        raise _http_error(ScraperError(errors.SERVER_BUSY))
     try:
-        if kind == "audio" and extract:
+        if clip:
+            source_kind = "audio" if kind == "audio" and not extract else "video"
+            source = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, source_kind, None)
+            opened = await asyncio.to_thread(_clip_from_stream, source, kind, start, end)
+            ext = opened.ext or ext
+        elif kind == "audio" and extract:
             video = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, "video", None)
             opened = await asyncio.to_thread(_audio_from_video, video)
             ext = "m4a"
@@ -1685,11 +1782,17 @@ async def stream(
             opened = await asyncio.to_thread(_open_stream_preferring_cobalt, url, referer, id, kind, range_header)
     except ScraperError as err:
         lease.release()
+        if gif_lease:
+            gif_lease.release()
         raise _http_error(err)
     except BaseException:
         lease.release()
+        if gif_lease:
+            gif_lease.release()
         raise
     opened.add_closer(lease.release)
+    if gif_lease:
+        opened.add_closer(gif_lease.release)
 
     return _attachment_response(opened, id, kind, ext)
 
