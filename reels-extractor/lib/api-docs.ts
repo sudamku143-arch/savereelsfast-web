@@ -91,7 +91,7 @@ export const API_DOCS = {
     {
       language: "JavaScript (Node.js 18+)",
       code: `const endpoint = "https://www.savereelsfast.com/api/public/extract";
-const link = "https://www.tiktok.com/@user/video/7212345678901234567";
+const link = "https://x.com/captainamerica/status/719944021058060289";
 
 const res = await fetch(\`\${endpoint}?url=\${encodeURIComponent(link)}\`);
 const body = await res.json();
@@ -107,7 +107,7 @@ if (body.success) {
       code: `import requests
 
 ENDPOINT = "https://www.savereelsfast.com/api/public/extract"
-link = "https://www.tiktok.com/@user/video/7212345678901234567"
+link = "https://x.com/captainamerica/status/719944021058060289"
 
 res = requests.get(ENDPOINT, params={"url": link}, timeout=30)
 body = res.json()
@@ -121,7 +121,7 @@ else:
       language: "PHP",
       code: `<?php
 $endpoint = "https://www.savereelsfast.com/api/public/extract";
-$link = "https://www.tiktok.com/@user/video/7212345678901234567";
+$link = "https://x.com/captainamerica/status/719944021058060289";
 
 $ch = curl_init($endpoint . "?url=" . urlencode($link));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
