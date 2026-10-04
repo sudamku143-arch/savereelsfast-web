@@ -148,7 +148,7 @@ export default async function AudioDownloaderPage({ params }: Props) {
       <FaqAccordion heading={audioDownloader.faqHeading} items={audioDownloader.faq} />
 
       <PlatformLinks
-        toolLinks={toolPageLinks(dict)}
+        toolLinks={toolPageLinks(locale, dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}

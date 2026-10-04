@@ -12,6 +12,7 @@ import type { ErrorsDict } from "./ErrorCard";
 import ShareTool from "./ShareTool";
 import VideoPreview from "./VideoPreview";
 import CaptionTools, { type CaptionDict } from "./CaptionTools";
+import ClipTools, { type ClipDict } from "./ClipTools";
 import { imageExtOf } from "@/lib/caption";
 
 /** Instagram photos come in the same shape as videos: `videoUrl` holds the picture and `kind` is "image". */
@@ -48,7 +49,7 @@ export type ReelResult = ImageFields & {
   items?: ReelItem[];
 };
 
-export type PreviewDict = ItemsDict & CaptionDict & {
+export type PreviewDict = ItemsDict & CaptionDict & ClipDict & {
   /** "Cover image ({format})": the post's thumbnail, saved as a picture. */
   downloadCover: string;
   title: string;
@@ -74,7 +75,7 @@ const VERTICAL_PLATFORMS: PlatformId[] = ["instagram", "tiktok", "snapchat"];
  * Which tool a page puts first. "caption" (the caption copier page): the whole caption in a box, with its
  * copy buttons. "cover" (the thumbnail page): the cover image shown large, with its download first.
  */
-export type CardFocus = "caption" | "cover";
+export type CardFocus = "caption" | "cover" | "trim" | "gif";
 
 function formatDuration(totalSeconds: number): string {
   const rounded = Math.round(totalSeconds);
@@ -325,6 +326,23 @@ export default function PreviewCard({
             </div>
           )}
         </>
+      )}
+
+      {/* Trim / GIF: for a single video (not photos, carousels or the audio page). */}
+      {!isCarousel && !isPhoto && !audioOnly && result.videoUrl && (
+        <ClipTools
+          id={result.id}
+          videoUrl={result.videoUrl}
+          sourceUrl={result.sourceUrl}
+          audioUrl={result.audioUrl}
+          durationSeconds={result.durationSeconds}
+          focus={focus === "trim" || focus === "gif" ? focus : undefined}
+          dict={dict}
+          downloadDict={downloadDict}
+          errorsDict={errorsDict}
+          platformName={platformName}
+          onSaved={() => setDownloaded(true)}
+        />
       )}
 
       {/* The cover's download, unless the cover page already shows it first. */}

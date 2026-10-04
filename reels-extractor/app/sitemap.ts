@@ -1,12 +1,20 @@
 import type { MetadataRoute } from "next";
-import { locales, localePath, defaultLocale, LEGAL_TRANSLATED, type Locale } from "@/lib/i18n-config";
+import { locales, localePath, defaultLocale, LEGAL_TRANSLATED, NEW_PAGE_LOCALES, type Locale } from "@/lib/i18n-config";
 import { blogPath, allPosts, localesWithPosts, translationsOf } from "@/lib/blog";
-import { CAPTION_COPIER_PATH, landingPath, LANDING_PLATFORMS, PHOTO_DOWNLOADER_PATH, THUMBNAIL_DOWNLOADER_PATH } from "@/lib/landing";
+import {
+  CAPTION_COPIER_PATH,
+  GIF_MAKER_PATH,
+  landingPath,
+  LANDING_PLATFORMS,
+  PHOTO_DOWNLOADER_PATH,
+  THUMBNAIL_DOWNLOADER_PATH,
+  VIDEO_TRIMMER_PATH,
+} from "@/lib/landing";
 import { SITE_URL } from "@/lib/site";
 
 type Frequency = "daily" | "weekly" | "monthly";
 
-const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal?: boolean }[] = [
+const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal?: boolean; only?: readonly Locale[] }[] = [
   { path: "", changeFrequency: "daily", priority: 1.0 },
   // One landing page per platform, in every language.
   ...LANDING_PLATFORMS.map((id) => ({
@@ -18,6 +26,9 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal
   { path: PHOTO_DOWNLOADER_PATH, changeFrequency: "daily", priority: 0.85 },
   { path: CAPTION_COPIER_PATH, changeFrequency: "weekly", priority: 0.8 },
   { path: THUMBNAIL_DOWNLOADER_PATH, changeFrequency: "weekly", priority: 0.8 },
+  // Not in Bengali, Marathi, Telugu or Tamil (NEW_PAGE_LOCALES).
+  { path: VIDEO_TRIMMER_PATH, changeFrequency: "weekly", priority: 0.8, only: NEW_PAGE_LOCALES },
+  { path: GIF_MAKER_PATH, changeFrequency: "weekly", priority: 0.8, only: NEW_PAGE_LOCALES },
   { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/terms-of-service", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/dmca", changeFrequency: "monthly", priority: 0.3, legal: true },
@@ -56,9 +67,9 @@ function blogEntries(): MetadataRoute.Sitemap {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = PAGES.flatMap(({ path, changeFrequency, priority, legal }) => {
-    // Legal pages are listed only in the languages where they are really translated.
-    const available = legal ? LEGAL_TRANSLATED : locales;
+  const pages = PAGES.flatMap(({ path, changeFrequency, priority, legal, only }) => {
+    // Legal pages are listed only in the languages where they are really translated; some pages only exist in some.
+    const available = only ?? (legal ? LEGAL_TRANSLATED : locales);
     const languages: Record<string, string> = {};
     available.forEach((l) => {
       languages[l] = `${SITE_URL}${localePath(l, path)}`;

@@ -678,7 +678,16 @@
     "copyHashtags": "Copiar hashtags ({n})",
     "copied": "Copiado",
     "copyFailed": "No se pudo copiar, selecciona el texto",
-    "downloadCover": "Imagen de portada ({format})"
+    "downloadCover": "Imagen de portada ({format})",
+    "clipToggle": "Recortar o crear un GIF",
+    "clipStart": "Inicio",
+    "clipEnd": "Fin",
+    "clipLength": "Duración: {n} s",
+    "clipVideo": "Descargar clip (MP4)",
+    "clipAudio": "Descargar audio del clip (M4A)",
+    "clipGif": "Crear un GIF",
+    "clipGifNote": "Los GIF duran hasta {n} s, miden 360 px de ancho y no tienen sonido.",
+    "clipKeyframeNote": "Un clip de video empieza en el fotograma clave anterior más cercano, que puede estar unos segundos antes (hasta 5 s en los Reels de Instagram). Los clips de audio son exactos."
   },
   "download": {
     "preparing": "Preparando la descarga…",
@@ -1479,6 +1488,152 @@
       },
       {
         "q": "¿Puedo obtener la miniatura de un video privado?",
+        "a": "No. Solo funcionan los videos públicos, porque la herramienta nunca inicia sesión en ninguna plataforma."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Recortar Video Online - Clips de Reels, TikTok y YouTube",
+    "metaDescription": "Recorta una parte de un Reel, TikTok o video de YouTube público y guárdala como clip MP4 o audio M4A. Sin recodificar, gratis, sin registro ni app.",
+    "h1": "Recortador de Video Online",
+    "lead": "Pega el enlace de un video, elige el inicio y el fin, y guarda solo esa parte como clip MP4, o solo su sonido en M4A. Reels, TikTok, YouTube y más.",
+    "placeholder": "Pega un enlace de Reel, TikTok o YouTube…",
+    "copyHint": "Copia el enlace del video desde el botón Compartir y pégalo aquí.",
+    "breadcrumb": "Recortar Video",
+    "footerLabel": "Recortar Video",
+    "howToHeading": "Cómo Recortar un Video Online",
+    "howToSteps": [
+      "Copia el enlace de un Reel de Instagram, un TikTok, un video de YouTube o un video de otra plataforma compatible, y pégalo arriba.",
+      "Cuando aparezca la vista previa, mueve los controles de Inicio y Fin hasta la parte que quieres. La duración se muestra debajo.",
+      "Toca Descargar clip (MP4) para el video, o Descargar audio del clip (M4A) solo para el sonido."
+    ],
+    "sections": [
+      {
+        "heading": "Por Qué Recortar Antes de Descargar",
+        "paragraphs": [
+          "Muchas veces solo quieres unos segundos de un video: un chiste, un gol, una frase, un sonido para tu estado. Descargar el archivo entero y cortarlo en una app de edición lleva tiempo y espacio. Aquí eliges primero la parte y guardas solo eso.",
+          "El corte se hace en nuestro servidor con ffmpeg, la misma herramienta que usan los editores de video, y el clip te llega en cuanto está listo. No hay nada que instalar y funciona en cualquier navegador del móvil o la computadora."
+        ]
+      },
+      {
+        "heading": "Cortes Rápidos Sin Perder Calidad",
+        "paragraphs": [
+          "El clip se corta sin recodificar: la imagen y el sonido se copian tal como los sirve la plataforma, así que no hay compresión extra y el corte tarda alrededor de un segundo. Obtienes la misma calidad que la descarga completa; en YouTube es el archivo de 360p que guarda este sitio.",
+          "Cortar sin recodificar tiene un efecto: un clip de video debe empezar en un fotograma clave, el más cercano antes del inicio elegido, así que puede empezar unos segundos antes. Los Reels de Instagram tienen un fotograma clave cada 5 segundos, así que ahí pueden ser hasta 5 segundos. Los clips de audio empiezan exactamente donde los pones."
+        ]
+      },
+      {
+        "heading": "Guarda Solo el Sonido",
+        "paragraphs": [
+          "Descargar audio del clip (M4A) te da solo el sonido de la parte elegida: el estribillo de una canción para un tono, una cita, un efecto de sonido. Es el audio AAC del propio video, copiado y no convertido, y se reproduce en cualquier app de música.",
+          "Si la plataforma sirve el audio como archivo aparte, el clip se corta de ese archivo; si no, el sonido se saca del propio video."
+        ]
+      },
+      {
+        "heading": "Uso Justo y Límites",
+        "paragraphs": [
+          "Solo se pueden recortar videos públicos, porque SaveReelsFast nunca inicia sesión en ninguna cuenta. Los videos muy largos pueden ser demasiado grandes para obtenerlos, y un clip de un video que supera nuestros límites se rechaza en lugar de cortarse a medias.",
+          "Un clip sigue siendo obra de su creador: guárdalo para ti o pide permiso antes de volver a publicarlo. ¿Quieres una versión en bucle y sin sonido para un chat? Usa Crear un GIF en la misma tarjeta."
+        ]
+      }
+    ],
+    "faqHeading": "Preguntas Frecuentes",
+    "faq": [
+      {
+        "q": "¿El recortador de video es gratis?",
+        "a": "Sí. Es gratis, sin cuenta, registro, app ni marca de agua."
+      },
+      {
+        "q": "¿Recortar baja la calidad?",
+        "a": "No. El clip se copia sin recodificar, así que mantiene la calidad de la descarga completa. En YouTube es 360p."
+      },
+      {
+        "q": "¿Por qué mi clip empieza un poco antes de lo que elegí?",
+        "a": "Un video solo se puede cortar sin recodificar en un fotograma clave, así que el clip empieza en el más cercano antes de tu inicio. Los Reels de Instagram tienen uno cada 5 segundos, así que el clip puede empezar hasta 5 segundos antes. Los clips de audio son exactos."
+      },
+      {
+        "q": "¿Puedo recortar solo el audio?",
+        "a": "Sí. Descargar audio del clip (M4A) guarda solo el sonido de la parte elegida."
+      },
+      {
+        "q": "¿Cuánto puede durar un clip?",
+        "a": "Cualquier parte del video, hasta su duración completa. Los GIF son la excepción: tienen un máximo de 8 segundos."
+      },
+      {
+        "q": "¿Puedo recortar un video privado?",
+        "a": "No. Solo funcionan los videos públicos, porque la herramienta nunca inicia sesión en ninguna plataforma."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Convertir Video a GIF - Crea GIFs de Reels y TikTok",
+    "metaDescription": "Convierte hasta 8 segundos de un Reel, TikTok o video de YouTube público en un GIF. Elige el inicio, toca Crear un GIF y guárdalo. Gratis, sin registro.",
+    "h1": "Convertir Video a GIF",
+    "lead": "Pega el enlace de un video, elige hasta 8 segundos y conviértelos en un GIF en bucle para compartir en chats y publicaciones. Reels, TikTok, YouTube y más.",
+    "placeholder": "Pega un enlace de Reel, TikTok o YouTube…",
+    "copyHint": "Copia el enlace del video desde el botón Compartir y pégalo aquí.",
+    "breadcrumb": "Video a GIF",
+    "footerLabel": "Video a GIF",
+    "howToHeading": "Cómo Crear un GIF a Partir de un Video",
+    "howToSteps": [
+      "Copia el enlace de un Reel de Instagram, un TikTok, un video de YouTube o un video de otra plataforma compatible, y pégalo arriba.",
+      "Mueve el control de Inicio al momento en que debe empezar tu GIF; abarca hasta 8 segundos desde ahí.",
+      "Toca Crear un GIF. Se crea en nuestro servidor en unos segundos y se guarda como archivo .gif."
+    ],
+    "sections": [
+      {
+        "heading": "¿Por Qué un GIF?",
+        "paragraphs": [
+          "Un GIF se reproduce solo, se repite sin fin y funciona casi en todas partes: apps de chat, foros, correos, presentaciones y documentos que no reproducen videos. Para una reacción, un paso de un tutorial o un momento divertido, suele ser el formato más fácil de compartir.",
+          "Esta herramienta crea uno a partir de la parte del video que elijas, sin app, sin cuenta y sin editor de escritorio."
+        ]
+      },
+      {
+        "heading": "Qué Obtienes",
+        "paragraphs": [
+          "El GIF mide 360 píxeles de ancho (el alto sigue la forma del video), va a 10 fotogramas por segundo y dura hasta 8 segundos. Así el archivo es pequeño, normalmente unos pocos megabytes, se envía rápido y carga rápido para quien lo recibe.",
+          "Los GIF no tienen sonido y solo usan 256 colores, así que se ven más suaves que el video. Si necesitas sonido o toda la nitidez, usa Descargar clip (MP4) en la misma tarjeta."
+        ]
+      },
+      {
+        "heading": "Hecho en Nuestro Servidor",
+        "paragraphs": [
+          "Crear un GIF significa redibujar cada fotograma, lo que lleva tiempo de cálculo, así que el servidor crea un GIF a la vez. Si en ese momento se está creando el de otra persona, se te pedirá que lo intentes de nuevo en unos segundos.",
+          "Tu GIF te llega mientras se crea. No se guarda nada después y no se añade marca de agua."
+        ]
+      },
+      {
+        "heading": "Usar GIFs con Respeto",
+        "paragraphs": [
+          "Un GIF hecho con el video de alguien sigue siendo obra suya. Compartir GIFs de reacción en un chat es habitual; usar uno en un anuncio o como si fuera tuyo requiere el permiso del creador.",
+          "Solo funcionan los videos públicos, porque SaveReelsFast nunca inicia sesión en ninguna cuenta."
+        ]
+      }
+    ],
+    "faqHeading": "Preguntas Frecuentes",
+    "faq": [
+      {
+        "q": "¿Es gratis convertir video a GIF?",
+        "a": "Sí. Es gratis, sin cuenta, registro, app ni marca de agua."
+      },
+      {
+        "q": "¿Cuánto puede durar el GIF?",
+        "a": "Hasta 8 segundos. Los GIF más largos crecen rápido y tardan mucho más en crearse, así que la herramienta se detiene en 8."
+      },
+      {
+        "q": "¿Qué tamaño tiene el GIF?",
+        "a": "360 píxeles de ancho, a 10 fotogramas por segundo. La mayoría de los GIF de 8 segundos pesan unos pocos megabytes."
+      },
+      {
+        "q": "¿El GIF tiene sonido?",
+        "a": "No. El formato GIF no puede llevar sonido. Para un clip con sonido, usa Descargar clip (MP4)."
+      },
+      {
+        "q": "¿Por qué dice que el servidor está ocupado?",
+        "a": "Los GIF se crean de uno en uno. Espera unos segundos y vuelve a tocar Crear un GIF."
+      },
+      {
+        "q": "¿Puedo crear un GIF de un video privado?",
         "a": "No. Solo funcionan los videos públicos, porque la herramienta nunca inicia sesión en ninguna plataforma."
       }
     ]

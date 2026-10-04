@@ -211,7 +211,7 @@ export default async function PlatformLandingPage({ params }: Props) {
       <RelatedPosts locale={locale} platform={id} dict={dict.blog} />
 
       <PlatformLinks
-        toolLinks={toolPageLinks(dict)}
+        toolLinks={toolPageLinks(locale, dict)}
         locale={locale}
         names={names}
         heading={common.otherHeading}

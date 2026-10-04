@@ -678,7 +678,16 @@
     "copyHashtags": "হ্যাশট্যাগ কপি করুন ({n})",
     "copied": "কপি হয়েছে",
     "copyFailed": "কপি করা যায়নি, লেখাটি বেছে কপি করুন",
-    "downloadCover": "কভার ছবি ({format})"
+    "downloadCover": "কভার ছবি ({format})",
+    "clipToggle": "ট্রিম করুন বা GIF বানান",
+    "clipStart": "শুরু",
+    "clipEnd": "শেষ",
+    "clipLength": "দৈর্ঘ্য: {n} সেকেন্ড",
+    "clipVideo": "ক্লিপ ডাউনলোড করুন (MP4)",
+    "clipAudio": "ক্লিপের অডিও ডাউনলোড করুন (M4A)",
+    "clipGif": "GIF বানান",
+    "clipGifNote": "GIF সর্বোচ্চ {n} সেকেন্ড, ৩৬০ px চওড়া এবং আওয়াজ ছাড়া।",
+    "clipKeyframeNote": "ভিডিও ক্লিপ আপনার শুরুর আগের নিকটতম keyframe থেকে শুরু হয়, যা কয়েক সেকেন্ড আগে হতে পারে (Instagram Reels-এ ৫ সেকেন্ড পর্যন্ত)। অডিও ক্লিপ একদম নির্ভুল।"
   },
   "download": {
     "preparing": "আপনার ডাউনলোড প্রস্তুত হচ্ছে…",

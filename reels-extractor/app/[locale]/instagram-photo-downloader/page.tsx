@@ -177,7 +177,7 @@ export default async function PhotoDownloaderPage({ params }: Props) {
       <FaqAccordion heading={photoDownloader.faqHeading} items={photoDownloader.faq} />
 
       <PlatformLinks
-        toolLinks={toolPageLinks(dict)}
+        toolLinks={toolPageLinks(locale, dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}

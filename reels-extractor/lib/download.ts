@@ -14,7 +14,18 @@ export function isImageExtension(value: unknown): value is ImageExtension {
   return typeof value === "string" && (IMAGE_EXTENSIONS as readonly string[]).includes(value);
 }
 
-export type DownloadKind = "video" | "audio" | "image";
+export type DownloadKind = "video" | "audio" | "image" | "gif";
+
+/** Longest GIF the scraper makes (its GIF_MAX_SECONDS): a GIF is encoded on a small server CPU. */
+export const GIF_MAX_SECONDS = 8;
+
+/** A part of a video, in seconds: cut by the scraper (MP4 or M4A, no re-encoding) or turned into a GIF. */
+export type ClipWindow = { start: number; end: number };
+
+/** Seconds with at most one decimal, as sent in a clip link. */
+function seconds(value: number): string {
+  return String(Math.round(Math.max(0, value) * 10) / 10);
+}
 
 /**
  * CDNs whose links only work from the IP that resolved them (the scraper's, often through the paid proxy).
@@ -49,14 +60,21 @@ export function buildDownloadHref(opts: {
   ext?: string;
   /** Audio only: `url` is a video with no separate audio track; the server takes its sound out (as M4A). */
   extract?: boolean;
+  /** Only this part of it (video, audio, or a GIF). */
+  clip?: ClipWindow;
 }): string {
   const params = new URLSearchParams({ url: opts.url, id: opts.id });
   if (opts.src) params.set("src", opts.src);
+  if (opts.kind === "gif") params.set("kind", "gif");
   if (opts.kind === "audio" || opts.kind === "image") {
     params.set("kind", opts.kind);
     if (opts.ext) params.set("ext", opts.ext);
   }
   if (opts.kind === "audio" && opts.extract) params.set("extract", "1");
+  if (opts.clip) {
+    params.set("start", seconds(opts.clip.start));
+    params.set("end", seconds(opts.clip.end));
+  }
   return `/api/download?${params.toString()}`;
 }
 
@@ -77,6 +95,7 @@ export function buildAudioHref(
 
 /** File name a download will be saved as (mirrors the server's Content-Disposition). */
 export function downloadFilename(id: string, kind: DownloadKind = "video", ext?: string): string {
-  const suffix = kind === "audio" ? ext ?? "m4a" : kind === "image" ? (isImageExtension(ext) ? ext : "jpg") : "mp4";
+  const suffix =
+    kind === "audio" ? ext ?? "m4a" : kind === "image" ? (isImageExtension(ext) ? ext : "jpg") : kind === "gif" ? "gif" : "mp4";
   return `savereelsfast-${id}.${suffix}`;
 }

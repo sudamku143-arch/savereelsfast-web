@@ -678,7 +678,16 @@
     "copyHashtags": "Salin hashtag ({n})",
     "copied": "Tersalin",
     "copyFailed": "Gagal menyalin, pilih teksnya",
-    "downloadCover": "Gambar sampul ({format})"
+    "downloadCover": "Gambar sampul ({format})",
+    "clipToggle": "Potong atau buat GIF",
+    "clipStart": "Mulai",
+    "clipEnd": "Selesai",
+    "clipLength": "Durasi: {n} dtk",
+    "clipVideo": "Unduh klip (MP4)",
+    "clipAudio": "Unduh audio klip (M4A)",
+    "clipGif": "Buat GIF",
+    "clipGifNote": "GIF maksimal {n} dtk, lebar 360 px, tanpa suara.",
+    "clipKeyframeNote": "Klip video dimulai dari keyframe terdekat sebelum titik awalmu, bisa beberapa detik lebih awal (hingga 5 dtk di Reels Instagram). Klip audio selalu tepat."
   },
   "download": {
     "preparing": "Menyiapkan unduhan Anda…",
@@ -1479,6 +1488,152 @@
       },
       {
         "q": "Bisakah saya mengambil thumbnail video privat?",
+        "a": "Tidak. Hanya video publik yang bisa, karena alat ini tidak pernah login ke platform mana pun."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Potong Video Online - Klip dari Reels, TikTok & YouTube",
+    "metaDescription": "Potong bagian dari Reel, TikTok, atau video YouTube publik lalu simpan sebagai klip MP4 atau audio M4A. Tanpa encoding ulang, gratis, tanpa login.",
+    "h1": "Potong Video Online",
+    "lead": "Tempel tautan video, pilih awal dan akhirnya, lalu simpan hanya bagian itu sebagai klip MP4, atau suaranya saja sebagai M4A. Reels, TikTok, YouTube, dan lainnya.",
+    "placeholder": "Tempel tautan Reel, TikTok, atau YouTube…",
+    "copyHint": "Salin tautan video dari tombol Bagikan, lalu tempel di sini.",
+    "breadcrumb": "Potong Video",
+    "footerLabel": "Potong Video",
+    "howToHeading": "Cara Memotong Video Online",
+    "howToSteps": [
+      "Salin tautan Reel Instagram, TikTok, video YouTube, atau video dari platform lain yang didukung, lalu tempel di atas.",
+      "Saat pratinjau muncul, geser penggeser Mulai dan Selesai ke bagian yang kamu mau. Durasinya tampil di bawahnya.",
+      "Ketuk Unduh klip (MP4) untuk videonya, atau Unduh audio klip (M4A) untuk suaranya saja."
+    ],
+    "sections": [
+      {
+        "heading": "Kenapa Memotong Sebelum Mengunduh",
+        "paragraphs": [
+          "Sering kali kamu hanya butuh beberapa detik dari sebuah video: lelucon, gol, satu kalimat, atau suara untuk status. Mengunduh file utuh lalu memotongnya di aplikasi edit makan waktu dan ruang. Di sini kamu pilih bagiannya dulu dan hanya menyimpan itu.",
+          "Pemotongan dilakukan di server kami dengan ffmpeg, alat yang sama yang dipakai editor video, dan klipnya langsung dikirim begitu siap. Tidak ada yang perlu diinstal, dan bisa dipakai di browser apa pun di ponsel atau komputer."
+        ]
+      },
+      {
+        "heading": "Potong Cepat Tanpa Turun Kualitas",
+        "paragraphs": [
+          "Klip dipotong tanpa encoding ulang: gambar dan suara disalin persis seperti yang disajikan platform, jadi tidak ada kompresi tambahan dan pemotongan hanya sekitar satu detik. Kualitasnya sama dengan unduhan penuh; untuk YouTube itu file 360p yang disimpan situs ini.",
+          "Memotong tanpa encoding ulang punya satu efek: klip video harus dimulai di keyframe, yang terdekat sebelum titik awal yang kamu pilih, jadi bisa mulai beberapa detik lebih awal. Reels Instagram punya keyframe setiap 5 detik, jadi di sana bisa sampai 5 detik. Klip audio dimulai tepat di tempat yang kamu atur."
+        ]
+      },
+      {
+        "heading": "Simpan Suaranya Saja",
+        "paragraphs": [
+          "Unduh audio klip (M4A) memberimu hanya suara dari bagian yang dipilih: reff lagu untuk nada dering, kutipan, atau efek suara. Ini audio AAC dari video itu sendiri, disalin bukan dikonversi, dan bisa diputar di aplikasi musik apa pun.",
+          "Jika platform menyajikan audio sebagai file terpisah, klip dipotong dari file itu; jika tidak, suaranya diambil dari videonya sendiri."
+        ]
+      },
+      {
+        "heading": "Penggunaan yang Adil dan Batasan",
+        "paragraphs": [
+          "Hanya video publik yang bisa dipotong, karena SaveReelsFast tidak pernah login ke akun mana pun. Video yang sangat panjang mungkin terlalu besar untuk diambil, dan klip dari video yang melebihi batas kami ditolak alih-alih dipotong setengah.",
+          "Klip tetap karya kreatornya: simpan untuk dirimu sendiri atau minta izin sebelum mempostingnya ulang. Mau versi berulang tanpa suara untuk chat? Gunakan Buat GIF di kartu yang sama."
+        ]
+      }
+    ],
+    "faqHeading": "Pertanyaan Umum",
+    "faq": [
+      {
+        "q": "Apakah pemotong video ini gratis?",
+        "a": "Ya. Gratis, tanpa akun, pendaftaran, aplikasi, atau watermark."
+      },
+      {
+        "q": "Apakah memotong menurunkan kualitas?",
+        "a": "Tidak. Klip disalin tanpa encoding ulang, jadi kualitasnya sama dengan unduhan penuh. Untuk YouTube, itu 360p."
+      },
+      {
+        "q": "Kenapa klip saya mulai sedikit lebih awal dari yang saya pilih?",
+        "a": "Tanpa encoding ulang, video hanya bisa dipotong di keyframe, jadi klip dimulai dari keyframe terdekat sebelum titik awalmu. Reels Instagram punya satu keyframe setiap 5 detik, jadi klip bisa mulai hingga 5 detik lebih awal. Klip audio selalu tepat."
+      },
+      {
+        "q": "Bisakah saya memotong audionya saja?",
+        "a": "Ya. Unduh audio klip (M4A) menyimpan hanya suara dari bagian yang dipilih."
+      },
+      {
+        "q": "Berapa panjang klip yang bisa dibuat?",
+        "a": "Bagian mana pun dari video, sampai durasi penuhnya. GIF pengecualian: maksimal 8 detik."
+      },
+      {
+        "q": "Bisakah saya memotong video privat?",
+        "a": "Tidak. Hanya video publik yang bisa, karena alat ini tidak pernah login ke platform mana pun."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Ubah Video ke GIF - Buat GIF dari Reels & TikTok",
+    "metaDescription": "Ubah hingga 8 detik dari Reel, TikTok, atau video YouTube publik menjadi GIF. Pilih awalnya, ketuk Buat GIF, lalu simpan. Gratis, tanpa login.",
+    "h1": "Ubah Video ke GIF",
+    "lead": "Tempel tautan video, pilih hingga 8 detik, lalu ubah jadi GIF berulang untuk dibagikan di chat dan postingan. Reels, TikTok, YouTube, dan lainnya.",
+    "placeholder": "Tempel tautan Reel, TikTok, atau YouTube…",
+    "copyHint": "Salin tautan video dari tombol Bagikan, lalu tempel di sini.",
+    "breadcrumb": "Video ke GIF",
+    "footerLabel": "Video ke GIF",
+    "howToHeading": "Cara Membuat GIF dari Video",
+    "howToSteps": [
+      "Salin tautan Reel Instagram, TikTok, video YouTube, atau video dari platform lain yang didukung, lalu tempel di atas.",
+      "Geser penggeser Mulai ke saat GIF-mu harus dimulai; GIF mencakup hingga 8 detik dari situ.",
+      "Ketuk Buat GIF. GIF dibuat di server kami dalam beberapa detik dan disimpan sebagai file .gif."
+    ],
+    "sections": [
+      {
+        "heading": "Kenapa GIF?",
+        "paragraphs": [
+          "GIF diputar sendiri, berulang terus, dan bisa dipakai hampir di mana saja: aplikasi chat, forum, email, presentasi, dan dokumen yang tidak bisa memutar video. Untuk reaksi, satu langkah tutorial, atau momen lucu, GIF sering jadi format paling mudah dibagikan.",
+          "Alat ini membuatnya dari bagian video yang kamu pilih, tanpa aplikasi, tanpa akun, dan tanpa editor desktop."
+        ]
+      },
+      {
+        "heading": "Yang Kamu Dapatkan",
+        "paragraphs": [
+          "GIF selebar 360 piksel (tingginya mengikuti bentuk video), berjalan 10 frame per detik, dan berdurasi hingga 8 detik. Dengan begitu filenya tetap kecil, biasanya beberapa megabyte, cepat dikirim dan cepat dimuat oleh penerimanya.",
+          "GIF tidak punya suara dan hanya memakai 256 warna, jadi terlihat kurang tajam dibanding videonya. Jika butuh suara atau ketajaman penuh, gunakan Unduh klip (MP4) di kartu yang sama."
+        ]
+      },
+      {
+        "heading": "Dibuat di Server Kami",
+        "paragraphs": [
+          "Membuat GIF berarti menggambar ulang setiap frame, yang butuh waktu proses, jadi server membuat satu GIF dalam satu waktu. Jika GIF orang lain sedang dibuat saat itu, kamu akan diminta mencoba lagi beberapa detik kemudian.",
+          "GIF-mu dikirim saat sedang dibuat. Setelahnya tidak ada yang disimpan dan tidak ada watermark yang ditambahkan."
+        ]
+      },
+      {
+        "heading": "Menggunakan GIF dengan Adil",
+        "paragraphs": [
+          "GIF yang dibuat dari video seseorang tetap karyanya. Membagikan GIF reaksi di chat itu wajar; memakainya di iklan atau seolah-olah kamu yang membuat butuh izin kreatornya.",
+          "Hanya video publik yang bisa, karena SaveReelsFast tidak pernah login ke akun mana pun."
+        ]
+      }
+    ],
+    "faqHeading": "Pertanyaan Umum",
+    "faq": [
+      {
+        "q": "Apakah mengubah video ke GIF gratis?",
+        "a": "Ya. Gratis, tanpa akun, pendaftaran, aplikasi, atau watermark."
+      },
+      {
+        "q": "Berapa lama durasi GIF?",
+        "a": "Hingga 8 detik. GIF yang lebih panjang cepat membesar dan butuh waktu jauh lebih lama, jadi alat ini berhenti di 8."
+      },
+      {
+        "q": "Berapa ukuran GIF-nya?",
+        "a": "Lebar 360 piksel, 10 frame per detik. Kebanyakan GIF 8 detik berukuran beberapa megabyte."
+      },
+      {
+        "q": "Apakah GIF punya suara?",
+        "a": "Tidak. Format GIF tidak bisa membawa suara. Untuk klip bersuara, gunakan Unduh klip (MP4)."
+      },
+      {
+        "q": "Kenapa muncul pesan server sedang sibuk?",
+        "a": "GIF dibuat satu per satu. Tunggu beberapa detik lalu ketuk Buat GIF lagi."
+      },
+      {
+        "q": "Bisakah saya membuat GIF dari video privat?",
         "a": "Tidak. Hanya video publik yang bisa, karena alat ini tidak pernah login ke platform mana pun."
       }
     ]

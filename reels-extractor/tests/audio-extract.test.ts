@@ -47,12 +47,12 @@ describe("the download route", () => {
 
   it("only the scraper can extract: the direct CDN attempt is skipped", () => {
     assert.match(route, /const extract = requestedKind === "audio" && searchParams\.get\("extract"\) === "1"/);
-    assert.match(route, /if \(!media\.extract && !isIpBound\(target\)\)/);
+    assert.match(route, /if \(!media\.extract && !media\.clip && media\.kind !== "gif" && !isIpBound\(target\)\)/);
   });
 
   it("passes extract on to both scraper endpoints, without a byte range, and always names the file .m4a", () => {
     assert.equal(route.match(/if \(media\.extract\) params\.set\("extract", "1"\)/g)?.length, 2);
-    assert.match(route, /media\.extract \? null : range/);
+    assert.match(route, /media\.extract \|\| media\.clip \|\| media\.kind === "gif" \? null : range/);
     assert.match(route, /const audioExt = !extract && isAudioExtension\(requestedExt\) \? requestedExt : "m4a"/);
   });
 });

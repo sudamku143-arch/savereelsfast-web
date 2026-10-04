@@ -1,5 +1,6 @@
 // Kept free of runtime imports so it can be unit-tested with plain Node.
 import type { PlatformId } from "./platforms";
+import type { Locale } from "./i18n-config";
 
 /**
  * URL slug of each platform's landing page: /<slug>, or /<language>/<slug>.
@@ -111,13 +112,31 @@ export const PHOTO_DOWNLOADER_PATH = "/instagram-photo-downloader";
 /** Feature pages: one tool each, with its own guide (see components/ToolLandingPage.tsx). */
 export const CAPTION_COPIER_PATH = "/instagram-caption-copier";
 export const THUMBNAIL_DOWNLOADER_PATH = "/video-thumbnail-downloader";
+export const VIDEO_TRIMMER_PATH = "/video-trimmer";
+export const GIF_MAKER_PATH = "/video-to-gif";
 
-/** The feature pages with their short names, for the footer and the "other tools" list. */
-export function toolPageLinks(dict: {
+/** Feature pages that exist only in NEW_PAGE_LOCALES (see lib/i18n-config.ts). */
+// The same list as NEW_PAGE_LOCALES leaves out, kept here so this file has no runtime imports (tests/feature-pages
+// checks the two agree).
+const NEW_PAGE_SKIPPED: readonly string[] = ["bn", "mr", "te", "ta"];
+export const NEW_LOCALE_ONLY_PATHS = [VIDEO_TRIMMER_PATH, GIF_MAKER_PATH];
+
+/** The feature pages with their short names, for the footer and the "other tools" list, in `locale`. */
+export function toolPageLinks(locale: Locale, dict: {
   captionCopier: { breadcrumb: string };
   thumbnailDownloader: { breadcrumb: string };
+  videoTrimmer?: { breadcrumb: string };
+  gifMaker?: { breadcrumb: string };
 }): { path: string; label: string }[] {
+  const newPages =
+    !NEW_PAGE_SKIPPED.includes(locale) && dict.videoTrimmer && dict.gifMaker
+      ? [
+          { path: VIDEO_TRIMMER_PATH, label: dict.videoTrimmer.breadcrumb },
+          { path: GIF_MAKER_PATH, label: dict.gifMaker.breadcrumb },
+        ]
+      : [];
   return [
+    ...newPages,
     { path: CAPTION_COPIER_PATH, label: dict.captionCopier.breadcrumb },
     { path: THUMBNAIL_DOWNLOADER_PATH, label: dict.thumbnailDownloader.breadcrumb },
   ];

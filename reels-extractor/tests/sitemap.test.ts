@@ -82,9 +82,10 @@ describe("sitemap contents", () => {
     }
   });
 
-  it("adds up: 13 home + 130 platform + 13 audio + 13 photo + 26 feature pages + 5 legal pages x every translated language", () => {
-    assert.equal(entries.length, locales.length + locales.length * ids.length + 4 * locales.length + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 230 + 1 + allBlogPosts + 1 + spanishBlogPosts, "230 site pages + the English and Spanish blog indexes + one entry per post");
+  it("adds up: 13 home + 130 platform + 13 audio + 13 photo + 52 feature pages + 5 legal pages x every translated language", () => {
+    // 4 feature pages: the caption copier and thumbnail downloader in all 13, the trimmer and GIF pages in 9 (India: Hindi only)
+    assert.equal(entries.length, locales.length + locales.length * ids.length + 4 * locales.length + 2 * 9 + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 248 + 1 + allBlogPosts + 1 + spanishBlogPosts, "248 site pages + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -130,7 +131,7 @@ describe("frequency and priority", () => {
     if (Object.values(PLATFORM_SLUGS).includes(path.slice(1))) return "platform";
     if (path === "/audio-downloader") return "audio";
     if (path === "/instagram-photo-downloader") return "photo";
-    if (path === "/instagram-caption-copier" || path === "/video-thumbnail-downloader") return "feature";
+    if (["/instagram-caption-copier", "/video-thumbnail-downloader", "/video-trimmer", "/video-to-gif"].includes(path)) return "feature";
     if (/^\/blog(\/|$)/.test(path)) return "blog";
     return "legal";
   };
@@ -186,9 +187,10 @@ describe("frequency and priority", () => {
     }
   });
 
-  it("feature pages (caption copier, thumbnail downloader): weekly, 0.8 - in every language", () => {
+  it("feature pages (trimmer, GIF, caption copier, thumbnail downloader): weekly, 0.8 - in every language", () => {
     const pages = entries.filter((x) => rule(x.url) === "feature");
-    assert.equal(pages.length, 2 * locales.length);
+    assert.equal(pages.length, 2 * locales.length + 2 * 9, "trimmer and GIF pages: for India, Hindi only");
+    for (const e of pages) assert.doesNotMatch(e.url, /\/(bn|mr|ta|te)\/video-(trimmer|to-gif)$/);
     for (const e of pages) {
       assert.equal(e.changeFrequency, "weekly", e.url);
       assert.equal(e.priority, 0.8, e.url);
@@ -204,9 +206,16 @@ describe("frequency and priority", () => {
 
 describe("alternate languages", () => {
   it("every platform and home page lists all 13 languages plus x-default", () => {
-    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog)/.test(x.url))) {
+    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog|video-trimmer|video-to-gif)/.test(x.url))) {
       assert.deepEqual(Object.keys(e.alternates.languages).sort(), [...locales, "x-default"].sort(), e.url);
     }
+  });
+
+  it("the trimmer and GIF pages list only their 9 languages (for India, Hindi only) plus x-default", () => {
+    const newPages = entries.filter((x) => /video-(trimmer|to-gif)$/.test(x.url));
+    assert.equal(newPages.length, 18);
+    const expected = [...locales.filter((l) => !["bn", "mr", "ta", "te"].includes(l)), "x-default"].sort();
+    for (const e of newPages) assert.deepEqual(Object.keys(e.alternates.languages).sort(), expected, e.url);
   });
 
   it("each alternate is the same page in that language, and x-default is English", () => {

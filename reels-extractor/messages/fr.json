@@ -678,7 +678,16 @@
     "copyHashtags": "Copier les hashtags ({n})",
     "copied": "Copié",
     "copyFailed": "Copie impossible, sélectionnez le texte",
-    "downloadCover": "Image de couverture ({format})"
+    "downloadCover": "Image de couverture ({format})",
+    "clipToggle": "Couper ou créer un GIF",
+    "clipStart": "Début",
+    "clipEnd": "Fin",
+    "clipLength": "Durée : {n} s",
+    "clipVideo": "Télécharger l'extrait (MP4)",
+    "clipAudio": "Télécharger l'audio de l'extrait (M4A)",
+    "clipGif": "Créer un GIF",
+    "clipGifNote": "Les GIF durent jusqu'à {n} s, font 360 px de large et sont muets.",
+    "clipKeyframeNote": "Un extrait vidéo commence à l'image clé la plus proche avant votre début, parfois quelques secondes plus tôt (jusqu'à 5 s sur les Reels Instagram). Les extraits audio sont exacts."
   },
   "download": {
     "preparing": "Préparation de votre téléchargement…",
@@ -1479,6 +1488,152 @@
       },
       {
         "q": "Puis-je obtenir la miniature d'une vidéo privée ?",
+        "a": "Non. Seules les vidéos publiques fonctionnent, car l'outil ne se connecte jamais à aucune plateforme."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Couper une Vidéo en Ligne - Extraits Reels, TikTok, YouTube",
+    "metaDescription": "Coupez une partie d'un Reel, d'un TikTok ou d'une vidéo YouTube publique et enregistrez-la en extrait MP4 ou audio M4A. Sans réencodage, gratuit.",
+    "h1": "Couper une Vidéo en Ligne",
+    "lead": "Collez le lien d'une vidéo, choisissez le début et la fin, et gardez seulement ce passage en extrait MP4, ou seulement son son en M4A. Reels, TikTok, YouTube et plus.",
+    "placeholder": "Collez un lien Reel, TikTok ou YouTube…",
+    "copyHint": "Copiez le lien de la vidéo avec le bouton Partager, puis collez-le ici.",
+    "breadcrumb": "Couper une Vidéo",
+    "footerLabel": "Couper une Vidéo",
+    "howToHeading": "Comment Couper une Vidéo en Ligne",
+    "howToSteps": [
+      "Copiez le lien d'un Reel Instagram, d'un TikTok, d'une vidéo YouTube ou d'une vidéo d'une autre plateforme prise en charge, et collez-le ci-dessus.",
+      "Quand l'aperçu apparaît, déplacez les curseurs Début et Fin sur le passage voulu. La durée s'affiche en dessous.",
+      "Touchez Télécharger l'extrait (MP4) pour la vidéo, ou Télécharger l'audio de l'extrait (M4A) pour le son seul."
+    ],
+    "sections": [
+      {
+        "heading": "Pourquoi Couper Avant de Télécharger",
+        "paragraphs": [
+          "Souvent, on ne veut que quelques secondes d'une vidéo : une chute, un but, une réplique, un son pour un statut. Télécharger le fichier entier puis le couper dans une application de montage prend du temps et de la place. Ici, vous choisissez d'abord le passage et n'enregistrez que lui.",
+          "La coupe se fait sur notre serveur avec ffmpeg, l'outil qu'utilisent les logiciels de montage, et l'extrait vous arrive dès qu'il est prêt. Rien à installer, et ça marche dans n'importe quel navigateur, sur téléphone ou ordinateur."
+        ]
+      },
+      {
+        "heading": "Des Coupes Rapides Sans Perte de Qualité",
+        "paragraphs": [
+          "L'extrait est coupé sans réencodage : l'image et le son sont copiés tels que la plateforme les fournit, donc aucune compression en plus, et la coupe prend environ une seconde. Vous gardez la qualité du téléchargement complet ; pour YouTube, c'est le fichier 360p que ce site enregistre.",
+          "Couper sans réencoder a un effet : un extrait vidéo doit commencer sur une image clé, la plus proche avant le début choisi, il peut donc démarrer quelques secondes plus tôt. Les Reels Instagram ont une image clé toutes les 5 secondes, l'écart peut donc y atteindre 5 secondes. Les extraits audio commencent exactement où vous les placez."
+        ]
+      },
+      {
+        "heading": "Garder Seulement le Son",
+        "paragraphs": [
+          "Télécharger l'audio de l'extrait (M4A) vous donne uniquement le son du passage choisi : le refrain d'une chanson pour une sonnerie, une citation, un effet sonore. C'est l'audio AAC de la vidéo elle-même, copié et non converti, lisible dans toute application de musique.",
+          "Si la plateforme fournit l'audio dans un fichier à part, l'extrait est coupé dans ce fichier ; sinon, le son est tiré de la vidéo elle-même."
+        ]
+      },
+      {
+        "heading": "Usage Correct et Limites",
+        "paragraphs": [
+          "Seules les vidéos publiques peuvent être coupées, car SaveReelsFast ne se connecte jamais à aucun compte. Les vidéos très longues peuvent être trop lourdes à récupérer, et l'extrait d'une vidéo qui dépasse nos limites est refusé plutôt que coupé à moitié.",
+          "Un extrait reste l'œuvre de son créateur : gardez-le pour vous ou demandez avant de le republier. Vous voulez une version en boucle et muette pour une discussion ? Utilisez Créer un GIF sur la même carte."
+        ]
+      }
+    ],
+    "faqHeading": "Questions Fréquentes",
+    "faq": [
+      {
+        "q": "L'outil pour couper une vidéo est-il gratuit ?",
+        "a": "Oui. C'est gratuit, sans compte, inscription, application ni filigrane."
+      },
+      {
+        "q": "Couper fait-il baisser la qualité ?",
+        "a": "Non. L'extrait est copié sans réencodage, il garde donc la qualité du téléchargement complet. Pour YouTube, c'est du 360p."
+      },
+      {
+        "q": "Pourquoi mon extrait commence-t-il un peu avant ce que j'ai choisi ?",
+        "a": "Sans réencodage, une vidéo ne peut être coupée que sur une image clé : l'extrait commence donc à la plus proche avant votre début. Les Reels Instagram en ont une toutes les 5 secondes, l'extrait peut donc commencer jusqu'à 5 secondes plus tôt. Les extraits audio sont exacts."
+      },
+      {
+        "q": "Puis-je couper seulement l'audio ?",
+        "a": "Oui. Télécharger l'audio de l'extrait (M4A) enregistre uniquement le son du passage choisi."
+      },
+      {
+        "q": "Quelle durée peut avoir un extrait ?",
+        "a": "N'importe quel passage, jusqu'à la durée complète de la vidéo. Les GIF font exception : ils sont limités à 8 secondes."
+      },
+      {
+        "q": "Puis-je couper une vidéo privée ?",
+        "a": "Non. Seules les vidéos publiques fonctionnent, car l'outil ne se connecte jamais à aucune plateforme."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Convertir une Vidéo en GIF - GIF à partir de Reels",
+    "metaDescription": "Transformez jusqu'à 8 secondes d'un Reel, d'un TikTok ou d'une vidéo YouTube publique en GIF. Choisissez le début, touchez Créer un GIF. Gratuit.",
+    "h1": "Convertir une Vidéo en GIF",
+    "lead": "Collez le lien d'une vidéo, choisissez jusqu'à 8 secondes et transformez-les en GIF en boucle à partager dans vos discussions et posts. Reels, TikTok, YouTube et plus.",
+    "placeholder": "Collez un lien Reel, TikTok ou YouTube…",
+    "copyHint": "Copiez le lien de la vidéo avec le bouton Partager, puis collez-le ici.",
+    "breadcrumb": "Vidéo en GIF",
+    "footerLabel": "Vidéo en GIF",
+    "howToHeading": "Comment Faire un GIF à Partir d'une Vidéo",
+    "howToSteps": [
+      "Copiez le lien d'un Reel Instagram, d'un TikTok, d'une vidéo YouTube ou d'une vidéo d'une autre plateforme prise en charge, et collez-le ci-dessus.",
+      "Placez le curseur Début au moment où votre GIF doit commencer ; il couvre jusqu'à 8 secondes à partir de là.",
+      "Touchez Créer un GIF. Il est fabriqué sur notre serveur en quelques secondes et enregistré en fichier .gif."
+    ],
+    "sections": [
+      {
+        "heading": "Pourquoi un GIF ?",
+        "paragraphs": [
+          "Un GIF se lance tout seul, tourne en boucle et marche presque partout : messageries, forums, e-mails, présentations et documents qui ne lisent pas les vidéos. Pour une réaction, une étape de tuto ou un moment drôle, c'est souvent le format le plus simple à partager.",
+          "Cet outil en crée un à partir du passage de la vidéo que vous choisissez, sans application, sans compte et sans logiciel de montage."
+        ]
+      },
+      {
+        "heading": "Ce Que Vous Obtenez",
+        "paragraphs": [
+          "Le GIF fait 360 pixels de large (la hauteur suit la forme de la vidéo), tourne à 10 images par seconde et dure jusqu'à 8 secondes. Le fichier reste ainsi léger, en général quelques mégaoctets, il s'envoie vite et se charge vite chez la personne qui le reçoit.",
+          "Les GIF n'ont pas de son et n'ont que 256 couleurs : ils paraissent donc moins nets que la vidéo. S'il vous faut du son ou toute la netteté, utilisez plutôt Télécharger l'extrait (MP4) sur la même carte."
+        ]
+      },
+      {
+        "heading": "Fabriqué sur Notre Serveur",
+        "paragraphs": [
+          "Faire un GIF, c'est redessiner chaque image, ce qui demande du temps de calcul : le serveur fabrique donc un GIF à la fois. Si celui de quelqu'un d'autre est en cours à ce moment-là, on vous demandera de réessayer dans quelques secondes.",
+          "Votre GIF vous arrive pendant qu'il est fabriqué. Rien n'est conservé ensuite et aucun filigrane n'est ajouté."
+        ]
+      },
+      {
+        "heading": "Utiliser les GIF Correctement",
+        "paragraphs": [
+          "Un GIF tiré de la vidéo de quelqu'un reste son œuvre. Partager des GIF de réaction dans une discussion est courant ; en utiliser un dans une publicité ou comme si vous l'aviez fait demande l'accord du créateur.",
+          "Seules les vidéos publiques fonctionnent, car SaveReelsFast ne se connecte jamais à aucun compte."
+        ]
+      }
+    ],
+    "faqHeading": "Questions Fréquentes",
+    "faq": [
+      {
+        "q": "La conversion de vidéo en GIF est-elle gratuite ?",
+        "a": "Oui. C'est gratuit, sans compte, inscription, application ni filigrane."
+      },
+      {
+        "q": "Quelle durée peut avoir le GIF ?",
+        "a": "Jusqu'à 8 secondes. Les GIF plus longs deviennent vite lourds et beaucoup plus lents à fabriquer, l'outil s'arrête donc à 8."
+      },
+      {
+        "q": "Quelle taille fait le GIF ?",
+        "a": "360 pixels de large, à 10 images par seconde. La plupart des GIF de 8 secondes pèsent quelques mégaoctets."
+      },
+      {
+        "q": "Le GIF a-t-il du son ?",
+        "a": "Non. Le format GIF ne peut pas contenir de son. Pour un extrait avec le son, utilisez Télécharger l'extrait (MP4)."
+      },
+      {
+        "q": "Pourquoi est-il écrit que le serveur est occupé ?",
+        "a": "Les GIF sont fabriqués un par un. Attendez quelques secondes et touchez à nouveau Créer un GIF."
+      },
+      {
+        "q": "Puis-je faire un GIF à partir d'une vidéo privée ?",
         "a": "Non. Seules les vidéos publiques fonctionnent, car l'outil ne se connecte jamais à aucune plateforme."
       }
     ]

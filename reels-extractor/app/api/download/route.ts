@@ -56,16 +56,25 @@ const IMAGE_CONTENT_TYPES: Record<ImageExtension, string> = {
  * whose sound only lives inside the MP4). `url` is then the video; the scraper pipes it through ffmpeg and
  * sends just its AAC track, as M4A. Only the scraper can do that, so the direct attempt is skipped.
  */
-type Media = { kind: "video" | "audio" | "image"; ext: string; contentType: string; extract?: boolean };
+type Media = {
+  kind: "video" | "audio" | "image" | "gif";
+  ext: string;
+  contentType: string;
+  extract?: boolean;
+  /** A part of the video ("start"/"end" seconds): cut by the scraper, which also makes GIFs. */
+  clip?: { start: number; end: number };
+};
 
 /** What the CDN may answer with for each kind of download (anything else is refused). */
 const ACCEPTED_TYPES: Record<Media["kind"], string[]> = {
   audio: ["audio/", "video/mp4", "video/webm", "application/octet-stream"],
+  gif: ["image/gif"],
   image: ["image/jpeg", "image/webp", "image/png", "application/octet-stream"],
   video: ["video/", "application/octet-stream"],
 };
 const ACCEPT_HEADER: Record<Media["kind"], string> = {
   audio: "audio/*,*/*;q=0.5",
+  gif: "image/gif",
   image: "image/jpeg,image/webp,image/png;q=0.9,*/*;q=0.5",
   video: "video/mp4,video/*;q=0.9,*/*;q=0.5",
 };
@@ -73,6 +82,15 @@ const ACCEPT_HEADER: Record<Media["kind"], string> = {
 function safeFilename(rawId: string | null, media: Media): string {
   const id = (rawId ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   return `savereelsfast-${id || "reel"}.${media.ext}`;
+}
+
+/** A clip window from the query: both ends, in seconds, the end after the start; else none. */
+function parseClip(rawStart: string | null, rawEnd: string | null): { start: number; end: number } | undefined {
+  if (rawStart === null || rawEnd === null) return undefined;
+  const start = Number(rawStart);
+  const end = Number(rawEnd);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start < 0 || end > 36000 || end - start < 0.5) return undefined;
+  return { start: Math.round(start * 10) / 10, end: Math.round(end * 10) / 10 };
 }
 
 function fail(message: string, status: number, code: ErrorCode) {
@@ -255,7 +273,12 @@ function viaScraperStream(
     ext: media.ext,
   });
   if (media.extract) params.set("extract", "1");
-  return fromScraper(`/stream?${params.toString()}`, filename, media, media.extract ? null : range);
+  if (media.clip) {
+    params.set("start", String(media.clip.start));
+    params.set("end", String(media.clip.end));
+  }
+  // A clip or extracted audio is a new file made on the fly: a byte range of it means nothing.
+  return fromScraper(`/stream?${params.toString()}`, filename, media, media.extract || media.clip || media.kind === "gif" ? null : range);
 }
 
 /**
@@ -265,11 +288,15 @@ function viaScraperStream(
 function viaScraperResolve(sourceUrl: string, id: string | null, filename: string, media: Media) {
   const params = new URLSearchParams({ url: sourceUrl, id: id ?? "video", kind: media.kind });
   if (media.extract) params.set("extract", "1");
+  if (media.clip) {
+    params.set("start", String(media.clip.start));
+    params.set("end", String(media.clip.end));
+  }
   return fromScraper(`/download?${params.toString()}`, filename, media);
 }
 
 /**
- * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio|image&ext=m4a|jpg[&extract=1]
+ * GET /api/download?url=<CDN URL>&id=<post id>&src=<post URL>&kind=video|audio|image|gif&ext=m4a|jpg[&extract=1][&start=<s>&end=<s>]
  *
  * Streams the video back from our own origin with
  * `Content-Disposition: attachment`, which is what makes browsers save the
@@ -304,18 +331,23 @@ export async function GET(request: NextRequest) {
   const requestedExt = searchParams.get("ext");
   const requestedKind = searchParams.get("kind");
   const extract = requestedKind === "audio" && searchParams.get("extract") === "1";
+  const clip = parseClip(searchParams.get("start"), searchParams.get("end"));
   const audioExt = !extract && isAudioExtension(requestedExt) ? requestedExt : "m4a";
   const imageExt = isImageExtension(requestedExt) ? requestedExt : "jpg";
-  const media: Media =
-    requestedKind === "audio"
-      ? { kind: "audio", ext: audioExt, contentType: AUDIO_CONTENT_TYPES[audioExt], extract }
-      : requestedKind === "image"
-        ? { kind: "image", ext: imageExt, contentType: IMAGE_CONTENT_TYPES[imageExt] }
-        : { kind: "video", ext: "mp4", contentType: "video/mp4" };
+  const baseMedia: Media =
+    requestedKind === "gif"
+      ? { kind: "gif", ext: "gif", contentType: "image/gif" }
+      : requestedKind === "audio"
+        ? { kind: "audio", ext: clip ? "m4a" : audioExt, contentType: AUDIO_CONTENT_TYPES[clip ? "m4a" : audioExt], extract }
+        : requestedKind === "image"
+          ? { kind: "image", ext: imageExt, contentType: IMAGE_CONTENT_TYPES[imageExt] }
+          : { kind: "video", ext: "mp4", contentType: "video/mp4" };
+  const media: Media = clip && baseMedia.kind !== "image" ? { ...baseMedia, clip } : baseMedia;
   const filename = safeFilename(id, media);
   const range = validRange(request.headers.get("range"));
 
-  if (!media.extract && !isIpBound(target)) {
+  // Only the scraper can cut a clip or make a GIF (ffmpeg), so those skip the direct CDN attempt.
+  if (!media.extract && !media.clip && media.kind !== "gif" && !isIpBound(target)) {
     const direct = await tryDirect(target, filename, media, range);
     if (direct) return direct;
   }

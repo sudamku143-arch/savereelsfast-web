@@ -678,7 +678,16 @@
     "copyHashtags": "हॅशटॅग कॉपी करा ({n})",
     "copied": "कॉपी झाले",
     "copyFailed": "कॉपी झाले नाही, मजकूर निवडून कॉपी करा",
-    "downloadCover": "कव्हर इमेज ({format})"
+    "downloadCover": "कव्हर इमेज ({format})",
+    "clipToggle": "ट्रिम करा किंवा GIF बनवा",
+    "clipStart": "सुरुवात",
+    "clipEnd": "शेवट",
+    "clipLength": "लांबी: {n} सेकंद",
+    "clipVideo": "क्लिप डाउनलोड करा (MP4)",
+    "clipAudio": "क्लिपचा ऑडिओ डाउनलोड करा (M4A)",
+    "clipGif": "GIF बनवा",
+    "clipGifNote": "GIF जास्तीत जास्त {n} सेकंद, 360 px रुंद आणि आवाजाशिवाय असतात.",
+    "clipKeyframeNote": "व्हिडिओ क्लिप तुमच्या सुरुवातीच्या आधीच्या जवळच्या keyframe पासून सुरू होते, जी काही सेकंद आधी असू शकते (Instagram Reels मध्ये 5 सेकंदांपर्यंत). ऑडिओ क्लिप अचूक असते."
   },
   "download": {
     "preparing": "तुमचे डाउनलोड तयार होत आहे…",

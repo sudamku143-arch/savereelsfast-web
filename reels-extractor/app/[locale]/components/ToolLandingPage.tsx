@@ -179,7 +179,7 @@ export default function ToolLandingPage({
         lead={dict.landing.common.otherLead}
         audioLabel={dict.audioDownloader.breadcrumb}
         photoLabel={dict.photoDownloader.breadcrumb}
-        toolLinks={toolPageLinks(dict).filter((tool) => tool.path !== path)}
+        toolLinks={toolPageLinks(locale, dict).filter((tool) => tool.path !== path)}
       />
 
       {/* Slot 3: sticky bottom banner (tool pages only, never the legal pages). */}

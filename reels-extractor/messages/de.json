@@ -678,7 +678,16 @@
     "copyHashtags": "Hashtags kopieren ({n})",
     "copied": "Kopiert",
     "copyFailed": "Kopieren fehlgeschlagen, markiere den Text",
-    "downloadCover": "Titelbild ({format})"
+    "downloadCover": "Titelbild ({format})",
+    "clipToggle": "Schneiden oder GIF erstellen",
+    "clipStart": "Anfang",
+    "clipEnd": "Ende",
+    "clipLength": "Länge: {n} s",
+    "clipVideo": "Clip herunterladen (MP4)",
+    "clipAudio": "Clip-Audio herunterladen (M4A)",
+    "clipGif": "GIF erstellen",
+    "clipGifNote": "GIFs sind bis zu {n} s lang, 360 px breit und ohne Ton.",
+    "clipKeyframeNote": "Ein Videoclip beginnt am nächsten Keyframe vor deinem Anfang, also eventuell ein paar Sekunden früher (bei Instagram Reels bis zu 5 s). Audioclips sind exakt."
   },
   "download": {
     "preparing": "Download wird vorbereitet…",
@@ -1175,6 +1184,152 @@
       },
       {
         "q": "Bekomme ich das Thumbnail eines privaten Videos?",
+        "a": "Nein. Nur öffentliche Videos funktionieren, weil sich das Tool nie bei einer Plattform anmeldet."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Video online schneiden - Clips aus Reels, TikTok, YouTube",
+    "metaDescription": "Schneide einen Teil eines öffentlichen Reels, TikToks oder YouTube-Videos aus und speichere ihn als MP4-Clip oder M4A-Audio. Ohne Neukodierung, kostenlos.",
+    "h1": "Video online schneiden",
+    "lead": "Füge einen Videolink ein, wähle Anfang und Ende und speichere nur diesen Teil als MP4-Clip, oder nur den Ton als M4A. Reels, TikTok, YouTube und mehr.",
+    "placeholder": "Reel-, TikTok- oder YouTube-Link einfügen…",
+    "copyHint": "Kopiere den Link des Videos über den Teilen-Button und füge ihn hier ein.",
+    "breadcrumb": "Video schneiden",
+    "footerLabel": "Video schneiden",
+    "howToHeading": "So schneidest du ein Video online",
+    "howToSteps": [
+      "Kopiere den Link eines öffentlichen Instagram Reels, TikToks, YouTube-Videos oder eines Videos einer anderen unterstützten Plattform und füge ihn oben ein.",
+      "Sobald die Vorschau erscheint, schiebe die Regler Anfang und Ende auf den gewünschten Teil. Darunter steht die Länge.",
+      "Tippe auf „Clip herunterladen (MP4)“ für das Video oder auf „Clip-Audio herunterladen (M4A)“ nur für den Ton."
+    ],
+    "sections": [
+      {
+        "heading": "Warum vor dem Download schneiden",
+        "paragraphs": [
+          "Oft willst du nur ein paar Sekunden eines Videos: eine Pointe, ein Tor, einen Satz, einen Sound für deinen Status. Die ganze Datei herunterzuladen und in einer Schnitt-App zu kürzen, kostet Zeit und Speicher. Hier wählst du zuerst den Teil und speicherst nur ihn.",
+          "Geschnitten wird auf unserem Server mit ffmpeg, dem Werkzeug, das auch Schnittprogramme nutzen, und der Clip kommt zu dir, sobald er fertig ist. Nichts zu installieren, und es funktioniert in jedem Browser auf Smartphone oder Computer."
+        ]
+      },
+      {
+        "heading": "Schnelle Schnitte ohne Qualitätsverlust",
+        "paragraphs": [
+          "Der Clip wird ohne Neukodierung geschnitten: Bild und Ton werden genau so kopiert, wie die Plattform sie liefert, es gibt also keine zusätzliche Kompression, und der Schnitt dauert etwa eine Sekunde. Du bekommst dieselbe Qualität wie beim vollständigen Download; bei YouTube ist das die 360p-Datei, die diese Seite speichert.",
+          "Schneiden ohne Neukodierung hat eine Folge: Ein Videoclip muss an einem Keyframe beginnen, dem nächsten vor dem gewählten Anfang, und kann daher ein paar Sekunden früher starten. Instagram Reels haben alle 5 Sekunden einen Keyframe, dort können es also bis zu 5 Sekunden sein. Audioclips beginnen genau dort, wo du sie setzt."
+        ]
+      },
+      {
+        "heading": "Nur den Ton speichern",
+        "paragraphs": [
+          "„Clip-Audio herunterladen (M4A)“ gibt dir nur den Ton des gewählten Teils: den Refrain eines Songs als Klingelton, ein Zitat, einen Soundeffekt. Es ist das AAC-Audio des Videos selbst, kopiert und nicht umgewandelt, und läuft in jeder Musik-App.",
+          "Liefert die Plattform den Ton als eigene Datei, wird der Clip aus dieser Datei geschnitten; sonst wird der Ton aus dem Video selbst geholt."
+        ]
+      },
+      {
+        "heading": "Faire Nutzung und Grenzen",
+        "paragraphs": [
+          "Nur öffentliche Videos lassen sich schneiden, denn SaveReelsFast meldet sich nie bei einem Konto an. Sehr lange Videos können zu groß zum Abrufen sein, und ein Clip aus einem Video über unseren Grenzen wird abgelehnt statt halb geschnitten.",
+          "Ein Clip bleibt das Werk des Creators: Behalte ihn für dich oder frage, bevor du ihn erneut postest. Du willst eine stumme Endlosschleife für einen Chat? Nimm „GIF erstellen“ auf derselben Karte."
+        ]
+      }
+    ],
+    "faqHeading": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Ist das Schneiden von Videos kostenlos?",
+        "a": "Ja. Kostenlos, ohne Konto, Registrierung, App oder Wasserzeichen."
+      },
+      {
+        "q": "Verschlechtert das Schneiden die Qualität?",
+        "a": "Nein. Der Clip wird ohne Neukodierung kopiert und behält die Qualität des vollständigen Downloads. Bei YouTube sind das 360p."
+      },
+      {
+        "q": "Warum beginnt mein Clip etwas früher als gewählt?",
+        "a": "Ohne Neukodierung lässt sich ein Video nur an einem Keyframe schneiden, also beginnt der Clip am nächsten vor deinem Anfang. Instagram Reels haben alle 5 Sekunden einen, der Clip kann dort also bis zu 5 Sekunden früher beginnen. Audioclips sind exakt."
+      },
+      {
+        "q": "Kann ich nur den Ton schneiden?",
+        "a": "Ja. „Clip-Audio herunterladen (M4A)“ speichert nur den Ton des gewählten Teils."
+      },
+      {
+        "q": "Wie lang darf ein Clip sein?",
+        "a": "Jeder Teil des Videos, bis zur vollen Länge. GIFs sind die Ausnahme: Sie sind auf 8 Sekunden begrenzt."
+      },
+      {
+        "q": "Kann ich ein privates Video schneiden?",
+        "a": "Nein. Nur öffentliche Videos funktionieren, weil sich das Tool nie bei einer Plattform anmeldet."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Video in GIF umwandeln - GIFs aus Reels und TikTok",
+    "metaDescription": "Mach aus bis zu 8 Sekunden eines öffentlichen Reels, TikToks oder YouTube-Videos ein GIF. Anfang wählen, „GIF erstellen“ tippen, speichern. Kostenlos.",
+    "h1": "Video in GIF umwandeln",
+    "lead": "Füge einen Videolink ein, wähle bis zu 8 Sekunden und mach daraus ein GIF in Endlosschleife für Chats und Posts. Reels, TikTok, YouTube und mehr.",
+    "placeholder": "Reel-, TikTok- oder YouTube-Link einfügen…",
+    "copyHint": "Kopiere den Link des Videos über den Teilen-Button und füge ihn hier ein.",
+    "breadcrumb": "Video zu GIF",
+    "footerLabel": "Video zu GIF",
+    "howToHeading": "So machst du ein GIF aus einem Video",
+    "howToSteps": [
+      "Kopiere den Link eines öffentlichen Instagram Reels, TikToks, YouTube-Videos oder eines Videos einer anderen unterstützten Plattform und füge ihn oben ein.",
+      "Schiebe den Regler Anfang auf den Moment, an dem dein GIF beginnen soll; es umfasst bis zu 8 Sekunden ab dort.",
+      "Tippe auf „GIF erstellen“. Es wird in wenigen Sekunden auf unserem Server erstellt und als .gif-Datei gespeichert."
+    ],
+    "sections": [
+      {
+        "heading": "Warum ein GIF?",
+        "paragraphs": [
+          "Ein GIF spielt von selbst, läuft endlos und funktioniert fast überall: in Chat-Apps, Foren, E-Mails, Präsentationen und Dokumenten, die keine Videos abspielen. Für eine Reaktion, einen Schritt in einer Anleitung oder einen witzigen Moment ist es oft das einfachste Format zum Teilen.",
+          "Dieses Tool macht eins aus dem Teil des Videos, den du wählst, ohne App, ohne Konto und ohne Schnittprogramm."
+        ]
+      },
+      {
+        "heading": "Was du bekommst",
+        "paragraphs": [
+          "Das GIF ist 360 Pixel breit (die Höhe folgt dem Format des Videos), läuft mit 10 Bildern pro Sekunde und dauert bis zu 8 Sekunden. So bleibt die Datei klein, meist ein paar Megabyte, ist schnell verschickt und lädt schnell beim Empfänger.",
+          "GIFs haben keinen Ton und nur 256 Farben, deshalb wirken sie weicher als das Video. Brauchst du Ton oder volle Schärfe, nimm „Clip herunterladen (MP4)“ auf derselben Karte."
+        ]
+      },
+      {
+        "heading": "Auf unserem Server erstellt",
+        "paragraphs": [
+          "Ein GIF zu erstellen heißt, jedes Bild neu zu zeichnen, und das kostet Rechenzeit, deshalb erstellt der Server ein GIF nach dem anderen. Wird gerade das GIF von jemand anderem erstellt, wirst du gebeten, es in ein paar Sekunden noch einmal zu versuchen.",
+          "Dein GIF kommt zu dir, während es erstellt wird. Danach wird nichts gespeichert, und es wird kein Wasserzeichen hinzugefügt."
+        ]
+      },
+      {
+        "heading": "GIFs fair nutzen",
+        "paragraphs": [
+          "Ein GIF aus dem Video von jemandem bleibt dessen Werk. Reaktions-GIFs im Chat sind üblich; eins in einer Werbung oder so zu verwenden, als hättest du es gemacht, braucht die Erlaubnis des Creators.",
+          "Nur öffentliche Videos funktionieren, denn SaveReelsFast meldet sich nie bei einem Konto an."
+        ]
+      }
+    ],
+    "faqHeading": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Ist das Umwandeln von Videos in GIFs kostenlos?",
+        "a": "Ja. Kostenlos, ohne Konto, Registrierung, App oder Wasserzeichen."
+      },
+      {
+        "q": "Wie lang darf das GIF sein?",
+        "a": "Bis zu 8 Sekunden. Längere GIFs werden schnell groß und brauchen viel länger, deshalb hört das Tool bei 8 auf."
+      },
+      {
+        "q": "Wie groß ist das GIF?",
+        "a": "360 Pixel breit, mit 10 Bildern pro Sekunde. Die meisten 8-Sekunden-GIFs sind ein paar Megabyte groß."
+      },
+      {
+        "q": "Hat das GIF Ton?",
+        "a": "Nein. Das GIF-Format kann keinen Ton enthalten. Für einen Clip mit Ton nimm „Clip herunterladen (MP4)“."
+      },
+      {
+        "q": "Warum stand da, der Server sei ausgelastet?",
+        "a": "GIFs werden nacheinander erstellt. Warte ein paar Sekunden und tippe erneut auf „GIF erstellen“."
+      },
+      {
+        "q": "Kann ich ein GIF aus einem privaten Video machen?",
         "a": "Nein. Nur öffentliche Videos funktionieren, weil sich das Tool nie bei einer Plattform anmeldet."
       }
     ]

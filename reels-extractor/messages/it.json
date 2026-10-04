@@ -678,7 +678,16 @@
     "copyHashtags": "Copia hashtag ({n})",
     "copied": "Copiato",
     "copyFailed": "Copia non riuscita, seleziona il testo",
-    "downloadCover": "Immagine di copertina ({format})"
+    "downloadCover": "Immagine di copertina ({format})",
+    "clipToggle": "Taglia o crea una GIF",
+    "clipStart": "Inizio",
+    "clipEnd": "Fine",
+    "clipLength": "Durata: {n} s",
+    "clipVideo": "Scarica clip (MP4)",
+    "clipAudio": "Scarica audio della clip (M4A)",
+    "clipGif": "Crea una GIF",
+    "clipGifNote": "Le GIF durano fino a {n} s, sono larghe 360 px e senza audio.",
+    "clipKeyframeNote": "Una clip video parte dal fotogramma chiave più vicino prima del tuo inizio, che può essere qualche secondo prima (fino a 5 s sui Reels di Instagram). Le clip audio sono esatte."
   },
   "download": {
     "preparing": "Preparazione del download…",
@@ -1175,6 +1184,152 @@
       },
       {
         "q": "Posso ottenere la miniatura di un video privato?",
+        "a": "No. Funzionano solo i video pubblici, perché lo strumento non accede mai a nessuna piattaforma."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Tagliare Video Online - Clip da Reels, TikTok e YouTube",
+    "metaDescription": "Taglia una parte di un Reel, TikTok o video YouTube pubblico e salvala come clip MP4 o audio M4A. Senza ricodifica, gratis, senza login, senza app.",
+    "h1": "Tagliare Video Online",
+    "lead": "Incolla il link di un video, scegli inizio e fine e salva solo quella parte come clip MP4, o solo il suo audio in M4A. Reels, TikTok, YouTube e altro.",
+    "placeholder": "Incolla un link di Reel, TikTok o YouTube…",
+    "copyHint": "Copia il link del video dal pulsante Condividi e incollalo qui.",
+    "breadcrumb": "Taglia Video",
+    "footerLabel": "Taglia Video",
+    "howToHeading": "Come Tagliare un Video Online",
+    "howToSteps": [
+      "Copia il link di un Reel di Instagram, un TikTok, un video YouTube o un video di un'altra piattaforma supportata, e incollalo qui sopra.",
+      "Quando compare l'anteprima, sposta i cursori Inizio e Fine sulla parte che vuoi. La durata è mostrata sotto.",
+      "Tocca Scarica clip (MP4) per il video, o Scarica audio della clip (M4A) solo per il suono."
+    ],
+    "sections": [
+      {
+        "heading": "Perché Tagliare Prima di Scaricare",
+        "paragraphs": [
+          "Spesso di un video ti servono solo pochi secondi: una battuta, un gol, una frase, un suono per lo stato. Scaricare tutto il file e tagliarlo in un'app di montaggio richiede tempo e spazio. Qui scegli prima la parte e salvi solo quella.",
+          "Il taglio avviene sul nostro server con ffmpeg, lo stesso strumento usato dai programmi di montaggio, e la clip ti arriva appena è pronta. Niente da installare, e funziona in qualsiasi browser su telefono o computer."
+        ]
+      },
+      {
+        "heading": "Tagli Rapidi Senza Perdere Qualità",
+        "paragraphs": [
+          "La clip viene tagliata senza ricodifica: immagine e suono vengono copiati esattamente come li fornisce la piattaforma, quindi nessuna compressione in più, e il taglio richiede circa un secondo. Ottieni la stessa qualità del download completo; per YouTube è il file a 360p che questo sito salva.",
+          "Tagliare senza ricodifica ha un effetto: una clip video deve iniziare su un fotogramma chiave, il più vicino prima dell'inizio scelto, quindi può partire qualche secondo prima. I Reels di Instagram hanno un fotogramma chiave ogni 5 secondi, quindi lì possono essere fino a 5 secondi. Le clip audio partono esattamente dove le imposti."
+        ]
+      },
+      {
+        "heading": "Salva Solo il Suono",
+        "paragraphs": [
+          "Scarica audio della clip (M4A) ti dà solo il suono della parte scelta: il ritornello di una canzone per una suoneria, una citazione, un effetto sonoro. È l'audio AAC del video stesso, copiato e non convertito, e si riproduce in qualsiasi app musicale.",
+          "Se la piattaforma fornisce l'audio come file separato, la clip viene tagliata da quel file; altrimenti il suono viene preso dal video stesso."
+        ]
+      },
+      {
+        "heading": "Uso Corretto e Limiti",
+        "paragraphs": [
+          "Si possono tagliare solo video pubblici, perché SaveReelsFast non accede mai a nessun account. I video molto lunghi possono essere troppo pesanti da recuperare, e una clip di un video oltre i nostri limiti viene rifiutata invece di essere tagliata a metà.",
+          "Una clip resta opera del suo creator: tienila per te o chiedi prima di ripubblicarla. Vuoi una versione in loop e senza audio per una chat? Usa Crea una GIF sulla stessa scheda."
+        ]
+      }
+    ],
+    "faqHeading": "Domande Frequenti",
+    "faq": [
+      {
+        "q": "Tagliare video è gratis?",
+        "a": "Sì. È gratis, senza account, registrazione, app o filigrana."
+      },
+      {
+        "q": "Il taglio abbassa la qualità?",
+        "a": "No. La clip viene copiata senza ricodifica, quindi mantiene la qualità del download completo. Per YouTube è 360p."
+      },
+      {
+        "q": "Perché la mia clip inizia un po' prima di quanto scelto?",
+        "a": "Senza ricodifica un video si può tagliare solo su un fotogramma chiave, quindi la clip parte dal più vicino prima del tuo inizio. I Reels di Instagram ne hanno uno ogni 5 secondi, quindi la clip può iniziare fino a 5 secondi prima. Le clip audio sono esatte."
+      },
+      {
+        "q": "Posso tagliare solo l'audio?",
+        "a": "Sì. Scarica audio della clip (M4A) salva solo il suono della parte scelta."
+      },
+      {
+        "q": "Quanto può durare una clip?",
+        "a": "Qualsiasi parte del video, fino alla sua durata completa. Le GIF sono l'eccezione: hanno un massimo di 8 secondi."
+      },
+      {
+        "q": "Posso tagliare un video privato?",
+        "a": "No. Funzionano solo i video pubblici, perché lo strumento non accede mai a nessuna piattaforma."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Convertire Video in GIF - Crea GIF da Reels e TikTok",
+    "metaDescription": "Trasforma fino a 8 secondi di un Reel, TikTok o video YouTube pubblico in una GIF. Scegli l'inizio, tocca Crea una GIF e salvala. Gratis, senza login.",
+    "h1": "Convertire Video in GIF",
+    "lead": "Incolla il link di un video, scegli fino a 8 secondi e trasformali in una GIF in loop da condividere in chat e post. Reels, TikTok, YouTube e altro.",
+    "placeholder": "Incolla un link di Reel, TikTok o YouTube…",
+    "copyHint": "Copia il link del video dal pulsante Condividi e incollalo qui.",
+    "breadcrumb": "Video in GIF",
+    "footerLabel": "Video in GIF",
+    "howToHeading": "Come Creare una GIF da un Video",
+    "howToSteps": [
+      "Copia il link di un Reel di Instagram, un TikTok, un video YouTube o un video di un'altra piattaforma supportata, e incollalo qui sopra.",
+      "Sposta il cursore Inizio sul momento in cui deve partire la GIF; copre fino a 8 secondi da lì.",
+      "Tocca Crea una GIF. Viene creata sul nostro server in pochi secondi e salvata come file .gif."
+    ],
+    "sections": [
+      {
+        "heading": "Perché una GIF?",
+        "paragraphs": [
+          "Una GIF parte da sola, si ripete all'infinito e funziona quasi ovunque: app di chat, forum, email, presentazioni e documenti che non riproducono video. Per una reazione, un passaggio di un tutorial o un momento divertente, spesso è il formato più facile da condividere.",
+          "Questo strumento ne crea una dalla parte del video che scegli, senza app, senza account e senza programmi di montaggio."
+        ]
+      },
+      {
+        "heading": "Cosa Ottieni",
+        "paragraphs": [
+          "La GIF è larga 360 pixel (l'altezza segue la forma del video), va a 10 fotogrammi al secondo e dura fino a 8 secondi. Così il file resta piccolo, di solito pochi megabyte, si invia in fretta e si carica in fretta per chi lo riceve.",
+          "Le GIF non hanno audio e usano solo 256 colori, quindi appaiono più morbide del video. Se ti servono l'audio o la piena nitidezza, usa Scarica clip (MP4) sulla stessa scheda."
+        ]
+      },
+      {
+        "heading": "Creata sul Nostro Server",
+        "paragraphs": [
+          "Creare una GIF significa ridisegnare ogni fotogramma, il che richiede tempo di calcolo, quindi il server crea una GIF alla volta. Se in quel momento si sta creando quella di qualcun altro, ti verrà chiesto di riprovare tra qualche secondo.",
+          "La tua GIF ti arriva mentre viene creata. Dopo non viene salvato nulla e non viene aggiunta alcuna filigrana."
+        ]
+      },
+      {
+        "heading": "Usare le GIF Correttamente",
+        "paragraphs": [
+          "Una GIF fatta dal video di qualcuno resta opera sua. Condividere GIF di reazione in chat è comune; usarne una in una pubblicità o come se l'avessi fatta tu richiede il permesso del creator.",
+          "Funzionano solo i video pubblici, perché SaveReelsFast non accede mai a nessun account."
+        ]
+      }
+    ],
+    "faqHeading": "Domande Frequenti",
+    "faq": [
+      {
+        "q": "Convertire video in GIF è gratis?",
+        "a": "Sì. È gratis, senza account, registrazione, app o filigrana."
+      },
+      {
+        "q": "Quanto può durare la GIF?",
+        "a": "Fino a 8 secondi. Le GIF più lunghe diventano presto pesanti e richiedono molto più tempo, quindi lo strumento si ferma a 8."
+      },
+      {
+        "q": "Quanto è grande la GIF?",
+        "a": "Larga 360 pixel, a 10 fotogrammi al secondo. La maggior parte delle GIF da 8 secondi pesa pochi megabyte."
+      },
+      {
+        "q": "La GIF ha l'audio?",
+        "a": "No. Il formato GIF non può contenere audio. Per una clip con audio, usa Scarica clip (MP4)."
+      },
+      {
+        "q": "Perché dice che il server è occupato?",
+        "a": "Le GIF vengono create una alla volta. Aspetta qualche secondo e tocca di nuovo Crea una GIF."
+      },
+      {
+        "q": "Posso creare una GIF da un video privato?",
         "a": "No. Funzionano solo i video pubblici, perché lo strumento non accede mai a nessuna piattaforma."
       }
     ]

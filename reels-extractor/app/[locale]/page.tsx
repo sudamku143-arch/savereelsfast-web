@@ -117,7 +117,7 @@ export default async function LocalePage({
       </section>
 
       <PlatformLinks
-        toolLinks={toolPageLinks(dict)}
+        toolLinks={toolPageLinks(locale, dict)}
         locale={locale}
         names={names}
         heading={dict.landing.common.otherHeading}

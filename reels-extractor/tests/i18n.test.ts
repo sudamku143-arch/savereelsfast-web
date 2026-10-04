@@ -7,7 +7,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { describe, it } from "node:test";
-import { LEGAL_TRANSLATED, defaultLocale, hasLegalTranslation, localeDir, localePath, locales } from "../lib/i18n-config.ts";
+import { NEW_PAGE_LOCALES, LEGAL_TRANSLATED, defaultLocale, hasLegalTranslation, localeDir, localePath, locales } from "../lib/i18n-config.ts";
 
 const messages = (locale: string) =>
   JSON.parse(readFileSync(new URL(`../messages/${locale}.json`, import.meta.url), "utf8")) as Record<string, unknown>;
@@ -61,7 +61,9 @@ describe("every language has the same interface text", () => {
     it(`${locale} has every key English has, and no extra ones`, () => {
       const own = flatten(messages(locale)).filter((key) => !key.startsWith("legal"));
       assert.deepEqual(own.filter((k) => !english.includes(k)), [], "extra keys");
-      assert.deepEqual(english.filter((k) => !own.includes(k)), [], "missing keys");
+      // The newer feature pages aren't written in every language (NEW_PAGE_LOCALES).
+      const optional = (k: string) => !NEW_PAGE_LOCALES.includes(locale) && /^(videoTrimmer|gifMaker)(\.|$)/.test(k);
+      assert.deepEqual(english.filter((k) => !own.includes(k) && !optional(k)), [], "missing keys");
     });
 
     it(`${locale} keeps every {placeholder} the English text uses`, () => {

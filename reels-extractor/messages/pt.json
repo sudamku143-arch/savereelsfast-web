@@ -678,7 +678,16 @@
     "copyHashtags": "Copiar hashtags ({n})",
     "copied": "Copiado",
     "copyFailed": "Não deu para copiar, selecione o texto",
-    "downloadCover": "Imagem de capa ({format})"
+    "downloadCover": "Imagem de capa ({format})",
+    "clipToggle": "Cortar ou criar um GIF",
+    "clipStart": "Início",
+    "clipEnd": "Fim",
+    "clipLength": "Duração: {n} s",
+    "clipVideo": "Baixar trecho (MP4)",
+    "clipAudio": "Baixar áudio do trecho (M4A)",
+    "clipGif": "Criar um GIF",
+    "clipGifNote": "Os GIFs têm até {n} s, 360 px de largura e não têm som.",
+    "clipKeyframeNote": "Um trecho de vídeo começa no quadro-chave anterior mais próximo, que pode estar alguns segundos antes (até 5 s nos Reels do Instagram). Trechos de áudio são exatos."
   },
   "download": {
     "preparing": "Preparando o download…",
@@ -1479,6 +1488,152 @@
       },
       {
         "q": "Posso pegar a thumbnail de um vídeo privado?",
+        "a": "Não. Só vídeos públicos funcionam, porque a ferramenta nunca faz login em nenhuma plataforma."
+      }
+    ]
+  },
+  "videoTrimmer": {
+    "metaTitle": "Cortar Vídeo Online - Trechos de Reels, TikTok e YouTube",
+    "metaDescription": "Corte uma parte de um Reel, TikTok ou vídeo público do YouTube e salve como trecho MP4 ou áudio M4A. Sem recodificar, grátis, sem login, sem app.",
+    "h1": "Cortador de Vídeo Online",
+    "lead": "Cole o link de um vídeo, escolha o início e o fim e salve só essa parte como trecho MP4, ou só o som em M4A. Reels, TikTok, YouTube e mais.",
+    "placeholder": "Cole um link de Reel, TikTok ou YouTube…",
+    "copyHint": "Copie o link do vídeo pelo botão Compartilhar e cole aqui.",
+    "breadcrumb": "Cortar Vídeo",
+    "footerLabel": "Cortar Vídeo",
+    "howToHeading": "Como Cortar um Vídeo Online",
+    "howToSteps": [
+      "Copie o link de um Reel do Instagram, um TikTok, um vídeo do YouTube ou um vídeo de outra plataforma compatível, e cole acima.",
+      "Quando a prévia aparecer, mova os controles de Início e Fim até a parte que você quer. A duração aparece embaixo.",
+      "Toque em Baixar trecho (MP4) para o vídeo, ou Baixar áudio do trecho (M4A) só para o som."
+    ],
+    "sections": [
+      {
+        "heading": "Por Que Cortar Antes de Baixar",
+        "paragraphs": [
+          "Muitas vezes você só quer alguns segundos de um vídeo: uma piada, um gol, uma fala, um som para o status. Baixar o arquivo inteiro e cortar em um app de edição leva tempo e espaço. Aqui você escolhe a parte primeiro e salva só ela.",
+          "O corte é feito no nosso servidor com ffmpeg, a mesma ferramenta que os editores de vídeo usam, e o trecho chega até você assim que fica pronto. Nada para instalar, e funciona em qualquer navegador no celular ou no computador."
+        ]
+      },
+      {
+        "heading": "Cortes Rápidos Sem Perder Qualidade",
+        "paragraphs": [
+          "O trecho é cortado sem recodificar: imagem e som são copiados exatamente como a plataforma entrega, então não há compressão extra e o corte leva cerca de um segundo. Você recebe a mesma qualidade do download completo; no YouTube é o arquivo de 360p que este site salva.",
+          "Cortar sem recodificar tem um efeito: um trecho de vídeo precisa começar em um quadro-chave, o mais próximo antes do início escolhido, então pode começar alguns segundos antes. Os Reels do Instagram têm um quadro-chave a cada 5 segundos, então lá podem ser até 5 segundos. Trechos de áudio começam exatamente onde você marcou."
+        ]
+      },
+      {
+        "heading": "Salve Só o Som",
+        "paragraphs": [
+          "Baixar áudio do trecho (M4A) entrega só o som da parte escolhida: o refrão de uma música para toque, uma citação, um efeito sonoro. É o áudio AAC do próprio vídeo, copiado e não convertido, e toca em qualquer app de música.",
+          "Se a plataforma entrega o áudio como arquivo separado, o trecho é cortado desse arquivo; se não, o som é tirado do próprio vídeo."
+        ]
+      },
+      {
+        "heading": "Uso Justo e Limites",
+        "paragraphs": [
+          "Só vídeos públicos podem ser cortados, porque o SaveReelsFast nunca faz login em nenhuma conta. Vídeos muito longos podem ser grandes demais para buscar, e um trecho de um vídeo acima dos nossos limites é recusado em vez de cortado pela metade.",
+          "Um trecho continua sendo obra do criador: guarde para você ou peça permissão antes de repostar. Quer uma versão em loop e sem som para um chat? Use Criar um GIF no mesmo cartão."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas Frequentes",
+    "faq": [
+      {
+        "q": "O cortador de vídeo é grátis?",
+        "a": "Sim. É grátis, sem conta, cadastro, app ou marca d'água."
+      },
+      {
+        "q": "Cortar diminui a qualidade?",
+        "a": "Não. O trecho é copiado sem recodificar, então mantém a qualidade do download completo. No YouTube, é 360p."
+      },
+      {
+        "q": "Por que meu trecho começa um pouco antes do que escolhi?",
+        "a": "Um vídeo só pode ser cortado sem recodificar em um quadro-chave, então o trecho começa no mais próximo antes do seu início. Os Reels do Instagram têm um a cada 5 segundos, então o trecho pode começar até 5 segundos antes. Trechos de áudio são exatos."
+      },
+      {
+        "q": "Posso cortar só o áudio?",
+        "a": "Sim. Baixar áudio do trecho (M4A) salva só o som da parte escolhida."
+      },
+      {
+        "q": "Quanto um trecho pode durar?",
+        "a": "Qualquer parte do vídeo, até a duração completa. Os GIFs são a exceção: têm no máximo 8 segundos."
+      },
+      {
+        "q": "Posso cortar um vídeo privado?",
+        "a": "Não. Só vídeos públicos funcionam, porque a ferramenta nunca faz login em nenhuma plataforma."
+      }
+    ]
+  },
+  "gifMaker": {
+    "metaTitle": "Converter Vídeo em GIF - Crie GIFs de Reels e TikTok",
+    "metaDescription": "Transforme até 8 segundos de um Reel, TikTok ou vídeo público do YouTube em GIF. Escolha o início, toque em Criar um GIF e salve. Grátis, sem login.",
+    "h1": "Converter Vídeo em GIF",
+    "lead": "Cole o link de um vídeo, escolha até 8 segundos e transforme em um GIF em loop para compartilhar em conversas e posts. Reels, TikTok, YouTube e mais.",
+    "placeholder": "Cole um link de Reel, TikTok ou YouTube…",
+    "copyHint": "Copie o link do vídeo pelo botão Compartilhar e cole aqui.",
+    "breadcrumb": "Vídeo para GIF",
+    "footerLabel": "Vídeo para GIF",
+    "howToHeading": "Como Fazer um GIF a Partir de um Vídeo",
+    "howToSteps": [
+      "Copie o link de um Reel do Instagram, um TikTok, um vídeo do YouTube ou um vídeo de outra plataforma compatível, e cole acima.",
+      "Mova o controle de Início para o momento em que o GIF deve começar; ele cobre até 8 segundos a partir dali.",
+      "Toque em Criar um GIF. Ele é feito no nosso servidor em alguns segundos e salvo como arquivo .gif."
+    ],
+    "sections": [
+      {
+        "heading": "Por Que um GIF?",
+        "paragraphs": [
+          "Um GIF toca sozinho, repete sem parar e funciona em quase todo lugar: apps de conversa, fóruns, e-mails, apresentações e documentos que não tocam vídeo. Para uma reação, um passo de tutorial ou um momento engraçado, costuma ser o formato mais fácil de compartilhar.",
+          "Esta ferramenta cria um a partir da parte do vídeo que você escolher, sem app, sem conta e sem editor no computador."
+        ]
+      },
+      {
+        "heading": "O Que Você Recebe",
+        "paragraphs": [
+          "O GIF tem 360 pixels de largura (a altura segue o formato do vídeo), roda a 10 quadros por segundo e dura até 8 segundos. Assim o arquivo fica pequeno, geralmente poucos megabytes, é enviado rápido e carrega rápido para quem recebe.",
+          "GIFs não têm som e só usam 256 cores, então parecem mais suaves que o vídeo. Se você precisa de som ou nitidez total, use Baixar trecho (MP4) no mesmo cartão."
+        ]
+      },
+      {
+        "heading": "Feito no Nosso Servidor",
+        "paragraphs": [
+          "Criar um GIF significa redesenhar cada quadro, o que exige tempo de processamento, então o servidor cria um GIF por vez. Se o de outra pessoa estiver sendo criado naquele momento, você vai precisar tentar de novo em alguns segundos.",
+          "Seu GIF chega até você enquanto é criado. Nada fica guardado depois e nenhuma marca d'água é adicionada."
+        ]
+      },
+      {
+        "heading": "Usando GIFs com Respeito",
+        "paragraphs": [
+          "Um GIF feito do vídeo de alguém continua sendo obra dessa pessoa. GIFs de reação em conversas são comuns; usar um em um anúncio ou como se fosse seu exige a permissão do criador.",
+          "Só vídeos públicos funcionam, porque o SaveReelsFast nunca faz login em nenhuma conta."
+        ]
+      }
+    ],
+    "faqHeading": "Perguntas Frequentes",
+    "faq": [
+      {
+        "q": "Converter vídeo em GIF é grátis?",
+        "a": "Sim. É grátis, sem conta, cadastro, app ou marca d'água."
+      },
+      {
+        "q": "Quanto o GIF pode durar?",
+        "a": "Até 8 segundos. GIFs mais longos ficam grandes rápido e demoram muito mais para ser feitos, então a ferramenta para em 8."
+      },
+      {
+        "q": "Qual é o tamanho do GIF?",
+        "a": "360 pixels de largura, a 10 quadros por segundo. A maioria dos GIFs de 8 segundos tem poucos megabytes."
+      },
+      {
+        "q": "O GIF tem som?",
+        "a": "Não. O formato GIF não carrega som. Para um trecho com som, use Baixar trecho (MP4)."
+      },
+      {
+        "q": "Por que apareceu que o servidor está ocupado?",
+        "a": "Os GIFs são feitos um por vez. Espere alguns segundos e toque em Criar um GIF de novo."
+      },
+      {
+        "q": "Posso fazer um GIF de um vídeo privado?",
         "a": "Não. Só vídeos públicos funcionam, porque a ferramenta nunca faz login em nenhuma plataforma."
       }
     ]

@@ -14,6 +14,13 @@ export function isLocale(value: string): value is Locale {
  */
 export const LEGAL_TRANSLATED: readonly Locale[] = ["en", "es", "pt", "hi", "fr", "id", "ar"];
 
+/**
+ * Languages new pages are written in (the video trimmer and video to GIF first): for India, Hindi only, by the
+ * site owner's choice; no Bengali, Marathi, Telugu or Tamil. Those pages don't exist in the other languages
+ * (no route, no sitemap entry, no hreflang, no link); the rest of the site stays fully translated there.
+ */
+export const NEW_PAGE_LOCALES: readonly Locale[] = locales.filter((l) => !["bn", "mr", "te", "ta"].includes(l));
+
 export function hasLegalTranslation(locale: Locale): boolean {
   return LEGAL_TRANSLATED.includes(locale);
 }
