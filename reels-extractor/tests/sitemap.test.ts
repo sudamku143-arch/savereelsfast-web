@@ -84,8 +84,8 @@ describe("sitemap contents", () => {
 
   it("adds up: 13 home + 130 platform + 13 audio + 13 photo + 52 feature pages + 5 legal pages x every translated language", () => {
     // 4 feature pages: the caption copier and thumbnail downloader in all 13, the trimmer and GIF pages in 9 (India: Hindi only)
-    assert.equal(entries.length, locales.length + locales.length * ids.length + 4 * locales.length + 2 * 9 + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
-    assert.equal(entries.length, 248 + 1 + allBlogPosts + 1 + spanishBlogPosts, "248 site pages + the English and Spanish blog indexes + one entry per post");
+    assert.equal(entries.length, locales.length + locales.length * ids.length + 4 * locales.length + 2 * 9 + 1 + 5 * LEGAL_TRANSLATED.length + blogEntryCount);
+    assert.equal(entries.length, 249 + 1 + allBlogPosts + 1 + spanishBlogPosts, "249 site pages (incl. the English-only API docs) + the English and Spanish blog indexes + one entry per post");
   });
 
   it("no address uses the old /downloader/ shape", () => {
@@ -133,6 +133,7 @@ describe("frequency and priority", () => {
     if (path === "/instagram-photo-downloader") return "photo";
     if (["/instagram-caption-copier", "/video-thumbnail-downloader", "/video-trimmer", "/video-to-gif"].includes(path)) return "feature";
     if (/^\/blog(\/|$)/.test(path)) return "blog";
+    if (path === "/free-video-api") return "docs";
     return "legal";
   };
 
@@ -197,6 +198,14 @@ describe("frequency and priority", () => {
     }
   });
 
+  it("API docs: English only, monthly, 0.6, with only English and x-default as alternates", () => {
+    const pages = entries.filter((x) => rule(x.url) === "docs");
+    assert.deepEqual(pages.map((e) => e.url), [`${SITE}/free-video-api`]);
+    assert.equal(pages[0].changeFrequency, "monthly");
+    assert.equal(pages[0].priority, 0.6);
+    assert.deepEqual(Object.keys(pages[0].alternates.languages).sort(), ["en", "x-default"]);
+  });
+
   it("legal pages: monthly", () => {
     const pages = entries.filter((x) => rule(x.url) === "legal");
     assert.equal(pages.length, 5 * LEGAL_TRANSLATED.length);
@@ -206,7 +215,7 @@ describe("frequency and priority", () => {
 
 describe("alternate languages", () => {
   it("every platform and home page lists all 13 languages plus x-default", () => {
-    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog|video-trimmer|video-to-gif)/.test(x.url))) {
+    for (const e of entries.filter((x) => !/(privacy|terms|dmca|disclaimer|contact|\/blog|video-trimmer|video-to-gif|free-video-api)/.test(x.url))) {
       assert.deepEqual(Object.keys(e.alternates.languages).sort(), [...locales, "x-default"].sort(), e.url);
     }
   });

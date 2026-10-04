@@ -29,6 +29,8 @@ const PAGES: { path: string; changeFrequency: Frequency; priority: number; legal
   // Not in Bengali, Marathi, Telugu or Tamil (NEW_PAGE_LOCALES).
   { path: VIDEO_TRIMMER_PATH, changeFrequency: "weekly", priority: 0.8, only: NEW_PAGE_LOCALES },
   { path: GIF_MAKER_PATH, changeFrequency: "weekly", priority: 0.8, only: NEW_PAGE_LOCALES },
+  // The public API's documentation: English only.
+  { path: "/free-video-api", changeFrequency: "monthly", priority: 0.6, only: ["en"] },
   { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/terms-of-service", changeFrequency: "monthly", priority: 0.3, legal: true },
   { path: "/dmca", changeFrequency: "monthly", priority: 0.3, legal: true },

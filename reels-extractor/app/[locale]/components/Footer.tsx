@@ -103,6 +103,8 @@ export default function Footer({
   const company = [
     ...(hasBlog ? [{ href: localePath(locale, "/blog"), label: dict.links.blog }] : []),
     { href: localePath(locale, "/contact"), label: dict.links.contact },
+    // The developer docs are in English only, linked as such from every language.
+    { href: "/free-video-api", label: "Free API" },
     {
       href: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(dict.reportSubject)}`,
       label: dict.links.report,

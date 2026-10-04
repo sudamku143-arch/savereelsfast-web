@@ -56,10 +56,15 @@ const nextConfig = {
       snapchat: "snapchat-video-downloader",
       linkedin: "linkedin-video-downloader",
     };
-    return Object.entries(LEGACY).flatMap(([old, current]) => [
-      { source: `/downloader/${old}`, destination: `/${current}`, permanent: true },
-      { source: `/:locale(${LANGUAGES})/downloader/${old}`, destination: `/:locale/${current}`, permanent: true },
-    ]);
+    return [
+      // The public API's documentation lives at /free-video-api (a normal page, styled like the rest of the
+      // site); /api is the short address people type or link to. Only /api itself: /api/* are the endpoints.
+      { source: "/api", destination: "/free-video-api", permanent: true },
+      ...Object.entries(LEGACY).flatMap(([old, current]) => [
+        { source: `/downloader/${old}`, destination: `/${current}`, permanent: true },
+        { source: `/:locale(${LANGUAGES})/downloader/${old}`, destination: `/:locale/${current}`, permanent: true },
+      ]),
+    ];
   },
   async headers() {
     return [
