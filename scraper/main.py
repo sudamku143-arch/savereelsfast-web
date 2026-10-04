@@ -604,6 +604,19 @@ def _describe_image(info: dict) -> dict | None:
     }
 
 
+# yt-dlp names an Instagram post with no title "Video by <user>" / "Post by <user>": a placeholder, not a caption.
+_PLACEHOLDER_TITLE = re.compile(r"^(Video|Post) by [\w.]+$")
+CAPTION_MAX_CHARS = 2200  # Instagram's own caption limit; nothing longer is a real caption
+
+
+def _caption(info: dict) -> str | None:
+    """The post's full caption (hashtags included), for the site's copy buttons. None when there is none."""
+    for text in (info.get("description"), info.get("title")):
+        if isinstance(text, str) and text.strip() and not _PLACEHOLDER_TITLE.match(text.strip()):
+            return text.strip()[:CAPTION_MAX_CHARS]
+    return None
+
+
 def _describe(info: dict, images: bool = False) -> dict | None:
     """
     One downloadable item from a single-media info dict: a video (plus optional separate audio), or, when
@@ -1187,6 +1200,8 @@ async def extract(
         # A carousel's id/author/title belong to the post, not to its first slide.
         "id": info.get("id") or first["id"],
         "title": first["title"] or info.get("title"),
+        # The whole caption with its hashtags; `title` stays the short form the card shows.
+        "caption": _caption(info) or (_caption(info["entries"][0]) if info.get("entries") else None),
         "author": first["author"] or info.get("uploader") or info.get("channel"),
         "formats": [],  # a single best progressive stream is returned in videoUrl
         # Only present for posts with several videos (or, with images=1, photos): carousels, multi-video tweets.
