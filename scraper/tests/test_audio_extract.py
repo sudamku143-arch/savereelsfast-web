@@ -114,6 +114,11 @@ class AudioFromVideoTests(EndpointBase):
     def test_requirements_bundle_ffmpeg_for_render(self):
         self.assertIn("imageio-ffmpeg", (ROOT / "requirements.txt").read_text())
 
+    def test_requirements_give_yt_dlp_browser_impersonation(self):
+        # TikTok refuses requests that don't look like a real browser; yt-dlp needs curl_cffi to impersonate one
+        # ("The extractor is attempting impersonation, but no impersonate target is available").
+        self.assertIn("yt-dlp[curl-cffi]", (ROOT / "requirements.txt").read_text().splitlines())
+
 
 if __name__ == "__main__":
     unittest.main()
